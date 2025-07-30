@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788" systemVersion="24F74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="InitConfig" representedClassName=".InitConfig" syncable="YES">
+        <attribute name="cATime" optional="YES" attributeType="String"/>
+        <attribute name="cFTime" optional="YES" attributeType="String"/>
+        <attribute name="clickRt" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="function" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="jsClickRt" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="levelGapTime" optional="YES" attributeType="String"/>
+        <attribute name="levelMax" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="limit" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="nextAdGap" optional="YES" attributeType="String"/>
+        <attribute name="refreshGapTime" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="sClick" optional="YES" attributeType="String"/>
+        <attribute name="slideRate" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="sSTime" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sTime" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="JSConfig" representedClassName=".JSConfig" syncable="YES">
+        <attribute name="bottomJs" optional="YES" attributeType="String"/>
+        <attribute name="clickJs" optional="YES" attributeType="String"/>
+        <attribute name="iframeJs" optional="YES" attributeType="String"/>
+        <attribute name="rectJs" optional="YES" attributeType="String"/>
+        <attribute name="topJs" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="LinkTask" representedClassName=".LinkTask" syncable="YES">
+        <attribute name="adJs" optional="YES" attributeType="String"/>
+        <attribute name="adType" optional="YES" attributeType="String"/>
+        <attribute name="area" optional="YES" attributeType="String"/>
+        <attribute name="clickAdTime" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="clickFuncTime" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="levelGapTime" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="link" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="nextAdGap" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sleepTime" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startClick" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startSlideTime" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="taskType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+</model>
