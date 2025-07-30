@@ -16,6 +16,8 @@ internal enum CoreDataError: Error, LocalizedError {
     case fetchError(String)
     case deleteError(String)
     case migrationError(String)
+    case modelNotFound(String)
+    case bundleNotFound(String)
     
     var errorDescription: String? {
         switch self {
@@ -29,6 +31,10 @@ internal enum CoreDataError: Error, LocalizedError {
             return "删除数据失败: \(message)"
         case .migrationError(let message):
             return "数据迁移失败: \(message)"
+        case .modelNotFound(let message):
+            return "CoreData模型文件未找到: \(message)"
+        case .bundleNotFound(let message):
+            return "Bundle未找到: \(message)"
         }
     }
 }
@@ -47,7 +53,7 @@ internal final class CoreDataManager: ObservableObject {
     private var isStoreLoaded = false
     
     private(set) lazy var container: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "SmallGame")
+        let container = createPersistentContainer()
         configureContainer(container)
         return container
     }()
@@ -65,20 +71,115 @@ internal final class CoreDataManager: ObservableObject {
         setupNotifications()
     }
     
+    // MARK: - 创建持久化容器
+    private func createPersistentContainer() -> NSPersistentContainer {
+        // 尝试获取 XCFramework 中的 CoreData 模型
+        guard let modelURL = findCoreDataModel() else {
+            fatalError("无法找到 CoreData 模型文件")
+        }
+        
+        print("[CoreData] 📁 找到模型文件: \(modelURL.path)")
+        
+        // 使用模型 URL 创建容器
+        guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
+            fatalError("无法加载 CoreData 模型: \(modelURL.path)")
+        }
+        
+        let container = NSPersistentContainer(name: "GameWrapper", managedObjectModel: model)
+        return container
+    }
+    
+    // MARK: - 查找 CoreData 模型文件
+    private func findCoreDataModel() -> URL? {
+        // 1. 首先尝试从当前 Bundle 中查找
+        let bundle = Bundle(for: type(of: self))
+        print("[CoreData] 🔍 从当前 Bundle 查找模型文件: \(bundle.bundlePath)")
+        // 尝试查找 .momd 文件（编译后的模型）
+        if let momdURL = bundle.url(forResource: "GameWrapper", withExtension: "momd") {
+            print("[CoreData] ✅ 找到 .momd 文件: \(momdURL.path)")
+            return momdURL
+        }
+        // 尝试查找 .mom 文件
+        if let momURL = bundle.url(forResource: "GameWrapper", withExtension: "mom") {
+            print("[CoreData] ✅ 找到 .mom 文件: \(momURL.path)")
+            return momURL
+        }
+        // 尝试查找 .xcdatamodeld 文件（开发时的模型）
+        if let modeldURL = bundle.url(forResource: "GameWrapper", withExtension: "xcdatamodeld") {
+            print("[CoreData] ✅ 找到 .xcdatamodeld 文件: \(modeldURL.path)")
+            return modeldURL
+        }
+        // 2. 尝试从主 Bundle 中查找（备用方案）
+        let mainBundle = Bundle.main
+        print("[CoreData] 🔍 从主 Bundle 查找模型文件: \(mainBundle.bundlePath)")
+        if let momdURL = mainBundle.url(forResource: "GameWrapper", withExtension: "momd") {
+            print("[CoreData] ✅ 在主 Bundle 中找到 .momd 文件: \(momdURL.path)")
+            return momdURL
+        }
+        if let momURL = mainBundle.url(forResource: "GameWrapper", withExtension: "mom") {
+            print("[CoreData] ✅ 在主 Bundle 中找到 .mom 文件: \(momURL.path)")
+            return momURL
+        }
+        // 3. 尝试从所有可用的 Bundle 中查找
+        let allBundles = Bundle.allBundles + Bundle.allFrameworks
+        for bundle in allBundles {
+            print("[CoreData] 🔍 从 Bundle 查找: \(bundle.bundlePath)")
+            if let momdURL = bundle.url(forResource: "GameWrapper", withExtension: "momd") {
+                print("[CoreData] ✅ 在 Bundle 中找到 .momd 文件: \(momdURL.path)")
+                return momdURL
+            }
+            if let momURL = bundle.url(forResource: "GameWrapper", withExtension: "mom") {
+                print("[CoreData] ✅ 在 Bundle 中找到 .mom 文件: \(momURL.path)")
+                return momURL
+            }
+        }
+        print("[CoreData] ❌ 未找到 CoreData 模型文件")
+        return nil
+    }
+    
+    // MARK: - 获取存储目录
+    private func getStorageDirectory() -> URL {
+        // 使用应用的 Documents 目录作为存储位置
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let storageDirectory = documentsPath.appendingPathComponent("GameWrapper")
+        
+        // 确保目录存在
+        if !FileManager.default.fileExists(atPath: storageDirectory.path) {
+            try? FileManager.default.createDirectory(at: storageDirectory, withIntermediateDirectories: true)
+            print("[CoreData] 📁 创建存储目录: \(storageDirectory.path)")
+        }
+        
+        return storageDirectory
+    }
+    
     // MARK: - 容器配置
     private func configureContainer(_ container: NSPersistentContainer) {
         guard !isStoreLoaded else {
             print("[CoreData] ⚠️ 持久化存储已加载，跳过重复加载")
             return
         }
-        guard let storeDescription = container.persistentStoreDescriptions.first else {
-            fatalError("未找到持久化存储描述")
-        }
+        
+        // 配置存储描述
+        let storageDirectory = getStorageDirectory()
+        let storeURL = storageDirectory.appendingPathComponent("GameWrapper.sqlite")
+        let storeDescription = NSPersistentStoreDescription()
+        
+        storeDescription.url = storeURL
+        storeDescription.type = NSSQLiteStoreType
+        
         // 启用轻量级迁移
         storeDescription.setOption(true as NSNumber, forKey: NSMigratePersistentStoresAutomaticallyOption)
         storeDescription.setOption(true as NSNumber, forKey: NSInferMappingModelAutomaticallyOption)
-        // 设置存储类型
-        storeDescription.type = NSSQLiteStoreType
+        
+        // 设置其他选项
+        storeDescription.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        storeDescription.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        
+        // 替换默认的存储描述
+        container.persistentStoreDescriptions = [storeDescription]
+        
+        print("[CoreData] 📊 配置存储: \(storeURL.path)")
+        
         // 加载持久化存储
         container.loadPersistentStores { [weak self] storeDescription, error in
             guard let error = error else {
