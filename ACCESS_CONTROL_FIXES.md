@@ -18,8 +18,8 @@
 - `@Published` 状态属性：支持 SwiftUI 响应式更新
 
 #### 2. 初始化流程
-- `initialize(configKeys:completion:)`：完整的初始化流程
-- `reinitialize(configKeys:completion:)`：重新初始化功能
+- `initialize(completion:)`：完整的初始化流程
+- `reinitialize(completion:)`：重新初始化功能
 - `cleanup()`：资源清理功能
 
 #### 3. 进度回调
@@ -27,10 +27,14 @@
 - `onInitComplete`：初始化完成回调
 
 #### 4. 初始化步骤
-1. **CoreData 初始化**：初始化本地数据存储
-2. **网络配置请求**：从服务器获取配置数据
-3. **任务仓库初始化**：加载和分类任务数据
-4. **自动刷新管理器**：启动配置自动刷新功能
+1. **CoreData 初始化**: 初始化本地数据存储
+2. **任务仓库初始化**: 加载和分类任务数据
+3. **自动刷新管理器**: 启动配置自动刷新功能
+
+#### 5. API 简化
+- 移除了 `configKeys` 参数，因为配置请求由内部管理器自动处理
+- 初始化方法更加简洁：`initialize(completion:)`
+- 重新初始化方法：`reinitialize(completion:)`
 
 ## 修复详情
 
@@ -139,7 +143,7 @@ let config = NetworkConfig(
 GameWebWrapper.shared.setup(network: config)
 
 // 2. 初始化 SDK
-GameWebWrapper.shared.initialize(configKeys: "your_config_keys") { result in
+GameWebWrapper.shared.initialize { result in
     switch result {
     case .success:
         print("SDK 初始化成功")
@@ -157,7 +161,7 @@ GameWebWrapper.shared.onInitProgress = { message in
 }
 
 // 初始化 SDK
-GameWebWrapper.shared.initialize(configKeys: "your_config_keys") { result in
+GameWebWrapper.shared.initialize { result in
     // 处理结果
 }
 ```
@@ -177,6 +181,8 @@ GameWebWrapper.shared.initialize(configKeys: "your_config_keys") { result in
 - 单例模式的 `shared` 实例已正确使用 `internal` 修饰符
 - 新增的初始化功能提供了完整的错误处理和进度反馈
 - 初始化流程在后台线程执行，回调在主线程返回，确保线程安全
+- **配置请求自动管理**：配置请求由内部的 `RefreshManager` 和 `TaskPloysManager` 自动处理，无需手动调用
+- **API 简化**：移除了 `configKeys` 参数，初始化 API 更加简洁
 
 ## 后续建议
 

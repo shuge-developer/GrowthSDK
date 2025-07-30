@@ -2,7 +2,7 @@
 
 ## 概述
 
-GameWrapper SDK 提供了一个完整的初始化入口，包括 CoreData 初始化、网络配置请求、任务仓库初始化等功能。本文档将详细介绍如何使用 SDK 的初始化功能。
+GameWrapper SDK 提供了一个完整的初始化入口，包括 CoreData 初始化、任务仓库初始化、自动刷新管理器启动等功能。配置请求由内部的 `RefreshManager` 和 `TaskPloysManager` 自动管理，具有复杂的业务逻辑。
 
 ## 初始化流程
 
@@ -67,6 +67,30 @@ GameWebWrapper.shared.onInitComplete = { result in
 }
 ```
 
+## 配置请求机制
+
+SDK 的配置请求由内部的 `RefreshManager` 和 `TaskPloysManager` 自动管理，具有以下特点：
+
+### 1. 自动配置检查
+- **应用启动时**：自动触发初始配置检查
+- **应用进入前台时**：触发配置检查
+- **任务队列清空时**：自动触发配置检查
+
+### 2. 配置类型和策略
+- **initConfig**：每日获取一次
+- **cfgConfig**：复杂逻辑（任务队列为空 + 每日限制 + 时间间隔）
+- **jsConfig**：只获取一次
+
+### 3. 智能重试机制
+- 网络失败时自动重试
+- 支持精确间隔重试和标准重试
+- 状态持久化，应用重启后恢复
+
+### 4. 业务逻辑验证
+- 每日请求次数限制
+- 时间间隔验证
+- 任务队列状态检查
+
 ## 完整使用示例
 
 ```swift
@@ -98,14 +122,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             switch result {
             case .success:
                 print("✅ GameWrapper SDK 初始化成功")
+                print("📡 配置请求将由内部管理器自动处理")
                 
             case .failure(let error):
                 print("❌ GameWrapper SDK 初始化失败: \(error.localizedDescription)")
                 
                 // 可以根据错误类型进行重试
                 switch error {
-                case .networkConfigFailed:
-                    print("网络配置请求失败，可能需要检查网络连接")
                 case .coreDataInitFailed:
                     print("CoreData 初始化失败，可能需要检查数据模型")
                 case .taskRepositoryInitFailed:
@@ -194,7 +217,6 @@ SDK 提供了详细的错误类型：
 
 - `configNotSet`: 网络配置未设置
 - `coreDataInitFailed`: CoreData 初始化失败
-- `networkConfigFailed`: 网络配置请求失败
 - `taskRepositoryInitFailed`: 任务仓库初始化失败
 
 ## 注意事项
@@ -203,13 +225,37 @@ SDK 提供了详细的错误类型：
 2. **线程安全**: 初始化方法在后台线程执行，回调在主线程返回
 3. **重复初始化**: 避免重复调用初始化方法，SDK 会自动处理
 4. **资源清理**: 在应用退出时调用 `cleanup()` 方法清理资源
-5. **网络配置**: 确保网络配置参数正确，特别是 `configKeys` 参数
+5. **配置请求**: 配置请求由内部管理器自动处理，无需手动调用
+6. **业务逻辑**: 配置请求遵循复杂的业务规则，包括时间间隔、次数限制等
 
 ## 初始化流程详解
 
 1. **CoreData 初始化**: 初始化本地数据存储
-2. **网络配置请求**: 从服务器获取配置数据
-3. **任务仓库初始化**: 加载和分类任务数据
-4. **自动刷新管理器**: 启动配置自动刷新功能
+2. **任务仓库初始化**: 加载和分类任务数据
+3. **自动刷新管理器**: 启动配置自动刷新功能，包括：
+   - 设置应用生命周期观察者
+   - 设置任务队列观察者
+   - 创建配置检查调度器
+   - 触发初始配置检查
+
+## 配置请求业务逻辑
+
+### 触发条件
+- 应用启动时
+- 应用进入前台时
+- 任务队列清空时
+
+### 验证规则
+- **initConfig**: 每日最多请求一次
+- **cfgConfig**: 需要满足多个条件
+  - 任务队列为空
+  - 每日请求次数未达上限
+  - 距离上次任务完成时间满足间隔要求
+- **jsConfig**: 只请求一次
+
+### 重试机制
+- 网络失败时自动重试
+- 支持精确间隔重试（基于业务规则）
+- 状态持久化，应用重启后恢复
 
 每个步骤都有详细的进度回调，方便调试和用户反馈。 

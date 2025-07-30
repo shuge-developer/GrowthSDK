@@ -20,7 +20,6 @@ public enum GameWrapperInitStatus {
 public enum GameWrapperInitError: Error, LocalizedError {
     case configNotSet
     case coreDataInitFailed(String)
-    case networkConfigFailed(String)
     case taskRepositoryInitFailed(String)
     
     public var errorDescription: String? {
@@ -29,8 +28,6 @@ public enum GameWrapperInitError: Error, LocalizedError {
             return "网络配置未设置，请先调用 setup(network:) 方法"
         case .coreDataInitFailed(let message):
             return "CoreData 初始化失败: \(message)"
-        case .networkConfigFailed(let message):
-            return "网络配置请求失败: \(message)"
         case .taskRepositoryInitFailed(let message):
             return "任务仓库初始化失败: \(message)"
         }
@@ -78,10 +75,8 @@ public class GameWebWrapper: ObservableObject {
     }
     
     /// 初始化 SDK
-    /// - Parameters:
-    ///   - configKeys: 配置请求的键值，用于获取远程配置
-    ///   - completion: 初始化完成回调
-    public func initialize(configKeys: String, completion: @escaping (Result<Void, GameWrapperInitError>) -> Void) {
+    /// - Parameter completion: 初始化完成回调
+    public func initialize(completion: @escaping (Result<Void, GameWrapperInitError>) -> Void) {
         // 检查配置是否已设置
         guard config != nil else {
             let error = GameWrapperInitError.configNotSet
@@ -104,17 +99,15 @@ public class GameWebWrapper: ObservableObject {
         onInitProgress?("开始初始化 SDK")
         
         // 执行初始化流程
-        performInitialization(configKeys: configKeys)
+        performInitialization()
     }
     
     /// 重新初始化 SDK
-    /// - Parameters:
-    ///   - configKeys: 配置请求的键值
-    ///   - completion: 初始化完成回调
-    public func reinitialize(configKeys: String, completion: @escaping (Result<Void, GameWrapperInitError>) -> Void) {
+    /// - Parameter completion: 初始化完成回调
+    public func reinitialize(completion: @escaping (Result<Void, GameWrapperInitError>) -> Void) {
         print("[GameWrapper] 🔄 重新初始化 SDK")
         initStatus = .notInitialized
-        initialize(configKeys: configKeys, completion: completion)
+        initialize(completion: completion)
     }
     
     /// 清理 SDK 资源
@@ -136,7 +129,7 @@ public class GameWebWrapper: ObservableObject {
     // MARK: - 私有方法
     
     /// 执行初始化流程
-    private func performInitialization(configKeys: String) {
+    private func performInitialization() {
         let initQueue = DispatchQueue(label: "com.gamewrapper.init", qos: .userInitiated)
         
         initQueue.async { [weak self] in
@@ -149,40 +142,25 @@ public class GameWebWrapper: ObservableObject {
                 case .success:
                     self?.initProgress("CoreData 初始化成功")
                     
-                    // 步骤2: 请求网络配置
-                    self?.initProgress("请求网络配置...")
-                    self?.requestNetworkConfig(configKeys: configKeys) { [weak self] result in
+                    // 步骤2: 初始化任务仓库
+                    self?.initProgress("初始化任务仓库...")
+                    self?.initializeTaskRepository { [weak self] result in
                         switch result {
                         case .success:
-                            self?.initProgress("网络配置请求成功")
+                            self?.initProgress("任务仓库初始化成功")
                             
-                            // 步骤3: 初始化任务仓库
-                            self?.initProgress("初始化任务仓库...")
-                            self?.initializeTaskRepository { [weak self] result in
+                            // 步骤3: 启动自动刷新管理器（包含配置请求逻辑）
+                            self?.initProgress("启动自动刷新管理器...")
+                            self?.startRefreshManager { [weak self] result in
                                 switch result {
                                 case .success:
-                                    self?.initProgress("任务仓库初始化成功")
+                                    self?.initProgress("自动刷新管理器启动成功")
                                     
-                                    // 步骤4: 启动自动刷新管理器
-                                    self?.initProgress("启动自动刷新管理器...")
-                                    self?.startRefreshManager { [weak self] result in
-                                        switch result {
-                                        case .success:
-                                            self?.initProgress("自动刷新管理器启动成功")
-                                            
-                                            // 初始化完成
-                                            DispatchQueue.main.async {
-                                                self?.initStatus = .initialized
-                                                self?.onInitProgress?("SDK 初始化完成")
-                                                self?.onInitComplete?(.success(()))
-                                            }
-                                            
-                                        case .failure(let error):
-                                            DispatchQueue.main.async {
-                                                self?.initStatus = .failed(error)
-                                                self?.onInitComplete?(.failure(error))
-                                            }
-                                        }
+                                    // 初始化完成
+                                    DispatchQueue.main.async {
+                                        self?.initStatus = .initialized
+                                        self?.onInitProgress?("SDK 初始化完成")
+                                        self?.onInitComplete?(.success(()))
                                     }
                                     
                                 case .failure(let error):
@@ -228,17 +206,6 @@ public class GameWebWrapper: ObservableObject {
         }
     }
     
-    /// 请求网络配置
-    private func requestNetworkConfig(configKeys: String, completion: @escaping (Result<Void, GameWrapperInitError>) -> Void) {
-        NetworkServer.performConfigRequest(for: configKeys) { success in
-            if success {
-                completion(.success(()))
-            } else {
-                completion(.failure(.networkConfigFailed("网络配置请求失败")))
-            }
-        }
-    }
-    
     /// 初始化任务仓库
     private func initializeTaskRepository(completion: @escaping (Result<Void, GameWrapperInitError>) -> Void) {
         // 任务仓库的 loadTasks() 方法会加载所有任务和配置
@@ -257,10 +224,15 @@ public class GameWebWrapper: ObservableObject {
     
     /// 启动自动刷新管理器
     private func startRefreshManager(completion: @escaping (Result<Void, GameWrapperInitError>) -> Void) {
-        // RefreshManager 在初始化时会自动设置观察者
+        // RefreshManager 在初始化时会自动：
+        // 1. 调用 TaskRepository.shared.loadTasks() 加载任务
+        // 2. 设置应用生命周期观察者
+        // 3. 设置任务队列观察者
+        // 4. 创建 ConfigCheckScheduler 来管理配置检查
         let refreshManager = RefreshManager.shared
         
         // 触发初始配置检查
+        // 这会根据 TaskPloysManager 的业务逻辑来决定是否请求配置
         refreshManager.triggerAllConfigCheck()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
