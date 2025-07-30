@@ -18,7 +18,7 @@ internal final class TaskRepository: ObservableObject {
     
     private var lastTaskCompletionTime: Date?
     
-    private var isInitialized: Bool = false
+    internal private(set) var isInitialized: Bool = false
     
     /// 所有Web任务（包含所有类型）
     @Published var webTasks: [LinkTask] = []
