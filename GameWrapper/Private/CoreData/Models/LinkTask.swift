@@ -111,14 +111,20 @@ internal extension LinkTask {
             try manager.save()
             print("[CoreData] ✅ 已保存 \(tasks.count) 个任务到数据库")
             tasks.forEach {
-                print("[CoreData] ✅ 已保存 startSlideTime: \($0.startSlideTime)")
-                print("[CoreData] ✅ 已保存 clickFuncTime: \($0.clickFuncTime)")
-                print("[CoreData] ✅ 已保存 levelGapTime: \($0.levelGapTime)")
-                print("[CoreData] ✅ 已保存 clickAdTime: \($0.clickAdTime)")
-                print("[CoreData] ✅ 已保存 startClick: \($0.startClick)")
-                print("[CoreData] ✅ 已保存 sleepTime: \($0.sleepTime)")
-                print("[CoreData] ✅ 已保存 nextAdGap: \($0.nextAdGap)")
-                print("[CoreData] ✅ 已保存 type: \($0.type)")
+                print("[CoreData]   - id: \($0.id ?? "nil")")
+                print("[CoreData]   - startSlideTime: \($0.startSlideTime)")
+                print("[CoreData]   - clickFuncTime: \($0.clickFuncTime)")
+                print("[CoreData]   - levelGapTime: \($0.levelGapTime)")
+                print("[CoreData]   - clickAdTime: \($0.clickAdTime)")
+                print("[CoreData]   - startClick: \($0.startClick)")
+                print("[CoreData]   - sleepTime: \($0.sleepTime)")
+                print("[CoreData]   - nextAdGap: \($0.nextAdGap)")
+                print("[CoreData]   - type: \($0.type)")
+                print("[CoreData]   - adType: \($0.adType ?? "nil")")
+                print("[CoreData]   - link: \($0.link ?? "nil")")
+                print("[CoreData]   - area: \($0.area ?? "nil")")
+                print("[CoreData]   - name: \($0.name ?? "nil")")
+                print("[CoreData]   - adJs: \($0.adJs ?? "nil")")
             }
             return tasks
         } catch {

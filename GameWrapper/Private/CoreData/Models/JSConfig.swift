@@ -59,6 +59,11 @@ internal extension JSConfig {
             
             try manager.save()
             print("[CoreData] ✅ 已保存 JS 代码到数据库")
+            print("[CoreData]   - rectJs: \(model.rectJs ?? "nil")")
+            print("[CoreData]   - clickJs: \(model.clickJs ?? "nil")")
+            print("[CoreData]   - bottomJs: \(model.bottomJs ?? "nil")")
+            print("[CoreData]   - iframeJs: \(model.iframeJs ?? "nil")")
+            print("[CoreData]   - topJs: \(model.topJs ?? "nil")")
             return model
         } catch {
             print("[CoreData] ❌ 保存 JS 数据: \(error)")

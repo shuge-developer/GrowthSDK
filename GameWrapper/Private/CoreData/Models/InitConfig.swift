@@ -90,11 +90,22 @@ internal extension InitConfig {
             }
             
             try manager.save()
-            print("[CoreData] ✅ 已保存 init 配置")
-            print("[CoreData] ✅ 已保存 refreshGapTime: \(model.refreshGapTime)")
-            print("[CoreData] ✅ 已保存 nextAdGap: \(model.nextAdGap ?? "nil")")
-            print("[CoreData] ✅ 已保存 jsClickRt: \(model.jsClickRt)")
-            print("[CoreData] ✅ 已保存 clickRt: \(model.clickRt)")
+            print("[CoreData] ✅ 已保存 init 配置到数据库")
+            print("[CoreData]   - cATime: \(model.cATime ?? "nil")")
+            print("[CoreData]   - cFTime: \(model.cFTime ?? "nil")")
+            print("[CoreData]   - function: \(model.function)")
+            print("[CoreData]   - levelMax: \(model.levelMax)")
+            print("[CoreData]   - refreshGapTime: \(model.refreshGapTime)")
+            print("[CoreData]   - levelGapTime: \(model.levelGapTime ?? "nil")")
+            print("[CoreData]   - status: \(model.status)")
+            print("[CoreData]   - slideRate: \(model.slideRate)")
+            print("[CoreData]   - sClick: \(model.sClick ?? "nil")")
+            print("[CoreData]   - sSTime: \(model.sSTime ?? "nil")")
+            print("[CoreData]   - sTime: \(model.sTime ?? "nil")")
+            print("[CoreData]   - limit: \(model.limit)")
+            print("[CoreData]   - nextAdGap: \(model.nextAdGap ?? "nil")")
+            print("[CoreData]   - jsClickRt: \(model.jsClickRt)")
+            print("[CoreData]   - clickRt: \(model.clickRt)")
             return model
         } catch {
             print("[CoreData] ❌ 保存 init 配置: \(error)")

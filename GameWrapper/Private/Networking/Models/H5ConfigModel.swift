@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: -
+// MARK: - Enums
 internal enum InitStatus: Int16, Codable {
     /// 全关
     case allOff = 0
@@ -23,6 +23,7 @@ internal enum InitStatus: Int16, Codable {
 /// H5配置接口返回的数据模型
 internal struct H5ConfigModel: Codable, ParseValueable, JSONPostMapping {
     
+    // MARK: - Properties
     /// 首次启动获取配置
     var `init`: H5InitConfig?
     
@@ -54,17 +55,26 @@ internal struct H5ConfigModel: Codable, ParseValueable, JSONPostMapping {
         try container.encodeIfPresent(js, forKey: .js)
     }
     
+    // MARK: - JSONPostMapping
     mutating func didFinishMapping() {
+        // 处理嵌套的 H5InitConfig
         if var initConfig = `init` {
             initConfig.didFinishMapping()
             `init` = initConfig
         }
+        
+        // 解析扩展配置
         parseExtraConfig()
+        
+        // 解析JS代码配置
         parseJSCodeConfig()
+        
+        // 解析所有任务类型
         parseAllTaskTypes()
     }
     
-    // MARK: -
+    // MARK: - Private Methods
+    /// 解析扩展配置
     private mutating func parseExtraConfig() {
         guard let extraString = `init`?.extra else { return }
         if let extraConfig = H5ExtraConfig.deserialize(from: extraString) {
@@ -72,6 +82,7 @@ internal struct H5ConfigModel: Codable, ParseValueable, JSONPostMapping {
         }
     }
     
+    /// 解析JS代码配置
     private mutating func parseJSCodeConfig() {
         guard let jsCodeString = js else { return }
         if let jsConfig = H5JSConfig.deserialize(from: jsCodeString) {
@@ -79,6 +90,7 @@ internal struct H5ConfigModel: Codable, ParseValueable, JSONPostMapping {
         }
     }
     
+    /// 解析所有任务类型
     private mutating func parseAllTaskTypes() {
         cfg = cfg?.compactMapValues { cfgConfig in
             guard var config = cfgConfig else { return nil }
@@ -89,16 +101,17 @@ internal struct H5ConfigModel: Codable, ParseValueable, JSONPostMapping {
         }
     }
     
+    // MARK: - Computed Properties
     var isEmpty: Bool {
         `init` == nil && cfg == nil && js == nil
     }
-    
 }
 
 // MARK: - H5InitConfig
 /// init配置数据
 internal struct H5InitConfig: Codable, ParseValueable, JSONPostMapping {
     
+    // MARK: - Time Configuration Properties
     /// 点击广告存活时间(秒) Click Ad Time
     var cATime: String?
     
@@ -107,18 +120,6 @@ internal struct H5InitConfig: Codable, ParseValueable, JSONPostMapping {
     
     /// 刷新间隔时间，即上次任务完成后，间隔xx秒再获取配置
     var refreshGapTime: String?
-    
-    /// 扩展配置（JSON字符串）
-    var extra: String?
-    
-    /// 扩展配置，从 extra 解析而来
-    var extraM: H5ExtraConfig?
-    
-    /// 点击功能的概率（`H5LinkData.flag`等于 0，这里才生效）
-    var function: Double = 0
-    
-    /// 每日最大刷新次数
-    var limit: Int16 = 0
     
     /// 开始滑动时间(秒) Start Slide Time
     var sSTime: String?
@@ -130,8 +131,15 @@ internal struct H5InitConfig: Codable, ParseValueable, JSONPostMapping {
     /// 层级加载间隔(秒)（下发多条链接，各链接加载间隔时间）
     var levelGapTime: String?
     
-    /// 顶部JS代码
-    var topJs: String?
+    /// 开始点击时间(秒)
+    var sClick: String?
+    
+    // MARK: - Function Configuration Properties
+    /// 点击功能的概率（`H5LinkData.flag`等于 0，这里才生效）
+    var function: Double = 0
+    
+    /// 每日最大刷新次数
+    var limit: Int16 = 0
     
     /// 最大层级数（最多有xx条链接同时加载显示）
     var levelMax: Int16 = 0
@@ -139,13 +147,22 @@ internal struct H5InitConfig: Codable, ParseValueable, JSONPostMapping {
     /// 滑动概率
     var slideRate: Double = 0
     
-    /// 开始点击时间(秒)
-    var sClick: String?
-    
     /// 状态开关 0是全关,1是买量开，自然关，2是全开 3是买量关，自然开
     var status: InitStatus = .allOff
     
-    // MARK: -
+    // MARK: - JS Configuration Properties
+    /// 顶部JS代码
+    var topJs: String?
+    
+    // MARK: - Extra Configuration Properties
+    /// 扩展配置（JSON字符串）
+    var extra: String?
+    
+    /// 扩展配置，从 extra 解析而来
+    var extraM: H5ExtraConfig?
+    
+    // MARK: - Parsed Properties
+    /// 解析后的刷新间隔时间
     var _refreshGapTime: Int16 = 0
     
     // MARK: - Codable
@@ -153,65 +170,78 @@ internal struct H5InitConfig: Codable, ParseValueable, JSONPostMapping {
         case cATime
         case cFTime
         case refreshGapTime
-        case extra
-        case function
-        case limit
         case sSTime
         case sTime
         case levelGapTime
-        case topJs
+        case sClick
+        case function
+        case limit
         case levelMax
         case slideRate
-        case sClick
         case status
+        case topJs
+        case extra
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        // 解析时间配置
         cATime = try container.decodeIfPresent(String.self, forKey: .cATime)
         cFTime = try container.decodeIfPresent(String.self, forKey: .cFTime)
         refreshGapTime = try container.decodeIfPresent(String.self, forKey: .refreshGapTime)
-        extra = try container.decodeIfPresent(String.self, forKey: .extra)
-        function = try container.decodeIfPresent(Double.self, forKey: .function) ?? 0
-        limit = try container.decodeIfPresent(Int16.self, forKey: .limit) ?? 0
         sSTime = try container.decodeIfPresent(String.self, forKey: .sSTime)
         sTime = try container.decodeIfPresent(String.self, forKey: .sTime)
         levelGapTime = try container.decodeIfPresent(String.self, forKey: .levelGapTime)
-        topJs = try container.decodeIfPresent(String.self, forKey: .topJs)
+        sClick = try container.decodeIfPresent(String.self, forKey: .sClick)
+        
+        // 解析功能配置
+        function = try container.decodeIfPresent(Double.self, forKey: .function) ?? 0
+        limit = try container.decodeIfPresent(Int16.self, forKey: .limit) ?? 0
         levelMax = try container.decodeIfPresent(Int16.self, forKey: .levelMax) ?? 0
         slideRate = try container.decodeIfPresent(Double.self, forKey: .slideRate) ?? 0
-        sClick = try container.decodeIfPresent(String.self, forKey: .sClick)
         status = try container.decodeIfPresent(InitStatus.self, forKey: .status) ?? .allOff
+        
+        // 解析其他配置
+        topJs = try container.decodeIfPresent(String.self, forKey: .topJs)
+        extra = try container.decodeIfPresent(String.self, forKey: .extra)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        // 编码时间配置
         try container.encodeIfPresent(cATime, forKey: .cATime)
         try container.encodeIfPresent(cFTime, forKey: .cFTime)
         try container.encodeIfPresent(refreshGapTime, forKey: .refreshGapTime)
-        try container.encodeIfPresent(extra, forKey: .extra)
-        try container.encode(function, forKey: .function)
-        try container.encode(limit, forKey: .limit)
         try container.encodeIfPresent(sSTime, forKey: .sSTime)
         try container.encodeIfPresent(sTime, forKey: .sTime)
         try container.encodeIfPresent(levelGapTime, forKey: .levelGapTime)
-        try container.encodeIfPresent(topJs, forKey: .topJs)
+        try container.encodeIfPresent(sClick, forKey: .sClick)
+        
+        // 编码功能配置
+        try container.encode(function, forKey: .function)
+        try container.encode(limit, forKey: .limit)
         try container.encode(levelMax, forKey: .levelMax)
         try container.encode(slideRate, forKey: .slideRate)
-        try container.encodeIfPresent(sClick, forKey: .sClick)
         try container.encode(status, forKey: .status)
+        
+        // 编码其他配置
+        try container.encodeIfPresent(topJs, forKey: .topJs)
+        try container.encodeIfPresent(extra, forKey: .extra)
     }
     
+    // MARK: - JSONPostMapping
     mutating func didFinishMapping() {
         _refreshGapTime = parseRandomInt16(from: refreshGapTime)
     }
-    
 }
 
 // MARK: - H5ExtraConfig
 /// extra字段解析后的配置（从JSON字符串解析）
 internal struct H5ExtraConfig: Codable, ParseValueable, JSONPostMapping {
     
+    // MARK: - Core Configuration Properties
     /// 下一条点击的广告展示间隔
     var nextAdGap: String?
     
@@ -221,19 +251,30 @@ internal struct H5ExtraConfig: Codable, ParseValueable, JSONPostMapping {
     /// 点击比例（生成随机数，小于此比例则允许点击功能）
     var clickRt: Double = 0.0
     
-    // MARK: - 以下字段暂时无用
+    // MARK: - JS Configuration Properties
     /// 初始化底部JS代码
     var initBottomJs: String?
     
     /// 是否到底部的JS代码
     var isBottomJs: String?
     
+    /// 获取功能元素位置的JS代码
+    var rectJs: String?
+    
+    // MARK: - Time Configuration Properties
     /// 开始滑动的时间范围（毫秒）
     var startM: String?
     
     /// （滑动）停止时间
     var stopTime: String?
     
+    /// 快速点击时间
+    var quickCT: String?
+    
+    /// 长（慢 ）点击时间（最大停留时间）
+    var longCT: String?
+    
+    // MARK: - Rate Configuration Properties
     /// 左边（手）比率
     var leftRate: Double?
     
@@ -246,25 +287,17 @@ internal struct H5ExtraConfig: Codable, ParseValueable, JSONPostMapping {
     /// 快速点击时间比率
     var quickCtR: Double?
     
-    /// 快速点击时间
-    var quickCT: String?
+    /// 快速滑动比率
+    var quickMove: Double?
     
-    /// 长（慢 ）点击时间（最大停留时间）
-    var longCT: String?
-    
+    // MARK: - Movement Configuration Properties
     /// 滑动的时间分布，最小 400，最大 500
     var moveTimeCenter: Int16?
     
     /// 单次滑动时间标准差，最小 30，最大 130
     var moveTimeSigma: Int16?
     
-    /// 快速滑动比率
-    var quickMove: Double?
-    
-    /// 获取功能元素位置的JS代码
-    var rectJs: String?
-    
-    // MARK: -
+    // MARK: - Parsed Properties
     var _quickCT: Int16 = 0
     var _stopTime: Int16 = 0
     var _longCT: Int16 = 0
@@ -277,27 +310,27 @@ internal struct H5ExtraConfig: Codable, ParseValueable, JSONPostMapping {
         case clickRt
         case initBottomJs
         case isBottomJs
+        case rectJs
         case startM
         case stopTime
+        case quickCT
+        case longCT
         case leftRate
         case leftUpMoveRate
         case upMoveRate
         case quickCtR
-        case quickCT
-        case longCT
+        case quickMove
         case moveTimeCenter
         case moveTimeSigma
-        case quickMove
-        case rectJs
     }
     
+    // MARK: - JSONPostMapping
     mutating func didFinishMapping() {
         _quickCT = parseRandomInt16(from: quickCT)
         _stopTime = parseRandomInt16(from: stopTime)
         _longCT = parseRandomInt16(from: longCT)
         _startM = parseRandomInt16(from: startM)
     }
-    
 }
 
 // MARK: - H5CfgConfig
@@ -309,13 +342,13 @@ internal struct H5CfgConfig: Codable {
     
     /// 服务商维度的js代码
     var js: String?
-    
 }
 
 // MARK: - H5LinkData
 /// 链接数据
 internal struct H5LinkData: Codable, TaskTypeable, ParseValueable, JSONPostMapping {
     
+    // MARK: - Core Properties
     /// 插屏名称
     /// 通过名称检测匹配的广告，命中则为插屏
     var inter: String?
@@ -326,17 +359,13 @@ internal struct H5LinkData: Codable, TaskTypeable, ParseValueable, JSONPostMappi
     /// 是否点击：0 不点击，1 点击
     var flag: Int16?
     
-    /// 兜底广告区域
-    /// 当 `flag` 等于 1，`id` && `type`为空时，则点击此兜底广告区域
-    var zone: String?
-    
     /// 链接地址
     var link: String?
     
-    /// 屏幕类型：0 首屏可见广告，1 首屏不可见广告
-    /// 当首屏可见广告时，先通过 `init`配置中的 `slideRate`来计算 `TaskType`，再结合功能或广告点击概率来计算 `TaskType`
-    /// 当首屏不可见广告时，则必须先滑动，再结合 `init`配置中的功能或广告点击概率来计算 `TaskType`
-    var screenType: Int16?
+    // MARK: - Advertisement Properties
+    /// 兜底广告区域
+    /// 当 `flag` 等于 1，`id` && `type`为空时，则点击此兜底广告区域
+    var zone: String?
     
     /// 广告ID
     /// 当 `flag` 等于 1，有值则点击对应 `id`
@@ -348,7 +377,13 @@ internal struct H5LinkData: Codable, TaskTypeable, ParseValueable, JSONPostMappi
     /// 当 `flag` 等于 1，`id`为空时，检测到多个匹配的广告类型，随机点击一个
     var type: String?
     
-    // MARK: -
+    // MARK: - Display Properties
+    /// 屏幕类型：0 首屏可见广告，1 首屏不可见广告
+    /// 当首屏可见广告时，先通过 `init`配置中的 `slideRate`来计算 `TaskType`，再结合功能或广告点击概率来计算 `TaskType`
+    /// 当首屏不可见广告时，则必须先滑动，再结合 `init`配置中的功能或广告点击概率来计算 `TaskType`
+    var screenType: Int16?
+    
+    // MARK: - Parsed Properties
     /// 开始滑动时间(秒)
     var _startSlideTime: Float = 0
     
@@ -385,9 +420,9 @@ internal struct H5LinkData: Codable, TaskTypeable, ParseValueable, JSONPostMappi
         case type
     }
     
-    // MARK: -
+    // MARK: - JSONPostMapping
     mutating func didFinishMapping() {
-        
+        // H5LinkData 的后处理逻辑
     }
     
     // MARK: - TaskTypeable
@@ -395,10 +430,12 @@ internal struct H5LinkData: Codable, TaskTypeable, ParseValueable, JSONPostMappi
         return TaskTypeCalculator.calculate(for: self, with: initConfig, cacheCfg: cacheCfg)
     }
     
+    // MARK: - Public Methods
     /// 更新TaskType和时间配置
     /// - Parameter configModel: H5配置模型
     mutating func updateTaskType(with configModel: H5ConfigModel) {
         if let initConfig = configModel.`init` {
+            // 使用新的配置
             let nextGap = initConfig.extraM?.nextAdGap
             _nextAdGap = parseRandomInt16(from: nextGap)
             _startSlideTime = parseRandomFloat(from: initConfig.sSTime)
@@ -409,6 +446,7 @@ internal struct H5LinkData: Codable, TaskTypeable, ParseValueable, JSONPostMappi
             _sleepTime = parseRandomInt16(from: initConfig.sTime)
             _taskType = calculateTaskType(with: initConfig)
         } else {
+            // 使用缓存的配置
             let cacheCfg = InitConfig.fetchInitConfig()
             _nextAdGap = parseRandomInt16(from: cacheCfg?.nextAdGap)
             _levelGapTime = parseRandomInt16(from: cacheCfg?.levelGapTime)
@@ -420,7 +458,6 @@ internal struct H5LinkData: Codable, TaskTypeable, ParseValueable, JSONPostMappi
             _taskType = calculateTaskType(cacheCfg: cacheCfg)
         }
     }
-    
 }
 
 // MARK: - H5JSConfig
@@ -441,5 +478,4 @@ internal struct H5JSConfig: Codable {
     
     /// 到达页面顶部的 js 代码
     var topJs: String?
-    
 }
