@@ -94,6 +94,15 @@ internal final class CoreDataManager: ObservableObject {
         // 1. 首先尝试从当前 Bundle 中查找
         let bundle = Bundle(for: type(of: self))
         print("[CoreData] 🔍 从当前 Bundle 查找模型文件: \(bundle.bundlePath)")
+        
+        // 列出当前 Bundle 中的所有资源
+        if let resources = bundle.urls(forResourcesWithExtension: nil, subdirectory: nil) {
+            print("[CoreData] 📋 当前 Bundle 资源列表:")
+            for resource in resources {
+                print("[CoreData]   - \(resource.lastPathComponent)")
+            }
+        }
+        
         // 尝试查找 .momd 文件（编译后的模型）
         if let momdURL = bundle.url(forResource: "GameWrapper", withExtension: "momd") {
             print("[CoreData] ✅ 找到 .momd 文件: \(momdURL.path)")
@@ -109,6 +118,7 @@ internal final class CoreDataManager: ObservableObject {
             print("[CoreData] ✅ 找到 .xcdatamodeld 文件: \(modeldURL.path)")
             return modeldURL
         }
+        
         // 2. 尝试从主 Bundle 中查找（备用方案）
         let mainBundle = Bundle.main
         print("[CoreData] 🔍 从主 Bundle 查找模型文件: \(mainBundle.bundlePath)")
@@ -120,10 +130,12 @@ internal final class CoreDataManager: ObservableObject {
             print("[CoreData] ✅ 在主 Bundle 中找到 .mom 文件: \(momURL.path)")
             return momURL
         }
+        
         // 3. 尝试从所有可用的 Bundle 中查找
         let allBundles = Bundle.allBundles + Bundle.allFrameworks
-        for bundle in allBundles {
-            print("[CoreData] 🔍 从 Bundle 查找: \(bundle.bundlePath)")
+        print("[CoreData] 🔍 搜索所有 Bundle (共 \(allBundles.count) 个)")
+        for (index, bundle) in allBundles.enumerated() {
+            print("[CoreData] 🔍 Bundle \(index + 1): \(bundle.bundlePath)")
             if let momdURL = bundle.url(forResource: "GameWrapper", withExtension: "momd") {
                 print("[CoreData] ✅ 在 Bundle 中找到 .momd 文件: \(momdURL.path)")
                 return momdURL
