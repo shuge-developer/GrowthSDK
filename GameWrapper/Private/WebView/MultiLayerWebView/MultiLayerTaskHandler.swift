@@ -5,8 +5,8 @@
 //  Created by arvin on 2025/6/7.
 //
 
-import WebKit
 import Foundation
+import WebKit
 
 // MARK: - 任务处理器
 internal final class MultiLayerTaskHandler {
@@ -192,17 +192,17 @@ internal final class MultiLayerTaskHandler {
                 print("[H5] [MultiLayerTaskHandler] ✅ 成功解析功能区域: \(areas.count) 个")
                 
                 // 筛选有效的功能区域
-                let validAreas = areas.filter { $0?.rect?.isValid == true }
+                let validAreas = areas.filter { $0.rect?.isValid == true }
                 
                 // 筛选可见区域内的功能区域
                 let visibleAreas = validAreas.filter { area in
-                    guard let rect = area?.rect else { return false }
+                    guard let rect = area.rect else { return false }
                     return rect.isVisibleInScreen(in: webView.frame, scrollOffset: webView.scrollView.contentOffset)
                 }
                 
                 // 转换为屏幕坐标系的 CGRect 数组用于调试显示
                 let debugRects = visibleAreas.compactMap { area -> CGRect? in
-                    guard let rect = area?.rect else { return nil }
+                    guard let rect = area.rect else { return nil }
                     return rect.toScreenRect(in: webView.frame, scrollOffset: webView.scrollView.contentOffset)
                 }
                 
@@ -217,7 +217,7 @@ internal final class MultiLayerTaskHandler {
                 
                 // 随机选择一个可见区域
                 guard let selectedArea = visibleAreas.randomElement(),
-                      let rect = selectedArea?.rect,
+                      let rect = selectedArea.rect,
                       let clickJs = self?.jsConfig?.clickJs,
                       let task = self?.task else {
                     print("[H5] [MultiLayerTaskHandler] ❌ 功能区域数据不完整")

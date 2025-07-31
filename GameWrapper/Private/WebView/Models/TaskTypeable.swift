@@ -6,6 +6,7 @@
 //
 
 import Foundation
+internal import SmartCodable
 
 // MARK: - TaskType枚举
 /// H5任务类型枚举
@@ -19,7 +20,7 @@ import Foundation
 /// 枚举值设计说明：
 /// - 基础值(0-2)：单一操作类型
 /// - 组合值(3-5)：滑动+其他操作的组合
-internal enum TaskType: Int16 {
+internal enum TaskType: Int16, SmartCaseDefaultable {
     /// 页面展示
     /// 场景：只加载H5页面并展示一段时间，不进行任何用户交互
     /// 适用：flag=0 且功能点击概率判断为否的情况

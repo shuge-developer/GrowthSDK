@@ -6,7 +6,7 @@
 //
 
 internal import NetworkService
-internal import HandyJSON
+internal import SmartCodable
 
 // MARK: -
 internal enum Api: APIProvider {

@@ -6,11 +6,11 @@
 //
 
 import Foundation
-internal import HandyJSON
+internal import SmartCodable
 import UIKit
 
 // MARK: - 广告区域模型
-internal struct AdArea: HandyJSON {
+internal struct AdArea: SmartCodable {
     /// 左边距（网页坐标）
     var left: CGFloat = 0
     /// 顶部边距（网页坐标）
@@ -158,7 +158,7 @@ internal struct AdArea: HandyJSON {
 }
 
 // MARK: - 广告元素状态枚举
-internal enum AdLoadStatus: String, HandyJSONEnum {
+internal enum AdLoadStatus: String, SmartCaseDefaultable {
     case done = "done"
     case loading = "loading"
     case failed = "failed"
@@ -174,7 +174,7 @@ internal enum AdLoadStatus: String, HandyJSONEnum {
     }
 }
 
-internal enum AdFillStatus: String, HandyJSONEnum {
+internal enum AdFillStatus: String, SmartCaseDefaultable {
     case filled = "filled"
     case unfilled = "unfilled"
     case unknown
@@ -187,7 +187,7 @@ internal enum AdFillStatus: String, HandyJSONEnum {
     }
 }
 
-internal enum AdDisplayStatus: String, HandyJSONEnum {
+internal enum AdDisplayStatus: String, SmartCaseDefaultable {
     case displayed = "displayed"
     case visible = "visible"
     case hidden = "hidden"
@@ -204,7 +204,7 @@ internal enum AdDisplayStatus: String, HandyJSONEnum {
 }
 
 // MARK: - 广告元素类型
-internal enum AdElementType: String, HandyJSONEnum {
+internal enum AdElementType: String, SmartCaseDefaultable {
     case iner = "iner"
     case anchor = "anchor"
     case native = "native"
@@ -223,7 +223,7 @@ internal func getSafeAreaInsets() -> UIEdgeInsets {
 }
 
 // MARK: - 广告元素模型
-internal struct AdElement: HandyJSON {
+internal struct AdElement: SmartCodable {
     /// 广告区域位置和尺寸
     var area: AdArea?
     /// 广告是否可见

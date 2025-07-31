@@ -6,10 +6,10 @@
 //
 
 import Foundation
-internal import HandyJSON
+internal import SmartCodable
 
 // MARK: -
-internal enum InitStatus: Int16, HandyJSONEnum {
+internal enum InitStatus: Int16, SmartCaseDefaultable {
     /// 全关
     case allOff = 0
     /// 买量开，自然关
@@ -22,7 +22,7 @@ internal enum InitStatus: Int16, HandyJSONEnum {
 
 // MARK: - H5ConfigModel
 /// H5配置接口返回的数据模型
-internal struct H5ConfigModel: HandyJSON {
+internal struct H5ConfigModel: SmartCodable {
     
     /// 首次启动获取配置
     var `init`: H5InitConfig?
@@ -70,7 +70,7 @@ internal struct H5ConfigModel: HandyJSON {
 
 // MARK: - H5InitConfig
 /// init配置数据
-internal struct H5InitConfig: HandyJSON, ParseValueable {
+internal struct H5InitConfig: SmartCodable, ParseValueable {
     
     /// 点击广告存活时间(秒) Click Ad Time
     var cATime: String?
@@ -129,7 +129,7 @@ internal struct H5InitConfig: HandyJSON, ParseValueable {
 
 // MARK: - H5ExtraConfig
 /// extra字段解析后的配置（从JSON字符串解析）
-internal struct H5ExtraConfig: HandyJSON, ParseValueable {
+internal struct H5ExtraConfig: SmartCodable, ParseValueable {
     
     /// 下一条点击的广告展示间隔
     var nextAdGap: String?
@@ -200,7 +200,7 @@ internal struct H5ExtraConfig: HandyJSON, ParseValueable {
 
 // MARK: - H5CfgConfig
 /// 服务商配置
-internal struct H5CfgConfig: HandyJSON {
+internal struct H5CfgConfig: SmartCodable {
     
     /// 服务商对应的链接信息
     var data: [H5LinkData] = []
@@ -212,7 +212,7 @@ internal struct H5CfgConfig: HandyJSON {
 
 // MARK: - H5LinkData
 /// 链接数据
-internal struct H5LinkData: HandyJSON, TaskTypeable, ParseValueable {
+internal struct H5LinkData: SmartCodable, TaskTypeable, ParseValueable {
     
     /// 插屏名称
     /// 通过名称检测匹配的广告，命中则为插屏
@@ -306,7 +306,7 @@ internal struct H5LinkData: HandyJSON, TaskTypeable, ParseValueable {
 
 // MARK: - H5JSConfig
 /// js 代码配置
-internal struct H5JSConfig: HandyJSON {
+internal struct H5JSConfig: SmartCodable {
     
     /// 获取功能位置的 js 代码
     var rectJs: String?

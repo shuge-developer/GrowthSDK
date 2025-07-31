@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A23C01772E37580400B6EEAB /* HandyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = A23C01762E37580400B6EEAB /* HandyJSON */; };
+		A23C01772E37580400B6EEAB /* SmartCodable in Frameworks */ = {isa = PBXBuildFile; productRef = A23C01762E37580400B6EEAB /* SmartCodable */; };
 		A2DEA59E2E38E7FE0069BABB /* NetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = A2DEA59D2E38E7FE0069BABB /* NetworkService */; };
 /* End PBXBuildFile section */
 
@@ -28,7 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A23C01772E37580400B6EEAB /* HandyJSON in Frameworks */,
+				A23C01772E37580400B6EEAB /* SmartCodable in Frameworks */,
 				A2DEA59E2E38E7FE0069BABB /* NetworkService in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -83,7 +83,7 @@
 			);
 			name = GameWrapper;
 			packageProductDependencies = (
-				A23C01762E37580400B6EEAB /* HandyJSON */,
+				A23C01762E37580400B6EEAB /* SmartCodable */,
 				A2DEA59D2E38E7FE0069BABB /* NetworkService */,
 			);
 			productName = GameWrapper;
@@ -115,7 +115,7 @@
 			mainGroup = A23CFFEF2E37505F00B6EEAB;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				A23C01752E37580400B6EEAB /* XCRemoteSwiftPackageReference "HandyJSON" */,
+				A23C01752E37580400B6EEAB /* XCRemoteSwiftPackageReference "SmartCodable" */,
 				A2DEA59C2E38E7FE0069BABB /* XCRemoteSwiftPackageReference "NetworkService" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -366,12 +366,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A23C01752E37580400B6EEAB /* XCRemoteSwiftPackageReference "HandyJSON" */ = {
+		A23C01752E37580400B6EEAB /* XCRemoteSwiftPackageReference "SmartCodable" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/alibaba/HandyJSON";
+			repositoryURL = "https://github.com/iAmMccc/SmartCodable";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.2;
+				minimumVersion = 5.0.0;
 			};
 		};
 		A2DEA59C2E38E7FE0069BABB /* XCRemoteSwiftPackageReference "NetworkService" */ = {
@@ -385,10 +385,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A23C01762E37580400B6EEAB /* HandyJSON */ = {
+		A23C01762E37580400B6EEAB /* SmartCodable */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A23C01752E37580400B6EEAB /* XCRemoteSwiftPackageReference "HandyJSON" */;
-			productName = HandyJSON;
+			package = A23C01752E37580400B6EEAB /* XCRemoteSwiftPackageReference "SmartCodable" */;
+			productName = SmartCodable;
 		};
 		A2DEA59D2E38E7FE0069BABB /* NetworkService */ = {
 			isa = XCSwiftPackageProductDependency;
