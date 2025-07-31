@@ -46,12 +46,16 @@ internal struct NetworkRequester: RequestConfigure {
         NetworkHeader()
     }
     
-    var version: ServiceVersion {
+    var apiVersion: ServiceVersion {
         return .v2
     }
     
+    var isLogEnabled: Bool {
+        return true
+    }
+    
     struct NetworkHeader: HeaderConfigure {
-        var packageName: String {
+        var packageName: String? {
             GameWebWrapper.shared.config.bundleName
         }
         var appId: String! {
@@ -88,13 +92,14 @@ internal class NetworkServer {
             switch result {
             case .success(let json):
                 let model = H5ConfigModel.deserialize(from: json)
+                print("[net] ✅ H5配置请求成功: \(model.toJSONString() ?? "nil")")
                 if let model, !model.isEmpty {
-                    print("[net] ✅ H5配置请求成功: \(model.toJSONString() ?? "nil")")
                     TaskRepository.shared.saveTasks(from: model)
                     TaskPloysManager.shared.record(for: keys)
                     print("[net] 📝 配置数据已保存并记录请求历史")
                     complete(true)
                 } else {
+                    print("[net] 📝 配置数据解析失败或者为空")
                     complete(false)
                 }
             case .failure(let error):

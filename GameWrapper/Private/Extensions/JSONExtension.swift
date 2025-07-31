@@ -1,5 +1,5 @@
 //
-//  H5ConfigModel.swift
+//  JSONExtension.swift
 //  GameWrapper
 //
 //  Created by arvin on 2025/5/29.
@@ -8,77 +8,80 @@
 import Foundation
 
 // MARK: -
-internal extension Decodable {
-    
-    /// 从 JSON 字符串反序列化对象
-    /// - Parameter jsonString: JSON 字符串
-    /// - Returns: 解析后的对象，如果解析失败返回 nil
-    static func deserialize(from jsonString: String?) -> Self? {
-        guard let jsonString = jsonString,
-              let jsonData = jsonString.data(using: .utf8) else {
-            return nil
-        }
-        return try? JSONDecoder().decode(Self.self, from: jsonData)
-    }
-    
+internal protocol JSONPostMapping {
+    mutating func didFinishMapping()
 }
 
 // MARK: -
 internal extension Array where Element: Decodable {
     
-    /// 从 JSON 字符串反序列化对象数组
-    /// - Parameter jsonString: JSON 字符串
-    /// - Returns: 解析后的对象数组，如果解析失败返回 nil
     static func deserialize(from jsonString: String?) -> [Element]? {
-        guard let jsonString = jsonString,
-              let jsonData = jsonString.data(using: .utf8) else {
+        guard let jsonString = jsonString, !jsonString.isEmpty else {
+            print("[JSON] ❌ JSON字符串为空")
             return nil
         }
-        return try? JSONDecoder().decode([Element].self, from: jsonData)
+        guard let jsonData = jsonString.data(using: .utf8) else {
+            print("[JSON] ❌ JSON字符串转换为Data失败")
+            return nil
+        }
+        do {
+            var results = try JSONDecoder().decode([Element].self, from: jsonData)
+            for (index, result) in results.enumerated() {
+                if var postMapping = result as? JSONPostMapping {
+                    postMapping.didFinishMapping()
+                    if let processed = postMapping as? Element {
+                        results[index] = processed
+                    }
+                }
+            }
+            return results
+        } catch {
+            print("[JSON] ❌ 数组解析失败: \(error)")
+            return nil
+        }
     }
     
 }
 
-// MARK: -
+internal extension Decodable {
+    
+    static func deserialize(from jsonString: String?) -> Self? {
+        guard let jsonString = jsonString, !jsonString.isEmpty else {
+            print("[JSON] ❌ JSON字符串为空")
+            return nil
+        }
+        guard let jsonData = jsonString.data(using: .utf8) else {
+            print("[JSON] ❌ JSON字符串转换为Data失败")
+            return nil
+        }
+        do {
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(Self.self, from: jsonData)
+            if var postMapping = result as? JSONPostMapping {
+                postMapping.didFinishMapping()
+                return postMapping as? Self
+            }
+            return result
+        } catch {
+            print("[JSON] ❌ 解析失败: \(error)")
+            return nil
+        }
+    }
+    
+}
+
 internal extension Encodable {
     
-    /// 将对象序列化为 JSON 字符串
-    /// - Returns: JSON 字符串，如果序列化失败返回 nil
     func toJSONString() -> String? {
-        guard let jsonData = try? JSONEncoder().encode(self) else {
+        do {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let data = try encoder.encode(self)
+            return String(data: data, encoding: .utf8)
+        } catch {
+            print("[JSON] ❌ 序列化失败: \(error)")
             return nil
         }
-        return String(data: jsonData, encoding: .utf8)
-    }
-    
-    /// 将对象序列化为格式化的 JSON 字符串
-    /// - Returns: 格式化的 JSON 字符串，如果序列化失败返回 nil
-    func toPrettyJSONString() -> String? {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        guard let jsonData = try? encoder.encode(self) else {
-            return nil
-        }
-        return String(data: jsonData, encoding: .utf8)
-    }
-    
-}
-
-// MARK: -
-internal extension String {
-    
-    /// 从当前字符串解析为指定类型
-    /// - Parameter type: 目标类型
-    /// - Returns: 解析后的对象，如果解析失败返回 nil
-    func deserialize<T: Decodable>(as type: T.Type) -> T? {
-        return T.deserialize(from: self)
-    }
-    
-    /// 从当前字符串解析为指定类型的数组
-    /// - Parameter type: 目标类型
-    /// - Returns: 解析后的对象数组，如果解析失败返回 nil
-    func deserialize<T: Decodable>(as type: T.Type) -> [T]? {
-        return [T].deserialize(from: self)
     }
     
 }

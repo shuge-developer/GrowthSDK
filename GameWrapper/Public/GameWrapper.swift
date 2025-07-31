@@ -53,10 +53,10 @@ public class GameWebWrapper: ObservableObject {
     }
     
     /// 初始化进度回调
-    public var onInitProgress: ((String) -> Void)?
+    private var onInitProgress: ((String) -> Void)?
     
     /// 初始化完成回调
-    public var onInitComplete: ((Result<Void, GameWrapperInitError>) -> Void)?
+    private var onInitComplete: ((Result<Void, GameWrapperInitError>) -> Void)?
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -96,7 +96,7 @@ public class GameWebWrapper: ObservableObject {
         onInitComplete = completion
         
         print("[GameWrapper] 🚀 开始初始化 SDK")
-        onInitProgress?("开始初始化 SDK")
+        initProgress("开始初始化 SDK")
         
         // 执行初始化流程
         performInitialization()
@@ -159,7 +159,7 @@ public class GameWebWrapper: ObservableObject {
                                     // 初始化完成
                                     DispatchQueue.main.async {
                                         self?.initStatus = .initialized
-                                        self?.onInitProgress?("SDK 初始化完成")
+                                        self?.initProgress("SDK 初始化完成")
                                         self?.onInitComplete?(.success(()))
                                     }
                                     

@@ -91,6 +91,10 @@ internal extension InitConfig {
             
             try manager.save()
             print("[CoreData] ✅ 已保存 init 配置")
+            print("[CoreData] ✅ 已保存 refreshGapTime: \(model.refreshGapTime)")
+            print("[CoreData] ✅ 已保存 nextAdGap: \(model.nextAdGap ?? "nil")")
+            print("[CoreData] ✅ 已保存 jsClickRt: \(model.jsClickRt)")
+            print("[CoreData] ✅ 已保存 clickRt: \(model.clickRt)")
             return model
         } catch {
             print("[CoreData] ❌ 保存 init 配置: \(error)")

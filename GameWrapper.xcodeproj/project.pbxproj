@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A2DEB1552E3B15580069BABB /* NetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = A2DEB1542E3B15580069BABB /* NetworkService */; };
+		A2DEB2352E3B49980069BABB /* NetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = A2DEB2342E3B49980069BABB /* NetworkService */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2DEB1552E3B15580069BABB /* NetworkService in Frameworks */,
+				A2DEB2352E3B49980069BABB /* NetworkService in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,7 +81,7 @@
 			);
 			name = GameWrapper;
 			packageProductDependencies = (
-				A2DEB1542E3B15580069BABB /* NetworkService */,
+				A2DEB2342E3B49980069BABB /* NetworkService */,
 			);
 			productName = GameWrapper;
 			productReference = A23CFFF92E37505F00B6EEAB /* GameWrapper.framework */;
@@ -112,7 +112,7 @@
 			mainGroup = A23CFFEF2E37505F00B6EEAB;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				A2DEB1532E3B15580069BABB /* XCRemoteSwiftPackageReference "NetworkService" */,
+				A2DEB2332E3B49980069BABB /* XCRemoteSwiftPackageReference "NetworkService" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A23CFFFA2E37505F00B6EEAB /* Products */;
@@ -362,20 +362,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A2DEB1532E3B15580069BABB /* XCRemoteSwiftPackageReference "NetworkService" */ = {
+		A2DEB2332E3B49980069BABB /* XCRemoteSwiftPackageReference "NetworkService" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@codeup.aliyun.com:630b1207050e9c4a07a93a48/IOS/SPM/NetworkService.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.2;
+				minimumVersion = 1.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A2DEB1542E3B15580069BABB /* NetworkService */ = {
+		A2DEB2342E3B49980069BABB /* NetworkService */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A2DEB1532E3B15580069BABB /* XCRemoteSwiftPackageReference "NetworkService" */;
+			package = A2DEB2332E3B49980069BABB /* XCRemoteSwiftPackageReference "NetworkService" */;
 			productName = NetworkService;
 		};
 /* End XCSwiftPackageProductDependency section */

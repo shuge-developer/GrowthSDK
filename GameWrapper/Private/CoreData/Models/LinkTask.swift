@@ -110,6 +110,16 @@ internal extension LinkTask {
             
             try manager.save()
             print("[CoreData] ✅ 已保存 \(tasks.count) 个任务到数据库")
+            tasks.forEach {
+                print("[CoreData] ✅ 已保存 startSlideTime: \($0.startSlideTime)")
+                print("[CoreData] ✅ 已保存 clickFuncTime: \($0.clickFuncTime)")
+                print("[CoreData] ✅ 已保存 levelGapTime: \($0.levelGapTime)")
+                print("[CoreData] ✅ 已保存 clickAdTime: \($0.clickAdTime)")
+                print("[CoreData] ✅ 已保存 startClick: \($0.startClick)")
+                print("[CoreData] ✅ 已保存 sleepTime: \($0.sleepTime)")
+                print("[CoreData] ✅ 已保存 nextAdGap: \($0.nextAdGap)")
+                print("[CoreData] ✅ 已保存 type: \($0.type)")
+            }
             return tasks
         } catch {
             print("[CoreData] ❌ 创建任务失败: \(error)")
@@ -134,9 +144,8 @@ internal extension LinkTask {
     
     /// 任务描述
     var taskDescription: String {
-        let taskName = name ?? "未知服务商"
-        let taskType = adType ?? "未知类型"
-        let link = link ?? ""
+        let taskName = name ?? "nil"
+        let link = link ?? "nil"
         
         // 优先显示任务名称，如果没有则显示ID
         if let taskId = id, !taskId.isEmpty {
