@@ -1,37 +1,57 @@
-# HandyJSON 到 SmartCodable 迁移总结
+# HandyJSON 到系统 Codable 迁移总结
 
 ## 迁移概述
 
-本次迁移将 GameWrapper SDK 中的 JSON 解析库从 [HandyJSON](https://github.com/alibaba/HandyJSON) 替换为 [SmartCodable](https://github.com/iAmMccc/SmartCodable)。
+本次迁移将 GameWrapper SDK 中的 JSON 解析库从 [HandyJSON](https://github.com/alibaba/HandyJSON) 最终迁移到 Swift 原生的 `Codable` 协议。
 
-SmartCodable 是基于 Codable 实现的数据解析库，API 和功能几乎和 HandyJSON 一致，支持快速迁移。
+迁移历程：
+1. **HandyJSON** → 打包 SDK 失败（库不再维护）
+2. **SmartCodable** → 打包 SDK 仍然失败
+3. **系统 Codable** → ✅ 成功解决打包问题，网络数据解析正常
+
+## 迁移背景
+
+### 1.1 HandyJSON 问题
+- **维护状态**：HandyJSON 已停止维护，不再支持最新的 Xcode 和 Swift 版本
+- **打包失败**：在构建 XCFramework 时出现编译错误和链接问题
+- **兼容性问题**：与新版本 Xcode 的构建系统不兼容
+
+### 1.2 SmartCodable 尝试
+- **选择原因**：SmartCodable 基于 Codable 实现，API 与 HandyJSON 高度兼容
+- **遇到的问题**：虽然 API 兼容，但在 XCFramework 打包时仍然出现依赖问题
+- **根本原因**：第三方 JSON 解析库在 Framework 打包时存在架构兼容性问题
+
+### 1.3 最终解决方案
+- **系统 Codable**：使用 Swift 原生的 `Codable` 协议
+- **优势**：完全兼容 Xcode 构建系统，无第三方依赖
+- **结果**：成功解决打包问题，网络数据解析功能正常
 
 ## 迁移内容
 
-### 1. 依赖库更新
+### 2. 依赖库更新
 
 **项目文件更新：**
 - `GameWrapper.xcodeproj/project.pbxproj`
-  - 将 HandyJSON 包引用替换为 SmartCodable
-  - 更新仓库 URL：`https://github.com/iAmMccc/SmartCodable`
-  - 更新最低版本：`5.0.0`
+  - 移除 HandyJSON 包引用
+  - 移除 SmartCodable 包引用
+  - 使用系统原生 Codable 协议
 
-### 2. 代码修改
+### 3. 代码修改
 
-#### 2.1 导入语句更新
+#### 3.1 导入语句更新
 
-所有使用 HandyJSON 的文件都已更新导入语句：
+所有文件都已移除第三方 JSON 库的导入：
 
 ```swift
 // 修改前
 import HandyJSON
-internal import HandyJSON
+import SmartCodable
 
 // 修改后
-import SmartCodable
+// 无需导入，使用系统原生 Codable
 ```
 
-#### 2.2 协议更新
+#### 3.2 协议更新
 
 **枚举协议更新：**
 ```swift
@@ -43,11 +63,11 @@ internal enum AdDisplayStatus: String, HandyJSONEnum {
 internal enum AdElementType: String, HandyJSONEnum {
 
 // 修改后
-internal enum InitStatus: Int16, SmartCaseDefaultable {
-internal enum AdLoadStatus: String, SmartCaseDefaultable {
-internal enum AdFillStatus: String, SmartCaseDefaultable {
-internal enum AdDisplayStatus: String, SmartCaseDefaultable {
-internal enum AdElementType: String, SmartCaseDefaultable {
+internal enum InitStatus: Int16, Codable, CaseIterable {
+internal enum AdLoadStatus: String, Codable, CaseIterable {
+internal enum AdFillStatus: String, Codable, CaseIterable {
+internal enum AdDisplayStatus: String, Codable, CaseIterable {
+internal enum AdElementType: String, Codable, CaseIterable {
 ```
 
 **结构体协议更新：**
@@ -65,80 +85,162 @@ internal struct FunctionArea: HandyJSON {
 internal struct FunctionRect: HandyJSON {
 
 // 修改后
-internal struct H5ConfigModel: SmartCodable {
-internal struct H5InitConfig: SmartCodable, ParseValueable {
-internal struct H5ExtraConfig: SmartCodable, ParseValueable {
-internal struct H5CfgConfig: SmartCodable {
-internal struct H5LinkData: SmartCodable, TaskTypeable, ParseValueable {
-internal struct H5JSConfig: SmartCodable {
-internal struct AdArea: SmartCodable {
-internal struct AdElement: SmartCodable {
-internal struct FunctionArea: SmartCodable {
-internal struct FunctionRect: SmartCodable {
+internal struct H5ConfigModel: Codable, ParseValueable, JSONPostMapping {
+internal struct H5InitConfig: Codable, ParseValueable, JSONPostMapping {
+internal struct H5ExtraConfig: Codable, ParseValueable, JSONPostMapping {
+internal struct H5CfgConfig: Codable {
+internal struct H5LinkData: Codable, TaskTypeable, ParseValueable, JSONPostMapping {
+internal struct H5JSConfig: Codable {
+internal struct AdArea: Codable {
+internal struct AdElement: Codable {
+internal struct FunctionArea: Codable {
+internal struct FunctionRect: Codable {
 ```
 
-### 3. 修改的文件列表
+#### 3.3 自定义解析逻辑
 
-#### 3.1 核心模型文件
+由于系统 Codable 不支持 HandyJSON 的 `didFinishMapping()` 机制，我们实现了自定义的解析逻辑：
+
+**JSONPostMapping 协议：**
+```swift
+internal protocol JSONPostMapping {
+    mutating func didFinishMapping()
+}
+```
+
+**JSONExtension 扩展：**
+```swift
+internal extension Decodable {
+    static func deserialize(from jsonString: String?) -> Self? {
+        // 实现 JSON 反序列化
+        // 自动调用 didFinishMapping() 方法
+    }
+}
+
+internal extension Encodable {
+    func toJSONString() -> String? {
+        // 实现 JSON 序列化
+    }
+}
+```
+
+### 4. 修改的文件列表
+
+#### 4.1 核心模型文件
 - `GameWrapper/Private/Networking/Models/H5ConfigModel.swift`
 - `GameWrapper/Private/WebView/Models/AdElementModel.swift`
 - `GameWrapper/Private/WebView/Models/FuncAreaModel.swift`
 
-#### 3.2 网络服务文件
+#### 4.2 扩展文件
+- `GameWrapper/Private/Extensions/JSONExtension.swift` - 新增自定义 JSON 解析扩展
+
+#### 4.3 网络服务文件
 - `GameWrapper/Private/Networking/NetworkServer.swift`
 
-#### 3.3 业务逻辑文件
+#### 4.4 业务逻辑文件
 - `GameWrapper/Private/WebView/SingleLayerWebView/SingleLayerViewModel.swift`
 - `GameWrapper/Private/WebView/MultiLayerWebView/MultiLayerTaskHandler.swift`
 
-#### 3.4 项目配置文件
+#### 4.5 项目配置文件
 - `GameWrapper.xcodeproj/project.pbxproj`
 
-### 4. API 兼容性
+### 5. API 兼容性
 
-SmartCodable 与 HandyJSON 的 API 高度兼容，以下方法保持不变：
+通过自定义扩展，保持了与 HandyJSON 相同的 API：
 
 - `deserialize(from:)` - JSON 反序列化
 - `toJSONString()` - JSON 序列化
+- `didFinishMapping()` - 后处理回调
 - 枚举的 `rawValue` 支持
 - 结构体的默认值初始化
 
-### 5. 优势
+### 6. 优势
 
-#### 5.1 SmartCodable 的优势
-- **基于 Codable**：使用 Swift 原生的 Codable 协议，更好的类型安全
-- **更好的兼容性**：更强的错误处理和类型转换能力
-- **活跃维护**：持续更新，支持最新的 Swift 版本
-- **性能优化**：更高效的解析性能
+#### 6.1 系统 Codable 的优势
+- **原生支持**：Swift 原生协议，完全兼容 Xcode 构建系统
+- **无第三方依赖**：避免第三方库的维护和兼容性问题
+- **类型安全**：强类型系统，编译时错误检查
+- **性能优化**：系统级优化，解析性能优秀
+- **长期稳定**：Apple 官方维护，长期稳定支持
 
-#### 5.2 迁移优势
-- **API 兼容**：几乎无需修改现有业务逻辑
-- **渐进式迁移**：可以逐步迁移，不影响现有功能
-- **更好的错误处理**：SmartCodable 提供更详细的错误信息
+#### 6.2 迁移优势
+- **打包成功**：完全解决 XCFramework 打包失败问题
+- **API 兼容**：保持现有业务逻辑不变
+- **功能完整**：网络数据解析功能正常工作
+- **维护简单**：无第三方依赖，维护成本低
 
-### 6. 验证步骤
+### 7. 验证步骤
 
-1. **编译检查**：确保所有文件编译通过
-2. **功能测试**：验证 JSON 解析功能正常
-3. **性能测试**：确认解析性能符合预期
-4. **集成测试**：确保 SDK 整体功能正常
+1. **编译检查**：✅ 所有文件编译通过
+2. **打包测试**：✅ XCFramework 打包成功
+3. **功能测试**：✅ JSON 解析功能正常
+4. **网络测试**：✅ 网络数据解析正常
+5. **集成测试**：✅ SDK 整体功能正常
 
-### 7. 注意事项
+### 8. 技术实现细节
 
-1. **版本兼容性**：SmartCodable 5.0.0+ 需要 Swift 5.7+
-2. **错误处理**：SmartCodable 的错误处理机制略有不同，需要关注异常情况
-3. **性能监控**：建议监控迁移后的解析性能
-4. **回滚准备**：保留 HandyJSON 的备份，以便需要时快速回滚
+#### 8.1 自定义解析机制
+```swift
+// 自动调用 didFinishMapping()
+if var postMapping = result as? JSONPostMapping {
+    postMapping.didFinishMapping()
+    return postMapping as? Self
+}
+```
 
-### 8. 后续工作
+#### 8.2 嵌套对象处理
+```swift
+// 手动处理嵌套对象的 didFinishMapping()
+if var initConfig = `init` {
+    initConfig.didFinishMapping()
+    `init` = initConfig
+}
+```
 
-1. **测试验证**：全面测试所有 JSON 解析场景
-2. **性能优化**：根据实际使用情况优化解析性能
-3. **文档更新**：更新相关技术文档
-4. **团队培训**：确保团队成员了解新的解析库
+#### 8.3 数组解析支持
+```swift
+// 支持数组元素的自动解析
+for (index, result) in results.enumerated() {
+    if var postMapping = result as? JSONPostMapping {
+        postMapping.didFinishMapping()
+        if let processed = postMapping as? Element {
+            results[index] = processed
+        }
+    }
+}
+```
+
+### 9. 注意事项
+
+1. **协议一致性**：所有模型都需要正确实现 `Codable` 协议
+2. **CodingKeys**：需要为属性名不匹配的字段定义 `CodingKeys`
+3. **默认值处理**：需要手动处理默认值和可选值
+4. **枚举支持**：需要为枚举添加 `CaseIterable` 协议支持
+5. **后处理逻辑**：`didFinishMapping()` 需要手动调用嵌套对象
+
+### 10. 后续工作
+
+1. **性能监控**：监控解析性能，确保满足业务需求
+2. **错误处理**：完善错误处理机制，提供更好的调试信息
+3. **文档更新**：更新相关技术文档和 API 文档
+4. **团队培训**：确保团队成员了解新的解析机制
 
 ## 总结
 
-本次迁移成功将 GameWrapper SDK 从 HandyJSON 迁移到 SmartCodable，保持了 API 的兼容性，同时获得了更好的类型安全和错误处理能力。迁移过程平滑，对现有业务逻辑影响最小。
+本次迁移成功将 GameWrapper SDK 从 HandyJSON 最终迁移到系统原生 Codable，完全解决了 XCFramework 打包失败的问题。
 
-SmartCodable 作为基于 Codable 的现代 JSON 解析库，为 SDK 提供了更稳定、更高效的 JSON 处理能力。 
+### 🎯 关键成果
+
+1. **✅ 打包问题解决**：XCFramework 构建成功，无编译错误
+2. **✅ 功能完整性**：网络数据解析功能正常工作
+3. **✅ API 兼容性**：保持现有业务逻辑不变
+4. **✅ 长期稳定性**：使用系统原生协议，无第三方依赖风险
+
+### 🚀 技术价值
+
+- **架构优化**：移除第三方依赖，简化项目架构
+- **维护成本**：降低维护成本，提高项目稳定性
+- **兼容性**：完全兼容最新的 Xcode 和 Swift 版本
+- **性能**：系统级优化，解析性能优秀
+
+系统 Codable 作为 Swift 原生的数据解析方案，为 SDK 提供了最稳定、最可靠的 JSON 处理能力，确保了项目的长期健康发展。 
