@@ -1,15 +1,14 @@
 //
 //  FuncAreaModel.swift
-// GameWrapper
+//  GameWrapper
 //
 //  Created by arvin on 2025/6/15.
 //
 
 import Foundation
-internal import SmartCodable
 
 // MARK: - 功能区域模型
-internal struct FunctionArea: SmartCodable {
+internal struct FunctionArea: Codable {
     /// HTML 标签名
     var tag: String = ""
     /// 区域位置
@@ -19,7 +18,7 @@ internal struct FunctionArea: SmartCodable {
 }
 
 // MARK: - 功能区域位置
-internal struct FunctionRect: SmartCodable {
+internal struct FunctionRect: Codable {
     /// 左边距（网页坐标）
     var left: CGFloat = 0
     /// 顶部边距（网页坐标）

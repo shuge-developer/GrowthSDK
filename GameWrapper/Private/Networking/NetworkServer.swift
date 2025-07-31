@@ -1,12 +1,11 @@
 //
 //  NetworkProvider.swift
-// GameWrapper
+//  GameWrapper
 //
 //  Created by arvin on 2025/5/29.
 //
 
 internal import NetworkService
-internal import SmartCodable
 
 // MARK: -
 internal enum Api: APIProvider {

@@ -1,6 +1,6 @@
 //
 //  MultiLayerTaskHandler.swift
-// GameWrapper
+//  GameWrapper
 //
 //  Created by arvin on 2025/6/7.
 //
@@ -440,8 +440,7 @@ internal final class MultiLayerTaskHandler {
             return
         }
         
-        let elements = [AdElement].deserialize(from: jsonString)
-        if let elements = elements?.compactMap({ $0 }) {
+        if let elements = [AdElement].deserialize(from: jsonString) {
             print("[H5] [MultiLayerTaskHandler] ✅ 成功解析广告元素: \(elements.count) 个")
             
             // 保存检测到的广告

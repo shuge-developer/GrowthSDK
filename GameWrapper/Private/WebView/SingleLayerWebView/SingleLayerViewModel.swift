@@ -1,6 +1,6 @@
 //
 //  SingleLayerViewModel.swift
-// GameWrapper
+//  GameWrapper
 //
 //  Created by arvin on 2025/6/15.
 //
@@ -685,8 +685,7 @@ internal class SingleLayerViewModel: ObservableObject {
             state = .failed(NSError(domain: "SingleLayerViewModel", code: 400, userInfo: [NSLocalizedDescriptionKey: "无效的广告数据"]))
             return
         }
-        let elements = [AdElement].deserialize(from: jsonString)
-        if let elements = elements?.compactMap({ $0 }) {
+        if let elements = [AdElement].deserialize(from: jsonString) {
             print("[H5] [SingleLayerVM] ✅ 成功解析广告元素: \(elements.count) 个")
             print("[H5] [SingleLayerVM] 📌 当前任务：\(currentTask?.taskDescription)")
             

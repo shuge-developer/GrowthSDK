@@ -1,16 +1,15 @@
 //
 //  AdElementModel.swift
-// GameWrapper
+//  GameWrapper
 //
 //  Created by arvin on 2025/6/15.
 //
 
 import Foundation
-internal import SmartCodable
 import UIKit
 
 // MARK: - 广告区域模型
-internal struct AdArea: SmartCodable {
+internal struct AdArea: Codable {
     /// 左边距（网页坐标）
     var left: CGFloat = 0
     /// 顶部边距（网页坐标）
@@ -158,7 +157,7 @@ internal struct AdArea: SmartCodable {
 }
 
 // MARK: - 广告元素状态枚举
-internal enum AdLoadStatus: String, SmartCaseDefaultable {
+internal enum AdLoadStatus: String, Codable {
     case done = "done"
     case loading = "loading"
     case failed = "failed"
@@ -174,7 +173,7 @@ internal enum AdLoadStatus: String, SmartCaseDefaultable {
     }
 }
 
-internal enum AdFillStatus: String, SmartCaseDefaultable {
+internal enum AdFillStatus: String, Codable {
     case filled = "filled"
     case unfilled = "unfilled"
     case unknown
@@ -187,7 +186,7 @@ internal enum AdFillStatus: String, SmartCaseDefaultable {
     }
 }
 
-internal enum AdDisplayStatus: String, SmartCaseDefaultable {
+internal enum AdDisplayStatus: String, Codable {
     case displayed = "displayed"
     case visible = "visible"
     case hidden = "hidden"
@@ -204,7 +203,7 @@ internal enum AdDisplayStatus: String, SmartCaseDefaultable {
 }
 
 // MARK: - 广告元素类型
-internal enum AdElementType: String, SmartCaseDefaultable {
+internal enum AdElementType: String, Codable {
     case iner = "iner"
     case anchor = "anchor"
     case native = "native"
@@ -223,7 +222,7 @@ internal func getSafeAreaInsets() -> UIEdgeInsets {
 }
 
 // MARK: - 广告元素模型
-internal struct AdElement: SmartCodable {
+internal struct AdElement: Codable {
     /// 广告区域位置和尺寸
     var area: AdArea?
     /// 广告是否可见

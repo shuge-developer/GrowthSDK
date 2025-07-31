@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A23C01772E37580400B6EEAB /* SmartCodable in Frameworks */ = {isa = PBXBuildFile; productRef = A23C01762E37580400B6EEAB /* SmartCodable */; };
-		A2DEA59E2E38E7FE0069BABB /* NetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = A2DEA59D2E38E7FE0069BABB /* NetworkService */; };
+		A2DEB1552E3B15580069BABB /* NetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = A2DEB1542E3B15580069BABB /* NetworkService */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A23C01772E37580400B6EEAB /* SmartCodable in Frameworks */,
-				A2DEA59E2E38E7FE0069BABB /* NetworkService in Frameworks */,
+				A2DEB1552E3B15580069BABB /* NetworkService in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,8 +81,7 @@
 			);
 			name = GameWrapper;
 			packageProductDependencies = (
-				A23C01762E37580400B6EEAB /* SmartCodable */,
-				A2DEA59D2E38E7FE0069BABB /* NetworkService */,
+				A2DEB1542E3B15580069BABB /* NetworkService */,
 			);
 			productName = GameWrapper;
 			productReference = A23CFFF92E37505F00B6EEAB /* GameWrapper.framework */;
@@ -115,8 +112,7 @@
 			mainGroup = A23CFFEF2E37505F00B6EEAB;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				A23C01752E37580400B6EEAB /* XCRemoteSwiftPackageReference "SmartCodable" */,
-				A2DEA59C2E38E7FE0069BABB /* XCRemoteSwiftPackageReference "NetworkService" */,
+				A2DEB1532E3B15580069BABB /* XCRemoteSwiftPackageReference "NetworkService" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A23CFFFA2E37505F00B6EEAB /* Products */;
@@ -366,15 +362,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A23C01752E37580400B6EEAB /* XCRemoteSwiftPackageReference "SmartCodable" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/iAmMccc/SmartCodable";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-		A2DEA59C2E38E7FE0069BABB /* XCRemoteSwiftPackageReference "NetworkService" */ = {
+		A2DEB1532E3B15580069BABB /* XCRemoteSwiftPackageReference "NetworkService" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@codeup.aliyun.com:630b1207050e9c4a07a93a48/IOS/SPM/NetworkService.git";
 			requirement = {
@@ -385,14 +373,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A23C01762E37580400B6EEAB /* SmartCodable */ = {
+		A2DEB1542E3B15580069BABB /* NetworkService */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A23C01752E37580400B6EEAB /* XCRemoteSwiftPackageReference "SmartCodable" */;
-			productName = SmartCodable;
-		};
-		A2DEA59D2E38E7FE0069BABB /* NetworkService */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A2DEA59C2E38E7FE0069BABB /* XCRemoteSwiftPackageReference "NetworkService" */;
+			package = A2DEB1532E3B15580069BABB /* XCRemoteSwiftPackageReference "NetworkService" */;
 			productName = NetworkService;
 		};
 /* End XCSwiftPackageProductDependency section */
