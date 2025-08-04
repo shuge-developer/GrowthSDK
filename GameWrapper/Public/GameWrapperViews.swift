@@ -7,8 +7,17 @@
 
 import SwiftUI
 
+// MARK: - Unity加载状态协议
+/// Unity加载状态协议
+/// 要求游戏视图实现此协议来正确管理Unity加载状态
+public protocol UnityLoadable {
+    /// 设置Unity加载状态变化回调，返回自身以支持链式调用
+    @discardableResult
+    func setUnityStateCallback(_ callback: @escaping (Bool) -> Void) -> Self
+}
+
 // MARK: - SwiftUI 适配器视图
-public struct GameWrapperSwiftUIView<GameView: View>: View {
+public struct GameWrapperSwiftUIView<GameView: View & UnityLoadable>: View {
     
     @StateObject private var startManager = H5TaskStartManager.shared
     @StateObject private var layerManager = GameWrapperLayerManager.shared
@@ -18,14 +27,19 @@ public struct GameWrapperSwiftUIView<GameView: View>: View {
     @State private var showPopupView: Bool = false
     @State private var showGameView: Bool = true
     @State private var showWebView: Bool = false
+    @State private var isUnityLoaded: Bool = false
     
-    /// 游戏视图（由外部提供）
+    /// 游戏视图（由外部提供，必须实现UnityLoadable协议）
     private let gameView: GameView
     
     /// 截图提供者（由外部提供）
     private let screenshotProvider: (() -> UIImage?)?
     
-    public init(@ViewBuilder gameView: () -> GameView, screenshotProvider: (() -> UIImage?)? = nil) {
+    
+    public init(
+        @ViewBuilder gameView: () -> GameView,
+        screenshotProvider: (() -> UIImage?)? = nil
+    ) {
         self.gameView = gameView()
         self.screenshotProvider = screenshotProvider
     }
@@ -59,7 +73,13 @@ public struct GameWrapperSwiftUIView<GameView: View>: View {
             // 层级2：游戏视图（主要交互层）
             if showGameView {
                 gameView
+                    .setUnityStateCallback { loaded in
+                        self.handleUnityStateChange(loaded)
+                    }
                     .zIndex(layerManager.unityZIndex)
+                    .onAppear {
+                        print("[GameWrapper] 📱 游戏视图显示")
+                    }
             }
             
             // 层级3：弹窗视图
@@ -70,6 +90,9 @@ public struct GameWrapperSwiftUIView<GameView: View>: View {
                     showPopupView = false
                 }
                 .zIndex(layerManager.popupZIndex)
+                .onAppear {
+                    print("[GameWrapper] 📱 弹窗视图显示")
+                }
             }
         }
         .onChange(of: layerManager.topLayerType) { newValue in
@@ -82,6 +105,25 @@ public struct GameWrapperSwiftUIView<GameView: View>: View {
     }
     
     // MARK: - 私有方法
+    
+    /// 处理Unity状态变化
+    private func handleUnityStateChange(_ loaded: Bool) {
+        guard isUnityLoaded != loaded else { return }
+        
+        isUnityLoaded = loaded
+        print("[GameWrapper] 🎮 Unity加载状态变更: \(loaded)")
+        
+        // 通知H5TaskStartManager Unity加载状态
+        startManager.setUnityLoaded(loaded)
+        
+        // 根据状态执行相应操作
+        if loaded {
+            print("[GameWrapper] ✅ Unity已加载完成，可以显示WebView")
+        } else {
+            print("[GameWrapper] ⏳ Unity未加载或已卸载")
+        }
+    }
+    
     private func setupScreenshotProvider() {
         // 设置截图提供者到SingleLayerViewModel
         if let provider = screenshotProvider {

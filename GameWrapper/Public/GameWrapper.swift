@@ -8,6 +8,16 @@
 import Foundation
 import Combine
 
+// MARK: - 网络配置协议
+public protocol NetworkConfigurable {
+    var appid: String { get }
+    var bundleName: String { get }
+    var baseUrl: String { get }
+    var publicKey: String { get }
+    var appKey: String { get }
+    var appIv: String { get }
+}
+
 // MARK: - SDK 初始化状态
 public enum GameWrapperInitStatus {
     case notInitialized
@@ -18,14 +28,11 @@ public enum GameWrapperInitStatus {
 
 // MARK: - SDK 初始化错误
 public enum GameWrapperInitError: Error, LocalizedError {
-    case configNotSet
     case coreDataInitFailed(String)
     case taskRepositoryInitFailed(String)
     
     public var errorDescription: String? {
         switch self {
-        case .configNotSet:
-            return "网络配置未设置，请先调用 setup(network:) 方法"
         case .coreDataInitFailed(let message):
             return "CoreData 初始化失败: \(message)"
         case .taskRepositoryInitFailed(let message):
@@ -39,7 +46,7 @@ public class GameWebWrapper: ObservableObject {
     
     public static let shared = GameWebWrapper()
     
-    private(set) var config: NetworkConfig!
+    private(set) var config: NetworkConfigurable!
     
     /// SDK 初始化状态
     @Published public private(set) var initStatus: GameWrapperInitStatus = .notInitialized
@@ -52,39 +59,18 @@ public class GameWebWrapper: ObservableObject {
         return false
     }
     
-    /// 初始化进度回调
-    private var onInitProgress: ((String) -> Void)?
-    
     /// 初始化完成回调
     private var onInitComplete: ((Result<Void, GameWrapperInitError>) -> Void)?
-    
-    private var cancellables = Set<AnyCancellable>()
     
     private init() {}
     
     // MARK: - 公开方法
     
-    /// 设置网络配置
-    /// - Parameter config: 网络配置参数
-    public func setup(network config: NetworkConfig) {
-        self.config = config
-        if self.config == nil {
-            assertionFailure("config cannot be nil！")
-        }
-        print("[GameWrapper] ✅ 网络配置已设置")
-    }
-    
     /// 初始化 SDK
-    /// - Parameter completion: 初始化完成回调
-    public func initialize(completion: @escaping (Result<Void, GameWrapperInitError>) -> Void) {
-        // 检查配置是否已设置
-        guard config != nil else {
-            let error = GameWrapperInitError.configNotSet
-            initStatus = .failed(error)
-            completion(.failure(error))
-            return
-        }
-        
+    /// - Parameters:
+    ///   - config: 网络配置参数
+    ///   - completion: 初始化完成回调
+    public func initialize(config: NetworkConfigurable, completion: @escaping (Result<Void, GameWrapperInitError>) -> Void) {
         // 避免重复初始化
         guard case .notInitialized = initStatus else {
             print("[GameWrapper] ⚠️ SDK 已初始化或正在初始化中")
@@ -92,38 +78,15 @@ public class GameWebWrapper: ObservableObject {
             return
         }
         
+        self.config = config
         initStatus = .initializing
         onInitComplete = completion
         
         print("[GameWrapper] 🚀 开始初始化 SDK")
-        initProgress("开始初始化 SDK")
+        print("[GameWrapper] 📊 网络配置: appid=\(config.appid), bundleName=\(config.bundleName), baseUrl=\(config.baseUrl)")
         
         // 执行初始化流程
         performInitialization()
-    }
-    
-    /// 重新初始化 SDK
-    /// - Parameter completion: 初始化完成回调
-    public func reinitialize(completion: @escaping (Result<Void, GameWrapperInitError>) -> Void) {
-        print("[GameWrapper] 🔄 重新初始化 SDK")
-        initStatus = .notInitialized
-        initialize(completion: completion)
-    }
-    
-    /// 清理 SDK 资源
-    public func cleanup() {
-        print("[GameWrapper] 🧹 清理 SDK 资源")
-        
-        // 清理 WebView 资源
-        GameWebView.cleanupSharedResources()
-        
-        // 清理任务仓库
-        TaskRepository.shared.clearAllData()
-        
-        // 重置状态
-        initStatus = .notInitialized
-        
-        print("[GameWrapper] ✅ SDK 资源清理完成")
     }
     
     // MARK: - 私有方法
@@ -243,27 +206,5 @@ public class GameWebWrapper: ObservableObject {
     /// 更新初始化进度
     private func initProgress(_ message: String) {
         print("[GameWrapper] 📊 \(message)")
-        DispatchQueue.main.async { [weak self] in
-            self?.onInitProgress?(message)
-        }
-    }
-}
-
-// MARK: - 网络配置结构体
-public struct NetworkConfig {
-    public let appid: String
-    public let bundleName: String
-    public let baseUrl: String
-    public let publicKey: String
-    public let appKey: String
-    public let appIv: String
-    
-    public init(appid: String, bundleName: String, baseUrl: String, publicKey: String, appKey: String, appIv: String) {
-        self.appid = appid
-        self.bundleName = bundleName
-        self.baseUrl = baseUrl
-        self.publicKey = publicKey
-        self.appKey = appKey
-        self.appIv = appIv
     }
 }
