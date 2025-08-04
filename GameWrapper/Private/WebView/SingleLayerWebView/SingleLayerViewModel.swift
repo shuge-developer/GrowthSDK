@@ -50,7 +50,7 @@ internal class SingleLayerViewModel: ObservableObject {
     /// 任务仓库
     private let taskRepository = TaskRepository.shared
     /// 层级管理器
-//    private let layerManager = LayerZIndexManager.shared
+    private let layerManager = GameWrapperLayerManager.shared
     /// WebView 协调器
     private var webViewCoordinator: WebViewCoordinator?
     /// 滑动交互器
@@ -70,7 +70,7 @@ internal class SingleLayerViewModel: ObservableObject {
     /// 重试滑动次数
     private var retryScrollCount: Int = 0
     /// 最大重试滑动次数
-    private let maxRetryScrollCount: Int = 1  // 修改为只重试1次
+    private let maxRetryScrollCount: Int = 1
     /// 初始化配置
     private var initConfig: InitConfig? {
         return taskRepository.initConfig
@@ -79,6 +79,10 @@ internal class SingleLayerViewModel: ObservableObject {
     private var jsConfig: JSConfig? {
         return taskRepository.jsConfig
     }
+    
+    // MARK: - 外部截图提供者
+    /// 外部截图提供者闭包
+    private var externalScreenshotProvider: (() -> UIImage?)?
     
     // MARK: - 初始化
     init() {
@@ -376,12 +380,12 @@ internal class SingleLayerViewModel: ObservableObject {
             .store(in: &cancellables)
         
         // 监听层级管理器的顶层类型变化
-//        layerManager.$topLayerType
-//            .dropFirst()
-//            .sink { [weak self] layerType in
-//                self?.handleLayerChange(layerType)
-//            }
-//            .store(in: &cancellables)
+        layerManager.$topLayerType
+            .dropFirst()
+            .sink { [weak self] layerType in
+                self?.handleLayerChange(layerType)
+            }
+            .store(in: &cancellables)
         
         // 监听点击广告后进入二级页面
         $isSecondaryPageLoaded
@@ -394,20 +398,6 @@ internal class SingleLayerViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
-        
-        // 监听广告展示状态变化
-        //        Task { @MainActor in
-        //            AdDisplayManager.shared.$isShowingAd
-        //                .dropFirst()
-        //                .sink { [weak self] isShowingAd in
-        //                    print("[H5] [SingleLayerVM] 📱 广告展示状态变化: \(isShowingAd ? "展示中" : "已关闭")")
-        //                    // 如果广告关闭且当前有待检测的状态，可以考虑重新触发检测
-        //                    if !isShowingAd {
-        //                        self?.handleAdDisplayStatusChanged()
-        //                    }
-        //                }
-        //                .store(in: &self.cancellables)
-        //        }
     }
     
     /// 处理广告展示状态变化
@@ -453,18 +443,18 @@ internal class SingleLayerViewModel: ObservableObject {
     }
     
     /// 处理层级类型变化
-//    private func handleLayerChange(_ layerType: LayerType) {
-//        print("[H5] [SingleLayerVM] 📱 层级类型变化: \(layerType)")
-//        
-//        // 如果从WebView切换回Unity，说明弹窗被关闭，用户点击了广告
-//        if layerType == .unity && isLayerSwitched && !isSecondaryPageLoaded {
-//            //print("[H5] [SingleLayerVM] 🔄 检测到从WebView切换回Unity，但未进入二级页面，直接完成任务")
-//            // 直接点击了弹窗但没有触发二级页面，直接完成任务
-//            //tryFinishCurrentTask(isSuccess: true, reason: "WebView切换回Unity且未进入二级页面")
-//            // 清理UI状态
-//            //cleanupUIState()
-//        }
-//    }
+    private func handleLayerChange(_ layerType: LayerType) {
+        print("[H5] [SingleLayerVM] 📱 层级类型变化: \(layerType)")
+        
+        // 如果从WebView切换回Unity，说明弹窗被关闭，用户点击了广告
+        if layerType == .unity && isLayerSwitched && !isSecondaryPageLoaded {
+            //print("[H5] [SingleLayerVM] 🔄 检测到从WebView切换回Unity，但未进入二级页面，直接完成任务")
+            // 直接点击了弹窗但没有触发二级页面，直接完成任务
+            //tryFinishCurrentTask(isSuccess: true, reason: "WebView切换回Unity且未进入二级页面")
+            // 清理UI状态
+            //cleanupUIState()
+        }
+    }
     
     /// 清理UI状态
     private func cleanupUIState() {
@@ -1109,57 +1099,6 @@ internal class SingleLayerViewModel: ObservableObject {
         }
     }
     
-    /// 准备点击广告
-    //    private func prepareAdClick(_ ad: AdElement) {
-    //        guard isWebViewLoaded, isLayerSwitched else {
-    //            print("[H5] [SingleLayerVM] ⚠️ WebView 未加载完成或层级未切换，暂不执行广告点击")
-    //            return
-    //        }
-    //
-    //        // 延迟一段时间后执行点击
-    //        let delay = TimeInterval.random(in: 0.5...2.0)
-    //        print("[H5] [SingleLayerVM] 👆 准备点击广告，延迟 \(String(format: "%.1f", delay)) 秒")
-    //
-    //        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
-    ////            self?.performAdClick(ad)
-    //        }
-    //    }
-    
-    /// 执行广告点击
-    //    private func performAdClick(_ ad: AdElement) {
-    //        guard let area = ad.area, area.isValid, let webViewCoordinator = webViewCoordinator else {
-    //            print("[H5] [SingleLayerVM] ❌ 广告区域无效或 WebView 协调器不可用")
-    //            state = .failed(NSError(domain: "SingleLayerViewModel", code: 500, userInfo: [NSLocalizedDescriptionKey: "无法执行点击"]))
-    //            return
-    //        }
-    //
-    //        state = .clicking
-    //        print("[H5] [SingleLayerVM] 👆 执行广告点击，位置: \(area.center)")
-    //
-    //        // 获取 WebView 的实际尺寸
-    //        guard let webView = webViewCoordinator.webView else {
-    //            print("[H5] [SingleLayerVM] ❌ WebView 不可用")
-    //            state = .failed(NSError(domain: "SingleLayerViewModel", code: 500, userInfo: [NSLocalizedDescriptionKey: "无法执行点击"]))
-    //            return
-    //        }
-    //
-    //        let webViewFrame = webView.frame
-    //        print("[H5] [SingleLayerVM] 📊 WebView 尺寸: \(webViewFrame)")
-    //
-    //        // 计算广告在屏幕上的实际位置
-    //        let clickPoint = area.toScreenCenter(in: webViewFrame)
-    //        print("[H5] [SingleLayerVM] 📍 点击位置: \(clickPoint)")
-    //
-    //        // 暂时不处理点击逻辑
-    //        print("[H5] [SingleLayerVM] ⏸️ 点击逻辑暂不处理")
-    //
-    //        // 延迟记录完成，给广告点击后的跳转留出时间
-    //        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-    //            guard let self = self else { return }
-    //            //            self.recordTaskCompleted()
-    //        }
-    //    }
-    
     /// 完成当前任务（成功或失败）
     private func finishCurrentTask(isSuccess: Bool) {
         guard let task = currentTask else {
@@ -1399,8 +1338,18 @@ internal class SingleLayerViewModel: ObservableObject {
         print("[H5] [SingleLayerVM] 📊 切换层级前WebView状态: isWebViewValid=\(isWebViewValid()), coordinator=\(webViewCoordinator != nil ? "有效" : "无效")")
         
         // 每次切换层级前都重新截图，确保截图内容是最新的
-        print("[H5] [SingleLayerVM] 📸 开始获取最新的Unity截图")
+        print("[H5] [SingleLayerVM] 📸 开始获取最新的游戏截图")
         Task {
+            // 检查应用状态 - 防止在后台状态下截图导致崩溃
+            await MainActor.run {
+                let applicationState = UIApplication.shared.applicationState
+                guard applicationState == .active else {
+                    print("[H5] [SingleLayerVM] ⚠️ 应用状态异常，跳过截图: \(applicationState.rawValue)")
+                    state = .failed(NSError(domain: "SingleLayerViewModel", code: 500, userInfo: [NSLocalizedDescriptionKey: "应用状态异常，无法截图"]))
+                    return
+                }
+            }
+            
             // 标记开始截图
             isCapturingScreenshot = true
             
@@ -1418,34 +1367,45 @@ internal class SingleLayerViewModel: ObservableObject {
                 print("[H5] [SingleLayerVM] 🗑️ 已释放旧截图资源")
             }
             
-//            let screenshot = await UnityServiceProvider.asyncUnityScreenshot()
-//            await MainActor.run {
-//                // 标记截图完成
-//                isCapturingScreenshot = false
-//                
-//                // 再次确认WebView仍然有效
-//                guard isWebViewValid(), webViewCoordinator === currentCoordinator else {
-//                    print("[H5] [SingleLayerVM] ⚠️ 截图完成后WebView已失效或协调器已变更，取消层级切换")
-//                    state = .failed(NSError(domain: "SingleLayerViewModel", code: 500, userInfo: [NSLocalizedDescriptionKey: "WebView 不可用"]))
-//                    return
-//                }
-//                
-//                unityScreenshot = screenshot
-//                if unityScreenshot != nil {
-//                    print("[H5] [SingleLayerVM] ✅ Unity 最新截图获取完成")
-//                    // 继续层级切换流程
-//                    performLayerSwitch()
-//                } else {
-//                    print("[H5] [SingleLayerVM] ❌ Unity 截图失败，无法切换层级")
-//                    state = .failed(NSError(domain: "SingleLayerViewModel", code: 500, userInfo: [NSLocalizedDescriptionKey: "截图获取失败"]))
-//                }
-//            }
+            // 使用外部截图提供者获取实时截图
+            let screenshot = await MainActor.run {
+                if let provider = externalScreenshotProvider {
+                    print("[H5] [SingleLayerVM] 📸 使用外部截图提供者获取截图")
+                    return provider()
+                } else {
+                    print("[H5] [SingleLayerVM] ⚠️ 外部截图提供者未设置，无法获取截图")
+                    return nil
+                }
+            }
+            
+            await MainActor.run {
+                // 标记截图完成
+                isCapturingScreenshot = false
+                
+                // 再次确认WebView仍然有效
+                guard isWebViewValid(), webViewCoordinator === currentCoordinator else {
+                    print("[H5] [SingleLayerVM] ⚠️ 截图完成后WebView已失效或协调器已变更，取消层级切换")
+                    state = .failed(NSError(domain: "SingleLayerViewModel", code: 500, userInfo: [NSLocalizedDescriptionKey: "WebView 不可用"]))
+                    return
+                }
+                
+                unityScreenshot = screenshot
+                if unityScreenshot != nil {
+                    print("[H5] [SingleLayerVM] ✅ 游戏最新截图获取完成")
+                    // 继续层级切换流程
+                    performLayerSwitch()
+                } else {
+                    print("[H5] [SingleLayerVM] ❌ 游戏截图失败，无法切换层级")
+                    state = .failed(NSError(domain: "SingleLayerViewModel", code: 500, userInfo: [NSLocalizedDescriptionKey: "截图获取失败"]))
+                }
+            }
         }
     }
     
     /// 执行层级切换的具体逻辑
     private func performLayerSwitch() {
-//        layerManager.bringWebViewToTop()
+        // 直接调用层级管理器的切换方法
+        layerManager.bringWebViewToTop()
         isLayerSwitched = true
         print("[H5] [SingleLayerVM] 🔄 层级已切换，WebView 在顶层")
         
@@ -1556,5 +1516,12 @@ internal class SingleLayerViewModel: ObservableObject {
             self.prepareNextTask()
             print("[H5] [SingleLayerVM] ")
         }
+    }
+    
+    // MARK: - 公开方法
+    /// 设置外部截图提供者
+    internal func setScreenshotProvider(_ provider: @escaping () -> UIImage?) {
+        externalScreenshotProvider = provider
+        print("[H5] [SingleLayerVM] ✅ 外部截图提供者已设置")
     }
 }
