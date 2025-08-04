@@ -25,21 +25,24 @@ internal enum Api: APIProvider {
 
 // MARK: -
 internal struct NetworkRequester: RequestConfigure {
+    struct SDK {
+        static let Config = GameWebWrapper.shared.config
+    }
     
     var baseURL: BaseURL {
-        .global(GameWebWrapper.shared.config.baseUrl)
+        .global(SDK.Config!.baseUrl)
     }
     
     var rsaPublicKey: String {
-        GameWebWrapper.shared.config.publicKey
+        SDK.Config!.publicKey
     }
     
     var aesKey: String {
-        GameWebWrapper.shared.config.appKey
+        SDK.Config!.appKey
     }
     
     var aesIV: String {
-        GameWebWrapper.shared.config.appIv
+        SDK.Config!.appIv
     }
     
     var headerProvider: any HeaderConfigure {
@@ -56,10 +59,11 @@ internal struct NetworkRequester: RequestConfigure {
     
     struct NetworkHeader: HeaderConfigure {
         var packageName: String? {
-            GameWebWrapper.shared.config.bundleName
+            SDK.Config!.bundleName
         }
+        
         var appId: String! {
-            GameWebWrapper.shared.config.appid
+            SDK.Config!.appid
         }
     }
     
@@ -116,7 +120,8 @@ internal class NetworkServer {
             case .success(let json):
                 print("[net] ✅ 数据上报成功：\(json)")
             case .failure(let error):
-                print(error.localizedDescription)
+                let errMsg = error.localizedDescription
+                print("[net] ❌ 数据上报失败：\(errMsg)")
             }
         }
     }
