@@ -238,6 +238,7 @@ internal final class MultiLayerTaskHandler {
                 let formattedScript = String(format: clickJs, clickPoint.x, clickPoint.y)
                 
                 let startClick = task.type == .fClick ? task.startClick : 0
+                print("[H5] [MultiLayerTaskHandler] 当前是 \"\(task.type.description)\" 任务！")
                 print("[H5] [MultiLayerTaskHandler] 📍 点击坐标: (\(clickPoint.x), \(clickPoint.y))")
                 if task.type == .fClick { // 功能点击，才需要延迟点击
                     print("[H5] [MultiLayerTaskHandler] 🕒 等待 \(startClick) 秒后执行点击")
@@ -439,7 +440,6 @@ internal final class MultiLayerTaskHandler {
             completion()
             return
         }
-        
         if let elements = [AdElement].deserialize(from: jsonString) {
             print("[H5] [MultiLayerTaskHandler] ✅ 成功解析广告元素: \(elements.count) 个")
             

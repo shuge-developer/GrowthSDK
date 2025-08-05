@@ -90,11 +90,11 @@ internal final class H5TaskStartManager: ObservableObject {
         let hasValidAdClickTasks = !adClickTasks.isEmpty
         let hasInitConfig = initConfig != nil
         
-//        print("[H5] [H5TaskStartManager] 📊 数据状态检查:")
-//        print("[H5] [H5TaskStartManager] - Unity已加载: \(unityLoaded)")
-//        print("[H5] [H5TaskStartManager] - 多层WebView任务数: \(multiLayerTasks.count)")
-//        print("[H5] [H5TaskStartManager] - 广告点击任务数: \(adClickTasks.count)")
-//        print("[H5] [H5TaskStartManager] - 配置状态: \(hasInitConfig ? "已加载" : "未加载")")
+        //        print("[H5] [H5TaskStartManager] 📊 数据状态检查:")
+        //        print("[H5] [H5TaskStartManager] - Unity已加载: \(unityLoaded)")
+        //        print("[H5] [H5TaskStartManager] - 多层WebView任务数: \(multiLayerTasks.count)")
+        //        print("[H5] [H5TaskStartManager] - 广告点击任务数: \(adClickTasks.count)")
+        //        print("[H5] [H5TaskStartManager] - 配置状态: \(hasInitConfig ? "已加载" : "未加载")")
         
         // 多层WebView容器显示条件
         let newShouldShowMultiLayer = unityLoaded && hasValidMultiLayerTasks && hasInitConfig

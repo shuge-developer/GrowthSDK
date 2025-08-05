@@ -66,7 +66,7 @@ internal struct FunctionRect: Codable {
         // 所以 top 和 bottom 已经是相对于当前视口的位置
         // 只需要加上 WebView 在屏幕中的位置即可
         let screenX = webViewFrame.origin.x + left
-        let screenY = webViewFrame.origin.y + top + safeAreaInsets.top
+        let screenY = webViewFrame.origin.y + top //+ safeAreaInsets.top
         
         // 打印调试信息
         //        DispatchQueue.main.async {

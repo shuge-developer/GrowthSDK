@@ -55,6 +55,8 @@ internal class SingleLayerViewModel: ObservableObject {
     private var webViewCoordinator: WebViewCoordinator?
     /// 滑动交互器
     private var scrollInteractor: WebViewScrollInteractor?
+    /// iframe广告点击处理器
+    private var iframeAdClickHandler: IframeAdClickHandler?
     /// 取消订阅集合
     private var cancellables = Set<AnyCancellable>()
     /// 滑动计时器
@@ -70,7 +72,7 @@ internal class SingleLayerViewModel: ObservableObject {
     /// 重试滑动次数
     private var retryScrollCount: Int = 0
     /// 最大重试滑动次数
-    private let maxRetryScrollCount: Int = 1
+    private let maxRetryScrollCount: Int = 2  // 增加重试次数，支持滚动到广告位置后重新检测
     /// 初始化配置
     private var initConfig: InitConfig? {
         return taskRepository.initConfig
@@ -83,6 +85,7 @@ internal class SingleLayerViewModel: ObservableObject {
     // MARK: - 外部截图提供者
     /// 外部截图提供者闭包
     private var externalScreenshotProvider: (() -> UIImage?)?
+    
     
     // MARK: - 初始化
     init() {
@@ -108,6 +111,10 @@ internal class SingleLayerViewModel: ObservableObject {
         
         currentTask = task
         print("[H5] [SingleLayerVM] 🚀 开始任务处理: \(task.taskDescription), \(task.nextAdGap)")
+        
+        // 重置重试计数
+        retryScrollCount = 0
+        print("[H5] [SingleLayerVM] 🔄 重置重试计数: \(retryScrollCount)")
         
         // 确定交互模式
         determineInteractionMode(for: task)
@@ -149,6 +156,9 @@ internal class SingleLayerViewModel: ObservableObject {
                 _ = oldInteractor // 防止编译器警告
             }
         }
+        
+        // 初始化iframe广告点击处理器
+        iframeAdClickHandler = IframeAdClickHandler(webViewCoordinator: coordinator)
         
         // 检查是否是二级页面加载完成
         if isSecondaryPageLoaded {
@@ -295,7 +305,7 @@ internal class SingleLayerViewModel: ObservableObject {
         print("[H5] [SingleLayerVM] 🔄 开始二级页面交互")
         
         // 延迟一段时间等待二级页面完全加载
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) { [weak self] in
             guard let self = self else { return }
             
             // 检查是否还在二级页面状态且WebView有效
@@ -398,6 +408,20 @@ internal class SingleLayerViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+        
+        // 监听广告展示状态变化
+        //        Task { @MainActor in
+        //            AdDisplayManager.shared.$isShowingAd
+        //                .dropFirst()
+        //                .sink { [weak self] isShowingAd in
+        //                    print("[H5] [SingleLayerVM] 📱 广告展示状态变化: \(isShowingAd ? "展示中" : "已关闭")")
+        //                    // 如果广告关闭且当前有待检测的状态，可以考虑重新触发检测
+        //                    if !isShowingAd {
+        //                        self?.handleAdDisplayStatusChanged()
+        //                    }
+        //                }
+        //                .store(in: &self.cancellables)
+        //        }
     }
     
     /// 处理广告展示状态变化
@@ -732,7 +756,8 @@ internal class SingleLayerViewModel: ObservableObject {
                     fallbackAd.fillStatus = .filled
                     fallbackAd.displayStatus = .visible
                     
-                    self.clickHandle(ad: fallbackAd)
+                    bestMatchedAd = fallbackAd
+                    switchLayers()
                     return
                 }
                 
@@ -774,53 +799,78 @@ internal class SingleLayerViewModel: ObservableObject {
         print("[H5] [SingleLayerVM] 📌 当前任务匹配条件: ID=\(task.id ?? "无"), 类型=\(task.adType ?? "无")")
         print("[H5] [SingleLayerVM] 📊 当前检测状态: 第\(retryScrollCount + 1)次检测，最大\(maxRetryScrollCount)次")
         
-        // 如果完全没有可点击的广告
+        // 如果完全没有广告元素
         if ads.isEmpty {
-            print("[H5] [SingleLayerVM] ⚠️ 未找到任何可点击的广告")
-            handleNoClickableAds(ads: ads, isLastDetection: isLastDetection)
+            print("[H5] [SingleLayerVM] ⚠️ 未检测到任何广告元素")
+            handleNoAdsDetected(isLastDetection: isLastDetection)
             return
         }
         
-        // 执行广告匹配逻辑
-        let matchResult = findBestMatchingAd(from: ads, allAds: ads, task: task)
+        // 分离可点击广告和所有广告
+        let clickableAds = ads.filter { $0.isClickable }
+        let allAds = ads
+        
+        print("[H5] [SingleLayerVM] 📊 检测到 \(allAds.count) 个广告元素，其中 \(clickableAds.count) 个可点击")
+        
+        // 添加详细的广告信息日志
+        for (index, ad) in allAds.enumerated() {
+            print("[H5] [SingleLayerVM] 📊 广告\(index): 类型=\(ad.type.rawValue), ID=\(ad.id), 可见=\(ad.visible), 可点击=\(ad.isClickable), 位置=\(ad.area?.top ?? 0)")
+        }
+        
+        // 如果完全没有可点击的广告
+        if clickableAds.isEmpty {
+            print("[H5] [SingleLayerVM] ⚠️ 未找到任何可点击的广告")
+            handleNoClickableAds(ads: allAds, isLastDetection: isLastDetection)
+            return
+        }
+        
+        // 执行广告匹配逻辑 - 传入所有广告，包括不可点击的
+        let matchResult = findBestMatchingAd(from: clickableAds, allAds: allAds, task: task)
         
         switch matchResult {
         case .found(let ad):
             // 找到了合适的广告
             print("[H5] [SingleLayerVM] ✅ 找到合适的广告: \(ad.id), 类型: \(ad.type.rawValue)")
-            reportAdDetectionResult(isSuccess: true, ads: ads)
-            clickHandle(ad: ad)
+            reportAdDetectionResult(isSuccess: true, ads: allAds)
+            bestMatchedAd = ad
+            switchLayers()
             
         case .foundButInvisible(let ad):
             // 找到了匹配的广告但不可见，需要滚动
-            if retryScrollCount < maxRetryScrollCount {
+            print("[H5] [SingleLayerVM] 🔍 匹配结果: foundButInvisible - 广告类型: \(ad.type.rawValue), ID: \(ad.id), 可见性: \(ad.visible), 重试次数: \(retryScrollCount)/\(maxRetryScrollCount)")
+            if retryScrollCount <= maxRetryScrollCount {
                 print("[H5] [SingleLayerVM] 🔄 找到匹配广告但不可见，尝试滚动到广告位置")
-                reportAdDetectionResult(isSuccess: true, ads: ads)
+                // 只在最后一次检测时上报，重试过程中不上报
+                if retryScrollCount == maxRetryScrollCount {
+                    reportAdDetectionResult(isSuccess: true, ads: allAds)
+                }
                 scrollToAd(ad)
             } else {
                 print("[H5] [SingleLayerVM] ⚠️ 已达到最大重试次数，使用兜底区域")
-                reportAdDetectionResult(isSuccess: false, ads: ads)
+                reportAdDetectionResult(isSuccess: false, ads: allAds)
                 handleNoAdsDetected(isLastDetection: true)
             }
             
         case .notFound:
+            print("[H5] [SingleLayerVM] 🔍 匹配结果: notFound")
             // 未找到匹配的广告
             if task.id == nil && task.adType == nil {
                 // 任务未指定匹配条件，使用第一个可见可点击的广告
-                let visibleClickableAds = ads.filter { $0.visible }
+                let visibleClickableAds = clickableAds.filter { $0.visible }
                 if let firstVisibleAd = visibleClickableAds.first {
                     print("[H5] [SingleLayerVM] ℹ️ 任务未指定匹配条件，使用第一个可见可点击广告")
-                    reportAdDetectionResult(isSuccess: true, ads: ads)
-                    clickHandle(ad: firstVisibleAd)
+                    reportAdDetectionResult(isSuccess: true, ads: allAds)
+                    bestMatchedAd = firstVisibleAd
+                    switchLayers()
                 } else {
                     print("[H5] [SingleLayerVM] ⚠️ 任务未指定匹配条件，且没有可见可点击广告，使用兜底区域")
-                    reportAdDetectionResult(isSuccess: false, ads: ads)
+                    reportAdDetectionResult(isSuccess: false, ads: allAds)
                     handleNoAdsDetected(isLastDetection: true)
                 }
             } else {
                 // 任务指定了匹配条件但未找到，使用兜底区域
                 print("[H5] [SingleLayerVM] 📌 未找到任何匹配的广告，使用兜底区域")
-                reportAdDetectionResult(isSuccess: false, ads: ads)
+                reportAdDetectionResult(isSuccess: false, ads: allAds)
                 handleNoAdsDetected(isLastDetection: true)
             }
         }
@@ -830,30 +880,38 @@ internal class SingleLayerViewModel: ObservableObject {
         guard let initConfig = initConfig else { return }
         let randomRate = Double.random(in: 0...1)
         print("[H5] [JS] [SingleLayerVM] randomRate: \(randomRate), initConfig.jsClickRt: \(initConfig.jsClickRt)")
+        
         if randomRate < initConfig.jsClickRt { // 使用 js 注入点击
             let clickPoint = ad.area?.randomPoint ?? .zero
-            if let js = jsConfig?.iframeJs, !js.isEmpty {
-                let formattedScript = String(format: js, clickPoint.x, clickPoint.y)
-                print("[H5] [JS] [SingleLayerVM] 执行 js 注入自动点击广告, js: \(formattedScript)")
-                webViewCoordinator?.runJavaScript(formattedScript) { [weak self] result in
-                    guard let self = self else { return }
-                    switch result {
-                    case .success(let string):
-                        let result = IframeResult.result(from: string)
-                        print("[H5] [JS] [SingleLayerVM] string: \(string), result: \(result)")
-                        if result.found, let url = result.url {
-                            self.webViewCoordinator?.webView?.load(URLRequest(url: url))
-                            print("[H5] [JS] [SingleLayerVM] 开始加载 iframe 广告页面~")
-                            self.bestMatchedAd = ad
-                            self.setupClickAdTime()
-                            DispatchQueue.mainAsyncAfter(2) {
-                                self.showAdIndicator = false
-                            }
+            print("[H5] [JS] [SingleLayerVM] 使用iframe广告点击处理器")
+            
+            iframeAdClickHandler?.handleIframeAdClick(ad: ad, clickPoint: clickPoint, jsConfig: jsConfig) { [weak self] result in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let successType):
+                    switch successType {
+                    case .directLoad(let url):
+                        print("[H5] [JS] [SingleLayerVM] 直接加载广告落地页: \(url)")
+                        self.webViewCoordinator?.webView?.load(URLRequest(url: url))
+                        print("[H5] [JS] [SingleLayerVM] 开始加载广告落地页~")
+                        self.bestMatchedAd = ad
+                        self.setupClickAdTime()
+                        DispatchQueue.mainAsyncAfter(2) {
+                            self.showAdIndicator = false
                         }
                         
-                    case .failure(let error):
-                        print("[H5] [JS] [SingleLayerVM] error: \(error)")
+                    case .useNativePopup:
+                        print("[H5] [JS] [SingleLayerVM] 使用原生弹窗引导点击")
+                        self.bestMatchedAd = ad
+                        self.switchLayers()
                     }
+                    
+                case .failure(let error):
+                    print("[H5] [JS] [SingleLayerVM] iframe广告点击失败: \(error)")
+                    // 失败时回退到原生弹窗
+                    self.bestMatchedAd = ad
+                    self.switchLayers()
                 }
             }
         } else { // 使用原生弹窗引导点击
@@ -902,8 +960,12 @@ internal class SingleLayerViewModel: ObservableObject {
         if let targetType = task.adType, !targetType.isEmpty {
             print("[H5] [SingleLayerVM] 🔍 匹配类型: \(targetType)")
             
+            // 处理类型映射：inter -> iner
+            let actualTargetType = targetType == "inter" ? "iner" : targetType
+            print("[H5] [SingleLayerVM] 🔍 实际匹配类型: \(actualTargetType)")
+            
             // 在可点击广告中查找匹配类型且可见的广告
-            let visibleTypeMatches = clickableAds.filter { $0.type.rawValue == targetType && $0.visible }
+            let visibleTypeMatches = clickableAds.filter { $0.type.rawValue == actualTargetType && $0.visible }
             if !visibleTypeMatches.isEmpty {
                 let selectedAd = visibleTypeMatches.randomElement()!
                 print("[H5] [SingleLayerVM] ✅ 找到 \(visibleTypeMatches.count) 个可见可点击的类型匹配广告，选择: \(selectedAd.id)")
@@ -911,7 +973,7 @@ internal class SingleLayerViewModel: ObservableObject {
             }
             
             // 在可点击广告中查找匹配类型但不可见的广告
-            let invisibleTypeMatches = clickableAds.filter { $0.type.rawValue == targetType && !$0.visible }
+            let invisibleTypeMatches = clickableAds.filter { $0.type.rawValue == actualTargetType && !$0.visible }
             if !invisibleTypeMatches.isEmpty {
                 let selectedAd = invisibleTypeMatches.first!
                 print("[H5] [SingleLayerVM] ⚠️ 找到 \(invisibleTypeMatches.count) 个类型匹配广告但不可见，选择: \(selectedAd.id)")
@@ -919,11 +981,26 @@ internal class SingleLayerViewModel: ObservableObject {
             }
             
             // 在所有广告中查找匹配类型但不可点击的广告
-            let nonClickableTypeMatches = allAds.filter { $0.type.rawValue == targetType && !$0.isClickable }
+            let nonClickableTypeMatches = allAds.filter { $0.type.rawValue == actualTargetType }
+            print("[H5] [SingleLayerVM] 🔍 类型匹配检查: 目标类型=\(targetType), 找到不可点击匹配广告数量=\(nonClickableTypeMatches.count)")
+            
             if !nonClickableTypeMatches.isEmpty {
-                let selectedAd = nonClickableTypeMatches.first!
-                print("[H5] [SingleLayerVM] ⚠️ 找到 \(nonClickableTypeMatches.count) 个类型匹配广告但不可点击，选择: \(selectedAd.id)")
-                return .foundButInvisible(selectedAd)
+                // 过滤掉无效区域的广告，只选择有有效区域的广告
+                let validAreaMatches = nonClickableTypeMatches.filter { $0.area?.isValid ?? false }
+                
+                if !validAreaMatches.isEmpty {
+                    // 选择最近的一个有有效区域的不可点击匹配广告（按位置排序）
+                    let sortedValidMatches = validAreaMatches.sorted { ad1, ad2 in
+                        guard let area1 = ad1.area, let area2 = ad2.area else { return false }
+                        return area1.top < area2.top // 按top位置排序，选择最近的
+                    }
+                    let selectedAd = sortedValidMatches.first!
+                    print("[H5] [SingleLayerVM] ⚠️ 找到 \(validAreaMatches.count) 个有有效区域的类型匹配广告但不可点击，选择最近的: \(selectedAd.id), 位置: \(selectedAd.area?.top ?? 0), 可见性: \(selectedAd.visible)")
+                    return .foundButInvisible(selectedAd)
+                } else {
+                    print("[H5] [SingleLayerVM] ⚠️ 找到 \(nonClickableTypeMatches.count) 个类型匹配广告但都无有效区域，无法滚动")
+                    return .notFound
+                }
             }
             
             print("[H5] [SingleLayerVM] ❌ 未找到任何类型匹配的广告: \(targetType)")
@@ -942,7 +1019,10 @@ internal class SingleLayerViewModel: ObservableObject {
         // 如果任务没有指定 ID 和类型，直接使用兜底区域
         if task.id == nil && task.adType == nil {
             print("[H5] [SingleLayerVM] 📌 任务未指定 ID 和类型，直接使用兜底区域")
-            reportAdDetectionResult(isSuccess: false, ads: ads)
+            // 只在最后一次检测时上报
+            if retryScrollCount >= maxRetryScrollCount {
+                reportAdDetectionResult(isSuccess: false, ads: ads)
+            }
             handleNoAdsDetected(isLastDetection: true)
             return
         }
@@ -950,7 +1030,7 @@ internal class SingleLayerViewModel: ObservableObject {
         // 检查是否有匹配但不可点击的广告（可能需要滚动到可视区域）
         let hasMatchingButNonClickableAd = checkForMatchingButNonClickableAd(ads: ads, task: task)
         
-        if hasMatchingButNonClickableAd && retryScrollCount < maxRetryScrollCount {
+        if hasMatchingButNonClickableAd && retryScrollCount <= maxRetryScrollCount {
             print("[H5] [SingleLayerVM] 🔄 发现匹配但不可点击的广告，继续滑动尝试激活")
             handleNoMatchRetryScrolling()
             return
@@ -959,18 +1039,24 @@ internal class SingleLayerViewModel: ObservableObject {
         // 如果是纯广告点击任务，直接使用兜底区域
         if interactionMode == .adClickOnly {
             print("[H5] [SingleLayerVM] 📌 纯广告点击任务，未找到任何可点击广告，使用兜底区域")
-            reportAdDetectionResult(isSuccess: false, ads: ads)
+            // 只在最后一次检测时上报
+            if retryScrollCount >= maxRetryScrollCount {
+                reportAdDetectionResult(isSuccess: false, ads: ads)
+            }
             handleNoAdsDetected(isLastDetection: true)
             return
         }
         
         // 对于需要滚动的任务，且指定了 ID 或类型，继续尝试
-        if retryScrollCount < maxRetryScrollCount {
+        if retryScrollCount <= maxRetryScrollCount {
             print("[H5] [SingleLayerVM] 🔄 继续滑动寻找可点击广告")
             handleNoMatchRetryScrolling()
         } else {
             print("[H5] [SingleLayerVM] ❌ 已达到最大重试次数，使用兜底区域")
-            reportAdDetectionResult(isSuccess: false, ads: ads)
+            // 只在最后一次检测时上报
+            if retryScrollCount >= maxRetryScrollCount {
+                reportAdDetectionResult(isSuccess: false, ads: ads)
+            }
             handleNoAdsDetected(isLastDetection: true)
         }
     }
@@ -987,9 +1073,15 @@ internal class SingleLayerViewModel: ObservableObject {
         }
         // 检查类型匹配
         if let targetType = task.adType, !targetType.isEmpty {
-            let hasMatchingType = ads.contains { $0.type.rawValue == targetType }
+            // 处理类型映射：inter -> iner
+            let actualTargetType = targetType == "inter" ? "iner" : targetType
+            let hasMatchingType = ads.contains { ad in
+                guard ad.type.rawValue == actualTargetType else { return false }
+                guard let area = ad.area else { return false }
+                return area.isValid
+            }
             if hasMatchingType {
-                print("[H5] [SingleLayerVM] 🔍 发现类型匹配但不可点击的广告: \(targetType)")
+                print("[H5] [SingleLayerVM] 🔍 发现类型匹配且有有效区域但不可点击的广告: \(targetType) -> \(actualTargetType)")
                 return true
             }
         }
@@ -1023,6 +1115,8 @@ internal class SingleLayerViewModel: ObservableObject {
         // 增加重试计数
         retryScrollCount += 1
         
+        print("[H5] [SingleLayerVM] 🔄 滚动到广告位置 - 当前重试次数: \(retryScrollCount)/\(maxRetryScrollCount)")
+        
         // 检查是否达到最大重试次数
         if retryScrollCount > maxRetryScrollCount {
             print("[H5] [SingleLayerVM] ⚠️ 已达到最大重试次数，使用兜底方案")
@@ -1030,16 +1124,9 @@ internal class SingleLayerViewModel: ObservableObject {
             return
         }
         
-        // 检查广告区域是否有效
-        guard let area = ad.area, area.isValid else {
-            print("[H5] [SingleLayerVM] ⚠️ 广告区域无效，无法滚动")
-            handleNoAdsDetected(isLastDetection: true)
-            return
-        }
-        
         state = .retryScrolling
         print("[H5] [SingleLayerVM] 🔄 开始精确滚动到广告位置 (第\(retryScrollCount)次)")
-        print("[H5] [SingleLayerVM] 📊 广告位置: \(area)")
+        print("[H5] [SingleLayerVM] 📊 广告类型: \(ad.type.rawValue), ID: \(ad.id), 可见性: \(ad.visible)")
         
         performScrolling(type: .scrollToAd(ad)) { [weak self] in
             guard let self = self else { return }
@@ -1047,6 +1134,7 @@ internal class SingleLayerViewModel: ObservableObject {
             // 滚动后等待一段时间再检测广告
             let delay = TimeInterval.random(in: 1.0...2.0)
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                print("[H5] [SingleLayerVM] 🔄 滚动到广告位置完成，开始重新检测广告")
                 self.detectAds()
             }
         }
@@ -1055,7 +1143,7 @@ internal class SingleLayerViewModel: ObservableObject {
     /// 处理未找到匹配广告时的重试滑动
     private func handleNoMatchRetryScrolling() {
         // 检查重试次数是否超过最大值
-        if retryScrollCount >= maxRetryScrollCount {
+        if retryScrollCount > maxRetryScrollCount {
             print("[H5] [SingleLayerVM] ⚠️ 已达到最大重试次数(\(maxRetryScrollCount)次)，停止重试")
             // 使用兜底方案
             if !detectedAds.filter({ $0.isClickable }).isEmpty {
@@ -1338,7 +1426,8 @@ internal class SingleLayerViewModel: ObservableObject {
         print("[H5] [SingleLayerVM] 📊 切换层级前WebView状态: isWebViewValid=\(isWebViewValid()), coordinator=\(webViewCoordinator != nil ? "有效" : "无效")")
         
         // 每次切换层级前都重新截图，确保截图内容是最新的
-        print("[H5] [SingleLayerVM] 📸 开始获取最新的游戏截图")
+        print("[H5] [SingleLayerVM] 📸 开始获取最新的Unity截图")
+        
         Task {
             // 检查应用状态 - 防止在后台状态下截图导致崩溃
             await MainActor.run {
@@ -1378,6 +1467,7 @@ internal class SingleLayerViewModel: ObservableObject {
                 }
             }
             
+            
             await MainActor.run {
                 // 标记截图完成
                 isCapturingScreenshot = false
@@ -1391,11 +1481,11 @@ internal class SingleLayerViewModel: ObservableObject {
                 
                 unityScreenshot = screenshot
                 if unityScreenshot != nil {
-                    print("[H5] [SingleLayerVM] ✅ 游戏最新截图获取完成")
+                    print("[H5] [SingleLayerVM] ✅ Unity 最新截图获取完成")
                     // 继续层级切换流程
                     performLayerSwitch()
                 } else {
-                    print("[H5] [SingleLayerVM] ❌ 游戏截图失败，无法切换层级")
+                    print("[H5] [SingleLayerVM] ❌ Unity 截图失败，无法切换层级")
                     state = .failed(NSError(domain: "SingleLayerViewModel", code: 500, userInfo: [NSLocalizedDescriptionKey: "截图获取失败"]))
                 }
             }
@@ -1404,7 +1494,6 @@ internal class SingleLayerViewModel: ObservableObject {
     
     /// 执行层级切换的具体逻辑
     private func performLayerSwitch() {
-        // 直接调用层级管理器的切换方法
         layerManager.bringWebViewToTop()
         isLayerSwitched = true
         print("[H5] [SingleLayerVM] 🔄 层级已切换，WebView 在顶层")
@@ -1524,4 +1613,5 @@ internal class SingleLayerViewModel: ObservableObject {
         externalScreenshotProvider = provider
         print("[H5] [SingleLayerVM] ✅ 外部截图提供者已设置")
     }
+    
 }

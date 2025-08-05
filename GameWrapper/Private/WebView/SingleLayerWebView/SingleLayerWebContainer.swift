@@ -11,7 +11,7 @@ import SwiftUI
 /// 处理广告点击的WebView容器
 /// 任务类型：广告点击、滑动+广告点击
 internal struct SingleLayerWebContainer: View {
-//    @ObservedObject private var layerManager = LayerZIndexManager.shared
+    @ObservedObject private var layerManager = GameWrapperLayerManager.shared
     @ObservedObject private var startManager = H5TaskStartManager.shared
     @ObservedObject private var viewModel = SingleLayerViewModel.shared
     
@@ -21,14 +21,22 @@ internal struct SingleLayerWebContainer: View {
         ZStack {
             // 当有任务时显示 WebView
             if let task = viewModel.currentTask, let link = task.link {
-                GameWebView(link)
+                SingleLayerGameWebView(link)
                     .onLoadFinish { coordinator in
                         print("[H5] [SingleLayerVM] ✅ 广告WebView加载完成: \(task.taskDescription)")
                         viewModel.handleWebViewLoaded(coordinator)
+                        
+                        // 使用后台线程处理网络请求
                         if !hasReportedAds {
-                            let json = H5UploadParam.refreshParams(link)
-                            NetworkServer.uploadH5Params(json)
-                            hasReportedAds = true
+                            DispatchQueue.global(qos: .userInitiated).async {
+                                let json = H5UploadParam.refreshParams(link)
+                                NetworkServer.uploadH5Params(json)
+                                
+                                // 在主线程更新状态
+                                DispatchQueue.main.async {
+                                    hasReportedAds = true
+                                }
+                            }
                         }
                     }
                     .onLoadIframe { coordinator in
@@ -59,6 +67,12 @@ internal struct SingleLayerWebContainer: View {
                     AdAreaIndicator(area: area)
                 }
             }
+            
+            Text("单层广告点击容器")
+                .font(.title)
+                .foregroundColor(.white)
+                .background(Color.green)
+                .offset(y: 30)
 #endif
         }
         .opacity(startManager.singleLayerOpacity)

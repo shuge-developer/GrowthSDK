@@ -39,6 +39,28 @@ internal class WebViewCoordinator: NSObject {
     static let coordinatorDidInitialize = Notification.Name("WebViewCoordinatorDidInitialize")
     static let coordinatorWillDeinitialize = Notification.Name("WebViewCoordinatorWillDeinitialize")
     
+    // 共享进程池，提高性能
+    private static let sharedProcessPool = WKProcessPool()
+    // 共享配置，减少内存占用
+    private static let sharedConfiguration: WKWebViewConfiguration = {
+        let config = WKWebViewConfiguration()
+        config.processPool = sharedProcessPool
+        
+        // 优化配置参数
+        config.allowsInlineMediaPlayback = true
+        config.mediaTypesRequiringUserActionForPlayback = []
+        config.suppressesIncrementalRendering = false
+        config.allowsAirPlayForMediaPlayback = true
+        
+        // 预加载优化
+        config.websiteDataStore = WKWebsiteDataStore.default()
+        
+        // 设置用户代理
+        config.applicationNameForUserAgent = "SmallGame/1.0"
+        
+        return config
+    }()
+    
     weak var webView: SGWebView?
     var onDidReceive: ((WebViewCoordinator.Message) -> Void)?
     var onLoadIframe: ((WebViewCoordinator) -> Void)?
@@ -74,7 +96,9 @@ internal class WebViewCoordinator: NSObject {
     
     func makeWebView() -> SGWebView {
         print("[H5] [WebCoordinator] 创建 WebView")
-        let configuration = WKWebViewConfiguration()
+        
+        // 使用共享配置的副本，避免配置冲突
+        let configuration = WebViewCoordinator.sharedConfiguration.copy() as! WKWebViewConfiguration
         let userController = WKUserContentController()
         
         //userController.add(self, name: "handlerName")
@@ -90,11 +114,20 @@ internal class WebViewCoordinator: NSObject {
         webView.scrollView.bounces = true
         webView.backgroundColor = .white
         
+        // 优化 WebView 性能设置
+        webView.scrollView.decelerationRate = UIScrollView.DecelerationRate.normal
+        webView.scrollView.showsVerticalScrollIndicator = false
+        webView.scrollView.showsHorizontalScrollIndicator = false
+        
         // 确保 scrollView 设置正确
         print("[H5] [WebCoordinator] WebView 创建完成: scrollView.isScrollEnabled=\(webView.scrollView.isScrollEnabled)")
         print("[H5] [WebCoordinator] WebView scrollView 属性: bounces=\(webView.scrollView.bounces), alwaysBounceVertical=\(webView.scrollView.alwaysBounceVertical)")
         
         self.webView = webView
+        
+        // 应用性能优化
+        optimizeWebViewPerformance()
+        
         return webView
     }
     
@@ -183,10 +216,15 @@ extension WebViewCoordinator: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("[H5] [web] \(#function)")
-        DispatchQueue.main.async {
-            self.onDidFinish?(self)
-        }
+        let startTime = CFAbsoluteTimeGetCurrent()
+        print("[H5] [web] \(#function) - 开始处理完成回调")
+        
+        // 立即执行回调，避免主队列阻塞
+        self.onDidFinish?(self)
+        
+        let endTime = CFAbsoluteTimeGetCurrent()
+        let duration = (endTime - startTime) * 1000 // 转换为毫秒
+        print("[H5] [web] didFinish 回调处理完成，耗时: \(String(format: "%.2f", duration))ms")
     }
     
     func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
@@ -262,6 +300,45 @@ internal extension WebViewCoordinator {
     func resetNavigationState() {
         hasTriggeredIframeCallback = false
         print("[H5] [web] 📱 重置导航状态")
+    }
+    
+    /// 预加载优化：预热 WebView
+    func preloadWebView() {
+        guard let webView = webView else { return }
+        
+        // 预加载一些常用的 JavaScript 函数
+        let preloadScript = """
+            // 预加载常用函数
+            window.preloadComplete = true;
+            console.log('WebView preload completed');
+        """
+        
+        webView.evaluateJavaScript(preloadScript) { _, _ in
+            print("[H5] [WebCoordinator] WebView 预加载完成")
+        }
+    }
+    
+    /// 清理 WebView 缓存
+    func clearWebViewCache() {
+        WKWebsiteDataStore.default().removeData(
+            ofTypes: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache],
+            modifiedSince: Date(timeIntervalSince1970: 0)
+        ) {
+            print("[H5] [WebCoordinator] WebView 缓存清理完成")
+        }
+    }
+    
+    /// 优化 WebView 性能设置
+    func optimizeWebViewPerformance() {
+        guard let webView = webView else { return }
+        
+        // 设置更激进的性能参数
+        webView.scrollView.decelerationRate = UIScrollView.DecelerationRate.fast
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
+        
+        // 禁用一些不必要的功能以提高性能
+        webView.allowsLinkPreview = false
+        webView.allowsBackForwardNavigationGestures = false
     }
     
 }

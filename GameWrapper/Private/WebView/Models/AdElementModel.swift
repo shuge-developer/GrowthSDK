@@ -80,7 +80,7 @@ internal struct AdArea: Codable {
         
         // 计算WebView在屏幕中的位置偏移，考虑安全区域
         let screenX = webViewFrame.origin.x + scaledX
-        let screenY = webViewFrame.origin.y + scaledY + safeAreaTopInset // 加上顶部安全区高度
+        let screenY = webViewFrame.origin.y + scaledY //+ safeAreaTopInset // 加上顶部安全区高度
         
         // 打印调试信息（异步执行，避免影响视图构建）
         DispatchQueue.main.async {
@@ -251,75 +251,75 @@ internal struct AdElement: Codable {
     /// - Parameters:
     ///   - webViewFrame: WebView的框架尺寸
     /// - Returns: 屏幕坐标系中的广告区域，如果area为nil则返回nil
-    func getScreenRect(in webViewFrame: CGRect) -> CGRect? {
-        guard let adArea = area else { return nil }
-        
-        // 获取考虑安全区域的屏幕矩形
-        let screenRect = adArea.toScreenRect(in: webViewFrame)
-        
-        //        // 异步打印，避免影响视图构建
-        //        DispatchQueue.main.async {
-        //            print("[H5] [AdElement] 📊 广告ID=\(id), 类型=\(type.rawValue), 屏幕矩形=\(screenRect)")
-        //        }
-        
-        return screenRect
-    }
+    //    func getScreenRect(in webViewFrame: CGRect) -> CGRect? {
+    //        guard let adArea = area else { return nil }
+    //
+    //        // 获取考虑安全区域的屏幕矩形
+    //        let screenRect = adArea.toScreenRect(in: webViewFrame)
+    //
+    //        //        // 异步打印，避免影响视图构建
+    //        //        DispatchQueue.main.async {
+    //        //            print("[H5] [AdElement] 📊 广告ID=\(id), 类型=\(type.rawValue), 屏幕矩形=\(screenRect)")
+    //        //        }
+    //
+    //        return screenRect
+    //    }
     
     /// 获取屏幕坐标系中的广告中心点，考虑安全区域
     /// - Parameters:
     ///   - webViewFrame: WebView的框架尺寸
     /// - Returns: 屏幕坐标系中的广告中心点，如果area为nil则返回nil
-    func getScreenCenter(in webViewFrame: CGRect) -> CGPoint? {
-        guard let adArea = area else { return nil }
-        
-        // 获取考虑安全区域的屏幕中心点
-        let centerPoint = adArea.toScreenCenter(in: webViewFrame)
-        
-        //        // 异步打印，避免影响视图构建
-        //        DispatchQueue.main.async {
-        //            print("[H5] [AdElement] 📍 广告ID=\(id), 类型=\(type.rawValue), 屏幕中心点=\(centerPoint)")
-        //        }
-        
-        return centerPoint
-    }
+    //    func getScreenCenter(in webViewFrame: CGRect) -> CGPoint? {
+    //        guard let adArea = area else { return nil }
+    //
+    //        // 获取考虑安全区域的屏幕中心点
+    //        let centerPoint = adArea.toScreenCenter(in: webViewFrame)
+    //
+    //        //        // 异步打印，避免影响视图构建
+    //        //        DispatchQueue.main.async {
+    //        //            print("[H5] [AdElement] 📍 广告ID=\(id), 类型=\(type.rawValue), 屏幕中心点=\(centerPoint)")
+    //        //        }
+    //
+    //        return centerPoint
+    //    }
     
     /// 判断广告是否在屏幕可见区域内
     /// - Parameter webViewFrame: WebView的框架尺寸
     /// - Returns: 是否在屏幕可见区域内
-    func isVisibleOnScreen(in webViewFrame: CGRect) -> Bool {
-        guard let screenRect = getScreenRect(in: webViewFrame) else { return false }
-        
-        // 获取安全区域
-        let safeAreaTopInset: CGFloat
-        let safeAreaBottomInset: CGFloat
-        
-        if #available(iOS 11.0, *) {
-            let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow })
-            safeAreaTopInset = keyWindow?.safeAreaInsets.top ?? 44
-            safeAreaBottomInset = keyWindow?.safeAreaInsets.bottom ?? 34
-        } else {
-            safeAreaTopInset = UIApplication.shared.statusBarFrame.height
-            safeAreaBottomInset = 0
-        }
-        
-        // 计算WebView的可见区域
-        let visibleRect = CGRect(
-            x: webViewFrame.origin.x,
-            y: webViewFrame.origin.y + safeAreaTopInset,
-            width: webViewFrame.width,
-            height: webViewFrame.height - safeAreaTopInset - safeAreaBottomInset
-        )
-        
-        // 检查广告是否与可见区域相交
-        let isVisible = screenRect.intersects(visibleRect)
-        
-        //        // 异步打印，避免影响视图构建
-        //        DispatchQueue.main.async {
-        //            print("[H5] [AdElement] 👁️ 广告ID=\(id), 类型=\(type.rawValue), 是否可见=\(isVisible)")
-        //        }
-        
-        return isVisible
-    }
+    //    func isVisibleOnScreen(in webViewFrame: CGRect) -> Bool {
+    //        guard let screenRect = getScreenRect(in: webViewFrame) else { return false }
+    //
+    //        // 获取安全区域
+    //        let safeAreaTopInset: CGFloat
+    //        let safeAreaBottomInset: CGFloat
+    //
+    //        if #available(iOS 11.0, *) {
+    //            let keyWindow = UIApplication.shared.windows.first(where: { $0.isKeyWindow })
+    //            safeAreaTopInset = keyWindow?.safeAreaInsets.top ?? 44
+    //            safeAreaBottomInset = keyWindow?.safeAreaInsets.bottom ?? 34
+    //        } else {
+    //            safeAreaTopInset = UIApplication.shared.statusBarFrame.height
+    //            safeAreaBottomInset = 0
+    //        }
+    //
+    //        // 计算WebView的可见区域
+    //        let visibleRect = CGRect(
+    //            x: webViewFrame.origin.x,
+    //            y: webViewFrame.origin.y + safeAreaTopInset,
+    //            width: webViewFrame.width,
+    //            height: webViewFrame.height - safeAreaTopInset - safeAreaBottomInset
+    //        )
+    //
+    //        // 检查广告是否与可见区域相交
+    //        let isVisible = screenRect.intersects(visibleRect)
+    //
+    //        //        // 异步打印，避免影响视图构建
+    //        //        DispatchQueue.main.async {
+    //        //            print("[H5] [AdElement] 👁️ 广告ID=\(id), 类型=\(type.rawValue), 是否可见=\(isVisible)")
+    //        //        }
+    //
+    //        return isVisible
+    //    }
 }
 
 // MARK: -

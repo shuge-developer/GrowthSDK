@@ -19,7 +19,7 @@ import Foundation
 /// 枚举值设计说明：
 /// - 基础值(0-2)：单一操作类型
 /// - 组合值(3-5)：滑动+其他操作的组合
-internal enum TaskType: Int16, Codable {
+internal enum TaskType: Int16, Codable, CustomStringConvertible {
     /// 页面展示
     /// 场景：只加载H5页面并展示一段时间，不进行任何用户交互
     /// 适用：flag=0 且功能点击概率判断为否的情况
@@ -49,6 +49,17 @@ internal enum TaskType: Int16, Codable {
     /// 场景：先滑动页面找到功能区，然后点击功能
     /// 适用：需要滑动 且 基础操作类型为fClick的情况
     case mFClick = 5
+    
+    var description: String {
+        switch self {
+        case .show:     return "页面展示"
+        case .aClick:   return "广告点击"
+        case .fClick:   return "功能点击"
+        case .move:     return "页面滑动"
+        case .mAClick:  return "滑动+广告点击"
+        case .mFClick:  return "滑动+功能点击"
+        }
+    }
 }
 
 // MARK: - TaskType计算协议

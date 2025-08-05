@@ -1,6 +1,6 @@
 //
 //  PopupPositionManager.swift
-//  SmallGame
+//  GameWrapper
 //
 //  Created by arvin on 2025/6/12.
 //

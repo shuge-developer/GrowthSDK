@@ -80,19 +80,29 @@ private struct AnimatedWebViewLayer: View {
     
     var body: some View {
         ZStack {
-            GameWebView(layer.url)
+            MultiLayerGameWebView(layer.url, layerId: layer.id)
                 .onLoadFinish { coordinator in
                     print("[H5] [MultiLayerContainer] ✅ WebView加载完成 (zIndex: \(layer.zIndex))")
                     print("[H5] [MultiLayerContainer] 🔗 链接: \(layer.task.link ?? "无链接")")
                     print("[H5] [MultiLayerContainer] 🌐 设置 coordinator")
-                    if let handler = viewModel.getTaskHandler(for: layer.id) {
-                        handler.setCoordinator(coordinator)
-                    }
-                    if !hasReportedAds {
-                        print("[H5] [Upload] h5 加载上报: \(hasReportedAds)")
-                        let json = H5UploadParam.refreshParams(layer.url)
-                        NetworkServer.uploadH5Params(json)
-                        hasReportedAds = true
+                    
+                    // 使用后台线程处理耗时操作
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        if let handler = viewModel.getTaskHandler(for: layer.id) {
+                            handler.setCoordinator(coordinator)
+                        }
+                        
+                        // 网络请求移到后台线程
+                        if !hasReportedAds {
+                            print("[H5] [Upload] h5 加载上报: \(hasReportedAds)")
+                            let json = H5UploadParam.refreshParams(layer.url)
+                            NetworkServer.uploadH5Params(json)
+                            
+                            // 在主线程更新状态
+                            DispatchQueue.main.async {
+                                hasReportedAds = true
+                            }
+                        }
                     }
                 }
                 .onLoadFail { error in
@@ -105,17 +115,23 @@ private struct AnimatedWebViewLayer: View {
 #if DEBUG
             // 调试覆盖层
             if showDebugOverlay {
-                //                GeometryReader { geometry in
-                //                    ForEach(debugRects.indices, id: \.self) { index in
-                //                        let rect = debugRects[index]
-                //                        Rectangle()
-                //                            .stroke(Color.random, lineWidth: 2)
-                //                            .frame(width: rect.width, height: rect.height)
-                //                            .position(x: rect.midX, y: rect.midY)
-                //                    }
-                //                }
-                //                .allowsHitTesting(false)
+                GeometryReader { geometry in
+                    ForEach(debugRects.indices, id: \.self) { index in
+                        let rect = debugRects[index]
+                        Rectangle()
+                            .stroke(Color.random, lineWidth: 2)
+                            .frame(width: rect.width, height: rect.height)
+                            .position(x: rect.midX, y: rect.midY)
+                    }
+                }
+                .allowsHitTesting(false)
             }
+            
+            Text("多层WebView容器")
+                .font(.title)
+                .foregroundColor(.white)
+                .background(Color.blue)
+                .offset(y: -30)
 #endif
         }
         .onAppear {
@@ -123,28 +139,30 @@ private struct AnimatedWebViewLayer: View {
             print("[H5] [MultiLayerContainer] 📋 任务: \(layer.task.taskDescription)")
             print("[H5] [MultiLayerContainer] 🚀 立即启动任务处理器，开始计时")
             
-            // 获取任务处理器并启动，同时设置调试回调
-            if let handler = viewModel.getTaskHandler(for: layer.id) {
-                handler.start()
-                
-                handler.onDebugRectsUpdate = { rects in
-                    print("[H5] [MultiLayerContainer] 🍀 rects: \(rects)")
+            // 使用后台线程启动任务处理器
+            DispatchQueue.global(qos: .userInitiated).async {
+                if let handler = viewModel.getTaskHandler(for: layer.id) {
+                    handler.start()
                     
-                    // 清空之前的可视化区域
-                    debugRects = []
-                    showDebugOverlay = false
-                    
-                    // 如果有新的区域，立即显示
-                    if !rects.isEmpty {
-                        // 使用主线程更新 UI
+                    handler.onDebugRectsUpdate = { rects in
+                        print("[H5] [MultiLayerContainer] 🍀 rects: \(rects)")
+                        
+                        // 在主线程更新 UI
                         DispatchQueue.main.async {
-                            debugRects = rects
-                            showDebugOverlay = true
+                            // 清空之前的可视化区域
+                            debugRects = []
+                            showDebugOverlay = false
+                            
+                            // 如果有新的区域，立即显示
+                            if !rects.isEmpty {
+                                debugRects = rects
+                                showDebugOverlay = true
+                            }
                         }
                     }
+                } else {
+                    print("[H5] [MultiLayerContainer] ❌ 未找到任务处理器: \(layer.id)")
                 }
-            } else {
-                print("[H5] [MultiLayerContainer] ❌ 未找到任务处理器: \(layer.id)")
             }
         }
         .onDisappear {
