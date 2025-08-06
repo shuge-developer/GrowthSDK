@@ -1,65 +1,67 @@
-# GameWrapper SDK 简化集成指南
+# GameWrapper SDK 极简集成指南
 
-## 概述
+## 🎯 SDK 设计理念
 
-GameWrapper SDK 是基于 SmallGame 项目现有架构的简化封装，直接移植了核心组件，提供最小侵入性的集成方案。
+**完全黑盒化，外部零感知** - 外部只需提供游戏视图和截图提供者，所有复杂的多层级WebView交互、层级切换、事件穿透等逻辑全部由SDK内部处理。
 
-## 核心特性
+## 🚀 核心特性
 
-- ✅ **直接移植**: 基于 SmallGame 现有架构，无需重新设计
-- ✅ **最小侵入**: 不集成 Unity 相关代码，通过接口与游戏交互
+- ✅ **完全黑盒化**: 外部只需2个参数，无需了解内部实现
+- ✅ **零感知集成**: 所有复杂逻辑SDK内部处理
+- ✅ **自动层级管理**: 游戏层、WebView层、弹窗层自动切换
+- ✅ **事件穿透机制**: 弹窗点击自动穿透到WebView广告
 - ✅ **双框架支持**: 同时支持 SwiftUI 和 UIKit
-- ✅ **层级管理**: 完整的游戏层、WebView层、弹窗层管理
-- ✅ **广告检测**: 自动检测和点击广告元素
+- ✅ **截图遮盖**: 自动处理层级切换时的视觉连续性
 
-## 快速集成
+## 🚀 极简集成示例
 
-### 1. 初始化 SDK
+### SwiftUI 集成（推荐）
 
 ```swift
+import SwiftUI
 import GameWrapper
 
-// 设置网络配置
-let config = NetworkConfig(
-    appid: "your_app_id",
-    bundleName: "your_bundle_name", 
-    baseUrl: "https://your_api_base_url",
-    publicKey: "your_public_key",
-    appKey: "your_app_key",
-    appIv: "your_app_iv"
-)
-
-GameWebWrapper.shared.setup(network: config)
-
-// 初始化 SDK
-GameWebWrapper.shared.initialize { result in
-    switch result {
-    case .success:
-        print("SDK 初始化成功")
-    case .failure(let error):
-        print("SDK 初始化失败: \(error)")
-    }
-}
-```
-
-### 2. SwiftUI 集成
-
-```swift
 struct ContentView: View {
     var body: some View {
+        // 只需一行代码，SDK处理所有复杂逻辑
         GameWrapperSwiftUIView(
             gameView: {
-                // 你的游戏视图
-                UnityViewWrapper()
-                    .onUnityLoaded { state in
-                        print("Unity 加载完成")
+                // 你的游戏视图，只需实现UnityLoadable协议
+                UnityGameView()
+                    .setUnityStateCallback { loaded in
+                        // 告知SDK Unity加载状态，其他无需关心
+                        print("Unity加载状态: \(loaded)")
                     }
             },
             screenshotProvider: {
-                // 提供游戏截图
-                UnityServiceProvider.asyncUnityScreenshot()
+                // 提供游戏截图，用于层级切换时的视觉连续性
+                return UnityServiceProvider.asyncUnityScreenshot()
             }
         )
+    }
+}
+
+// 你的游戏视图只需实现UnityLoadable协议
+struct UnityGameView: View, UnityLoadable {
+    @State private var unityLoaded = false
+    
+    var body: some View {
+        // 你的Unity游戏内容
+        UnityView()
+            .onAppear {
+                // 模拟Unity加载完成
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    unityLoaded = true
+                }
+            }
+    }
+    
+    func setUnityStateCallback(_ callback: @escaping (Bool) -> Void) -> Self {
+        // 监听Unity状态变化并通知SDK
+        if unityLoaded {
+            callback(true)
+        }
+        return self
     }
 }
 ```

@@ -48,7 +48,14 @@ internal struct SingleLayerWebContainer: View {
                         viewModel.handleWebViewLoadFailed(error)
                     }
             }
-            
+#if DEBUG
+            // 显示广告区域指示器
+            if viewModel.showAdIndicator {
+                if let ad = viewModel.bestMatchedAd, let area = ad.area {
+                    AdAreaIndicator(area: area)
+                }
+            }
+#endif
             // 显示 Unity 截图作为背景
             if let screenshot = viewModel.unityScreenshot {
                 Image(uiImage: screenshot)
@@ -60,20 +67,6 @@ internal struct SingleLayerWebContainer: View {
                         print("[H5] [SingleLayerVM] 展示截图遮罩")
                     }
             }
-#if DEBUG
-            // 显示广告区域指示器
-            if viewModel.showAdIndicator {
-                if let ad = viewModel.bestMatchedAd, let area = ad.area {
-                    AdAreaIndicator(area: area)
-                }
-            }
-            
-            Text("单层广告点击容器")
-                .font(.title)
-                .foregroundColor(.white)
-                .background(Color.green)
-                .offset(y: 30)
-#endif
         }
         .opacity(startManager.singleLayerOpacity)
         .onAppear {

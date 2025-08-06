@@ -10,7 +10,6 @@ import SwiftUI
 import Combine
 import WebKit
 
-#warning("ad")
 /// 单层 WebView 容器的 ViewModel
 internal class SingleLayerViewModel: ObservableObject {
     
@@ -82,9 +81,9 @@ internal class SingleLayerViewModel: ObservableObject {
         return taskRepository.jsConfig
     }
     
-    // MARK: - 外部截图提供者
-    /// 外部截图提供者闭包
-    private var externalScreenshotProvider: (() -> UIImage?)?
+    // MARK: - Unity截图管理器
+    /// Unity截图管理器
+    private let screenshotManager = UnityScreenshotManager.shared
     
     
     // MARK: - 初始化
@@ -701,7 +700,7 @@ internal class SingleLayerViewModel: ObservableObject {
         }
         if let elements = [AdElement].deserialize(from: jsonString) {
             print("[H5] [SingleLayerVM] ✅ 成功解析广告元素: \(elements.count) 个")
-            print("[H5] [SingleLayerVM] 📌 当前任务：\(currentTask?.taskDescription)")
+            print("[H5] [SingleLayerVM] 📌 当前任务：\(currentTask?.taskDescription ?? "无")")
             
             // 设置检测到的广告，让 Combine 监听器处理匹配逻辑
             detectedAds = elements
@@ -1104,7 +1103,7 @@ internal class SingleLayerViewModel: ObservableObject {
         print("[H5] [SingleLayerVM] 📊 任务信息: \(task.taskDescription)")
         
         let json = H5UploadParam.loadParams(ads, link: task.link)
-        print("[H5] [SingleLayerVM] 📊 json: \(json)")
+        print("[H5] [SingleLayerVM] 📊 json: \(String(describing: json))")
         NetworkServer.uploadH5Params(json)
         
         print("[H5] [SingleLayerVM] ✅ 广告检测结果上报完成")
@@ -1456,17 +1455,12 @@ internal class SingleLayerViewModel: ObservableObject {
                 print("[H5] [SingleLayerVM] 🗑️ 已释放旧截图资源")
             }
             
-            // 使用外部截图提供者获取实时截图
-            let screenshot = await MainActor.run {
-                if let provider = externalScreenshotProvider {
-                    print("[H5] [SingleLayerVM] 📸 使用外部截图提供者获取截图")
-                    return provider()
-                } else {
-                    print("[H5] [SingleLayerVM] ⚠️ 外部截图提供者未设置，无法获取截图")
-                    return nil
-                }
-            }
+            // 等待一个短暂的时间，确保Unity视图完全渲染，0.1秒
+            try? await Task.sleep(nanoseconds: 100_000_000)
             
+            // 使用Unity截图管理器获取截图
+            print("[H5] [SingleLayerVM] 📸 使用Unity截图管理器进行截图")
+            let screenshot = await screenshotManager.captureUnityScreenshot()
             
             await MainActor.run {
                 // 标记截图完成
@@ -1480,13 +1474,15 @@ internal class SingleLayerViewModel: ObservableObject {
                 }
                 
                 unityScreenshot = screenshot
-                if unityScreenshot != nil {
-                    print("[H5] [SingleLayerVM] ✅ Unity 最新截图获取完成")
+                if let screenshot = unityScreenshot {
+                    print("[H5] [SingleLayerVM] ✅ Unity 最新截图获取完成，尺寸: \(screenshot.size)")
+                    print("[H5] [SingleLayerVM] 📊 截图详情: scale=\(screenshot.scale), hasAlpha=\(screenshot.cgImage?.alphaInfo != CGImageAlphaInfo.none)")
                     // 继续层级切换流程
                     performLayerSwitch()
                 } else {
-                    print("[H5] [SingleLayerVM] ❌ Unity 截图失败，无法切换层级")
-                    state = .failed(NSError(domain: "SingleLayerViewModel", code: 500, userInfo: [NSLocalizedDescriptionKey: "截图获取失败"]))
+                    print("[H5] [SingleLayerVM] ❌ Unity 截图失败，取消层级切换")
+                    // 截图失败时不进行层级切换，直接标记任务失败
+                    self.state = .failed(NSError(domain: "SingleLayerViewModel", code: 500, userInfo: [NSLocalizedDescriptionKey: "Unity截图失败，无法切换层级"]))
                 }
             }
         }
@@ -1608,10 +1604,10 @@ internal class SingleLayerViewModel: ObservableObject {
     }
     
     // MARK: - 公开方法
-    /// 设置外部截图提供者
-    internal func setScreenshotProvider(_ provider: @escaping () -> UIImage?) {
-        externalScreenshotProvider = provider
-        print("[H5] [SingleLayerVM] ✅ 外部截图提供者已设置")
+    /// 设置Unity控制器，用于截图
+    internal func setUnityController(_ controller: UIViewController) {
+        screenshotManager.setUnityController(controller)
+        print("[H5] [SingleLayerVM] ✅ Unity控制器已设置到截图管理器")
     }
     
 }

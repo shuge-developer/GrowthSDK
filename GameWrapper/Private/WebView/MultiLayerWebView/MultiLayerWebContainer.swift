@@ -126,12 +126,6 @@ private struct AnimatedWebViewLayer: View {
                 }
                 .allowsHitTesting(false)
             }
-            
-            Text("多层WebView容器")
-                .font(.title)
-                .foregroundColor(.white)
-                .background(Color.blue)
-                .offset(y: -30)
 #endif
         }
         .onAppear {

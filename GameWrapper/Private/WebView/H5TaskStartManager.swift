@@ -20,9 +20,6 @@ internal final class H5TaskStartManager: ObservableObject {
     /// 单层广告点击WebView是否应该显示（层级1）
     @Published var shouldShowAdClickWebView: Bool = false
     
-    /// Unity是否已加载完成
-    @Published var isUnityLoaded: Bool = false
-    
     /// 多层WebView透明度
     @Published var multiLayerOpacity: Double = 1.0
     
@@ -30,7 +27,7 @@ internal final class H5TaskStartManager: ObservableObject {
     @Published var singleLayerOpacity: Double = 1.0
     
     /// Unity截图透明度
-    @Published var screenshotOpacity: Double = 1.0
+    @Published var screenshotOpacity: Double = 0.5
     
     /// 多层WebView独立层级透明度
     @Published var layerOpacities: [String: Double] = [:]
@@ -56,75 +53,55 @@ internal final class H5TaskStartManager: ObservableObject {
         }
     }
     
-    /// 设置Unity加载状态
-    func setUnityLoaded(_ loaded: Bool) {
-        isUnityLoaded = loaded
-        print("[H5] [H5TaskStartManager] 🎮 Unity加载状态: \(loaded)")
-        checkShouldShowWebViews()
-    }
-    
     /// 设置数据观察者
     private func setupDataObservers() {
-        // 监听TaskRepository的数据变化
-        Publishers.CombineLatest4(
+        // 只监听任务和配置
+        Publishers.CombineLatest3(
             taskRepository.$multiLayerTasks,
             taskRepository.$adClickTasks,
-            taskRepository.$initConfig,
-            $isUnityLoaded
+            taskRepository.$initConfig
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (multiLayerTasks, adClickTasks, initConfig, unityLoaded) in
+        .sink { [weak self] (multiLayerTasks, adClickTasks, initConfig) in
             self?.handleDataChange(
                 multiLayerTasks: multiLayerTasks,
                 adClickTasks: adClickTasks,
-                initConfig: initConfig,
-                unityLoaded: unityLoaded
+                initConfig: initConfig
             )
         }
         .store(in: &cancellables)
     }
     
     /// 处理数据变化
-    private func handleDataChange(multiLayerTasks: [LinkTask], adClickTasks: [LinkTask], initConfig: InitConfig?, unityLoaded: Bool) {
+    private func handleDataChange(multiLayerTasks: [LinkTask], adClickTasks: [LinkTask], initConfig: InitConfig?) {
         let hasValidMultiLayerTasks = !multiLayerTasks.isEmpty
         let hasValidAdClickTasks = !adClickTasks.isEmpty
         let hasInitConfig = initConfig != nil
         
-        //        print("[H5] [H5TaskStartManager] 📊 数据状态检查:")
-        //        print("[H5] [H5TaskStartManager] - Unity已加载: \(unityLoaded)")
-        //        print("[H5] [H5TaskStartManager] - 多层WebView任务数: \(multiLayerTasks.count)")
-        //        print("[H5] [H5TaskStartManager] - 广告点击任务数: \(adClickTasks.count)")
-        //        print("[H5] [H5TaskStartManager] - 配置状态: \(hasInitConfig ? "已加载" : "未加载")")
-        
         // 多层WebView容器显示条件
-        let newShouldShowMultiLayer = unityLoaded && hasValidMultiLayerTasks && hasInitConfig
-        
+        let newShouldShowMultiLayer = hasValidMultiLayerTasks && hasInitConfig
         // 单层广告点击WebView显示条件
-        let newShouldShowAdClick = unityLoaded && hasValidAdClickTasks && hasInitConfig
+        let newShouldShowAdClick = hasValidAdClickTasks && hasInitConfig
         
         // 更新多层WebView容器状态
         if newShouldShowMultiLayer != shouldShowMultiLayerWebView {
             shouldShowMultiLayerWebView = newShouldShowMultiLayer
             print("[H5] [H5TaskStartManager] 🚀 多层WebView显示状态变更: \(newShouldShowMultiLayer)")
-            
             if newShouldShowMultiLayer {
                 print("[H5] [H5TaskStartManager] ✅ 多层WebView条件满足，开始显示")
             }
         }
-        
         // 更新单层广告点击WebView状态
         if newShouldShowAdClick != shouldShowAdClickWebView {
             shouldShowAdClickWebView = newShouldShowAdClick
             print("[H5] [H5TaskStartManager] 🚀 广告点击WebView显示状态变更: \(newShouldShowAdClick)")
-            
             if newShouldShowAdClick {
                 print("[H5] [H5TaskStartManager] ✅ 广告点击WebView条件满足，可以使用")
             }
         }
-        
         // 如果任一WebView类型满足显示条件，记录状态详情
         if newShouldShowMultiLayer || newShouldShowAdClick {
-            //            logCurrentStatus()
+            // logCurrentStatus()
         }
     }
     
@@ -133,8 +110,7 @@ internal final class H5TaskStartManager: ObservableObject {
         handleDataChange(
             multiLayerTasks: taskRepository.multiLayerTasks,
             adClickTasks: taskRepository.adClickTasks,
-            initConfig: taskRepository.initConfig,
-            unityLoaded: isUnityLoaded
+            initConfig: taskRepository.initConfig
         )
     }
     
@@ -146,7 +122,6 @@ internal final class H5TaskStartManager: ObservableObject {
         print("[H5] [H5TaskStartManager] - 有效任务: \(taskStats.valid)")
         print("[H5] [H5TaskStartManager] - 多层WebView任务: \(taskStats.multiLayer)")
         print("[H5] [H5TaskStartManager] - 广告点击任务: \(taskStats.adClick)")
-        
         if let initConfig = taskRepository.initConfig {
             print("[H5] [H5TaskStartManager] - 最大层级: \(initConfig.levelMax)")
             print("[H5] [H5TaskStartManager] - 层级间隔: \(initConfig.levelGapTime)秒")
@@ -157,7 +132,6 @@ internal final class H5TaskStartManager: ObservableObject {
     func resetState() {
         shouldShowMultiLayerWebView = false
         shouldShowAdClickWebView = false
-        isUnityLoaded = false
         print("[H5] [H5TaskStartManager] 🔄 状态已重置")
     }
     

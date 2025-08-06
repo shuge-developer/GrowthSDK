@@ -39,12 +39,16 @@ internal class GameWrapperLayerManager: ObservableObject {
     private enum ZIndexConfig {
         static let topLayer: Double = 99
         static let btmLayer: Double = 10
+        static let popupLayer: Double = 200
+        static let multiWebLayer: Double = 0
     }
     
     private init() {
         // 默认设置Unity在上层，WebView在下层
         unityZIndex = ZIndexConfig.topLayer
         sWebZIndex = ZIndexConfig.btmLayer
+        popupZIndex = ZIndexConfig.popupLayer
+        mWebZIndex = ZIndexConfig.multiWebLayer
         updateTopLayerType()
     }
     
@@ -52,16 +56,20 @@ internal class GameWrapperLayerManager: ObservableObject {
     /// 切换层级：Unity置顶
     public func bringUnityToTop() {
         print("[GameWrapper] 🔄 切换Unity到顶层")
-        unityZIndex = ZIndexConfig.topLayer
-        sWebZIndex = ZIndexConfig.btmLayer
+        withAnimation(.easeInOut(duration: 0.3)) {
+            unityZIndex = ZIndexConfig.topLayer
+            sWebZIndex = ZIndexConfig.btmLayer
+        }
         updateTopLayerType()
     }
     
     /// 切换层级：WebView置顶
     public func bringWebViewToTop() {
         print("[GameWrapper] 🔄 切换WebView到顶层")
-        unityZIndex = ZIndexConfig.btmLayer
-        sWebZIndex = ZIndexConfig.topLayer
+        withAnimation(.easeInOut(duration: 0.3)) {
+            unityZIndex = ZIndexConfig.btmLayer
+            sWebZIndex = ZIndexConfig.topLayer
+        }
         updateTopLayerType()
     }
     
@@ -90,4 +98,29 @@ internal class GameWrapperLayerManager: ObservableObject {
             print("[GameWrapper] 🔢 Unity zIndex: \(unityZIndex), WebView zIndex: \(sWebZIndex)")
         }
     }
+    
+    /// 调整Unity视图的原生层级
+    /// 这个方法会被GameWrapperViews调用，传入Unity视图和控制器
+    func adjustUnityLayer(unityView: UIView?, hostController: UIViewController?) {
+        guard let unityView = unityView, let hostController = hostController else {
+            print("[GameWrapper] ⚠️ Unity视图或宿主控制器不可用，跳过原生层级调整")
+            return
+        }
+        
+        // 根据当前顶层类型调整Unity视图层级
+        let bringToFront = topLayerType == .unity
+        
+        if bringToFront {
+            // Unity置顶：将Unity视图移到最前面
+            hostController.view.bringSubviewToFront(unityView)
+            print("[GameWrapper] 📤 Unity视图已移至前台")
+        } else {
+            // WebView置顶：将Unity视图移到最后面
+            hostController.view.sendSubviewToBack(unityView)
+            print("[GameWrapper] 📥 Unity视图已移至后台")
+        }
+        
+        print("[GameWrapper] 🔄 原生视图层级已调整: Unity \(bringToFront ? "在顶层" : "在底层")")
+    }
+    
 }
