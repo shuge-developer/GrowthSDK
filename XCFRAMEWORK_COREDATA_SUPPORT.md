@@ -14,14 +14,14 @@
 private func findCoreDataModel() -> URL? {
     // 1. 从当前 Bundle 查找
     if let bundle = Bundle(for: type(of: self)) {
-        if let momdURL = bundle.url(forResource: "GameWrapper", withExtension: "momd") {
+        if let momdURL = bundle.url(forResource: "GrowthKit", withExtension: "momd") {
             return momdURL
         }
     }
     
     // 2. 从主 Bundle 查找
     if let mainBundle = Bundle.main {
-        if let momdURL = mainBundle.url(forResource: "GameWrapper", withExtension: "momd") {
+        if let momdURL = mainBundle.url(forResource: "GrowthKit", withExtension: "momd") {
             return momdURL
         }
     }
@@ -29,7 +29,7 @@ private func findCoreDataModel() -> URL? {
     // 3. 从所有 Bundle 查找
     let allBundles = Bundle.allBundles + Bundle.allFrameworks
     for bundle in allBundles {
-        if let momdURL = bundle.url(forResource: "GameWrapper", withExtension: "momd") {
+        if let momdURL = bundle.url(forResource: "GrowthKit", withExtension: "momd") {
             return momdURL
         }
     }
@@ -45,7 +45,7 @@ private func findCoreDataModel() -> URL? {
 ```swift
 private func getStorageDirectory() -> URL {
     let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    let storageDirectory = documentsPath.appendingPathComponent("GameWrapper")
+    let storageDirectory = documentsPath.appendingPathComponent("GrowthKit")
     
     if !FileManager.default.fileExists(atPath: storageDirectory.path) {
         try? FileManager.default.createDirectory(at: storageDirectory, withIntermediateDirectories: true)
@@ -61,7 +61,7 @@ private func getStorageDirectory() -> URL {
 private func configureContainer(_ container: NSPersistentContainer) {
     let storeDescription = NSPersistentStoreDescription()
     let storageDirectory = getStorageDirectory()
-    let storeURL = storageDirectory.appendingPathComponent("GameWrapper.sqlite")
+    let storeURL = storageDirectory.appendingPathComponent("GrowthKit.sqlite")
     
     storeDescription.url = storeURL
     storeDescription.type = NSSQLiteStoreType
@@ -76,7 +76,7 @@ private func configureContainer(_ container: NSPersistentContainer) {
 
 ## 构建要求
 
-1. 确保 `GameWrapper.xcdatamodeld` 被添加到 Framework 的 Bundle Resources
+1. 确保 `GrowthKit.xcdatamodeld` 被添加到 Framework 的 Bundle Resources
 2. 确保模型文件会被编译成 `.momd` 文件
 3. 确保模型文件属于 Framework target
 
@@ -93,7 +93,7 @@ GameWebWrapper.shared.initialize { result in
 ## 数据存储位置
 
 ```
-~/Documents/GameWrapper/GameWrapper.sqlite
+~/Documents/GrowthKit/GrowthKit.sqlite
 ```
 
 ## 调试日志

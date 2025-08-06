@@ -1,8 +1,8 @@
-# GameWrapper SDK 集成指南
+# GrowthKit SDK 集成指南
 
 ## 概述
 
-GameWrapper SDK 是一个用于在Unity游戏上层叠加WebView广告内容的多层级视图交互系统。通过巧妙的层级切换和事件穿透机制来实现广告点击，支持SwiftUI和UIKit两种集成方式。
+GrowthKit SDK 是一个用于在Unity游戏上层叠加WebView广告内容的多层级视图交互系统。通过巧妙的层级切换和事件穿透机制来实现广告点击，支持SwiftUI和UIKit两种集成方式。
 
 ## 功能特性
 
@@ -19,7 +19,7 @@ GameWrapper SDK 是一个用于在Unity游戏上层叠加WebView广告内容的�
 ### 1. 初始化 SDK
 
 ```swift
-import GameWrapper
+import GrowthKit
 
 // 1. 设置网络配置
 let config = NetworkConfig(
@@ -50,27 +50,27 @@ GameWebWrapper.shared.initialize { result in
 
 ```swift
 import SwiftUI
-import GameWrapper
+import GrowthKit
 
 struct GameContentView: View {
-    @StateObject private var gameWrapperManager = GameWrapperManager.shared
+    @StateObject private var gameWrapperManager = GrowthKitManager.shared
     
     var body: some View {
         ZStack {
             // 游戏视图（Unity或其他游戏引擎）
             UnityGameView()
             
-            // GameWrapper SDK 视图
-            GameWrapperSwiftUIView()
+            // GrowthKit SDK 视图
+            GrowthKitSwiftUIView()
         }
         .onAppear {
             // 启动 SDK
             gameWrapperManager.start { result in
                 switch result {
                 case .success:
-                    print("GameWrapper 启动成功")
+                    print("GrowthKit 启动成功")
                 case .failure(let error):
-                    print("GameWrapper 启动失败: \(error)")
+                    print("GrowthKit 启动失败: \(error)")
                 }
             }
         }
@@ -85,8 +85,8 @@ struct GameContentView: View {
 #### 2.2 自定义游戏视图集成
 
 ```swift
-struct CustomGameWrapperView: View {
-    @StateObject private var gameWrapperManager = GameWrapperManager.shared
+struct CustomGrowthKitView: View {
+    @StateObject private var gameWrapperManager = GrowthKitManager.shared
     
     var body: some View {
         ZStack {
@@ -117,17 +117,17 @@ struct CustomGameWrapperView: View {
 
 ```swift
 import UIKit
-import GameWrapper
+import GrowthKit
 
 class GameViewController: UIViewController {
     
-    private var gameWrapperViewController: GameWrapperUIKitViewController!
+    private var gameWrapperViewController: GrowthKitUIKitViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 创建 GameWrapper 视图控制器
-        gameWrapperViewController = GameWrapperUIKitViewController()
+        // 创建 GrowthKit 视图控制器
+        gameWrapperViewController = GrowthKitUIKitViewController()
         addChild(gameWrapperViewController)
         view.addSubview(gameWrapperViewController.view)
         gameWrapperViewController.didMove(toParent: self)
@@ -146,12 +146,12 @@ class GameViewController: UIViewController {
         gameWrapperViewController.setGameView(gameView)
         
         // 启动 SDK
-        GameWrapperManager.shared.start { result in
+        GrowthKitManager.shared.start { result in
             switch result {
             case .success:
-                print("GameWrapper 启动成功")
+                print("GrowthKit 启动成功")
             case .failure(let error):
-                print("GameWrapper 启动失败: \(error)")
+                print("GrowthKit 启动失败: \(error)")
             }
         }
     }
@@ -170,18 +170,18 @@ class GameViewController: UIViewController {
 ```swift
 class AdvancedGameViewController: UIViewController {
     
-    private var gameWrapperViewController: GameWrapperUIKitViewController!
-    private var gameWrapperManager = GameWrapperManager.shared
+    private var gameWrapperViewController: GrowthKitUIKitViewController!
+    private var gameWrapperManager = GrowthKitManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupGameWrapper()
+        setupGrowthKit()
         setupObservers()
     }
     
-    private func setupGameWrapper() {
-        // 创建 GameWrapper 视图控制器
-        gameWrapperViewController = GameWrapperUIKitViewController()
+    private func setupGrowthKit() {
+        // 创建 GrowthKit 视图控制器
+        gameWrapperViewController = GrowthKitUIKitViewController()
         addChild(gameWrapperViewController)
         view.addSubview(gameWrapperViewController.view)
         gameWrapperViewController.didMove(toParent: self)
@@ -227,14 +227,14 @@ class AdvancedGameViewController: UIViewController {
         }
     }
     
-    private func handleStatusChange(_ status: GameWrapperStatus) {
+    private func handleStatusChange(_ status: GrowthKitStatus) {
         switch status {
         case .ready:
-            print("GameWrapper 准备就绪")
+            print("GrowthKit 准备就绪")
         case .running:
-            print("GameWrapper 正在运行")
+            print("GrowthKit 正在运行")
         case .error(let error):
-            print("GameWrapper 发生错误: \(error)")
+            print("GrowthKit 发生错误: \(error)")
         default:
             break
         }
@@ -248,7 +248,7 @@ class AdvancedGameViewController: UIViewController {
 
 ```swift
 // 设置截图提供者
-GameWrapperManager.shared.setScreenshotProvider { [weak self] in
+GrowthKitManager.shared.setScreenshotProvider { [weak self] in
     // 返回当前游戏画面的截图
     return self?.captureGameScreenshot()
 }
@@ -275,13 +275,13 @@ private func captureGameScreenshot() -> UIImage? {
 
 ```swift
 // 设置层级切换代理
-GameWrapperManager.shared.layerDelegate = self
+GrowthKitManager.shared.layerDelegate = self
 
 // 设置 WebView 事件代理
-GameWrapperManager.shared.webViewDelegate = self
+GrowthKitManager.shared.webViewDelegate = self
 
 // 实现代理方法
-extension GameViewController: GameWrapperLayerDelegate {
+extension GameViewController: GrowthKitLayerDelegate {
     func layerSwitchWillBegin() {
         print("层级切换即将开始")
     }
@@ -295,7 +295,7 @@ extension GameViewController: GameWrapperLayerDelegate {
     }
 }
 
-extension GameViewController: GameWrapperWebViewDelegate {
+extension GameViewController: GrowthKitWebViewDelegate {
     func webViewDidFinishLoad() {
         print("WebView 加载完成")
     }
@@ -350,17 +350,17 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupGameWrapper()
+        setupGrowthKit()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GameWrapperManager.shared.start { _ in }
+        GrowthKitManager.shared.start { _ in }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        GameWrapperManager.shared.stop()
+        GrowthKitManager.shared.stop()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -374,7 +374,7 @@ class GameViewController: UIViewController {
 ### 2. 错误处理
 
 ```swift
-GameWrapperManager.shared.start { result in
+GrowthKitManager.shared.start { result in
     switch result {
     case .success:
         print("SDK 启动成功")
@@ -382,7 +382,7 @@ GameWrapperManager.shared.start { result in
         print("SDK 启动失败: \(error.localizedDescription)")
         
         // 根据错误类型进行处理
-        if let wrapperError = error as? GameWrapperInitError {
+        if let wrapperError = error as? GrowthKitInitError {
             switch wrapperError {
             case .configNotSet:
                 print("请先设置网络配置")
@@ -400,7 +400,7 @@ GameWrapperManager.shared.start { result in
 
 ```swift
 // 1. 延迟初始化
-private func setupGameWrapperLazily() {
+private func setupGrowthKitLazily() {
     DispatchQueue.global(qos: .userInitiated).async {
         // 在后台线程进行初始化
         GameWebWrapper.shared.initialize { result in
@@ -421,7 +421,7 @@ private func cleanupResources() {
     TaskRepository.shared.clearAllData()
     
     // 重置管理器状态
-    GameWrapperManager.shared.stop()
+    GrowthKitManager.shared.stop()
 }
 ```
 
@@ -429,19 +429,19 @@ private func cleanupResources() {
 
 ### Q1: 如何自定义弹窗样式？
 
-A: 可以通过修改 `CustomPopupView.swift` 或 `GameWrapperUIKitViewController.swift` 中的弹窗实现来自定义样式。
+A: 可以通过修改 `CustomPopupView.swift` 或 `GrowthKitUIKitViewController.swift` 中的弹窗实现来自定义样式。
 
 ### Q2: 如何控制广告展示时机？
 
-A: 通过调用 `GameWrapperManager.shared.switchLayer(to: .webView)` 来手动触发层级切换。
+A: 通过调用 `GrowthKitManager.shared.switchLayer(to: .webView)` 来手动触发层级切换。
 
 ### Q3: 如何获取广告点击事件？
 
-A: 实现 `GameWrapperWebViewDelegate` 协议中的 `adDidClick()` 方法。
+A: 实现 `GrowthKitWebViewDelegate` 协议中的 `adDidClick()` 方法。
 
 ### Q4: 如何调试层级切换？
 
-A: 监听 `GameWrapperManager.shared.$topLayerType` 来观察层级变化。
+A: 监听 `GrowthKitManager.shared.$topLayerType` 来观察层级变化。
 
 ## 技术支持
 

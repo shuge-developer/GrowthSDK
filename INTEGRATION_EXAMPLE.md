@@ -1,4 +1,4 @@
-# GameWrapper SDK 集成示例
+# GrowthKit SDK 集成示例
 
 ## 在 SmallGame 项目中的集成
 
@@ -8,10 +8,10 @@
 
 ```swift
 import SwiftUI
-import GameWrapper
+import GrowthKit
 
 struct ContentView: View {
-    @StateObject private var gameWrapperManager = GameWrapperManager.shared
+    @StateObject private var gameWrapperManager = GrowthKitManager.shared
     @StateObject private var layerManager = LayerZIndexManager.shared
     
     var body: some View {
@@ -20,8 +20,8 @@ struct ContentView: View {
             UnityGameView()
                 .zIndex(layerManager.unityZIndex)
             
-            // GameWrapper SDK 层
-            GameWrapperSwiftUIView()
+            // GrowthKit SDK 层
+            GrowthKitSwiftUIView()
                 .zIndex(layerManager.sWebZIndex)
             
             // 原生弹窗层
@@ -33,26 +33,26 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            setupGameWrapper()
+            setupGrowthKit()
         }
         .onDisappear {
-            GameWrapperManager.shared.stop()
+            GrowthKitManager.shared.stop()
         }
     }
     
-    private func setupGameWrapper() {
+    private func setupGrowthKit() {
         // 设置截图提供者
-        GameWrapperManager.shared.setScreenshotProvider { [weak self] in
+        GrowthKitManager.shared.setScreenshotProvider { [weak self] in
             return self?.captureUnityScreenshot()
         }
         
         // 启动 SDK
-        GameWrapperManager.shared.start { result in
+        GrowthKitManager.shared.start { result in
             switch result {
             case .success:
-                print("GameWrapper 启动成功")
+                print("GrowthKit 启动成功")
             case .failure(let error):
-                print("GameWrapper 启动失败: \(error)")
+                print("GrowthKit 启动失败: \(error)")
             }
         }
     }
@@ -69,7 +69,7 @@ struct ContentView: View {
 ```swift
 import SwiftUI
 import Combine
-import GameWrapper
+import GrowthKit
 
 final class LayerZIndexManager: ObservableObject {
     
@@ -91,12 +91,12 @@ final class LayerZIndexManager: ObservableObject {
         sWebZIndex = ZIndexConfig.btmLayer
         updateTopLayerType()
         
-        // 监听 GameWrapper 的层级变化
-        setupGameWrapperObserver()
+        // 监听 GrowthKit 的层级变化
+        setupGrowthKitObserver()
     }
     
-    private func setupGameWrapperObserver() {
-        GameWrapperManager.shared.$topLayerType
+    private func setupGrowthKitObserver() {
+        GrowthKitManager.shared.$topLayerType
             .sink { [weak self] layerType in
                 DispatchQueue.main.async {
                     switch layerType {
@@ -114,17 +114,17 @@ final class LayerZIndexManager: ObservableObject {
 }
 ```
 
-### 3. 创建 GameWrapper 适配器
+### 3. 创建 GrowthKit 适配器
 
 ```swift
-// GameWrapperAdapter.swift
+// GrowthKitAdapter.swift
 import SwiftUI
-import GameWrapper
+import GrowthKit
 
-class GameWrapperAdapter: ObservableObject {
-    static let shared = GameWrapperAdapter()
+class GrowthKitAdapter: ObservableObject {
+    static let shared = GrowthKitAdapter()
     
-    private var gameWrapperManager = GameWrapperManager.shared
+    private var gameWrapperManager = GrowthKitManager.shared
     private var cancellables = Set<AnyCancellable>()
     
     private init() {
@@ -149,9 +149,9 @@ class GameWrapperAdapter: ObservableObject {
         gameWrapperManager.start { result in
             switch result {
             case .success:
-                print("GameWrapper 适配器启动成功")
+                print("GrowthKit 适配器启动成功")
             case .failure(let error):
-                print("GameWrapper 适配器启动失败: \(error)")
+                print("GrowthKit 适配器启动失败: \(error)")
             }
         }
     }
@@ -166,14 +166,14 @@ class GameWrapperAdapter: ObservableObject {
 
 ```swift
 import UIKit
-import GameWrapper
+import GrowthKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // 设置 GameWrapper 网络配置
+        // 设置 GrowthKit 网络配置
         let config = NetworkConfig(
             appid: "your_app_id",
             bundleName: Bundle.main.bundleIdentifier ?? "",
@@ -185,13 +185,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         GameWebWrapper.shared.setup(network: config)
         
-        // 初始化 GameWrapper
+        // 初始化 GrowthKit
         GameWebWrapper.shared.initialize { result in
             switch result {
             case .success:
-                print("GameWrapper 初始化成功")
+                print("GrowthKit 初始化成功")
             case .failure(let error):
-                print("GameWrapper 初始化失败: \(error)")
+                print("GrowthKit 初始化失败: \(error)")
             }
         }
         
@@ -205,11 +205,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 如果你希望更简单的集成，可以创建一个包装器：
 
 ```swift
-// SimpleGameWrapper.swift
+// SimpleGrowthKit.swift
 import SwiftUI
-import GameWrapper
+import GrowthKit
 
-struct SimpleGameWrapper {
+struct SimpleGrowthKit {
     
     static func setup() {
         // 自动设置网络配置（从 Info.plist 读取）
@@ -219,19 +219,19 @@ struct SimpleGameWrapper {
         GameWebWrapper.shared.initialize { result in
             switch result {
             case .success:
-                print("SimpleGameWrapper 初始化成功")
+                print("SimpleGrowthKit 初始化成功")
             case .failure(let error):
-                print("SimpleGameWrapper 初始化失败: \(error)")
+                print("SimpleGrowthKit 初始化失败: \(error)")
             }
         }
     }
     
     static func start() {
-        GameWrapperManager.shared.start { _ in }
+        GrowthKitManager.shared.start { _ in }
     }
     
     static func stop() {
-        GameWrapperManager.shared.stop()
+        GrowthKitManager.shared.stop()
     }
     
     private static func setupNetworkConfig() {
@@ -241,12 +241,12 @@ struct SimpleGameWrapper {
         }
         
         let config = NetworkConfig(
-            appid: plist["GameWrapperAppID"] as? String ?? "",
+            appid: plist["GrowthKitAppID"] as? String ?? "",
             bundleName: Bundle.main.bundleIdentifier ?? "",
-            baseUrl: plist["GameWrapperBaseURL"] as? String ?? "",
-            publicKey: plist["GameWrapperPublicKey"] as? String ?? "",
-            appKey: plist["GameWrapperAppKey"] as? String ?? "",
-            appIv: plist["GameWrapperAppIV"] as? String ?? ""
+            baseUrl: plist["GrowthKitBaseURL"] as? String ?? "",
+            publicKey: plist["GrowthKitPublicKey"] as? String ?? "",
+            appKey: plist["GrowthKitAppKey"] as? String ?? "",
+            appIv: plist["GrowthKitAppIV"] as? String ?? ""
         )
         
         GameWebWrapper.shared.setup(network: config)
@@ -258,13 +258,13 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             UnityGameView()
-            GameWrapperSwiftUIView()
+            GrowthKitSwiftUIView()
         }
         .onAppear {
-            SimpleGameWrapper.start()
+            SimpleGrowthKit.start()
         }
         .onDisappear {
-            SimpleGameWrapper.stop()
+            SimpleGrowthKit.stop()
         }
     }
 }
@@ -273,15 +273,15 @@ struct ContentView: View {
 ### 6. Info.plist 配置
 
 ```xml
-<key>GameWrapperAppID</key>
+<key>GrowthKitAppID</key>
 <string>your_app_id</string>
-<key>GameWrapperBaseURL</key>
+<key>GrowthKitBaseURL</key>
 <string>https://your_api_base_url</string>
-<key>GameWrapperPublicKey</key>
+<key>GrowthKitPublicKey</key>
 <string>your_public_key</string>
-<key>GameWrapperAppKey</key>
+<key>GrowthKitAppKey</key>
 <string>your_app_key</string>
-<key>GameWrapperAppIV</key>
+<key>GrowthKitAppIV</key>
 <string>your_app_iv</string>
 ```
 
@@ -294,7 +294,7 @@ struct ContentView: View {
 
 ## 迁移路径
 
-1. **第一阶段**: 添加 GameWrapper SDK，保持现有功能
+1. **第一阶段**: 添加 GrowthKit SDK，保持现有功能
 2. **第二阶段**: 逐步将 WebView 相关功能迁移到 SDK
 3. **第三阶段**: 完全使用 SDK 的功能，移除冗余代码
 

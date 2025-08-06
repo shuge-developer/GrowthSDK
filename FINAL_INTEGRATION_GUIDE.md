@@ -1,8 +1,8 @@
-# GameWrapper SDK 最终集成指南
+# GrowthKit SDK 最终集成指南
 
 ## 🎉 编译成功！
 
-经过修复，GameWrapper SDK 现在已经可以正常编译了。以下是完整的集成指南。
+经过修复，GrowthKit SDK 现在已经可以正常编译了。以下是完整的集成指南。
 
 ## 📋 功能特性
 
@@ -18,7 +18,7 @@
 ### 1. 初始化 SDK
 
 ```swift
-import GameWrapper
+import GrowthKit
 
 // 设置网络配置
 let config = NetworkConfig(
@@ -47,11 +47,11 @@ GameWebWrapper.shared.initialize { result in
 
 ```swift
 import SwiftUI
-import GameWrapper
+import GrowthKit
 
 struct ContentView: View {
     var body: some View {
-        GameWrapperSwiftUIView(
+        GrowthKitSwiftUIView(
             gameView: {
                 // 你的游戏视图
                 UnityViewWrapper()
@@ -70,17 +70,17 @@ struct ContentView: View {
 
 ```swift
 import UIKit
-import GameWrapper
+import GrowthKit
 
 class GameViewController: UIViewController {
     
-    private var gameWrapperViewController: GameWrapperUIKitViewController!
+    private var gameWrapperViewController: GrowthKitUIKitViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 创建 GameWrapper 视图控制器
-        gameWrapperViewController = GameWrapperUIKitViewController(
+        // 创建 GrowthKit 视图控制器
+        gameWrapperViewController = GrowthKitUIKitViewController(
             gameViewProvider: {
                 // 返回你的游戏视图
                 return self.createGameView()
@@ -115,10 +115,10 @@ class GameViewController: UIViewController {
 ### 手动控制层级切换
 
 ```swift
-import GameWrapper
+import GrowthKit
 
 // 获取层级管理器
-let layerManager = GameWrapperLayerManager.shared
+let layerManager = GrowthKitLayerManager.shared
 
 // 切换Unity到顶层
 layerManager.bringUnityToTop()
@@ -145,7 +145,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // 监听层级变化
-        GameWrapperLayerManager.shared.$topLayerType
+        GrowthKitLayerManager.shared.$topLayerType
             .sink { layerType in
                 print("当前顶层: \(layerType.displayName)")
             }
@@ -159,7 +159,7 @@ class GameViewController: UIViewController {
 ### 自定义弹窗位置
 
 ```swift
-import GameWrapper
+import GrowthKit
 
 // 获取弹窗位置管理器
 let popupManager = PopupPositionManager.shared
@@ -175,7 +175,7 @@ popupManager.$currentPosition
 ### 任务管理
 
 ```swift
-import GameWrapper
+import GrowthKit
 
 // 开始任务处理
 SingleLayerViewModel.shared.startTaskProcess()
@@ -195,7 +195,7 @@ SingleLayerViewModel.shared.$currentTask
 
 ```swift
 import SwiftUI
-import GameWrapper
+import GrowthKit
 
 struct ContentView: View {
     @StateObject private var startManager = H5TaskStartManager.shared
@@ -203,8 +203,8 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            // 使用 GameWrapper SDK
-            GameWrapperSwiftUIView(
+            // 使用 GrowthKit SDK
+            GrowthKitSwiftUIView(
                 gameView: {
                     UnityViewWrapper()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -267,9 +267,9 @@ print("是否已初始化: \(GameWebWrapper.shared.isInitialized)")
 ### 主要类
 
 - `GameWebWrapper`: SDK 主管理器
-- `GameWrapperLayerManager`: 层级管理器
-- `GameWrapperSwiftUIView`: SwiftUI 适配器视图
-- `GameWrapperUIKitViewController`: UIKit 适配器视图控制器
+- `GrowthKitLayerManager`: 层级管理器
+- `GrowthKitSwiftUIView`: SwiftUI 适配器视图
+- `GrowthKitUIKitViewController`: UIKit 适配器视图控制器
 - `PopupPositionManager`: 弹窗位置管理器
 - `SingleLayerViewModel`: 单层WebView视图模型
 
@@ -277,8 +277,8 @@ print("是否已初始化: \(GameWebWrapper.shared.isInitialized)")
 
 - `LayerType`: 层级类型（unity, webView）
 - `PopupPosition`: 弹窗位置（top, center, bottom）
-- `GameWrapperInitStatus`: 初始化状态
-- `GameWrapperInitError`: 初始化错误类型
+- `GrowthKitInitStatus`: 初始化状态
+- `GrowthKitInitError`: 初始化错误类型
 
 ## 🎯 最佳实践
 
@@ -299,4 +299,4 @@ print("是否已初始化: \(GameWebWrapper.shared.isInitialized)")
 
 ---
 
-**GameWrapper SDK** - 让游戏与WebView完美融合！🎮✨ 
+**GrowthKit SDK** - 让游戏与WebView完美融合！🎮✨ 

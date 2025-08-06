@@ -1,4 +1,4 @@
-# GameWrapper SDK 极简集成指南
+# GrowthKit SDK 极简集成指南
 
 ## 🎯 SDK 设计理念
 
@@ -19,12 +19,12 @@
 
 ```swift
 import SwiftUI
-import GameWrapper
+import GrowthKit
 
 struct ContentView: View {
     var body: some View {
         // 只需一行代码，SDK处理所有复杂逻辑
-        GameWrapperSwiftUIView(
+        GrowthKitSwiftUIView(
             gameView: {
                 // 你的游戏视图，只需实现UnityLoadable协议
                 UnityGameView()
@@ -71,13 +71,13 @@ struct UnityGameView: View, UnityLoadable {
 ```swift
 class GameViewController: UIViewController {
     
-    private var gameWrapperViewController: GameWrapperUIKitViewController!
+    private var gameWrapperViewController: GrowthKitUIKitViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 创建 GameWrapper 视图控制器
-        gameWrapperViewController = GameWrapperUIKitViewController(
+        // 创建 GrowthKit 视图控制器
+        gameWrapperViewController = GrowthKitUIKitViewController(
             gameViewProvider: {
                 // 返回你的游戏视图
                 return self.createGameView()
@@ -114,17 +114,17 @@ class GameViewController: UIViewController {
 - **网络配置**: 设置 API 接口和加密参数
 - **状态管理**: 监控 SDK 运行状态
 
-### 2. GameWrapperLayerManager
+### 2. GrowthKitLayerManager
 - **层级管理**: 管理游戏层、WebView层、弹窗层的显示顺序
 - **层级切换**: 提供 `bringUnityToTop()` 和 `bringWebViewToTop()` 方法
 - **状态监控**: 通过 `@Published` 属性监控层级变化
 
-### 3. GameWrapperSwiftUIView
+### 3. GrowthKitSwiftUIView
 - **SwiftUI 适配器**: 提供 SwiftUI 集成接口
 - **游戏视图注入**: 通过 `@ViewBuilder` 接收外部游戏视图
 - **截图提供者**: 通过闭包接收游戏截图
 
-### 4. GameWrapperUIKitViewController
+### 4. GrowthKitUIKitViewController
 - **UIKit 适配器**: 提供 UIKit 集成接口
 - **视图层次管理**: 管理游戏视图、WebView、弹窗的显示
 - **生命周期管理**: 处理视图控制器的生命周期

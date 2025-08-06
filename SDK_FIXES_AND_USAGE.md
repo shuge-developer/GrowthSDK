@@ -1,4 +1,4 @@
-# GameWrapper SDK 修复和使用指南
+# GrowthKit SDK 修复和使用指南
 
 ## 🔧 修复内容
 
@@ -23,7 +23,7 @@ internal func setScreenshotProvider(_ provider: @escaping () -> UIImage?) {
 
 ### 2. 视图层级切换机制修复
 
-**问题：** `GameWrapperLayerManager`缺少实际的视图层级切换
+**问题：** `GrowthKitLayerManager`缺少实际的视图层级切换
 
 **修复：**
 - 添加了`performUnityLayerChange()`和`notifyExternalLayerChange()`方法
@@ -31,9 +31,9 @@ internal func setScreenshotProvider(_ provider: @escaping () -> UIImage?) {
 - 添加了层级切换观察者，监听来自`SingleLayerViewModel`的切换请求
 
 ```swift
-// 在GameWrapperLayerManager中
+// 在GrowthKitLayerManager中
 private func performUnityLayerChange() {
-    print("[GameWrapper] 🔄 执行Unity层级变化")
+    print("[GrowthKit] 🔄 执行Unity层级变化")
     DispatchQueue.main.async {
         self.notifyExternalLayerChange()
     }
@@ -82,11 +82,11 @@ let screenshot = await MainActor.run {
 
 ```swift
 import SwiftUI
-import GameWrapper
+import GrowthKit
 
 struct ContentView: View {
     var body: some View {
-        GameWrapperSwiftUIView(
+        GrowthKitSwiftUIView(
             gameView: {
                 // 你的游戏视图
                 UnityViewWrapper()

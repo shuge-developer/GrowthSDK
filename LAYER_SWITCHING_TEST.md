@@ -1,8 +1,8 @@
-# GameWrapper SDK 层级切换测试指南
+# GrowthKit SDK 层级切换测试指南
 
 ## 🎯 测试目标
 
-验证GameWrapper SDK的层级切换功能是否正常工作，确保：
+验证GrowthKit SDK的层级切换功能是否正常工作，确保：
 1. 广告检测时自动触发层级切换
 2. Unity游戏层和WebView层正确交换位置
 3. 弹窗正确显示和事件穿透
@@ -13,11 +13,11 @@
 ### 1. 基础集成代码
 ```swift
 import SwiftUI
-import GameWrapper
+import GrowthKit
 
 struct TestContentView: View {
     var body: some View {
-        GameWrapperSwiftUIView(
+        GrowthKitSwiftUIView(
             gameView: {
                 TestUnityView()
                     .setUnityStateCallback { loaded in
@@ -112,9 +112,9 @@ struct TestUnityView: View, UnityLoadable {
 
 **预期结果:**
 ```
-[GameWrapper] 📱 游戏视图显示
-[GameWrapper] 🎮 Unity加载状态: true
-[GameWrapper] ✅ Unity已加载完成，可以显示WebView
+[GrowthKit] 📱 游戏视图显示
+[GrowthKit] 🎮 Unity加载状态: true
+[GrowthKit] ✅ Unity已加载完成，可以显示WebView
 ```
 
 ### 步骤2: 广告检测触发
@@ -124,10 +124,10 @@ struct TestUnityView: View, UnityLoadable {
 
 **预期结果:**
 ```
-[GameWrapper] 📱 单层广告点击容器显示
+[GrowthKit] 📱 单层广告点击容器显示
 [H5] [SingleLayerVM] 🔍 优先匹配 ID: xxx
 [H5] [SingleLayerVM] ✅ 找到可见可点击的ID匹配广告: xxx
-[GameWrapper] 🎯 检测到新广告，准备层级切换
+[GrowthKit] 🎯 检测到新广告，准备层级切换
 ```
 
 ### 步骤3: 层级切换验证
@@ -137,11 +137,11 @@ struct TestUnityView: View, UnityLoadable {
 
 **预期结果:**
 ```
-[GameWrapper] 🔄 开始执行层级切换
-[GameWrapper] 🔄 切换到WebView层
-[GameWrapper] 🔄 切换WebView到顶层
-[GameWrapper] 🔝 顶层切换为: WebView
-[GameWrapper] 🔢 Unity zIndex: 10, WebView zIndex: 99
+[GrowthKit] 🔄 开始执行层级切换
+[GrowthKit] 🔄 切换到WebView层
+[GrowthKit] 🔄 切换WebView到顶层
+[GrowthKit] 🔝 顶层切换为: WebView
+[GrowthKit] 🔢 Unity zIndex: 10, WebView zIndex: 99
 ```
 
 ### 步骤4: 弹窗显示验证
@@ -151,9 +151,9 @@ struct TestUnityView: View, UnityLoadable {
 
 **预期结果:**
 ```
-[GameWrapper] 📍 弹窗位置已更新
-[GameWrapper] 📱 弹窗已显示
-[GameWrapper] 📱 弹窗视图显示
+[GrowthKit] 📍 弹窗位置已更新
+[GrowthKit] 📱 弹窗已显示
+[GrowthKit] 📱 弹窗视图显示
 ```
 
 ### 步骤5: 事件穿透测试
@@ -163,9 +163,9 @@ struct TestUnityView: View, UnityLoadable {
 
 **预期结果:**
 ```
-[GameWrapper] 👆 弹窗按钮被点击
+[GrowthKit] 👆 弹窗按钮被点击
 [H5] [SingleLayerVM] 📱 广告点击成功
-[GameWrapper] 🔄 已恢复游戏层级
+[GrowthKit] 🔄 已恢复游戏层级
 ```
 
 ### 步骤6: 层级恢复验证
@@ -175,10 +175,10 @@ struct TestUnityView: View, UnityLoadable {
 
 **预期结果:**
 ```
-[GameWrapper] 🔄 切换到游戏层
-[GameWrapper] 🔄 切换Unity到顶层
-[GameWrapper] 🔝 顶层切换为: Unity游戏
-[GameWrapper] 🔢 Unity zIndex: 99, WebView zIndex: 10
+[GrowthKit] 🔄 切换到游戏层
+[GrowthKit] 🔄 切换Unity到顶层
+[GrowthKit] 🔝 顶层切换为: Unity游戏
+[GrowthKit] 🔢 Unity zIndex: 99, WebView zIndex: 10
 ```
 
 ## 🐛 常见问题排查
@@ -187,14 +187,14 @@ struct TestUnityView: View, UnityLoadable {
 **症状:** zIndex值没有变化，视图层级没有切换
 
 **排查步骤:**
-1. 检查GameWrapperLayerManager是否正确初始化
+1. 检查GrowthKitLayerManager是否正确初始化
 2. 验证bringWebViewToTop()方法是否被调用
 3. 确认SwiftUI的ZStack是否正确响应zIndex变化
 
 **解决方案:**
 ```swift
 // 确保层级管理器正确初始化
-@StateObject private var layerManager = GameWrapperLayerManager.shared
+@StateObject private var layerManager = GrowthKitLayerManager.shared
 
 // 检查zIndex绑定
 .zIndex(layerManager.unityZIndex)
@@ -266,7 +266,7 @@ CustomPopupView {
 ### 测试环境
 - 设备: iPhone 14 Pro
 - 系统: iOS 17.0
-- SDK版本: GameWrapper 1.0.0
+- SDK版本: GrowthKit 1.0.0
 
 ### 测试结果
 | 测试项目 | 预期结果 | 实际结果 | 状态 |
@@ -286,7 +286,7 @@ CustomPopupView {
 
 ## 🎉 测试结论
 
-GameWrapper SDK的层级切换功能测试通过，所有核心功能正常工作：
+GrowthKit SDK的层级切换功能测试通过，所有核心功能正常工作：
 
 1. ✅ 广告检测自动触发层级切换
 2. ✅ Unity和WebView层级正确交换
