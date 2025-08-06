@@ -6,16 +6,10 @@
 //
 
 import SwiftUI
-import Combine
 import UIKit
 
-
-
-
-
 // MARK: - Unity视图包装器
-/// Unity视图包装器，将UIView包装成SwiftUI View
-public struct UnityViewWrapper: UIViewRepresentable {
+private struct UnityViewWrapper: UIViewRepresentable {
     let unityView: UIView
     
     public func makeUIView(context: Context) -> UIView {
@@ -27,34 +21,28 @@ public struct UnityViewWrapper: UIViewRepresentable {
     }
 }
 
-// MARK: - SwiftUI 适配器视图
-/// GameWrapper SDK 的主要入口视图
-/// 完全封装多层级WebView和游戏视图的交互逻辑
-/// 外部只需提供Unity控制器和截图提供者，其他全部由SDK内部处理
+// MARK: - GameWrapper SwiftUI 主视图
 public struct GameWrapperSwiftUIView: View {
     
-    // MARK: - 内部管理器（外部不可见）
-    @StateObject private var startManager = H5TaskStartManager.shared
-    @StateObject private var layerManager = GameWrapperLayerManager.shared
-    @StateObject private var singleLayerViewModel = SingleLayerViewModel.shared
-    @StateObject private var popupPositionManager = PopupPositionManager.shared
-    
-    // MARK: - 内部状态（外部不可见）
-    @State private var showPopupView: Bool = false
-    
-    // MARK: - 外部输入
+    // MARK: - 属性
     /// Unity控制器（由外部提供）
     private let unityController: UIViewController
     
-    // 便捷访问Unity视图
+    /// 便捷访问Unity视图
     private var unityView: UIView {
         return unityController.view
     }
     
-    // MARK: - 初始化方法
+    // MARK: - 状态管理
+    @StateObject private var startManager = H5TaskStartManager.shared
+    @StateObject private var layerManager = GameWrapperLayerManager.shared
+    @StateObject private var singleLayerViewModel = SingleLayerViewModel.shared
+    @StateObject private var popupPositionManager = PopupPositionManager.shared
+    @State private var showPopupView: Bool = false
+    
+    // MARK: - 初始化
     /// 创建GameWrapper视图
-    /// - Parameters:
-    ///   - unityController: Unity控制器
+    /// - Parameter unityController: Unity控制器
     public init(unityController: UIViewController) {
         self.unityController = unityController
     }
@@ -62,116 +50,144 @@ public struct GameWrapperSwiftUIView: View {
     // MARK: - 视图构建
     public var body: some View {
         ZStack {
-            // 层级0：多层WebView容器（底层，用户不可见）
-            // 包含：展示、滑动、功能点击、滑动+功能点击
-            if startManager.shouldShowMultiLayerWebView {
-                MultiLayerWebContainer()
-                    .zIndex(layerManager.mWebZIndex)
-                    .onAppear {
-                        print("[GameWrapper] 📱 多层WebView容器显示")
-                    }
-            }
-            
-            // 层级1：单层广告点击容器（条件可见）
-            // 包含：广告点击、滑动+广告点击
-            if startManager.shouldShowAdClickWebView {
-                SingleLayerWebContainer()
-                    .zIndex(layerManager.sWebZIndex)
-                    .onAppear {
-                        print("[GameWrapper] 📱 单层广告点击容器显示")
-                    }
-            }
-            
-            // 层级2：游戏视图（主要交互层）
-            UnityViewWrapper(unityView: unityView)
-                .zIndex(layerManager.unityZIndex)
-                .onAppear {
-                    print("[GameWrapper] 📱 Unity视图显示")
-                }
-            
-            // 层级3：弹窗视图（最顶层）
-            if showPopupView {
-                CustomPopupView {
-                    // 点击弹窗按钮，触发关闭，恢复游戏层级展示
-                    showPopupView = false
-                    self.bringGameToTop()
-                }
-                .zIndex(layerManager.popupZIndex)
-                .onAppear {
-                    print("[GameWrapper] 📱 弹窗视图显示")
-                }
-            }
+            buildMultiLayerWebView()
+            buildSingleLayerWebView()
+            buildUnityView()
+            buildPopupView()
         }
         .onChange(of: layerManager.topLayerType) { newValue in
-            print("[GameWrapper] 🔄 视图层级变更: \(newValue)")
-            self.handleLayerChange(newValue)
+            handleLayerChange(newValue)
         }
         .onAppear {
-            self.setupSDK()
+            setupSDK()
+        }
+    }
+}
+
+// MARK: - 视图构建方法
+private extension GameWrapperSwiftUIView {
+    
+    /// 构建多层WebView容器
+    @ViewBuilder
+    func buildMultiLayerWebView() -> some View {
+        if startManager.shouldShowMultiLayerWebView {
+            MultiLayerWebContainer()
+                .zIndex(layerManager.mWebZIndex)
+                .onAppear {
+                    logInfo("多层WebView容器显示")
+                }
         }
     }
     
-    // MARK: - 私有方法（外部不可见）
-    
-    
-    
-    /// 设置SDK
-    private func setupSDK() {
-        // 将Unity控制器传递给SingleLayerViewModel，用于内部截图
-        SingleLayerViewModel.shared.setUnityController(unityController)
-        print("[GameWrapper] 📸 Unity控制器已传递到SingleLayerViewModel，支持内部截图")
-    }
-    
-    // MARK: - 私有方法（外部不可见）
-    
-    
-    
-    /// 处理层级变化
-    private func handleLayerChange(_ layerType: LayerType) {
-        switch layerType {
-        case .unity:
-            print("[GameWrapper] 🔄 层级已切换到Unity游戏层")
-        case .webView:
-            print("[GameWrapper] 🔄 层级已切换到WebView层")
-            bringWebViewToTop()
-            updatePopupPositionShow()
+    /// 构建单层广告点击容器
+    @ViewBuilder
+    func buildSingleLayerWebView() -> some View {
+        if startManager.shouldShowAdClickWebView {
+            SingleLayerWebContainer()
+                .zIndex(layerManager.sWebZIndex)
+                .onAppear {
+                    logInfo("单层广告点击容器显示")
+                }
         }
     }
     
-    private func updatePopupPositionShow() {
-        let adViewModel = SingleLayerViewModel.shared
-        let bestMatchedAd = adViewModel.bestMatchedAd
-        if let adArea = bestMatchedAd?.area {
-            print("[ContentView] 📍 检测到广告区域，更新弹窗位置")
-            print("[ContentView] 📊 广告区域详情: left=\(adArea.left), top=\(adArea.top), width=\(adArea.width), height=\(adArea.height)")
-            print("[ContentView] 📊 广告中心点: \(adArea.center.x), \(adArea.center.y)")
-            
-            popupPositionManager.updatePopupPosition(for: adArea)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                showPopupView = true
+    /// 构建Unity游戏视图
+    @ViewBuilder
+    func buildUnityView() -> some View {
+        UnityViewWrapper(unityView: unityView)
+            .zIndex(layerManager.unityZIndex)
+            .onAppear {
+                logInfo("Unity视图显示")
+            }
+    }
+    
+    /// 构建弹窗视图
+    @ViewBuilder
+    func buildPopupView() -> some View {
+        if showPopupView {
+            CustomPopupView {
+                showPopupView = false
+                bringGameViewToTop()
+            }
+            .zIndex(layerManager.popupZIndex)
+            .onAppear {
+                logInfo("弹窗视图显示")
             }
         }
     }
+}
+
+// MARK: - SDK 设置
+private extension GameWrapperSwiftUIView {
     
+    /// 设置SDK
+    func setupSDK() {
+        singleLayerViewModel.setUnityController(unityController)
+        logInfo("Unity控制器已传递到SingleLayerViewModel，支持内部截图")
+    }
+}
+
+// MARK: - 层级管理
+private extension GameWrapperSwiftUIView {
     
-    
+    /// 处理层级变化
+    func handleLayerChange(_ layerType: LayerType) {
+        logInfo("视图层级变更: \(layerType)")
+        switch layerType {
+        case .unity:
+            logInfo("层级已切换到Unity游戏层")
+        case .webView:
+            logInfo("层级已切换到WebView层")
+            bringWebViewToTop()
+            setPopupPosition()
+        }
+    }
     
     /// 切换到游戏层（Unity）
-    private func bringGameToTop() {
-        print("[GameWrapper] 🔄 切换到游戏层")
+    func bringGameViewToTop() {
+        logInfo("切换到游戏层")
         layerManager.bringUnityToTop()
-        // 调整Unity视图的原生层级
-        print("[GameWrapper] bringGameToTop: unityView: \(unityView), unityController: \(unityController)")
-        layerManager.adjustUnityLayer(unityView: unityView, hostController: unityController)
+        adjustUnityLayer()
     }
     
     /// 切换到WebView层
-    private func bringWebViewToTop() {
-        print("[GameWrapper] 🔄 切换到WebView层")
-        //        layerManager.bringWebViewToTop()
-        // 调整Unity视图的原生层级
-        print("[GameWrapper] bringWebViewToTop: unityView: \(unityView), unityController: \(unityController)")
-        layerManager.adjustUnityLayer(unityView: unityView, hostController: unityController)
+    func bringWebViewToTop() {
+        logInfo("切换到WebView层")
+        adjustUnityLayer()
     }
     
+    /// 调整Unity视图的原生层级
+    func adjustUnityLayer() {
+        layerManager.adjustUnityLayer(
+            hostController: unityController,
+            unityView: unityView
+        )
+    }
+}
+
+// MARK: - 弹窗管理
+private extension GameWrapperSwiftUIView {
+    
+    /// 更新弹窗位置并显示
+    func setPopupPosition() {
+        let bestMatchedAd = singleLayerViewModel.bestMatchedAd
+        guard let adArea = bestMatchedAd?.area else { return }
+        
+        logInfo("检测到广告区域，更新弹窗位置")
+        
+        popupPositionManager.updatePopupPosition(for: adArea)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            showPopupView = true
+        }
+    }
+}
+
+// MARK: - 日志工具
+private extension GameWrapperSwiftUIView {
+    
+    /// 记录信息日志
+    func logInfo(_ message: String) {
+        print("[GameWrapper] 📱 \(message)")
+    }
 }
