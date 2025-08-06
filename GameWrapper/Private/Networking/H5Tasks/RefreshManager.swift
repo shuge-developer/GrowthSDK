@@ -173,17 +173,26 @@ extension RefreshManager {
         
         // 检查是否有持久化的拒绝状态
         if checkPersistedRejectionState() {
+            if configCheckScheduler?.isInitialCheckInProgress == true {
+                configCheckScheduler?.onConfigCheckFailure()
+            }
             return
         }
         
         if getCurrentRejectionReason() == .dailyLimitReached {
             print("[AutoRefresh] 📅 已达到每日请求上限，跳过配置检查")
+            if configCheckScheduler?.isInitialCheckInProgress == true {
+                configCheckScheduler?.onConfigCheckFailure()
+            }
             return
         }
         
         let requestKeys = TaskPloysManager.shared.getRequestKeys()
         if requestKeys.isEmpty {
             handleEmptyRequestKeys(type)
+            if configCheckScheduler?.isInitialCheckInProgress == true {
+                configCheckScheduler?.onConfigCheckFailure()
+            }
             return
         }
         
@@ -520,9 +529,9 @@ extension RefreshManager {
 extension RefreshManager {
     
     private class ConfigCheckScheduler {
-        private weak var refreshManager: RefreshManager?
-        private var isInitialCheckInProgress = false
+        private(set) var isInitialCheckInProgress: Bool = false
         private var pendingTriggers: Set<ConfigCheckTrigger> = []
+        private weak var refreshManager: RefreshManager?
         
         enum ConfigCheckTrigger {
             case appLaunch
