@@ -1,12 +1,11 @@
 framework module GrowthKit {
-  umbrella header "GrowthKit.h"
-  
-  export *
-  module * { export * }
-  
-  // 确保Swift桥接头文件可以被访问
-  explicit module GrowthKit.Swift {
-    header "GrowthKit-Swift.h"
-    requires objc
-  }
+    umbrella header "GrowthKit.h"
+    
+    export *
+    module * { export * }
+    
+    explicit module GrowthKit.Swift {
+        header "GrowthKit-Swift.h"
+        requires objc
+    }
 }
