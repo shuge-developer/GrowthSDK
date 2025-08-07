@@ -196,13 +196,13 @@ private extension GrowthKitSwiftUIView {
 import UIKit
 
 /// UIKit桥接器，用于在UIKit项目中集成GrowthKit
-public class GrowthKitUIKitBridge: UIViewController {
+@objc public class GrowthKitUIKitBridge: UIViewController {
     
     private var hostingController: UIHostingController<GrowthKitSwiftUIView>?
     
     /// 初始化UIKit桥接器
     /// - Parameter unityController: Unity视图控制器
-    public init(unityController: UIViewController) {
+    @objc public init(unityController: UIViewController) {
         super.init(nibName: nil, bundle: nil)
         setupSwiftUIView(unityController: unityController)
     }
@@ -213,8 +213,7 @@ public class GrowthKitUIKitBridge: UIViewController {
     
     private func setupSwiftUIView(unityController: UIViewController) {
         let swiftUIView = GrowthKitSwiftUIView(unityController: unityController)
-        
-        hostingController = UIHostingController(swiftUIView, ignoreSafeArea: true)
+        hostingController = UIHostingController(swiftUIView, ignoresSafeArea: true)
         
         if let hostingController = hostingController {
             addChild(hostingController)

@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58127DE9136894AD48B5F588 /* Pods_GrowthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21554DC3B55B64B678CDD5E9 /* Pods_GrowthKit.framework */; };
 		A2DEB2352E3B49980069BABB /* NetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = A2DEB2342E3B49980069BABB /* NetworkService */; };
-		C461EE3D8301C23EA485EA93 /* Pods_GrowthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E691E8B1DEE950034B7A4D43 /* Pods_GrowthKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		21554DC3B55B64B678CDD5E9 /* Pods_GrowthKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GrowthKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D61B62CFEB16D9C6358187B /* Pods-GrowthKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrowthKit.debug.xcconfig"; path = "Target Support Files/Pods-GrowthKit/Pods-GrowthKit.debug.xcconfig"; sourceTree = "<group>"; };
 		A23CFFF92E37505F00B6EEAB /* GrowthKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GrowthKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC3CBF1CFBEA784D3A01BD58 /* Pods-GrowthKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrowthKit.release.xcconfig"; path = "Target Support Files/Pods-GrowthKit/Pods-GrowthKit.release.xcconfig"; sourceTree = "<group>"; };
-		E691E8B1DEE950034B7A4D43 /* Pods_GrowthKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GrowthKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2DEB2352E3B49980069BABB /* NetworkService in Frameworks */,
-				C461EE3D8301C23EA485EA93 /* Pods_GrowthKit.framework in Frameworks */,
+				58127DE9136894AD48B5F588 /* Pods_GrowthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,7 +42,7 @@
 		1CB8E1AC236DAFF39BDAF068 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E691E8B1DEE950034B7A4D43 /* Pods_GrowthKit.framework */,
+				21554DC3B55B64B678CDD5E9 /* Pods_GrowthKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

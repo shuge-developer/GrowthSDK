@@ -18,6 +18,26 @@ public protocol NetworkConfigurable {
     var appIv: String { get }
 }
 
+// MARK: - Objective-C 兼容的网络配置类
+@objc public class GrowthKitNetworkConfig: NSObject, NetworkConfigurable {
+    @objc public let appid: String
+    @objc public let bundleName: String
+    @objc public let baseUrl: String
+    @objc public let publicKey: String
+    @objc public let appKey: String
+    @objc public let appIv: String
+    
+    @objc public init(appid: String, bundleName: String, baseUrl: String, publicKey: String, appKey: String, appIv: String) {
+        self.appid = appid
+        self.bundleName = bundleName
+        self.baseUrl = baseUrl
+        self.publicKey = publicKey
+        self.appKey = appKey
+        self.appIv = appIv
+        super.init()
+    }
+}
+
 // MARK: - SDK 初始化状态
 public enum GrowthKitInitStatus {
     case notInitialized
@@ -42,17 +62,14 @@ public enum GrowthKitInitError: Error, LocalizedError {
 }
 
 // MARK: - SDK 主类
-public class GameWebWrapper: ObservableObject {
+@objc public class GameWebWrapper: NSObject {
     
-    public static let shared = GameWebWrapper()
+    @objc public static let shared = GameWebWrapper()
     
     private(set) var config: NetworkConfigurable!
     
-    /// SDK 初始化状态
-    @Published public private(set) var initStatus: GrowthKitInitStatus = .notInitialized
-    
     /// 是否已初始化
-    public var isInitialized: Bool {
+    @objc public var isInitialized: Bool {
         if case .initialized = initStatus {
             return true
         }
@@ -62,11 +79,16 @@ public class GameWebWrapper: ObservableObject {
     /// 初始化完成回调
     private var onInitComplete: ((Result<Void, GrowthKitInitError>) -> Void)?
     
-    private init() {}
+    // 内部状态管理（不暴露给OC）
+    private var initStatus: GrowthKitInitStatus = .notInitialized
     
-    // MARK: - 公开方法
+    private override init() {
+        super.init()
+    }
     
-    /// 初始化 SDK
+    // MARK: - Swift 公开方法
+    
+    /// 初始化 SDK (Swift版本)
     /// - Parameters:
     ///   - config: 网络配置参数
     ///   - completion: 初始化完成回调
@@ -87,6 +109,25 @@ public class GameWebWrapper: ObservableObject {
         
         // 执行初始化流程
         performInitialization()
+    }
+    
+    // MARK: - Objective-C 公开方法
+    
+    /// 初始化 SDK (Objective-C版本)
+    /// - Parameters:
+    ///   - config: 网络配置参数
+    ///   - completion: 初始化完成回调
+    @objc public func initializeWithConfig(_ config: GrowthKitNetworkConfig, completion: @escaping (Bool, String?) -> Void) {
+        initialize(config: config) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    completion(true, nil)
+                case .failure(let error):
+                    completion(false, error.localizedDescription)
+                }
+            }
+        }
     }
     
     // MARK: - 私有方法
