@@ -1,5 +1,5 @@
 //
-//  TaskRepository.swift
+//  TaskService.swift
 //  GrowthKit
 //
 //  Created by arvin on 2025/5/30.
@@ -9,12 +9,12 @@ import Foundation
 import CoreData
 import Combine
 
-// MARK: - LinkTask 数据仓库
-internal final class TaskRepository: ObservableObject {
+// MARK: - 任务服务
+internal final class TaskService: ObservableObject {
     
-    internal static let shared = TaskRepository()
+    internal static let shared = TaskService()
     
-    private let coreDataManager = CoreDataManager.shared
+    private let dataStore = DataStore.shared
     
     private var lastTaskCompletionTime: Date?
     
@@ -125,7 +125,7 @@ internal final class TaskRepository: ObservableObject {
     func fetchTask(byID id: String) -> LinkTask? {
         do {
             let predicate = NSPredicate(format: "id == %@", id)
-            return try coreDataManager.fetch(
+            return try dataStore.fetch(
                 LinkTask.self, predicate: predicate
             )
         } catch {
@@ -139,7 +139,7 @@ internal final class TaskRepository: ObservableObject {
         do {
             let predicate = NSPredicate(format: "name == %@", name)
             let config = FetchConfig(predicate: predicate)
-            return try coreDataManager.fetch(
+            return try dataStore.fetch(
                 LinkTask.self, config: config
             )
         } catch {
@@ -154,7 +154,7 @@ internal final class TaskRepository: ObservableObject {
             let typeValues = types.map { $0.rawValue }
             let predicate = NSPredicate(format: "taskType IN %@", typeValues)
             let config = FetchConfig(predicate: predicate)
-            return try coreDataManager.fetch(
+            return try dataStore.fetch(
                 LinkTask.self, config: config
             )
         } catch {
@@ -166,7 +166,7 @@ internal final class TaskRepository: ObservableObject {
     /// 删除所有任务
     func deleteAllTasks() {
         do {
-            try coreDataManager.deleteAll(LinkTask.self)
+            try dataStore.deleteAll(LinkTask.self)
             print("[CoreData] ✅ 已删除所有任务")
         } catch {
             print("[CoreData] ❌ 删除所有任务失败: \(error)")
@@ -179,8 +179,8 @@ internal final class TaskRepository: ObservableObject {
     /// 删除单个任务
     func deleteTask(_ task: LinkTask) {
         do {
-            coreDataManager.delete(task)
-            try coreDataManager.save()
+            dataStore.delete(task)
+            try dataStore.save()
             
             // 从所有集合中移除
             webTasks.removeAll { $0.link == task.link }
@@ -215,7 +215,7 @@ internal final class TaskRepository: ObservableObject {
 }
 
 // MARK: - 任务统计与获取
-internal extension TaskRepository {
+internal extension TaskService {
     
     /// 获取任务统计
     func getTaskStatistics() -> (total: Int, valid: Int, invalid: Int, multiLayer: Int, adClick: Int) {
@@ -250,7 +250,7 @@ internal extension TaskRepository {
     /// 获取任务数量
     func getTaskCount() -> Int {
         do {
-            return try coreDataManager.count(LinkTask.self)
+            return try dataStore.count(LinkTask.self)
         } catch {
             print("[CoreData] ❌ 获取任务数量失败: \(error)")
             return 0
@@ -259,7 +259,7 @@ internal extension TaskRepository {
 }
 
 // MARK: - 便利方法
-internal extension TaskRepository {
+internal extension TaskService {
     
     /// 按服务商分组任务
     func groupTasksByProvider() -> [String: [LinkTask]] {
@@ -314,17 +314,17 @@ internal extension TaskRepository {
 }
 
 // MARK: - 清理数据
-internal extension TaskRepository {
+internal extension TaskService {
     
     /// 清理所有 CoreData 存储的数据
     func clearAllData() {
         do {
             // 删除所有 LinkTask
-            try coreDataManager.deleteAll(LinkTask.self)
+            try dataStore.deleteAll(LinkTask.self)
             // 删除所有 InitConfig
-            try coreDataManager.deleteAll(InitConfig.self)
+            try dataStore.deleteAll(InitConfig.self)
             // 删除所有 JSConfig
-            try coreDataManager.deleteAll(JSConfig.self)
+            try dataStore.deleteAll(JSConfig.self)
             
             // 清空内存中的数据
             webTasks.removeAll()

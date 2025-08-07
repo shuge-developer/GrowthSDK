@@ -30,8 +30,8 @@ internal struct WebViewLayer: Identifiable, Equatable {
 /// 处理多层WebView的展示逻辑
 /// 任务类型：展示、滑动、功能点击、滑动+功能点击
 internal struct MultiLayerWebContainer: View {
-    @ObservedObject private var taskRepository = TaskRepository.shared
-    @ObservedObject private var startManager = H5TaskStartManager.shared
+    @ObservedObject private var taskService = TaskService.shared
+    @ObservedObject private var startManager = TaskLauncher.shared
     @StateObject private var viewModel = MultiLayerViewModel.shared
     
     // 将 viewModel 作为环境对象传递给子视图
@@ -75,7 +75,7 @@ private struct AnimatedWebViewLayer: View {
     @State private var hasReportedAds: Bool = false
     @State private var debugRects: [CGRect] = []
     
-    @ObservedObject private var startManager = H5TaskStartManager.shared
+    @ObservedObject private var startManager = TaskLauncher.shared
     @EnvironmentObject private var viewModel: MultiLayerViewModel
     
     var body: some View {

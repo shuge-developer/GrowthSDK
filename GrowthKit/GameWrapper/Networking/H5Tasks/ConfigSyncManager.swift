@@ -1,5 +1,5 @@
 //
-//  RefreshManager.swift
+//  ConfigSyncManager.swift
 //  GrowthKit
 //
 //  Created by arvin on 2025/6/4.
@@ -31,13 +31,13 @@ private enum RejectionReason: String, Codable {
     case otherConditionsNotMet = "otherConditionsNotMet"
 }
 
-// MARK: - 配置刷新管理器
+// MARK: - 配置同步管理器
 /// 负责监听用户状态变化，并在用户状态为变化或任务队列清空时触发配置重新加载
 /// 专门针对cfg配置的复杂业务逻辑，包含优雅的重试机制
-final class RefreshManager: ObservableObject {
+final class ConfigSyncManager: ObservableObject {
     
     // MARK: - 单例与属性
-    static let shared = RefreshManager()
+    static let shared = ConfigSyncManager()
     
     private var cancellables = Set<AnyCancellable>()
     private var retryTimer: Timer?
@@ -58,9 +58,9 @@ final class RefreshManager: ObservableObject {
     // MARK: - 初始化与释放
     private init() {
         print("[AutoRefresh] 🎯 任务队列自动刷新管理器已初始化")
-        TaskRepository.shared.loadTasks()
+        TaskService.shared.loadTasks()
         setupObservers()
-        configCheckScheduler = ConfigCheckScheduler(refreshManager: self)
+        configCheckScheduler = ConfigCheckScheduler(configSyncManager: self)
     }
     
     deinit {
@@ -77,7 +77,7 @@ final class RefreshManager: ObservableObject {
 }
 
 // MARK: - 观察者设置
-extension RefreshManager {
+extension ConfigSyncManager {
     
     private func setupObservers() {
         setupAppLifecycleObservers()
@@ -99,7 +99,7 @@ extension RefreshManager {
     
     private func setupTaskQueueObserver() {
         print("[AutoRefresh] 📡 设置任务队列观察者")
-        TaskRepository.shared.$webTasks
+        TaskService.shared.$webTasks
             .debounce(for: .seconds(1.0), scheduler: DispatchQueue.main)
             .sink { [weak self] webTasks in
                 self?.handleTaskQueueChange(webTasks)
@@ -110,7 +110,7 @@ extension RefreshManager {
 }
 
 // MARK: - 应用生命周期事件处理
-extension RefreshManager {
+extension ConfigSyncManager {
     
     @objc private func appWillEnterForeground() {
         print("[AutoRefresh] 📱 应用进入前台")
@@ -138,7 +138,7 @@ extension RefreshManager {
 }
 
 // MARK: - 任务队列变化处理
-extension RefreshManager {
+extension ConfigSyncManager {
     
     private func handleTaskQueueChange(_ webTasks: [LinkTask]) {
         print("[AutoRefresh] 📊 任务队列状态更新: \(webTasks.count)个任务")
@@ -154,7 +154,7 @@ extension RefreshManager {
         }
         
         // 记录任务完成时间
-        TaskRepository.shared.recordTaskCompletion()
+        TaskService.shared.recordTaskCompletion()
         print("[AutoRefresh] 🔄 检测到任务队列为空，记录任务完成时间")
         
         print("[AutoRefresh] 🔄 触发配置检查")
@@ -166,7 +166,7 @@ extension RefreshManager {
 }
 
 // MARK: - 配置检查核心逻辑
-extension RefreshManager {
+extension ConfigSyncManager {
     
     private func performConfigCheck(type: ConfigCheckType) {
         print("[AutoRefresh] 🔄 开始执行\(type.rawValue)的配置检查")
@@ -256,11 +256,11 @@ extension RefreshManager {
 }
 
 // MARK: - 拒绝原因分析
-extension RefreshManager {
+extension ConfigSyncManager {
     
     private func analyzeRejectionReason() -> (reason: RejectionReason, remainingSeconds: Int?) {
         // 检查是否有 init 配置
-        guard let initConfig = TaskRepository.shared.initConfig else {
+        guard let initConfig = TaskService.shared.initConfig else {
             return (.otherConditionsNotMet, nil)
         }
         
@@ -273,7 +273,7 @@ extension RefreshManager {
         }
         
         // 检查间隔时间
-        if let taskCompletionTime = TaskRepository.shared.getLastTaskCompletionTime() {
+        if let taskCompletionTime = TaskService.shared.getLastTaskCompletionTime() {
             let requiredInterval = TimeInterval(initConfig.refreshGapTime)
             let timeInterval = Date().timeIntervalSince(taskCompletionTime)
             
@@ -291,7 +291,7 @@ extension RefreshManager {
 }
 
 // MARK: - 重试调度
-extension RefreshManager {
+extension ConfigSyncManager {
     
     private func scheduleExactRetry(_ seconds: Int, reason: String) {
         guard !isRetryActive else {
@@ -391,7 +391,7 @@ extension RefreshManager {
 }
 
 // MARK: - 状态持久化
-extension RefreshManager {
+extension ConfigSyncManager {
     
     private func checkPersistedRejectionState() -> Bool {
         let reasonString: String? = UserDefaults.get(key: .configRejectionReason)
@@ -516,7 +516,7 @@ extension RefreshManager {
 }
 
 // MARK: - 辅助方法
-extension RefreshManager {
+extension ConfigSyncManager {
     
     private func formatDateString(_ date: Date) -> String {
         let formatter = DateFormatter()
@@ -526,12 +526,12 @@ extension RefreshManager {
 }
 
 // MARK: - 配置检查调度器
-extension RefreshManager {
+extension ConfigSyncManager {
     
     private class ConfigCheckScheduler {
         private(set) var isInitialCheckInProgress: Bool = false
         private var pendingTriggers: Set<ConfigCheckTrigger> = []
-        private weak var refreshManager: RefreshManager?
+        private weak var configSyncManager: ConfigSyncManager?
         
         enum ConfigCheckTrigger {
             case appLaunch
@@ -540,12 +540,12 @@ extension RefreshManager {
             case taskQueueEmpty
         }
         
-        init(refreshManager: RefreshManager) {
-            self.refreshManager = refreshManager
+        init(configSyncManager: ConfigSyncManager) {
+            self.configSyncManager = configSyncManager
         }
         
         func requestConfigCheck(trigger: ConfigCheckTrigger) {
-            guard let manager = refreshManager else { return }
+            guard let manager = configSyncManager else { return }
             
             print("[AutoRefresh] 📋 配置检查请求: \(trigger)")
             
@@ -577,7 +577,7 @@ extension RefreshManager {
         }
         
         private func startInitialCheck() {
-            guard let manager = refreshManager else { return }
+            guard let manager = configSyncManager else { return }
             
             isInitialCheckInProgress = true
             print("[AutoRefresh] 🚀 开始初始配置检查")
@@ -588,7 +588,7 @@ extension RefreshManager {
         }
         
         private func completeInitialCheck() {
-            guard let manager = refreshManager else { return }
+            guard let manager = configSyncManager else { return }
             
             isInitialCheckInProgress = false
             manager.hasCompletedInitialCheck = true

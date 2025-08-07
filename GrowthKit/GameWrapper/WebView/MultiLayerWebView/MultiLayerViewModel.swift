@@ -32,7 +32,7 @@ internal final class MultiLayerViewModel: ObservableObject {
     // MARK: - 私有属性
     // 存储每个层级的任务处理器
     private var taskHandlers: [String: MultiLayerTaskHandler] = [:]
-    private let taskRepository = TaskRepository.shared
+    private let taskService = TaskService.shared
     private var cancellables = Set<AnyCancellable>()
     private var layerTimers: [String: Timer] = [:]
     private var gapTimer: Timer?
@@ -50,12 +50,12 @@ internal final class MultiLayerViewModel: ObservableObject {
     
     /// 开始WebView层级展示
     func startLayeredDisplay() {
-        guard let initConfig = taskRepository.initConfig else {
+        guard let initConfig = taskService.initConfig else {
             print("[H5] [MultiLayerVM] ❌ 缺少初始化配置")
             return
         }
         
-        guard !taskRepository.multiLayerTasks.isEmpty else {
+        guard !taskService.multiLayerTasks.isEmpty else {
             print("[H5] [MultiLayerVM] ⚠️ 任务队列为空")
             isAllTasksCompleted = true
             return
@@ -63,10 +63,10 @@ internal final class MultiLayerViewModel: ObservableObject {
         
         print("[H5] [MultiLayerVM] 🚀 开始多层WebView展示")
         print("[H5] [MultiLayerVM] 📊 配置信息: levelMax=\(initConfig.levelMax)")
-        print("[H5] [MultiLayerVM] 📋 待处理任务数: \(taskRepository.multiLayerTasks.count)")
+        print("[H5] [MultiLayerVM] 📋 待处理任务数: \(taskService.multiLayerTasks.count)")
         
         // 显示任务详情
-        for (index, task) in taskRepository.multiLayerTasks.enumerated() {
+        for (index, task) in taskService.multiLayerTasks.enumerated() {
             print("[H5] [MultiLayerVM] 任务\(index): 类型：\(task.type) - \(task.name ?? "未知") - \(task.link ?? "无链接")")
         }
         
@@ -85,7 +85,7 @@ internal final class MultiLayerViewModel: ObservableObject {
     
     /// 设置任务观察器
     private func setupTaskObserver() {
-        taskRepository.$multiLayerTasks
+        taskService.$multiLayerTasks
             .receive(on: DispatchQueue.main)
             .removeDuplicates { oldTasks, newTasks in
                 // 只有当任务数量变化时才触发
@@ -134,7 +134,7 @@ internal final class MultiLayerViewModel: ObservableObject {
     
     /// 调度下一个层级（仅用于初始启动阶段）
     private func scheduleNextLayer() {
-        guard let initConfig = taskRepository.initConfig else {
+        guard let initConfig = taskService.initConfig else {
             print("[H5] [MultiLayerVM] ❌ 缺少初始化配置，无法调度")
             return
         }
@@ -148,7 +148,7 @@ internal final class MultiLayerViewModel: ObservableObject {
         }
         
         // 检查是否还有待处理任务
-        guard let nextTask = taskRepository.getNextAvailableMultiLayerTask() else {
+        guard let nextTask = taskService.getNextAvailableMultiLayerTask() else {
             print("[H5] [MultiLayerVM] ⚠️ 没有更多可用任务")
             checkCompletionStatus()
             return
@@ -173,7 +173,7 @@ internal final class MultiLayerViewModel: ObservableObject {
         // 再次检查任务是否仍然有效和可用
         guard let link = task.link, !link.isEmpty else {
             print("[H5] [MultiLayerVM] ❌ 任务链接无效: \(task.taskDescription)")
-            taskRepository.deleteTask(task)
+            taskService.deleteTask(task)
             scheduleNextLayer()
             return
         }
@@ -224,7 +224,7 @@ internal final class MultiLayerViewModel: ObservableObject {
         print("[H5] [MultiLayerVM] 📋 任务详情: 类型=\(task.type), 🔗 链接: \(link), 存活时间=\(duration)秒")
         
         // 只在初始阶段（未达到最大层级数时）继续调度下一层
-        if activeLayers.count < taskRepository.initConfig?.levelMax ?? 0 {
+        if activeLayers.count < taskService.initConfig?.levelMax ?? 0 {
             print("[H5] [MultiLayerVM] 🔄 层级创建完成，继续调度下一层")
             scheduleNextLayer()
         } else {
@@ -253,7 +253,7 @@ internal final class MultiLayerViewModel: ObservableObject {
         layerTimers.removeValue(forKey: layerId)
         
         // 立即删除数据库任务，标记为已完成
-        taskRepository.deleteTask(layer.task)
+        taskService.deleteTask(layer.task)
         print("[H5] [MultiLayerVM] ✅ 已从数据库删除任务")
         
         // 从活跃层级中移除
@@ -272,7 +272,7 @@ internal final class MultiLayerViewModel: ObservableObject {
     
     /// 专门用于补充替换层级的调度方法
     private func scheduleReplacementLayer() {
-        guard let initConfig = taskRepository.initConfig else {
+        guard let initConfig = taskService.initConfig else {
             print("[H5] [MultiLayerVM] ❌ 缺少初始化配置，无法调度")
             return
         }
@@ -284,7 +284,7 @@ internal final class MultiLayerViewModel: ObservableObject {
         }
         
         // 查找下一个可用任务
-        guard let nextTask = taskRepository.getNextAvailableMultiLayerTask() else {
+        guard let nextTask = taskService.getNextAvailableMultiLayerTask() else {
             print("[H5] [MultiLayerVM] ℹ️ 无可用任务补充，当前层级: \(activeLayers.count)")
             return
         }
@@ -296,7 +296,7 @@ internal final class MultiLayerViewModel: ObservableObject {
     
     /// 检查完成状态
     private func checkCompletionStatus() {
-        if taskRepository.multiLayerTasks.isEmpty && activeLayers.isEmpty {
+        if taskService.multiLayerTasks.isEmpty && activeLayers.isEmpty {
             print("[H5] [MultiLayerVM] ✅ 所有任务已完成")
             isAllTasksCompleted = true
         }
@@ -333,7 +333,7 @@ internal extension MultiLayerViewModel {
     /// 更新指定层级的透明度
     func updateLayerOpacity(_ opacity: Double, for layerId: String) {
         if let index = activeLayers.firstIndex(where: { $0.id == layerId }) {
-            H5TaskStartManager.shared.setLayerOpacity(opacity, for: layerId)
+            TaskLauncher.shared.setLayerOpacity(opacity, for: layerId)
             withAnimation(.easeInOut(duration: 0.25)) {
                 activeLayers[index].opacity = opacity
             }
@@ -342,7 +342,7 @@ internal extension MultiLayerViewModel {
     
     /// 从启动管理器中恢复层级透明度
     private func restoreLayerOpacity(for layer: WebViewLayer) {
-        let opacity = H5TaskStartManager.shared.getLayerOpacity(layer.id)
+        let opacity = TaskLauncher.shared.getLayerOpacity(layer.id)
         if opacity != layer.opacity {
             updateLayerOpacity(opacity, for: layer.id)
         }

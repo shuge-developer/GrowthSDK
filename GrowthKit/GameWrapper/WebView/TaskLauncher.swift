@@ -1,5 +1,5 @@
 //
-//  H5TaskStartManager.swift
+//  TaskLauncher.swift
 //  GrowthKit
 //
 //  Created by Assistant on 2025/6/7.
@@ -8,11 +8,11 @@
 import SwiftUI
 import Combine
 
-/// WebView启动管理器
+/// 任务启动器
 /// 负责管理WebView的启动时机，确保在配置和任务数据都准备好后才启动
-internal final class H5TaskStartManager: ObservableObject {
+internal final class TaskLauncher: ObservableObject {
     
-    internal static let shared = H5TaskStartManager()
+    internal static let shared = TaskLauncher()
     
     /// 多层WebView容器是否应该显示（层级0）
     @Published var shouldShowMultiLayerWebView: Bool = false
@@ -34,7 +34,7 @@ internal final class H5TaskStartManager: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    let taskRepository = TaskRepository.shared
+    let taskService = TaskService.shared
     
     private init() {
         setupDataObservers()
@@ -57,9 +57,9 @@ internal final class H5TaskStartManager: ObservableObject {
     private func setupDataObservers() {
         // 只监听任务和配置
         Publishers.CombineLatest3(
-            taskRepository.$multiLayerTasks,
-            taskRepository.$adClickTasks,
-            taskRepository.$initConfig
+            taskService.$multiLayerTasks,
+            taskService.$adClickTasks,
+            taskService.$initConfig
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (multiLayerTasks, adClickTasks, initConfig) in
@@ -86,17 +86,17 @@ internal final class H5TaskStartManager: ObservableObject {
         // 更新多层WebView容器状态
         if newShouldShowMultiLayer != shouldShowMultiLayerWebView {
             shouldShowMultiLayerWebView = newShouldShowMultiLayer
-            print("[H5] [H5TaskStartManager] 🚀 多层WebView显示状态变更: \(newShouldShowMultiLayer)")
+            print("[H5] [TaskLauncher] 🚀 多层WebView显示状态变更: \(newShouldShowMultiLayer)")
             if newShouldShowMultiLayer {
-                print("[H5] [H5TaskStartManager] ✅ 多层WebView条件满足，开始显示")
+                print("[H5] [TaskLauncher] ✅ 多层WebView条件满足，开始显示")
             }
         }
         // 更新单层广告点击WebView状态
         if newShouldShowAdClick != shouldShowAdClickWebView {
             shouldShowAdClickWebView = newShouldShowAdClick
-            print("[H5] [H5TaskStartManager] 🚀 广告点击WebView显示状态变更: \(newShouldShowAdClick)")
+            print("[H5] [TaskLauncher] 🚀 广告点击WebView显示状态变更: \(newShouldShowAdClick)")
             if newShouldShowAdClick {
-                print("[H5] [H5TaskStartManager] ✅ 广告点击WebView条件满足，可以使用")
+                print("[H5] [TaskLauncher] ✅ 广告点击WebView条件满足，可以使用")
             }
         }
         // 如果任一WebView类型满足显示条件，记录状态详情
@@ -108,23 +108,23 @@ internal final class H5TaskStartManager: ObservableObject {
     /// 手动检查是否应该显示WebView
     func checkShouldShowWebViews() {
         handleDataChange(
-            multiLayerTasks: taskRepository.multiLayerTasks,
-            adClickTasks: taskRepository.adClickTasks,
-            initConfig: taskRepository.initConfig
+            multiLayerTasks: taskService.multiLayerTasks,
+            adClickTasks: taskService.adClickTasks,
+            initConfig: taskService.initConfig
         )
     }
     
     /// 打印当前状态详情
     private func logCurrentStatus() {
-        let taskStats = taskRepository.getTaskStatistics()
-        print("[H5] [H5TaskStartManager] 📈 当前状态详情:")
-        print("[H5] [H5TaskStartManager] - 总任务数: \(taskStats.total)")
-        print("[H5] [H5TaskStartManager] - 有效任务: \(taskStats.valid)")
-        print("[H5] [H5TaskStartManager] - 多层WebView任务: \(taskStats.multiLayer)")
-        print("[H5] [H5TaskStartManager] - 广告点击任务: \(taskStats.adClick)")
-        if let initConfig = taskRepository.initConfig {
-            print("[H5] [H5TaskStartManager] - 最大层级: \(initConfig.levelMax)")
-            print("[H5] [H5TaskStartManager] - 层级间隔: \(initConfig.levelGapTime)秒")
+        let taskStats = taskService.getTaskStatistics()
+        print("[H5] [TaskLauncher] 📈 当前状态详情:")
+        print("[H5] [TaskLauncher] - 总任务数: \(taskStats.total)")
+        print("[H5] [TaskLauncher] - 有效任务: \(taskStats.valid)")
+        print("[H5] [TaskLauncher] - 多层WebView任务: \(taskStats.multiLayer)")
+        print("[H5] [TaskLauncher] - 广告点击任务: \(taskStats.adClick)")
+        if let initConfig = taskService.initConfig {
+            print("[H5] [TaskLauncher] - 最大层级: \(initConfig.levelMax)")
+            print("[H5] [TaskLauncher] - 层级间隔: \(initConfig.levelGapTime)秒")
         }
     }
     
@@ -132,7 +132,7 @@ internal final class H5TaskStartManager: ObservableObject {
     func resetState() {
         shouldShowMultiLayerWebView = false
         shouldShowAdClickWebView = false
-        print("[H5] [H5TaskStartManager] 🔄 状态已重置")
+        print("[H5] [TaskLauncher] 🔄 状态已重置")
     }
     
     /// 是否应该显示任何WebView

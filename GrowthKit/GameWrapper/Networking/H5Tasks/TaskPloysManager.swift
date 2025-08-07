@@ -344,7 +344,7 @@ private class ConfigValidator {
     /// 验证cfg 配置的前置条件
     /// - Returns: 前置条件是否满足
     private func validateCfgPrerequisites() -> Bool {
-        let taskCount = TaskRepository.shared.webTasks.count
+        let taskCount = TaskService.shared.webTasks.count
         let isEmpty = taskCount == 0
         print("[H5] [ConfigValidator] 📋 任务队列状态: \(isEmpty ? "空" : "有\(taskCount)个任务")")
         guard isEmpty else {
@@ -408,7 +408,7 @@ private class ConfigValidator {
     /// - Returns: 特殊限制是否满足
     private func validateCfgSpecialLimits() -> Bool {
         // 如果没有init 配置，说明是首次启动，允许请求
-        guard let initConfig = TaskRepository.shared.initConfig else {
+        guard let initConfig = TaskService.shared.initConfig else {
             print("[H5] [ConfigValidator] 🆕 首次启动，无init 配置限制")
             return true
         }
@@ -425,7 +425,7 @@ private class ConfigValidator {
         
         // 2. 检查间隔时间（秒级别判断）
         // 从任务完成时间开始计算间隔，而不是上次请求时间
-        if let taskCompletionTime = TaskRepository.shared.getLastTaskCompletionTime() {
+        if let taskCompletionTime = TaskService.shared.getLastTaskCompletionTime() {
             let requiredInterval = TimeInterval(initConfig.refreshGapTime)
             let timeInterval = Date().timeIntervalSince(taskCompletionTime)
             print("[H5] [ConfigValidator] ⏱️ 任务完成后间隔检查: \(Int(timeInterval))秒 vs 要求\(Int(requiredInterval))秒")

@@ -11,8 +11,8 @@ import SwiftUI
 /// 处理广告点击的WebView容器
 /// 任务类型：广告点击、滑动+广告点击
 internal struct SingleLayerWebContainer: View {
-    @ObservedObject private var layerManager = GrowthKitLayerManager.shared
-    @ObservedObject private var startManager = H5TaskStartManager.shared
+    @ObservedObject private var layerManager = LayerOrchestrator.shared
+    @ObservedObject private var startManager = TaskLauncher.shared
     @ObservedObject private var viewModel = SingleLayerViewModel.shared
     
     @State private var hasReportedAds: Bool = false

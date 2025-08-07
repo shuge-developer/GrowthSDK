@@ -66,7 +66,7 @@ internal extension InitConfig {
     static func create(from config: H5ConfigModel) -> InitConfig? {
         guard let `init` = config.`init` else { return nil }
         do {
-            let manager = CoreDataManager.shared
+            let manager = DataStore.shared
             try manager.deleteAll(InitConfig.self)
             
             let model = manager.create(InitConfig.self)
@@ -115,7 +115,7 @@ internal extension InitConfig {
     
     static func fetchInitConfig() -> InitConfig? {
         do {
-            let manager = CoreDataManager.shared
+            let manager = DataStore.shared
             return try manager.fetch(InitConfig.self)
         } catch {
             print("[CoreData] ❌ 获取 Init 配置失败")

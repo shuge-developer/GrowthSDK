@@ -73,7 +73,7 @@ internal extension LinkTask {
     static func create(from config: H5ConfigModel) -> [LinkTask] {
         guard let cfg = config.cfg else { return [] }
         do {
-            let manager = CoreDataManager.shared
+            let manager = DataStore.shared
             try manager.deleteAll(LinkTask.self)
             
             let dataList = cfg.compactMapValues { $0 }
@@ -135,7 +135,7 @@ internal extension LinkTask {
     
     static func fetchAllTasks() -> [LinkTask] {
         do {
-            let manager = CoreDataManager.shared
+            let manager = DataStore.shared
             return try manager.fetch(LinkTask.self)
         } catch {
             print("[CoreData] ❌ 获取所有任务失败: \(error)")

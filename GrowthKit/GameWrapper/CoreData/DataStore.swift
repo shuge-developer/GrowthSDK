@@ -1,5 +1,5 @@
 //
-//  CoreDataManager.swift
+//  DataStore.swift
 //  GrowthKit
 //
 //  Created by arvin on 2025/5/30.
@@ -44,11 +44,11 @@ internal protocol CoreDataEntity: NSManagedObject {
     static var name: String { get }
 }
 
-// MARK: - CoreData管理器
-internal final class CoreDataManager: ObservableObject {
+// MARK: - 数据存储管理器
+internal final class DataStore: ObservableObject {
     
     // MARK: -
-    internal static let shared = CoreDataManager()
+    internal static let shared = DataStore()
     
     private var isStoreLoaded = false
     
@@ -256,7 +256,7 @@ internal final class CoreDataManager: ObservableObject {
 }
 
 // MARK: - CRUD操作
-internal extension CoreDataManager {
+internal extension DataStore {
     
     /// 保存上下文
     func save() throws {
@@ -373,7 +373,7 @@ internal extension CoreDataManager {
 }
 
 // MARK: - 异步操作
-internal extension CoreDataManager {
+internal extension DataStore {
     
     /// 执行后台操作
     func performBackgroundTask<T>(_ operation: @escaping (NSManagedObjectContext) throws -> T) async throws -> T {
@@ -400,7 +400,7 @@ internal extension CoreDataManager {
 }
 
 // MARK: - 数据库维护
-internal extension CoreDataManager {
+internal extension DataStore {
     
     /// 获取数据库文件大小
     func getDatabaseSize() -> String {

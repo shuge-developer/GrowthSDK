@@ -13,8 +13,10 @@ internal protocol ImageResourceable {
 
 internal extension ImageResourceable {
     static func getImageResource(_ name: String) -> ImageResource {
-        let bundle = Bundle(for: GameWebWrapper.self)
-        return ImageResource(name: name, bundle: bundle)
+        let bundle = Bundle(for: GrowthSDK.self)
+        return ImageResource(
+            name: name, bundle: bundle
+        )
     }
 }
 

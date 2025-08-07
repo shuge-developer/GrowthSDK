@@ -26,7 +26,7 @@ internal enum Api: APIProvider {
 // MARK: -
 internal struct NetworkRequester: RequestConfigure {
     struct SDK {
-        static let Config = GameWebWrapper.shared.config
+        static let Config = GrowthSDK.shared.config
     }
     
     var baseURL: BaseURL {
@@ -98,7 +98,7 @@ internal class NetworkServer {
                 let model = H5ConfigModel.deserialize(from: json)
                 print("[net] ✅ H5配置请求成功: \(model.toJSONString() ?? "nil")")
                 if let model, !model.isEmpty {
-                    TaskRepository.shared.saveTasks(from: model)
+                    TaskService.shared.saveTasks(from: model)
                     TaskPloysManager.shared.record(for: keys)
                     print("[net] 📝 配置数据已保存并记录请求历史")
                     complete(true)

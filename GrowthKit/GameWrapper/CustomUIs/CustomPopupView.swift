@@ -72,7 +72,7 @@ struct CustomPopupView: View {
     @State private var position: Position
     
     /// 位置管理器
-    private let positionManager = PopupPositionManager.shared
+    private let positionManager = PopupCoordinator.shared
     
     /// 取消订阅集合
     @State private var cancellables = Set<AnyCancellable>()

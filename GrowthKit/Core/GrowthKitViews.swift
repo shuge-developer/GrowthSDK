@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+#if canImport(UIKit)
+import UIKit
+
 // MARK: - Unity视图包装器
 private struct UnityViewWrapper: UIViewRepresentable {
     let unityView: UIView
@@ -21,7 +24,7 @@ private struct UnityViewWrapper: UIViewRepresentable {
 }
 
 // MARK: - GrowthKit SwiftUI 主视图
-public struct GrowthKitSwiftUIView: View {
+public struct GrowthKitView: View {
     
     // MARK: - 属性
     /// Unity控制器（由外部提供）
@@ -33,10 +36,10 @@ public struct GrowthKitSwiftUIView: View {
     }
     
     // MARK: - 状态管理
-    @StateObject private var startManager = H5TaskStartManager.shared
-    @StateObject private var layerManager = GrowthKitLayerManager.shared
+    @StateObject private var startManager = TaskLauncher.shared
+    @StateObject private var layerManager = LayerOrchestrator.shared
     @StateObject private var singleLayerViewModel = SingleLayerViewModel.shared
-    @StateObject private var popupPositionManager = PopupPositionManager.shared
+    @StateObject private var popupPositionManager = PopupCoordinator.shared
     @State private var showPopupView: Bool = false
     
     // MARK: - 初始化
@@ -64,7 +67,7 @@ public struct GrowthKitSwiftUIView: View {
 }
 
 // MARK: - 视图构建方法
-private extension GrowthKitSwiftUIView {
+private extension GrowthKitView {
     
     /// 构建多层WebView容器
     @ViewBuilder
@@ -117,7 +120,7 @@ private extension GrowthKitSwiftUIView {
 }
 
 // MARK: - SDK 设置
-private extension GrowthKitSwiftUIView {
+private extension GrowthKitView {
     
     /// 设置SDK
     func setupSDK() {
@@ -127,7 +130,7 @@ private extension GrowthKitSwiftUIView {
 }
 
 // MARK: - 层级管理
-private extension GrowthKitSwiftUIView {
+private extension GrowthKitView {
     
     /// 处理层级变化
     func handleLayerChange(_ layerType: LayerType) {
@@ -165,7 +168,7 @@ private extension GrowthKitSwiftUIView {
 }
 
 // MARK: - 弹窗管理
-private extension GrowthKitSwiftUIView {
+private extension GrowthKitView {
     
     /// 更新弹窗位置并显示
     func setPopupPosition() {
@@ -183,7 +186,7 @@ private extension GrowthKitSwiftUIView {
 }
 
 // MARK: - 日志工具
-private extension GrowthKitSwiftUIView {
+private extension GrowthKitView {
     
     /// 记录信息日志
     func logInfo(_ message: String) {
@@ -192,13 +195,10 @@ private extension GrowthKitSwiftUIView {
 }
 
 // MARK: - UIKit 桥接器
-#if canImport(UIKit)
-import UIKit
-
 /// UIKit桥接器，用于在UIKit项目中集成GrowthKit
-@objc public class GrowthKitUIKitBridge: UIViewController {
+@objc public class GrowthKitViewController: UIViewController {
     
-    private var hostingController: UIHostingController<GrowthKitSwiftUIView>?
+    private var hostingController: UIHostingController<GrowthKitView>?
     
     /// 初始化UIKit桥接器
     /// - Parameter unityController: Unity视图控制器
@@ -212,7 +212,7 @@ import UIKit
     }
     
     private func setupSwiftUIView(unityController: UIViewController) {
-        let swiftUIView = GrowthKitSwiftUIView(unityController: unityController)
+        let swiftUIView = GrowthKitView(unityController: unityController)
         hostingController = UIHostingController(swiftUIView, ignoresSafeArea: true)
         
         if let hostingController = hostingController {

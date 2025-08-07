@@ -47,7 +47,7 @@ internal extension JSConfig {
     static func create(from config: H5ConfigModel) -> JSConfig? {
         guard let jsM = config.jsM else { return nil }
         do {
-            let manager = CoreDataManager.shared
+            let manager = DataStore.shared
             try manager.deleteAll(JSConfig.self)
             
             let model = manager.create(JSConfig.self)
@@ -73,7 +73,7 @@ internal extension JSConfig {
     
     static func fetchJSConfig() -> JSConfig? {
         do {
-            let manager = CoreDataManager.shared
+            let manager = DataStore.shared
             return try manager.fetch(JSConfig.self)
         } catch {
             print("[CoreData] ❌ 获取 JS 配置失败")

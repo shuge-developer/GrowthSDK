@@ -1,5 +1,5 @@
 //
-//  GrowthKitLayerManager.swift
+//  LayerOrchestrator.swift
 //  GrowthKit
 //
 //  Created by arvin on 2025/8/4.
@@ -20,10 +20,10 @@ internal enum LayerType: String, CaseIterable {
     }
 }
 
-// MARK: - 层级管理器
-internal final class GrowthKitLayerManager: ObservableObject {
+// MARK: - 层级编排器
+internal final class LayerOrchestrator: ObservableObject {
     // MARK: - 单例
-    static let shared = GrowthKitLayerManager()
+    static let shared = LayerOrchestrator()
     
     // MARK: - 层级状态
     @Published var topLayerType: LayerType = .unity

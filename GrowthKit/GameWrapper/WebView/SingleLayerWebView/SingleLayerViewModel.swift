@@ -47,9 +47,9 @@ internal class SingleLayerViewModel: ObservableObject {
     /// 交互模式
     private var interactionMode: SingleLayerInteraction.Mode = .adClickOnly
     /// 任务仓库
-    private let taskRepository = TaskRepository.shared
-    /// 层级管理器
-    private let layerManager = GrowthKitLayerManager.shared
+    private let taskService = TaskService.shared
+    /// 层级编排器
+    private let layerManager = LayerOrchestrator.shared
     /// WebView 协调器
     private var webViewCoordinator: WebViewCoordinator?
     /// 滑动交互器
@@ -74,11 +74,11 @@ internal class SingleLayerViewModel: ObservableObject {
     private let maxRetryScrollCount: Int = 2  // 增加重试次数，支持滚动到广告位置后重新检测
     /// 初始化配置
     private var initConfig: InitConfig? {
-        return taskRepository.initConfig
+        return taskService.initConfig
     }
     /// JS 配置
     private var jsConfig: JSConfig? {
-        return taskRepository.jsConfig
+        return taskService.jsConfig
     }
     
     // MARK: - Unity截图管理器
@@ -102,7 +102,7 @@ internal class SingleLayerViewModel: ObservableObject {
         }
         
         // 获取下一个可用的广告点击任务
-        guard let task = taskRepository.getNextAvailableAdClickTask() else {
+        guard let task = taskService.getNextAvailableAdClickTask() else {
             print("[H5] [SingleLayerVM] ⚠️ 没有可用的广告点击任务")
             state = .initial
             return
@@ -1208,7 +1208,7 @@ internal class SingleLayerViewModel: ObservableObject {
         print("[H5] [SingleLayerVM] ⏱️ 下一个任务将在 \(Int(nextAdGap)) 秒后开始")
         
         // 从数据库删除当前已完成的任务
-        taskRepository.markTaskCompleted(task)
+        taskService.markTaskCompleted(task)
         
         // 删除当前任务
         currentTask = nil

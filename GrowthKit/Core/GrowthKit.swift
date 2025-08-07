@@ -19,7 +19,7 @@ public protocol NetworkConfigurable {
 }
 
 // MARK: - Objective-C 兼容的网络配置类
-@objc public class GrowthKitNetworkConfig: NSObject, NetworkConfigurable {
+@objc public class NetworkConfig: NSObject, NetworkConfigurable {
     @objc public let appid: String
     @objc public let bundleName: String
     @objc public let baseUrl: String
@@ -39,7 +39,7 @@ public protocol NetworkConfigurable {
 }
 
 // MARK: - SDK 初始化状态
-public enum GrowthKitInitStatus {
+public enum SDKInitStatus {
     case notInitialized
     case initializing
     case initialized
@@ -47,24 +47,24 @@ public enum GrowthKitInitStatus {
 }
 
 // MARK: - SDK 初始化错误
-public enum GrowthKitInitError: Error, LocalizedError {
+public enum SDKInitError: Error, LocalizedError {
     case coreDataInitFailed(String)
-    case taskRepositoryInitFailed(String)
+    case taskServiceInitFailed(String)
     
     public var errorDescription: String? {
         switch self {
         case .coreDataInitFailed(let message):
             return "CoreData 初始化失败: \(message)"
-        case .taskRepositoryInitFailed(let message):
+        case .taskServiceInitFailed(let message):
             return "任务仓库初始化失败: \(message)"
         }
     }
 }
 
 // MARK: - SDK 主类
-@objc public class GameWebWrapper: NSObject {
+@objc public class GrowthSDK: NSObject {
     
-    @objc public static let shared = GameWebWrapper()
+    @objc public static let shared = GrowthSDK()
     
     private(set) var config: NetworkConfigurable!
     
@@ -77,10 +77,10 @@ public enum GrowthKitInitError: Error, LocalizedError {
     }
     
     /// 初始化完成回调
-    private var onInitComplete: ((Result<Void, GrowthKitInitError>) -> Void)?
+    private var onInitComplete: ((Result<Void, SDKInitError>) -> Void)?
     
     // 内部状态管理（不暴露给OC）
-    private var initStatus: GrowthKitInitStatus = .notInitialized
+    private var initStatus: SDKInitStatus = .notInitialized
     
     private override init() {
         super.init()
@@ -92,7 +92,7 @@ public enum GrowthKitInitError: Error, LocalizedError {
     /// - Parameters:
     ///   - config: 网络配置参数
     ///   - completion: 初始化完成回调
-    public func initialize(config: NetworkConfigurable, completion: @escaping (Result<Void, GrowthKitInitError>) -> Void) {
+    public func initialize(config: NetworkConfigurable, completion: @escaping (Result<Void, SDKInitError>) -> Void) {
         // 避免重复初始化
         guard case .notInitialized = initStatus else {
             print("[GrowthKit] ⚠️ SDK 已初始化或正在初始化中")
@@ -117,7 +117,7 @@ public enum GrowthKitInitError: Error, LocalizedError {
     /// - Parameters:
     ///   - config: 网络配置参数
     ///   - completion: 初始化完成回调
-    @objc public func initializeWithConfig(_ config: GrowthKitNetworkConfig, completion: @escaping (Bool, String?) -> Void) {
+    @objc public func initializeWithConfig(_ config: NetworkConfig, completion: @escaping (Bool, String?) -> Void) {
         initialize(config: config) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -134,7 +134,7 @@ public enum GrowthKitInitError: Error, LocalizedError {
     
     /// 执行初始化流程
     private func performInitialization() {
-        let initQueue = DispatchQueue(label: "com.gamewrapper.init", qos: .userInitiated)
+        let initQueue = DispatchQueue(label: "com.growthkit.init", qos: .userInitiated)
         
         initQueue.async { [weak self] in
             guard let self = self else { return }
@@ -148,14 +148,14 @@ public enum GrowthKitInitError: Error, LocalizedError {
                     
                     // 步骤2: 初始化任务仓库
                     self?.initProgress("初始化任务仓库...")
-                    self?.initializeTaskRepository { [weak self] result in
+                    self?.initializeTaskService { [weak self] result in
                         switch result {
                         case .success:
                             self?.initProgress("任务仓库初始化成功")
                             
                             // 步骤3: 启动自动刷新管理器（包含配置请求逻辑）
                             self?.initProgress("启动自动刷新管理器...")
-                            self?.startRefreshManager { [weak self] result in
+                            self?.startConfigSyncManager { [weak self] result in
                                 switch result {
                                 case .success:
                                     self?.initProgress("自动刷新管理器启动成功")
@@ -194,12 +194,12 @@ public enum GrowthKitInitError: Error, LocalizedError {
     }
     
     /// 初始化 CoreData
-    private func initializeCoreData(completion: @escaping (Result<Void, GrowthKitInitError>) -> Void) {
-        // CoreData 管理器是懒加载的，访问 container 属性会触发初始化
-        let coreDataManager = CoreDataManager.shared
+    private func initializeCoreData(completion: @escaping (Result<Void, SDKInitError>) -> Void) {
+        // 数据存储管理器是懒加载的，访问 container 属性会触发初始化
+        let dataStore = DataStore.shared
         
         // 检查 CoreData 是否初始化成功
-        if coreDataManager.container.persistentStoreDescriptions.isEmpty {
+        if dataStore.container.persistentStoreDescriptions.isEmpty {
             completion(.failure(.coreDataInitFailed("CoreData 容器初始化失败")))
             return
         }
@@ -210,34 +210,34 @@ public enum GrowthKitInitError: Error, LocalizedError {
         }
     }
     
-    /// 初始化任务仓库
-    private func initializeTaskRepository(completion: @escaping (Result<Void, GrowthKitInitError>) -> Void) {
-        // 任务仓库的 loadTasks() 方法会加载所有任务和配置
-        TaskRepository.shared.loadTasks()
+    /// 初始化任务服务
+    private func initializeTaskService(completion: @escaping (Result<Void, SDKInitError>) -> Void) {
+        // 任务服务的 loadTasks() 方法会加载所有任务和配置
+        TaskService.shared.loadTasks()
         
-        // 检查任务仓库是否初始化成功
+        // 检查任务服务是否初始化成功
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let repository = TaskRepository.shared
-            if repository.isInitialized {
+            let taskService = TaskService.shared
+            if taskService.isInitialized {
                 completion(.success(()))
             } else {
-                completion(.failure(.taskRepositoryInitFailed("任务仓库初始化失败")))
+                completion(.failure(.taskServiceInitFailed("任务服务初始化失败")))
             }
         }
     }
     
-    /// 启动自动刷新管理器
-    private func startRefreshManager(completion: @escaping (Result<Void, GrowthKitInitError>) -> Void) {
-        // RefreshManager 在初始化时会自动：
-        // 1. 调用 TaskRepository.shared.loadTasks() 加载任务
+    /// 启动配置同步管理器
+    private func startConfigSyncManager(completion: @escaping (Result<Void, SDKInitError>) -> Void) {
+        // ConfigSyncManager 在初始化时会自动：
+        // 1. 调用 TaskService.shared.loadTasks() 加载任务
         // 2. 设置应用生命周期观察者
         // 3. 设置任务队列观察者
         // 4. 创建 ConfigCheckScheduler 来管理配置检查
-        let refreshManager = RefreshManager.shared
+        let configSyncManager = ConfigSyncManager.shared
         
         // 触发初始配置检查
         // 这会根据 TaskPloysManager 的业务逻辑来决定是否请求配置
-        refreshManager.triggerAllConfigCheck()
+        configSyncManager.triggerAllConfigCheck()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             completion(.success(()))

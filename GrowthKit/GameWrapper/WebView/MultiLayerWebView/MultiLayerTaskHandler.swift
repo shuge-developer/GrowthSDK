@@ -13,7 +13,7 @@ internal final class MultiLayerTaskHandler {
     private let task: LinkTask
     private let onComplete: () -> Void
     
-    private let taskRepository = TaskRepository.shared
+    private let taskService = TaskService.shared
     private var coordinator: WebViewCoordinator?
     private var isTaskCompleted = false
     private var taskTimer: Timer?
@@ -31,11 +31,11 @@ internal final class MultiLayerTaskHandler {
     
     /// 初始化配置
     private var initConfig: InitConfig? {
-        return taskRepository.initConfig
+        return taskService.initConfig
     }
     /// JS 配置
     private var jsConfig: JSConfig? {
-        return taskRepository.jsConfig
+        return taskService.jsConfig
     }
     
     // MARK: -
