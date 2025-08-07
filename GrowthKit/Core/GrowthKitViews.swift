@@ -45,7 +45,7 @@ public struct GrowthKitView: View {
     // MARK: - 初始化
     /// 创建GrowthKit视图
     /// - Parameter unityController: Unity控制器
-    public init(unityController: UIViewController) {
+    public init(_ unityController: UIViewController) {
         self.unityController = unityController
     }
     
@@ -202,25 +202,22 @@ private extension GrowthKitView {
     
     /// 初始化UIKit桥接器
     /// - Parameter unityController: Unity视图控制器
-    @objc public init(unityController: UIViewController) {
+    @objc public init(_ unityController: UIViewController) {
         super.init(nibName: nil, bundle: nil)
-        setupSwiftUIView(unityController: unityController)
+        setupSwiftUIView(unityController)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSwiftUIView(unityController: UIViewController) {
-        let swiftUIView = GrowthKitView(unityController: unityController)
-        hostingController = UIHostingController(swiftUIView, ignoresSafeArea: true)
-        
+    private func setupSwiftUIView(_ unityController: UIViewController) {
+        hostingController = UIHostingController(GrowthKitView(unityController),
+                                                ignoresSafeArea: true)
         if let hostingController = hostingController {
             addChild(hostingController)
             view.addSubview(hostingController.view)
             hostingController.didMove(toParent: self)
-            
-            // 设置约束 - 忽略安全间距，填满整个屏幕
             hostingController.view.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),

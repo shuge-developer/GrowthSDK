@@ -19,15 +19,16 @@ public protocol NetworkConfigurable {
 }
 
 // MARK: - Objective-C 兼容的网络配置类
-@objc public class NetworkConfig: NSObject, NetworkConfigurable {
-    @objc public let appid: String
-    @objc public let bundleName: String
-    @objc public let baseUrl: String
-    @objc public let publicKey: String
-    @objc public let appKey: String
-    @objc public let appIv: String
+@objcMembers
+public class NetworkConfig: NSObject, NetworkConfigurable {
+    public let appid: String
+    public let bundleName: String
+    public let baseUrl: String
+    public let publicKey: String
+    public let appKey: String
+    public let appIv: String
     
-    @objc public init(appid: String, bundleName: String, baseUrl: String, publicKey: String, appKey: String, appIv: String) {
+    public init(appid: String, bundleName: String, baseUrl: String, publicKey: String, appKey: String, appIv: String) {
         self.appid = appid
         self.bundleName = bundleName
         self.baseUrl = baseUrl
@@ -68,7 +69,6 @@ public enum SDKInitError: Error, LocalizedError {
     
     private(set) var config: NetworkConfigurable!
     
-    /// 是否已初始化
     @objc public var isInitialized: Bool {
         if case .initialized = initStatus {
             return true
@@ -76,10 +76,8 @@ public enum SDKInitError: Error, LocalizedError {
         return false
     }
     
-    /// 初始化完成回调
     private var onInitComplete: ((Result<Void, SDKInitError>) -> Void)?
     
-    // 内部状态管理（不暴露给OC）
     private var initStatus: SDKInitStatus = .notInitialized
     
     private override init() {
@@ -93,7 +91,6 @@ public enum SDKInitError: Error, LocalizedError {
     ///   - config: 网络配置参数
     ///   - completion: 初始化完成回调
     public func initialize(_ config: NetworkConfigurable, completion: @escaping (Result<Void, SDKInitError>) -> Void) {
-        // 避免重复初始化
         guard case .notInitialized = initStatus else {
             print("[GrowthKit] ⚠️ SDK 已初始化或正在初始化中")
             completion(.success(()))
@@ -105,9 +102,7 @@ public enum SDKInitError: Error, LocalizedError {
         onInitComplete = completion
         
         print("[GrowthKit] 🚀 开始初始化 SDK")
-        print("[GrowthKit] 📊 网络配置: appid=\(config.appid), bundleName=\(config.bundleName), baseUrl=\(config.baseUrl)")
         
-        // 执行初始化流程
         performInitialization()
     }
     
