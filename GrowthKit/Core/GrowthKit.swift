@@ -92,7 +92,7 @@ public enum SDKInitError: Error, LocalizedError {
     /// - Parameters:
     ///   - config: 网络配置参数
     ///   - completion: 初始化完成回调
-    public func initialize(config: NetworkConfigurable, completion: @escaping (Result<Void, SDKInitError>) -> Void) {
+    public func initialize(_ config: NetworkConfigurable, completion: @escaping (Result<Void, SDKInitError>) -> Void) {
         // 避免重复初始化
         guard case .notInitialized = initStatus else {
             print("[GrowthKit] ⚠️ SDK 已初始化或正在初始化中")
@@ -117,14 +117,16 @@ public enum SDKInitError: Error, LocalizedError {
     /// - Parameters:
     ///   - config: 网络配置参数
     ///   - completion: 初始化完成回调
-    @objc public func initializeWithConfig(_ config: NetworkConfig, completion: @escaping (Bool, String?) -> Void) {
-        initialize(config: config) { result in
+    @objc public func initialize(_ config: NetworkConfig, completion: @escaping (Bool, String?) -> Void) {
+        initialize(config) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:
                     completion(true, nil)
+                    
                 case .failure(let error):
-                    completion(false, error.localizedDescription)
+                    let errMsg = error.localizedDescription
+                    completion(false, errMsg)
                 }
             }
         }
