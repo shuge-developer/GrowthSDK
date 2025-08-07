@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 // MARK: - Unity视图包装器
 private struct UnityViewWrapper: UIViewRepresentable {
@@ -191,3 +190,46 @@ private extension GrowthKitSwiftUIView {
         print("[GrowthKit] 📱 \(message)")
     }
 }
+
+// MARK: - UIKit 桥接器
+#if canImport(UIKit)
+import UIKit
+
+/// UIKit桥接器，用于在UIKit项目中集成GrowthKit
+public class GrowthKitUIKitBridge: UIViewController {
+    
+    private var hostingController: UIHostingController<GrowthKitSwiftUIView>?
+    
+    /// 初始化UIKit桥接器
+    /// - Parameter unityController: Unity视图控制器
+    public init(unityController: UIViewController) {
+        super.init(nibName: nil, bundle: nil)
+        setupSwiftUIView(unityController: unityController)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupSwiftUIView(unityController: UIViewController) {
+        let swiftUIView = GrowthKitSwiftUIView(unityController: unityController)
+        
+        hostingController = UIHostingController(swiftUIView, ignoreSafeArea: true)
+        
+        if let hostingController = hostingController {
+            addChild(hostingController)
+            view.addSubview(hostingController.view)
+            hostingController.didMove(toParent: self)
+            
+            // 设置约束 - 忽略安全间距，填满整个屏幕
+            hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
+                hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+        }
+    }
+}
+#endif
