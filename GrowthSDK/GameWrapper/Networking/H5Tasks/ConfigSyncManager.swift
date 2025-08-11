@@ -58,9 +58,8 @@ final class ConfigSyncManager: ObservableObject {
     // MARK: - 初始化与释放
     private init() {
         print("[AutoRefresh] 🎯 任务队列自动刷新管理器已初始化")
-        TaskService.shared.loadTasks()
+        configCheckScheduler = ConfigCheckScheduler(self)
         setupObservers()
-        configCheckScheduler = ConfigCheckScheduler(configSyncManager: self)
     }
     
     deinit {
@@ -540,7 +539,7 @@ extension ConfigSyncManager {
             case taskQueueEmpty
         }
         
-        init(configSyncManager: ConfigSyncManager) {
+        init(_ configSyncManager: ConfigSyncManager) {
             self.configSyncManager = configSyncManager
         }
         

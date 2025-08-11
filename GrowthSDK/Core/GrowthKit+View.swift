@@ -39,14 +39,14 @@ private class SDKInitializationManager: ObservableObject {
 // MARK: - 视图管理扩展
 public extension GrowthKit {
     
-    /// 创建主视图控制器 (Objective-C) - 立即返回，内部自动处理一切
+    /// 创建主视图控制器
     /// - Parameter unityController: Unity 视图控制器
     /// - Returns: GrowthSDK 视图控制器
     @objc static func createController(with unityController: UIViewController) -> UIViewController {
         return GrowthSDKViewController(unityController)
     }
     
-    /// 创建 SwiftUI 视图 - 立即返回，内部自动处理一切
+    /// 创建 SwiftUI 视图
     /// - Parameter unityController: Unity 视图控制器
     /// - Returns: SwiftUI 视图
     static func createView(with unityController: UIViewController) -> some View {
