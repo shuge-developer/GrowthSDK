@@ -11,42 +11,46 @@ import Foundation
 import SwiftUI
 import UIKit
 
-// MARK: - 视图管理扩展
-public extension GrowthKit {
+// MARK: - SDK 初始化状态管理器
+private class SDKInitializationManager: ObservableObject {
+    private var monitoringTask: Task<Void, Never>?
+    @Published var isReady: Bool = false
     
-    /// 创建主视图控制器 (Objective-C)
-    /// - Parameters:
-    ///   - unityController: Unity 视图控制器
-    ///   - completion: 完成回调
-    @objc func createController(with unityController: UIViewController, completion: @escaping (UIViewController?, Error?) -> Void) {
-        Task {
-            do {
-                let viewController = try await createController(with: unityController)
-                await MainActor.run {
-                    completion(viewController, nil)
-                }
-            } catch {
-                await MainActor.run {
-                    completion(nil, error)
-                }
+    func startMonitoring() {
+        if GrowthKit.shared.isInitialized {
+            isReady = true
+            return
+        }
+        monitoringTask?.cancel()
+        monitoringTask = Task { @MainActor in
+            while !GrowthKit.shared.isInitialized {
+                try? await Task.sleep(nanoseconds: 50_000_000)
             }
+            isReady = true
+            Logger.info("SDK 初始化完成，功能视图已激活")
         }
     }
     
-    /// 创建主视图控制器（Swift-UIKit）
+    deinit {
+        monitoringTask?.cancel()
+    }
+}
+
+// MARK: - 视图管理扩展
+public extension GrowthKit {
+    
+    /// 创建主视图控制器 (Objective-C) - 立即返回，内部自动处理一切
     /// - Parameter unityController: Unity 视图控制器
     /// - Returns: GrowthSDK 视图控制器
-    func createController(with unityController: UIViewController) async throws -> UIViewController {
-        if !isInitialized { try await waitForInitialization() }
-        return await GrowthSDKViewController(unityController)
+    @objc static func createController(with unityController: UIViewController) -> UIViewController {
+        return GrowthSDKViewController(unityController)
     }
     
-    /// 创建主视图控制器（SwiftUI）
+    /// 创建 SwiftUI 视图 - 立即返回，内部自动处理一切
     /// - Parameter unityController: Unity 视图控制器
     /// - Returns: SwiftUI 视图
-    func createView(with unityController: UIViewController) async throws -> some View {
-        if !isInitialized { try await waitForInitialization() }
-        return await GrowthSDKView(unityController)
+    static func createView(with unityController: UIViewController) -> some View {
+        return GrowthSDKView(unityController)
     }
 }
 
@@ -76,6 +80,7 @@ private struct GrowthSDKView: View {
     // MARK: - 状态管理
     @StateObject private var startManager = TaskLauncher.shared
     @StateObject private var layerManager = LayerOrchestrator.shared
+    @StateObject private var initializationManager = SDKInitializationManager()
     @StateObject private var singleLayerViewModel = SingleLayerViewModel.shared
     @StateObject private var popupPositionManager = PopupCoordinator.shared
     @State private var showPopupView: Bool = false
@@ -88,14 +93,19 @@ private struct GrowthSDKView: View {
     // MARK: - 视图构建
     var body: some View {
         ZStack {
-            buildMultiLayerWebView()
-            buildSingleLayerWebView()
-            buildUnityView()
-            buildPopupView()
+            if initializationManager.isReady {
+                buildMultiLayerWebView()
+                buildSingleLayerWebView()
+                buildUnityView()
+                buildPopupView()
+            } else {
+                Color.hex("201D1D")
+            }
         }
         .onChange(of: layerManager.topLayerType) { newValue in
             handleLayerChange(newValue)
         }
+        .ignoresSafeArea()
         .onAppear {
             setupSDK()
         }
@@ -149,8 +159,12 @@ private struct GrowthSDKView: View {
     
     // MARK: - 私有方法
     private func setupSDK() {
+        // 立即设置 Unity 控制器
         singleLayerViewModel.setUnityController(unityController)
         Logger.info("Unity控制器已传递到SingleLayerViewModel，支持内部截图")
+        
+        // 启动初始化管理器（内部异步处理）
+        initializationManager.startMonitoring()
     }
     
     private func handleLayerChange(_ layerType: LayerType) {
@@ -208,6 +222,7 @@ private final class GrowthSDKViewController: UIViewController {
     init(_ unityController: UIViewController) {
         self.unityController = unityController
         super.init(nibName: nil, bundle: nil)
+        Logger.info("GrowthSDK 视图控制器创建完成")
     }
     
     required init?(coder: NSCoder) {
@@ -222,15 +237,18 @@ private final class GrowthSDKViewController: UIViewController {
     
     // MARK: - 私有方法
     private func setupController() {
+        // 立即创建 SwiftUI 视图（内部会处理初始化状态）
         let contentView = GrowthSDKView(unityController)
         let hostingController = UIHostingController(
             contentView, ignoresSafeArea: true
         )
         
+        // 添加到视图层级
         addChild(hostingController)
         view.addSubview(hostingController.view)
         hostingController.didMove(toParent: self)
         
+        // 设置约束
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
@@ -240,6 +258,7 @@ private final class GrowthSDKViewController: UIViewController {
         ])
         
         self.contentController = hostingController
+        Logger.info("GrowthSDK 视图控制器加载完成")
     }
 }
 
