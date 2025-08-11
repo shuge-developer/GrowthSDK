@@ -1,27 +1,27 @@
-# GrowthKit SDK 统一API集成指南
+# GrowthSDK SDK 统一API集成指南
 
 ## 🎯 新的API设计
 
 ### 核心组件
-- `GrowthKitManager`: 统一管理器
-- `GrowthKitSwiftUIAdapter`: SwiftUI适配器  
-- `GrowthKitUIKitAdapter`: UIKit适配器
+- `GrowthSDKManager`: 统一管理器
+- `GrowthSDKSwiftUIAdapter`: SwiftUI适配器  
+- `GrowthSDKUIKitAdapter`: UIKit适配器
 
 ## 🚀 快速集成
 
 ### SwiftUI项目
 ```swift
 import SwiftUI
-import GrowthKit
+import GrowthSDK
 
 struct ContentView: View {
-    @StateObject private var growthKitManager = GrowthKitManager.shared
+    @StateObject private var growthKitManager = GrowthSDKManager.shared
     @State private var unityController: UIViewController?
     
     var body: some View {
         Group {
             if let controller = unityController {
-                GrowthKitSwiftUIAdapter()
+                GrowthSDKSwiftUIAdapter()
                     .ignoresSafeArea()
                     .onAppear {
                         growthKitManager.setUnityController(controller)
@@ -37,7 +37,7 @@ struct ContentView: View {
     }
     
     private func initializeSDK() {
-        let config = GrowthKitConfig(
+        let config = GrowthSDKConfig(
             appid: "your_app_id",
             bundleName: Bundle.main.bundleIdentifier ?? "com.example.app",
             baseUrl: "https://api.example.com",
@@ -46,7 +46,7 @@ struct ContentView: View {
             appIv: "your_app_iv"
         )
         
-        GrowthKitManager.shared.initialize(config: config) { result in
+        GrowthSDKManager.shared.initialize(config: config) { result in
             print("SDK初始化: \(result)")
         }
     }
@@ -69,21 +69,21 @@ struct ContentView: View {
 ### UIKit项目
 ```swift
 import UIKit
-import GrowthKit
+import GrowthSDK
 
 class GameViewController: UIViewController {
     private var unityController: UIViewController?
-    private var growthKitAdapter: GrowthKitUIKitAdapter?
+    private var growthKitAdapter: GrowthSDKUIKitAdapter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupGrowthKitAdapter()
+        setupGrowthSDKAdapter()
         initializeSDK()
         initializeUnity()
     }
     
-    private func setupGrowthKitAdapter() {
-        growthKitAdapter = GrowthKitUIKitAdapter()
+    private func setupGrowthSDKAdapter() {
+        growthKitAdapter = GrowthSDKUIKitAdapter()
         addChild(growthKitAdapter!)
         view.addSubview(growthKitAdapter!.view)
         growthKitAdapter!.didMove(toParent: self)
@@ -98,7 +98,7 @@ class GameViewController: UIViewController {
     }
     
     private func initializeSDK() {
-        let config = GrowthKitConfig(
+        let config = GrowthSDKConfig(
             appid: "your_app_id",
             bundleName: Bundle.main.bundleIdentifier ?? "com.example.app",
             baseUrl: "https://api.example.com",
@@ -107,7 +107,7 @@ class GameViewController: UIViewController {
             appIv: "your_app_iv"
         )
         
-        GrowthKitManager.shared.initialize(config: config) { result in
+        GrowthSDKManager.shared.initialize(config: config) { result in
             print("SDK初始化: \(result)")
         }
     }
@@ -118,7 +118,7 @@ class GameViewController: UIViewController {
                 switch result {
                 case .success(let controller):
                     self?.unityController = controller
-                    GrowthKitManager.shared.setUnityController(controller)
+                    GrowthSDKManager.shared.setUnityController(controller)
                     self?.setupUnityIntegration(controller)
                 case .failure(let error):
                     print("Unity初始化失败: \(error)")
@@ -147,7 +147,7 @@ class GameViewController: UIViewController {
 
 ## 📱 API参考
 
-### GrowthKitManager
+### GrowthSDKManager
 - `initialize(config:completion:)` - 初始化SDK
 - `setUnityController(_:)` - 设置Unity控制器
 - `bringGameToTop()` - 切换到游戏层
@@ -156,13 +156,13 @@ class GameViewController: UIViewController {
 
 ### 状态监听
 ```swift
-GrowthKitManager.shared.$isInitialized
+GrowthSDKManager.shared.$isInitialized
     .sink { isInitialized in
         print("SDK初始化状态: \(isInitialized)")
     }
     .store(in: &cancellables)
 
-GrowthKitManager.shared.$currentLayerType
+GrowthSDKManager.shared.$currentLayerType
     .sink { layerType in
         print("当前层级: \(layerType)")
     }

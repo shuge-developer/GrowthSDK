@@ -1,8 +1,8 @@
-# GrowthKit SDK 初始化指南 V2
+# GrowthSDK SDK 初始化指南 V2
 
 ## 概述
 
-GrowthKit SDK 提供了一个完整的初始化入口，包括 CoreData 初始化、任务仓库初始化、自动刷新管理器启动等功能。**配置请求由内部的 `RefreshManager` 和 `TaskPloysManager` 自动管理**，具有复杂的业务逻辑。
+GrowthSDK SDK 提供了一个完整的初始化入口，包括 CoreData 初始化、任务仓库初始化、自动刷新管理器启动等功能。**配置请求由内部的 `RefreshManager` 和 `TaskPloysManager` 自动管理**，具有复杂的业务逻辑。
 
 ## 初始化流程
 

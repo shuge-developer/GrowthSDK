@@ -1,14 +1,14 @@
-# SmallGame 项目集成 GrowthKit SDK 示例
+# SmallGame 项目集成 GrowthSDK SDK 示例
 
 ## 概述
 
-本文档展示如何在现有的 SmallGame 项目中集成 GrowthKit SDK，实现最小侵入性的改造。
+本文档展示如何在现有的 SmallGame 项目中集成 GrowthSDK SDK，实现最小侵入性的改造。
 
 ## 集成步骤
 
 ### 1. 修改 ContentView.swift
 
-将现有的 ContentView 改造为使用 GrowthKit SDK：
+将现有的 ContentView 改造为使用 GrowthSDK SDK：
 
 ```swift
 //
@@ -19,7 +19,7 @@
 //
 
 import SwiftUI
-import GrowthKit
+import GrowthSDK
 
 struct ContentView: View {
     
@@ -34,8 +34,8 @@ struct ContentView: View {
     @State private var opacity: Double = 1.0
     
     var body: some View {
-        // 使用 GrowthKit SDK 的 SwiftUI 视图
-        GrowthKitSwiftUIView(
+        // 使用 GrowthSDK SDK 的 SwiftUI 视图
+        GrowthSDKSwiftUIView(
             gameView: {
                 // 原有的 Unity 游戏视图
                 UnityViewWrapper()
@@ -168,7 +168,7 @@ struct LongPressView: View {
 
 ### 2. 修改 SmallGameApp.swift
 
-在 App 启动时初始化 GrowthKit SDK：
+在 App 启动时初始化 GrowthSDK SDK：
 
 ```swift
 //
@@ -179,7 +179,7 @@ struct LongPressView: View {
 //
 
 import SwiftUI
-import GrowthKit
+import GrowthSDK
 
 @main
 struct SmallGameApp: App {
@@ -190,12 +190,12 @@ struct SmallGameApp: App {
         WindowGroup {
             ContentView()
                 .onAppear {
-                    initializeGrowthKitSDK()
+                    initializeGrowthSDKSDK()
                 }
         }
     }
     
-    private func initializeGrowthKitSDK() {
+    private func initializeGrowthSDKSDK() {
         // 设置网络配置
         let config = NetworkConfig(
             appid: "your_app_id",
@@ -212,9 +212,9 @@ struct SmallGameApp: App {
         GameWebWrapper.shared.initialize { result in
             switch result {
             case .success:
-                print("[SmallGameApp] ✅ GrowthKit SDK 初始化成功")
+                print("[SmallGameApp] ✅ GrowthSDK SDK 初始化成功")
             case .failure(let error):
-                print("[SmallGameApp] ❌ GrowthKit SDK 初始化失败: \(error)")
+                print("[SmallGameApp] ❌ GrowthSDK SDK 初始化失败: \(error)")
             }
         }
     }
@@ -234,7 +234,7 @@ struct SmallGameApp: App {
 //
 
 import UIKit
-import GrowthKit
+import GrowthSDK
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     
@@ -280,7 +280,7 @@ ZStack {
 
 **新结构**：
 ```swift
-GrowthKitSwiftUIView(
+GrowthSDKSwiftUIView(
     gameView: {
         UnityViewWrapper()
     },
@@ -297,7 +297,7 @@ GrowthKitSwiftUIView(
 - 在 `ContentView` 中手动控制层级切换
 
 **新方式**：
-- 使用 `GrowthKitLayerManager` 统一管理层级
+- 使用 `GrowthSDKLayerManager` 统一管理层级
 - SDK 内部自动处理层级切换逻辑
 
 ### 3. 弹窗管理变化

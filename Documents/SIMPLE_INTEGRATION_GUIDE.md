@@ -1,10 +1,10 @@
-# GrowthKit SDK 简化集成指南
+# GrowthSDK SDK 简化集成指南
 
 ## 🎯 设计理念
 
 基于你的建议，我们采用了更合理和优雅的方案：
 - **SDK在App启动时初始化** - 越早越好，避免延迟
-- **GrowthKitUIKitBridge作为根控制器** - 避免视图层级问题
+- **GrowthSDKUIKitBridge作为根控制器** - 避免视图层级问题
 - **保持SwiftUI项目的优雅集成** - 不修改现有实现
 - **最小化集成成本** - 简单直接的API设计
 
@@ -13,7 +13,7 @@
 ### SwiftUI项目（保持不变）
 ```swift
 import SwiftUI
-import GrowthKit
+import GrowthSDK
 
 struct ContentView: View {
     @State private var unityController: UIViewController?
@@ -21,7 +21,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if let controller = unityController {
-                GrowthKitSwiftUIView(unityController: controller)
+                GrowthSDKSwiftUIView(unityController: controller)
                     .ignoresSafeArea()
             } else {
                 EmptyView()
@@ -52,21 +52,21 @@ struct ContentView: View {
 #### 1. AppDelegate - SDK初始化
 ```swift
 import UIKit
-import GrowthKit
+import GrowthSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // 在应用启动时尽早初始化GrowthKit SDK
-        initializeGrowthKitSDK()
+        // 在应用启动时尽早初始化GrowthSDK SDK
+        initializeGrowthSDKSDK()
         
         return true
     }
     
-    private func initializeGrowthKitSDK() {
-        let config = GrowthKitConfig(
+    private func initializeGrowthSDKSDK() {
+        let config = GrowthSDKConfig(
             appid: "your_app_id",
             bundleName: Bundle.main.bundleIdentifier ?? "com.example.app",
             baseUrl: "https://api.example.com",
@@ -85,12 +85,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #### 2. SceneDelegate - 根控制器设置
 ```swift
 import UIKit
-import GrowthKit
+import GrowthSDK
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    private var growthKitBridge: GrowthKitUIKitBridge?
+    private var growthKitBridge: GrowthSDKUIKitBridge?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -98,17 +98,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // 创建窗口
         window = UIWindow(windowScene: windowScene)
         
-        // 初始化Unity和GrowthKit集成
-        initializeUnityAndGrowthKit()
+        // 初始化Unity和GrowthSDK集成
+        initializeUnityAndGrowthSDK()
     }
     
-    private func initializeUnityAndGrowthKit() {
+    private func initializeUnityAndGrowthSDK() {
         // 初始化Unity
         UnityManager.shared.initializeUnity { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let unityController):
-                    self?.setupGrowthKitBridge(unityController)
+                    self?.setupGrowthSDKBridge(unityController)
                 case .failure(let error):
                     print("Unity初始化失败: \(error)")
                 }
@@ -116,9 +116,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
-    private func setupGrowthKitBridge(_ unityController: UIViewController) {
-        // 创建GrowthKit桥接器作为根控制器
-        growthKitBridge = GrowthKitUIKitBridge(unityController: unityController)
+    private func setupGrowthSDKBridge(_ unityController: UIViewController) {
+        // 创建GrowthSDK桥接器作为根控制器
+        growthKitBridge = GrowthSDKUIKitBridge(unityController: unityController)
         
         // 设置为根控制器
         window?.rootViewController = growthKitBridge
@@ -135,10 +135,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 - **错误处理更早** - 及时发现配置问题
 
 ### 2. 根控制器设计
-- **GrowthKitUIKitBridge作为根控制器** - 避免视图层级冲突
+- **GrowthSDKUIKitBridge作为根控制器** - 避免视图层级冲突
 - **完整的视图生命周期管理** - 确保SDK正常工作
 - **更好的内存管理** - 避免循环引用问题
-- **自动忽略安全间距** - GrowthKitUIKitBridge内部自动应用`.ignoresSafeArea()`，填满整个屏幕
+- **自动忽略安全间距** - GrowthSDKUIKitBridge内部自动应用`.ignoresSafeArea()`，填满整个屏幕
 
 ### 3. 分离关注点
 - **AppDelegate负责SDK初始化** - 应用级别的配置
@@ -148,7 +148,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 ## 🔧 配置说明
 
 ```swift
-struct GrowthKitConfig: NetworkConfigurable {
+struct GrowthSDKConfig: NetworkConfigurable {
     let appid: String
     let bundleName: String
     let baseUrl: String
@@ -161,11 +161,11 @@ struct GrowthKitConfig: NetworkConfigurable {
 ## 🎉 优势总结
 
 1. **合理的初始化时机** - SDK在应用启动时初始化，越早越好
-2. **避免视图层级问题** - GrowthKitUIKitBridge作为根控制器
+2. **避免视图层级问题** - GrowthSDKUIKitBridge作为根控制器
 3. **保持SwiftUI优雅** - 不修改现有的SwiftUI集成
 4. **清晰的架构分离** - 职责明确，易于维护
 5. **更好的错误处理** - 早期发现和解决问题
 6. **简化的项目结构** - 无需额外的ViewController
 7. **完美的UI布局** - 忽略安全间距，填满整个屏幕
 
-这个设计完全符合你的要求：**SDK初始化在App启动阶段，GrowthKitUIKitBridge作为根控制器，避免视图层级问题，UI布局完美**。 
+这个设计完全符合你的要求：**SDK初始化在App启动阶段，GrowthSDKUIKitBridge作为根控制器，避免视图层级问题，UI布局完美**。 

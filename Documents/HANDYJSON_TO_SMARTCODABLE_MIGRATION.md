@@ -2,7 +2,7 @@
 
 ## 迁移概述
 
-本次迁移将 GrowthKit SDK 中的 JSON 解析库从 [HandyJSON](https://github.com/alibaba/HandyJSON) 最终迁移到 Swift 原生的 `Codable` 协议。
+本次迁移将 GrowthSDK SDK 中的 JSON 解析库从 [HandyJSON](https://github.com/alibaba/HandyJSON) 最终迁移到 Swift 原生的 `Codable` 协议。
 
 迁移历程：
 1. **HandyJSON** → 打包 SDK 失败（库不再维护）
@@ -31,7 +31,7 @@
 ### 2. 依赖库更新
 
 **项目文件更新：**
-- `GrowthKit.xcodeproj/project.pbxproj`
+- `GrowthSDK.xcodeproj/project.pbxproj`
   - 移除 HandyJSON 包引用
   - 移除 SmartCodable 包引用
   - 使用系统原生 Codable 协议
@@ -127,22 +127,22 @@ internal extension Encodable {
 ### 4. 修改的文件列表
 
 #### 4.1 核心模型文件
-- `GrowthKit/Private/Networking/Models/H5ConfigModel.swift`
-- `GrowthKit/Private/WebView/Models/AdElementModel.swift`
-- `GrowthKit/Private/WebView/Models/FuncAreaModel.swift`
+- `GrowthSDK/Private/Networking/Models/H5ConfigModel.swift`
+- `GrowthSDK/Private/WebView/Models/AdElementModel.swift`
+- `GrowthSDK/Private/WebView/Models/FuncAreaModel.swift`
 
 #### 4.2 扩展文件
-- `GrowthKit/Private/Extensions/JSONExtension.swift` - 新增自定义 JSON 解析扩展
+- `GrowthSDK/Private/Extensions/JSONExtension.swift` - 新增自定义 JSON 解析扩展
 
 #### 4.3 网络服务文件
-- `GrowthKit/Private/Networking/NetworkServer.swift`
+- `GrowthSDK/Private/Networking/NetworkServer.swift`
 
 #### 4.4 业务逻辑文件
-- `GrowthKit/Private/WebView/SingleLayerWebView/SingleLayerViewModel.swift`
-- `GrowthKit/Private/WebView/MultiLayerWebView/MultiLayerTaskHandler.swift`
+- `GrowthSDK/Private/WebView/SingleLayerWebView/SingleLayerViewModel.swift`
+- `GrowthSDK/Private/WebView/MultiLayerWebView/MultiLayerTaskHandler.swift`
 
 #### 4.5 项目配置文件
-- `GrowthKit.xcodeproj/project.pbxproj`
+- `GrowthSDK.xcodeproj/project.pbxproj`
 
 ### 5. API 兼容性
 
@@ -227,7 +227,7 @@ for (index, result) in results.enumerated() {
 
 ## 总结
 
-本次迁移成功将 GrowthKit SDK 从 HandyJSON 最终迁移到系统原生 Codable，完全解决了 XCFramework 打包失败的问题。
+本次迁移成功将 GrowthSDK SDK 从 HandyJSON 最终迁移到系统原生 Codable，完全解决了 XCFramework 打包失败的问题。
 
 ### 🎯 关键成果
 

@@ -2,11 +2,11 @@
 install! 'cocoapods', :warn_for_unused_master_specs_repo => false
 platform :ios, '14.0'
 
-target 'GrowthKit' do
+target 'GrowthSDK' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks! :linkage => :static
   
-  # Pods for GrowthKit
+  # Pods for GrowthSDK
   
 end
 

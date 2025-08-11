@@ -1,27 +1,27 @@
-# GrowthKit SDK 统一API集成指南
+# GrowthSDK SDK 统一API集成指南
 
 ## 🎯 新的API设计理念
 
 ### 问题解决
-- **统一管理**: 通过`GrowthKitManager`统一管理SDK生命周期
+- **统一管理**: 通过`GrowthSDKManager`统一管理SDK生命周期
 - **框架无关**: 提供SwiftUI和UIKit两种适配器
 - **简化集成**: 隐藏内部实现细节，提供简洁的API
 - **类型安全**: 使用Swift的类型系统确保API安全性
 
 ### 核心组件
-- `GrowthKitManager`: 统一管理器
-- `GrowthKitSwiftUIAdapter`: SwiftUI适配器
-- `GrowthKitUIKitAdapter`: UIKit适配器
+- `GrowthSDKManager`: 统一管理器
+- `GrowthSDKSwiftUIAdapter`: SwiftUI适配器
+- `GrowthSDKUIKitAdapter`: UIKit适配器
 
 ## 🚀 快速开始
 
 ### 1. 初始化SDK
 
 ```swift
-import GrowthKit
+import GrowthSDK
 
 // 创建配置
-let config = GrowthKitConfig(
+let config = GrowthSDKConfig(
     appid: "your_app_id",
     bundleName: Bundle.main.bundleIdentifier ?? "com.example.app",
     baseUrl: "https://api.example.com",
@@ -31,7 +31,7 @@ let config = GrowthKitConfig(
 )
 
 // 初始化SDK
-GrowthKitManager.shared.initialize(config: config) { result in
+GrowthSDKManager.shared.initialize(config: config) { result in
     switch result {
     case .success:
         print("SDK初始化成功")
@@ -45,16 +45,16 @@ GrowthKitManager.shared.initialize(config: config) { result in
 
 ```swift
 import SwiftUI
-import GrowthKit
+import GrowthSDK
 
 struct ContentView: View {
-    @StateObject private var growthKitManager = GrowthKitManager.shared
+    @StateObject private var growthKitManager = GrowthSDKManager.shared
     @State private var unityController: UIViewController?
     
     var body: some View {
         Group {
             if let controller = unityController {
-                GrowthKitSwiftUIAdapter()
+                GrowthSDKSwiftUIAdapter()
                     .ignoresSafeArea()
                     .onAppear {
                         growthKitManager.setUnityController(controller)
@@ -87,20 +87,20 @@ struct ContentView: View {
 
 ```swift
 import UIKit
-import GrowthKit
+import GrowthSDK
 
 class GameViewController: UIViewController {
     private var unityController: UIViewController?
-    private var growthKitAdapter: GrowthKitUIKitAdapter?
+    private var growthKitAdapter: GrowthSDKUIKitAdapter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupGrowthKitAdapter()
+        setupGrowthSDKAdapter()
         initializeUnity()
     }
     
-    private func setupGrowthKitAdapter() {
-        growthKitAdapter = GrowthKitUIKitAdapter()
+    private func setupGrowthSDKAdapter() {
+        growthKitAdapter = GrowthSDKUIKitAdapter()
         addChild(growthKitAdapter!)
         view.addSubview(growthKitAdapter!.view)
         growthKitAdapter!.didMove(toParent: self)
@@ -121,7 +121,7 @@ class GameViewController: UIViewController {
                 switch result {
                 case .success(let controller):
                     self?.unityController = controller
-                    GrowthKitManager.shared.setUnityController(controller)
+                    GrowthSDKManager.shared.setUnityController(controller)
                     
                     // 将Unity视图添加到适配器
                     if let adapter = self?.growthKitAdapter {
@@ -148,7 +148,7 @@ class GameViewController: UIViewController {
 
 ## 📱 API参考
 
-### GrowthKitManager
+### GrowthSDKManager
 
 #### 属性
 - `isInitialized: Bool` - SDK是否已初始化
@@ -162,11 +162,11 @@ class GameViewController: UIViewController {
 - `bringWebViewToTop()` - 切换到WebView层
 - `closePopup()` - 关闭弹窗
 
-### GrowthKitSwiftUIAdapter
+### GrowthSDKSwiftUIAdapter
 
 SwiftUI视图适配器，自动处理层级管理和视图更新。
 
-### GrowthKitUIKitAdapter
+### GrowthSDKUIKitAdapter
 
 UIKit视图控制器适配器，提供完整的视图生命周期管理。
 
@@ -181,13 +181,13 @@ SDK会根据业务逻辑自动切换层级：
 ### 手动层级控制
 ```swift
 // 切换到游戏层
-GrowthKitManager.shared.bringGameToTop()
+GrowthSDKManager.shared.bringGameToTop()
 
 // 切换到WebView层
-GrowthKitManager.shared.bringWebViewToTop()
+GrowthSDKManager.shared.bringWebViewToTop()
 
 // 关闭弹窗
-GrowthKitManager.shared.closePopup()
+GrowthSDKManager.shared.closePopup()
 ```
 
 ## 📊 状态监听
@@ -206,21 +206,21 @@ class GameViewController: UIViewController {
     
     private func setupStatusMonitoring() {
         // 监听初始化状态
-        GrowthKitManager.shared.$isInitialized
+        GrowthSDKManager.shared.$isInitialized
             .sink { isInitialized in
                 print("SDK初始化状态: \(isInitialized)")
             }
             .store(in: &cancellables)
         
         // 监听层级变化
-        GrowthKitManager.shared.$currentLayerType
+        GrowthSDKManager.shared.$currentLayerType
             .sink { layerType in
                 print("当前层级: \(layerType)")
             }
             .store(in: &cancellables)
         
         // 监听弹窗状态
-        GrowthKitManager.shared.$showPopupView
+        GrowthSDKManager.shared.$showPopupView
             .sink { show in
                 print("弹窗显示状态: \(show)")
             }
@@ -237,8 +237,8 @@ class GameViewController: UIViewController {
 UnityManager.shared.initializeUnity { result in
     switch result {
     case .success(let controller):
-        // 将控制器传递给GrowthKit
-        GrowthKitManager.shared.setUnityController(controller)
+        // 将控制器传递给GrowthSDK
+        GrowthSDKManager.shared.setUnityController(controller)
     case .failure(let error):
         print("Unity初始化失败: \(error)")
     }
@@ -269,7 +269,7 @@ public protocol NetworkConfigurable {
 
 ### 配置示例
 ```swift
-struct GrowthKitConfig: NetworkConfigurable {
+struct GrowthSDKConfig: NetworkConfigurable {
     let appid: String
     let bundleName: String
     let baseUrl: String
@@ -278,7 +278,7 @@ struct GrowthKitConfig: NetworkConfigurable {
     let appIv: String
 }
 
-let config = GrowthKitConfig(
+let config = GrowthSDKConfig(
     appid: "your_app_id",
     bundleName: Bundle.main.bundleIdentifier ?? "com.example.app",
     baseUrl: "https://api.example.com",
@@ -291,7 +291,7 @@ let config = GrowthKitConfig(
 ## 🚨 注意事项
 
 ### 1. 初始化顺序
-1. 先初始化GrowthKit SDK
+1. 先初始化GrowthSDK SDK
 2. 再初始化Unity
 3. 最后设置Unity控制器
 
@@ -313,21 +313,21 @@ let config = GrowthKitConfig(
 
 #### 旧版本
 ```swift
-// 旧版本使用GrowthKitSwiftUIView
-GrowthKitSwiftUIView(unityController: controller)
+// 旧版本使用GrowthSDKSwiftUIView
+GrowthSDKSwiftUIView(unityController: controller)
 ```
 
 #### 新版本
 ```swift
-// 新版本使用GrowthKitSwiftUIAdapter
-GrowthKitSwiftUIAdapter()
+// 新版本使用GrowthSDKSwiftUIAdapter
+GrowthSDKSwiftUIAdapter()
 // 然后设置Unity控制器
-GrowthKitManager.shared.setUnityController(controller)
+GrowthSDKManager.shared.setUnityController(controller)
 ```
 
 ### 主要变化
 1. 不再需要直接传递Unity控制器给视图
-2. 通过`GrowthKitManager`统一管理
+2. 通过`GrowthSDKManager`统一管理
 3. 更好的状态管理和错误处理
 4. 支持UIKit和SwiftUI两种框架
 
@@ -340,4 +340,4 @@ GrowthKitManager.shared.setUnityController(controller)
 - **易于使用**: 简化的集成流程
 - **状态管理**: 完整的生命周期管理
 
-通过这个新的API设计，开发者可以更轻松地在SwiftUI和UIKit项目中集成GrowthKit SDK，享受统一的开发体验。
+通过这个新的API设计，开发者可以更轻松地在SwiftUI和UIKit项目中集成GrowthSDK SDK，享受统一的开发体验。

@@ -1,8 +1,8 @@
-# GrowthKit SDK 访问控制权限修复报告
+# GrowthSDK SDK 访问控制权限修复报告
 
 ## 修复概述
 
-本次修复确保了 GrowthKit SDK 的访问控制权限符合以下原则：
+本次修复确保了 GrowthSDK SDK 的访问控制权限符合以下原则：
 - **Public 目录**：只有必要的接口对外公开
 - **Private 目录**：所有实现细节都使用适当的访问修饰符隐藏
 
@@ -13,8 +13,8 @@
 新增了完整的 SDK 初始化入口，包括：
 
 #### 1. 初始化状态管理
-- `GrowthKitInitStatus` 枚举：管理 SDK 初始化状态
-- `GrowthKitInitError` 枚举：详细的错误类型定义
+- `GrowthSDKInitStatus` 枚举：管理 SDK 初始化状态
+- `GrowthSDKInitError` 枚举：详细的错误类型定义
 - `@Published` 状态属性：支持 SwiftUI 响应式更新
 
 #### 2. 初始化流程
@@ -40,7 +40,7 @@
 
 ### 1. Public 目录修复
 
-#### GrowthKit.swift
+#### GrowthSDK.swift
 - ✅ 修复 `NetworkConfig` 结构体的访问修饰符
   - 所有属性添加 `public` 修饰符
   - 初始化器添加 `public` 修饰符
@@ -114,8 +114,8 @@
 ### Public 接口（对外暴露）
 - `GameWebWrapper`：SDK 主入口类
 - `NetworkConfig`：网络配置结构体
-- `GrowthKitInitStatus`：初始化状态枚举
-- `GrowthKitInitError`：初始化错误枚举
+- `GrowthSDKInitStatus`：初始化状态枚举
+- `GrowthSDKInitError`：初始化错误枚举
 
 ### Internal 实现（模块内部可见）
 - 所有 Private 目录中的类、结构体、枚举、协议

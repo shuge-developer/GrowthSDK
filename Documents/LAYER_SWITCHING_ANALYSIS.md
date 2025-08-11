@@ -122,7 +122,7 @@ private func bringWebViewToTop() {
 
 ```swift
 // 如果需要更精确的控制，可以桥接到UIKit
-class GrowthKitUIKitBridge {
+class GrowthSDKUIKitBridge {
     private weak var hostViewController: UIViewController?
     private weak var gameView: UIView?
     private weak var webView: UIView?
@@ -164,7 +164,7 @@ class GrowthKitUIKitBridge {
 
 ```swift
 // 最终推荐的实现
-public struct GrowthKitSwiftUIView<GameView: View>: View {
+public struct GrowthSDKSwiftUIView<GameView: View>: View {
     @State private var showGameView: Bool = true
     @State private var showWebView: Bool = false
     

@@ -1,8 +1,8 @@
- # GrowthKit SDK 层级切换流程图
+ # GrowthSDK SDK 层级切换流程图
 
 ## 🎯 系统概述
 
-GrowthKit SDK 实现了完整的四层级视图管理系统，通过智能的层级切换机制实现广告点击功能。整个系统完全黑盒化，外部无需了解内部实现细节。
+GrowthSDK SDK 实现了完整的四层级视图管理系统，通过智能的层级切换机制实现广告点击功能。整个系统完全黑盒化，外部无需了解内部实现细节。
 
 ## 📊 层级架构
 
@@ -101,7 +101,7 @@ GrowthKit SDK 实现了完整的四层级视图管理系统，通过智能的层
 
 ## ⚙️ 核心组件交互
 
-### GrowthKitViews.swift
+### GrowthSDKViews.swift
 ```swift
 // 主要职责：
 // 1. 监听SingleLayerViewModel状态变化
@@ -117,7 +117,7 @@ GrowthKit SDK 实现了完整的四层级视图管理系统，通过智能的层
 }
 ```
 
-### GrowthKitLayerManager.swift
+### GrowthSDKLayerManager.swift
 ```swift
 // 主要职责：
 // 1. 管理各层级的zIndex值
@@ -152,7 +152,7 @@ private func switchLayers() {
 ## 🎯 关键时序图
 
 ```
-时间线：     外部游戏     GrowthKitViews    SingleLayerViewModel    GrowthKitLayerManager
+时间线：     外部游戏     GrowthSDKViews    SingleLayerViewModel    GrowthSDKLayerManager
    ↓           │              │                      │                        │
    │      [Unity加载]          │                      │                        │
    │           │         [监听状态]                   │                        │
@@ -221,7 +221,7 @@ private func switchLayers() {
 
 ```swift
 // 外部集成代码（极简）
-GrowthKitSwiftUIView(
+GrowthSDKSwiftUIView(
     gameView: {
         UnityGameView()
             .setUnityStateCallback { loaded in
@@ -238,4 +238,4 @@ GrowthKitSwiftUIView(
 
 ## 🎯 总结
 
-GrowthKit SDK 通过精心设计的四层级架构和智能的层级切换机制，实现了完全黑盒化的广告点击功能。外部开发者只需提供游戏视图和截图提供者，即可享受完整的广告交互功能，无需关心任何内部实现细节。
+GrowthSDK SDK 通过精心设计的四层级架构和智能的层级切换机制，实现了完全黑盒化的广告点击功能。外部开发者只需提供游戏视图和截图提供者，即可享受完整的广告交互功能，无需关心任何内部实现细节。

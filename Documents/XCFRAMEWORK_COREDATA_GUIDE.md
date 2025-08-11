@@ -1,8 +1,8 @@
-# GrowthKit SDK XCFramework CoreData 支持指南
+# GrowthSDK SDK XCFramework CoreData 支持指南
 
 ## 概述
 
-当 SDK 打包成 XCFramework 后，CoreData 的读取需要特殊处理。本文档详细说明了 GrowthKit SDK 中 CoreData 的 XCFramework 支持实现。
+当 SDK 打包成 XCFramework 后，CoreData 的读取需要特殊处理。本文档详细说明了 GrowthSDK SDK 中 CoreData 的 XCFramework 支持实现。
 
 ## 问题背景
 
@@ -24,17 +24,17 @@ private func findCoreDataModel() -> URL? {
     // 1. 首先尝试从当前 Bundle 中查找
     if let bundle = Bundle(for: type(of: self)) {
         // 尝试查找 .momd 文件（编译后的模型）
-        if let momdURL = bundle.url(forResource: "GrowthKit", withExtension: "momd") {
+        if let momdURL = bundle.url(forResource: "GrowthSDK", withExtension: "momd") {
             return momdURL
         }
         
         // 尝试查找 .mom 文件
-        if let momURL = bundle.url(forResource: "GrowthKit", withExtension: "mom") {
+        if let momURL = bundle.url(forResource: "GrowthSDK", withExtension: "mom") {
             return momURL
         }
         
         // 尝试查找 .xcdatamodeld 文件（开发时的模型）
-        if let modeldURL = bundle.url(forResource: "GrowthKit", withExtension: "xcdatamodeld") {
+        if let modeldURL = bundle.url(forResource: "GrowthSDK", withExtension: "xcdatamodeld") {
             return modeldURL
         }
     }
@@ -42,10 +42,10 @@ private func findCoreDataModel() -> URL? {
     // 2. 尝试从主 Bundle 中查找（备用方案）
     if let mainBundle = Bundle.main {
         // 查找逻辑...
-        if let momdURL = mainBundle.url(forResource: "GrowthKit", withExtension: "momd") {
+        if let momdURL = mainBundle.url(forResource: "GrowthSDK", withExtension: "momd") {
             return momdURL
         }
-        if let momURL = mainBundle.url(forResource: "GrowthKit", withExtension: "mom") {
+        if let momURL = mainBundle.url(forResource: "GrowthSDK", withExtension: "mom") {
             return momURL
         }
     }
@@ -54,10 +54,10 @@ private func findCoreDataModel() -> URL? {
     let allBundles = Bundle.allBundles + Bundle.allFrameworks
     for bundle in allBundles {
         // 查找逻辑...
-        if let momdURL = bundle.url(forResource: "GrowthKit", withExtension: "momd") {
+        if let momdURL = bundle.url(forResource: "GrowthSDK", withExtension: "momd") {
             return momdURL
         }
-        if let momURL = bundle.url(forResource: "GrowthKit", withExtension: "mom") {
+        if let momURL = bundle.url(forResource: "GrowthSDK", withExtension: "mom") {
             return momURL
         }
     }
@@ -74,7 +74,7 @@ private func findCoreDataModel() -> URL? {
 private func getStorageDirectory() -> URL {
     // 使用应用的 Documents 目录作为存储位置
     let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    let storageDirectory = documentsPath.appendingPathComponent("GrowthKit")
+    let storageDirectory = documentsPath.appendingPathComponent("GrowthSDK")
     
     // 确保目录存在
     if !FileManager.default.fileExists(atPath: storageDirectory.path) {
@@ -92,7 +92,7 @@ private func configureContainer(_ container: NSPersistentContainer) {
     // 配置存储描述
     let storeDescription = NSPersistentStoreDescription()
     let storageDirectory = getStorageDirectory()
-    let storeURL = storageDirectory.appendingPathComponent("GrowthKit.sqlite")
+    let storeURL = storageDirectory.appendingPathComponent("GrowthSDK.sqlite")
     
     storeDescription.url = storeURL
     storeDescription.type = NSSQLiteStoreType
@@ -118,23 +118,23 @@ private func configureContainer(_ container: NSPersistentContainer) {
 
 ```bash
 # 构建 XCFramework 时确保包含 CoreData 模型
-xcodebuild -project GrowthKit.xcodeproj \
-           -scheme GrowthKit \
+xcodebuild -project GrowthSDK.xcodeproj \
+           -scheme GrowthSDK \
            -configuration Release \
            -destination 'generic/platform=iOS' \
-           -archivePath ./build/GrowthKit.xcarchive \
+           -archivePath ./build/GrowthSDK.xcarchive \
            archive
 
 xcodebuild -create-xcframework \
-           -framework ./build/GrowthKit.xcarchive/Products/Library/Frameworks/GrowthKit.framework \
-           -output ./build/GrowthKit.xcframework
+           -framework ./build/GrowthSDK.xcarchive/Products/Library/Frameworks/GrowthSDK.framework \
+           -output ./build/GrowthSDK.xcframework
 ```
 
 ### 2. 项目设置
 
 在 Xcode 项目设置中确保：
 
-1. **Core Data 模型文件**：确保 `GrowthKit.xcdatamodeld` 被添加到 Framework 的 Bundle Resources 中
+1. **Core Data 模型文件**：确保 `GrowthSDK.xcdatamodeld` 被添加到 Framework 的 Bundle Resources 中
 2. **编译设置**：确保 Core Data 模型文件会被编译成 `.momd` 文件
 3. **目标成员**：确保模型文件属于 Framework target
 
@@ -172,7 +172,7 @@ GameWebWrapper.shared.initialize { result in
 
 CoreData 数据会存储在：
 ```
-~/Documents/GrowthKit/GrowthKit.sqlite
+~/Documents/GrowthSDK/GrowthSDK.sqlite
 ```
 
 ### 3. 调试信息
@@ -181,10 +181,10 @@ SDK 会输出详细的 CoreData 初始化日志：
 
 ```
 [CoreData] 🔍 从当前 Bundle 查找模型文件: /path/to/framework
-[CoreData] ✅ 找到 .momd 文件: /path/to/GrowthKit.momd
-[CoreData] 📁 创建存储目录: /path/to/Documents/GrowthKit
-[CoreData] 📊 配置存储: /path/to/Documents/GrowthKit/GrowthKit.sqlite
-[CoreData] ✅ 持久化存储加载成功: GrowthKit.sqlite
+[CoreData] ✅ 找到 .momd 文件: /path/to/GrowthSDK.momd
+[CoreData] 📁 创建存储目录: /path/to/Documents/GrowthSDK
+[CoreData] 📊 配置存储: /path/to/Documents/GrowthSDK/GrowthSDK.sqlite
+[CoreData] ✅ 持久化存储加载成功: GrowthSDK.sqlite
 ```
 
 ## 错误处理
@@ -260,7 +260,7 @@ SDK 会输出详细的 CoreData 初始化日志：
 
 ## 总结
 
-GrowthKit SDK 的 CoreData 实现已经完全支持 XCFramework，包括：
+GrowthSDK SDK 的 CoreData 实现已经完全支持 XCFramework，包括：
 
 1. **智能模型文件查找**：多层次查找策略，确保在各种环境下都能找到模型文件
 2. **自定义存储位置**：使用应用的 Documents 目录，确保数据持久化

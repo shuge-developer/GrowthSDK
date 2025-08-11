@@ -1,4 +1,4 @@
-# GrowthKit SDK 改进设计 - 内部层级切换管理
+# GrowthSDK SDK 改进设计 - 内部层级切换管理
 
 ## 🎯 设计目标
 
@@ -20,10 +20,10 @@
 ### 1. 内部层级切换管理
 
 ```swift
-// GrowthKitSwiftUIView 内部管理层级切换
-public struct GrowthKitSwiftUIView<GameView: View>: View {
+// GrowthSDKSwiftUIView 内部管理层级切换
+public struct GrowthSDKSwiftUIView<GameView: View>: View {
     
-    @StateObject private var layerManager = GrowthKitLayerManager.shared
+    @StateObject private var layerManager = GrowthSDKLayerManager.shared
     @State private var gameViewOpacity: Double = 1.0
     @State private var webViewOpacity: Double = 0.0
     
@@ -83,7 +83,7 @@ public struct GrowthKitSwiftUIView<GameView: View>: View {
 // SingleLayerViewModel 直接调用层级管理器
 private func performLayerSwitch() {
     // 直接调用层级管理器的切换方法
-    GrowthKitLayerManager.shared.bringWebViewToTop()
+    GrowthSDKLayerManager.shared.bringWebViewToTop()
     isLayerSwitched = true
     print("[H5] [SingleLayerVM] 🔄 层级已切换，WebView 在顶层")
     
@@ -126,7 +126,7 @@ private func bringUnityToFront() {
 ### 改进后的实现（简洁）
 ```swift
 // 外部只需要提供游戏视图和截图方法
-GrowthKitSwiftUIView(
+GrowthSDKSwiftUIView(
     gameView: {
         UnityViewWrapper()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -221,7 +221,7 @@ graph TD
     C --> D[调用switchLayers]
     D --> E[获取实时截图]
     E --> F[调用performLayerSwitch]
-    F --> G[直接调用GrowthKitLayerManager]
+    F --> G[直接调用GrowthSDKLayerManager]
     G --> H[更新topLayerType]
     H --> I[触发onChange]
     I --> J[内部handleLayerChange]
