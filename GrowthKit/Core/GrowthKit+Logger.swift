@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - 日志级别
-public enum LogLevel: Int {
+internal enum LogLevel: Int {
     case debug = 0
     case info = 1
     case warning = 2
@@ -25,24 +25,23 @@ public enum LogLevel: Int {
 }
 
 // MARK: - 日志协议
-public protocol GrowthKitLogging {
+internal protocol GrowthKitLogging {
     func log(_ level: LogLevel, message: String)
 }
 
 // MARK: - 默认日志实现
-public final class DefaultLogger: GrowthKitLogging {
-    public static let shared = DefaultLogger()
+internal final class DefaultLogger: GrowthKitLogging {
+    static let shared = DefaultLogger()
     
     private init() {}
     
     public func log(_ level: LogLevel, message: String) {
-        let fileName = (#file as NSString).lastPathComponent
-        print("[GrowthKit] \(level.emoji) [\(fileName):\(#line)] \(message)")
+        print("[GrowthKit] \(level.emoji) \(message)")
     }
 }
 
 // MARK: - 日志工具
-enum Logger {
+internal enum Logger {
     static func info(_ message: String) {
         GrowthSDK.logger.log(.info, message: message)
     }

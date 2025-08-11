@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 // MARK: -
-extension Color {
+internal extension Color {
     
     static func random(using generator: inout RandomNumberGenerator, opacity: Double) -> Color {
         let red   = Double.random(in: 0..<1, using: &generator)
@@ -30,9 +30,9 @@ extension Color {
 }
 
 // MARK: -
-extension Color {
+internal extension Color {
     
-    public init(hex: String, _ opacity: Double = 1) {
+    init(hex: String, _ opacity: Double = 1) {
         let hex = hex.trimmingCharacters(in: .alphanumerics.inverted)
         var int: UInt64 = 0
         Scanner(string: hex).scanHexInt64(&int)
@@ -59,7 +59,7 @@ extension Color {
 }
 
 // MARK: -
-extension ShapeStyle where Self == Color {
+internal extension ShapeStyle where Self == Color {
     
     static func hex(_ hex: String, _ opacity: Double = 1) -> Color {
         Color(hex: hex, opacity)
@@ -68,7 +68,7 @@ extension ShapeStyle where Self == Color {
 }
 
 // MARK: -
-extension UIColor {
+internal extension UIColor {
     
     func opacity(_ opacity: CGFloat) -> UIColor {
         withAlphaComponent(opacity)

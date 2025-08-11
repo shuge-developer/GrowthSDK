@@ -40,7 +40,7 @@ public class NetworkConfig: NSObject, NetworkConfigurable {
 }
 
 // MARK: - SDK 状态
-@objc public enum SDKInitState: Int {
+@objc public enum InitState: Int {
     case uninitialized  // 未初始化
     case initializing   // 初始化中
     case initialized    // 已初始化
@@ -48,9 +48,11 @@ public class NetworkConfig: NSObject, NetworkConfigurable {
 }
 
 // MARK: - SDK 错误
-public enum SDKInitError: Error, LocalizedError {
+public enum InitError: Error, LocalizedError {
     case notInitialized
     case alreadyInitialized
+    case initializationTimeout
+    case initializationFailed
     case coreDataInitFailed(String)
     case taskServiceInitFailed(String)
     case networkError(String)
@@ -62,6 +64,10 @@ public enum SDKInitError: Error, LocalizedError {
             return "SDK 尚未初始化"
         case .alreadyInitialized:
             return "SDK 已经初始化"
+        case .initializationTimeout:
+            return "SDK 初始化超时"
+        case .initializationFailed:
+            return "SDK 初始化失败"
         case .coreDataInitFailed(let message):
             return "CoreData 初始化失败: \(message)"
         case .taskServiceInitFailed(let message):
@@ -83,7 +89,7 @@ public enum SDKInitError: Error, LocalizedError {
     @objc public static let shared = GrowthSDK()
     
     /// 当前状态
-    @objc public private(set) var state: SDKInitState = .uninitialized
+    @objc public private(set) var state: InitState = .uninitialized
     
     /// 日志工具
     internal static var logger: GrowthKitLogging = DefaultLogger.shared
@@ -108,7 +114,7 @@ public enum SDKInitError: Error, LocalizedError {
     /// - Parameter config: 配置信息
     public func initialize(with config: NetworkConfigurable) async throws {
         guard state == .uninitialized else {
-            throw SDKInitError.alreadyInitialized
+            throw InitError.alreadyInitialized
         }
         state = .initializing
         do {
@@ -156,45 +162,64 @@ public enum SDKInitError: Error, LocalizedError {
 }
 
 // MARK: - 私有方法
-private extension GrowthSDK {
+internal extension GrowthSDK {
+    
+    /// 等待 SDK 初始化完成
+    /// - Parameter timeout: 超时时间（秒），默认为 5 秒
+    /// - Returns: 是否初始化成功
+    func waitForInitialization(timeout: TimeInterval = 5.0) async throws {
+        let startTime = Date()
+        while !isInitialized {
+            // 检查是否超时
+            if Date().timeIntervalSince(startTime) > timeout {
+                throw InitError.initializationTimeout
+            }
+            // 如果初始化失败，直接抛出错误
+            if state == .failed {
+                throw InitError.initializationFailed
+            }
+            // 等待 50ms 后再次检查
+            try await Task.sleep(nanoseconds: 50_000_000)
+        }
+    }
     
     /// 初始化 CoreData
-    func initializeCoreData() async throws {
+    private func initializeCoreData() async throws {
         Logger.info("开始初始化 CoreData...")
         // 数据存储管理器是懒加载的
         let dataStore = DataStore.shared
         // 检查初始化状态
         guard !dataStore.container.persistentStoreDescriptions.isEmpty else {
-            throw SDKInitError.coreDataInitFailed("CoreData 容器初始化失败")
+            throw InitError.coreDataInitFailed("CoreData 容器初始化失败")
         }
-        // 等待初始化完成
-        try await Task.sleep(nanoseconds: 500_000_000)
+        // 等待初始化完成（减少延迟时间）
+        try await Task.sleep(nanoseconds: 50_000_000)
         Logger.info("CoreData 初始化成功")
     }
     
     /// 初始化任务服务
-    func initializeTaskService() async throws {
+    private func initializeTaskService() async throws {
         Logger.info("开始初始化任务服务...")
         // 加载任务
         TaskService.shared.loadTasks()
-        // 等待初始化完成
-        try await Task.sleep(nanoseconds: 500_000_000)
+        // 等待初始化完成（减少延迟时间）
+        try await Task.sleep(nanoseconds: 50_000_000)
         // 检查初始化状态
         guard TaskService.shared.isInitialized else {
-            throw SDKInitError.taskServiceInitFailed("任务服务初始化失败")
+            throw InitError.taskServiceInitFailed("任务服务初始化失败")
         }
         Logger.info("任务服务初始化成功")
     }
     
     /// 初始化网络服务
-    func initializeNetworkService() async throws {
+    private func initializeNetworkService() async throws {
         Logger.info("开始初始化网络服务...")
         // 初始化配置同步管理器
         let configSyncManager = ConfigSyncManager.shared
         // 触发初始配置检查
         configSyncManager.triggerAllConfigCheck()
-        // 等待初始化完成
-        try await Task.sleep(nanoseconds: 500_000_000)
+        // 等待初始化完成（减少延迟时间）
+        try await Task.sleep(nanoseconds: 50_000_000)
         Logger.info("网络服务初始化成功")
     }
 }

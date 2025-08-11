@@ -19,28 +19,34 @@ public extension GrowthSDK {
     ///   - unityController: Unity 视图控制器
     ///   - completion: 完成回调
     @objc func createController(with unityController: UIViewController, completion: @escaping (UIViewController?, Error?) -> Void) {
-        do {
-            let viewController = try createController(with: unityController)
-            completion(viewController, nil)
-        } catch {
-            completion(nil, error)
+        Task {
+            do {
+                let viewController = try await createController(with: unityController)
+                await MainActor.run {
+                    completion(viewController, nil)
+                }
+            } catch {
+                await MainActor.run {
+                    completion(nil, error)
+                }
+            }
         }
     }
     
-    /// 创建主视图控制器 (Swift)
+    /// 创建主视图控制器（Swift-UIKit）
     /// - Parameter unityController: Unity 视图控制器
     /// - Returns: GrowthKit 视图控制器
-    func createController(with unityController: UIViewController) throws -> UIViewController {
-        guard isInitialized else { throw SDKInitError.notInitialized }
-        return GrowthKitRootViewController(unityController)
+    func createController(with unityController: UIViewController) async throws -> UIViewController {
+        if !isInitialized { try await waitForInitialization() }
+        return await GrowthKitViewController(unityController)
     }
     
-    /// 创建 SwiftUI 视图
+    /// 创建主视图控制器（SwiftUI）
     /// - Parameter unityController: Unity 视图控制器
     /// - Returns: SwiftUI 视图
-    func createView(with unityController: UIViewController) throws -> some View {
-        guard isInitialized else { throw SDKInitError.notInitialized }
-        return GrowthKitRootView(unityController)
+    func createView(with unityController: UIViewController) async throws -> some View {
+        if !isInitialized { try await waitForInitialization() }
+        return await GrowthKitView(unityController)
     }
 }
 
@@ -58,7 +64,7 @@ private struct UnityViewWrapper: UIViewRepresentable {
 }
 
 // MARK: - SwiftUI 主视图
-private struct GrowthKitRootView: View {
+private struct GrowthKitView: View {
     
     // MARK: - 属性
     private let unityController: UIViewController
@@ -192,7 +198,7 @@ private struct GrowthKitRootView: View {
 }
 
 // MARK: - 根视图控制器
-private final class GrowthKitRootViewController: UIViewController {
+private final class GrowthKitViewController: UIViewController {
     
     // MARK: - 私有属性
     private var contentController: UIViewController?
@@ -211,12 +217,12 @@ private final class GrowthKitRootViewController: UIViewController {
     // MARK: - 生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupContentController()
+        setupController()
     }
     
     // MARK: - 私有方法
-    private func setupContentController() {
-        let contentView = GrowthKitRootView(unityController)
+    private func setupController() {
+        let contentView = GrowthKitView(unityController)
         let hostingController = UIHostingController(
             contentView, ignoresSafeArea: true
         )
