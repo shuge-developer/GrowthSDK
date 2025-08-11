@@ -104,9 +104,33 @@ public enum InitError: Error, LocalizedError {
         super.init()
     }
     
+    // MARK: - Objective-C 公开方法
+    
+    /// 初始化 SDK
+    /// - Parameters:
+    ///   - config: 配置信息
+    ///   - completion: 完成回调
+    @objc public func initialize(with config: NetworkConfig, completion: @escaping (Error?) -> Void) {
+        // 取消之前的初始化任务
+        initializationTask?.cancel()
+        // 创建新的初始化任务
+        initializationTask = Task {
+            do {
+                try await initialize(with: config)
+                await MainActor.run {
+                    completion(nil)
+                }
+            } catch {
+                await MainActor.run {
+                    completion(error)
+                }
+            }
+        }
+    }
+    
     // MARK: - Swift 公开方法
     
-    /// 初始化 SDK (Swift)
+    /// 初始化 SDK
     /// - Parameter config: 配置信息
     public func initialize(with config: NetworkConfigurable) async throws {
         guard state == .uninitialized else {
@@ -129,30 +153,6 @@ public enum InitError: Error, LocalizedError {
             state = .failed
             Logger.error("SDK 初始化失败: \(error)")
             throw error
-        }
-    }
-    
-    // MARK: - Objective-C 公开方法
-    
-    /// 初始化 SDK (Objective-C)
-    /// - Parameters:
-    ///   - config: 配置信息
-    ///   - completion: 完成回调
-    @objc public func initialize(with config: NetworkConfig, completion: @escaping (Error?) -> Void) {
-        // 取消之前的初始化任务
-        initializationTask?.cancel()
-        // 创建新的初始化任务
-        initializationTask = Task {
-            do {
-                try await initialize(with: config)
-                await MainActor.run {
-                    completion(nil)
-                }
-            } catch {
-                await MainActor.run {
-                    completion(error)
-                }
-            }
         }
     }
 }
