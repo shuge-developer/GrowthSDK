@@ -49,30 +49,18 @@ public class NetworkConfig: NSObject, NetworkConfigurable {
 
 // MARK: - SDK 错误
 public enum InitError: Error, LocalizedError {
-    case notInitialized
     case alreadyInitialized
-    case initializationTimeout
-    case initializationFailed
     case storageInitFailed(String)
     case serviceInitFailed(String)
-    case networkError(String)
     
     public var errorDescription: String? {
         switch self {
-        case .notInitialized:
-            return "SDK 尚未初始化"
         case .alreadyInitialized:
             return "SDK 已经初始化"
-        case .initializationTimeout:
-            return "SDK 初始化超时"
-        case .initializationFailed:
-            return "SDK 初始化失败"
         case .storageInitFailed(let message):
             return "CoreData 初始化失败: \(message)"
         case .serviceInitFailed(let message):
             return "任务服务初始化失败: \(message)"
-        case .networkError(let message):
-            return "网络错误: \(message)"
         }
     }
 }
