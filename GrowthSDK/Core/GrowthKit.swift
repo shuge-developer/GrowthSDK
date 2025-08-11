@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 // MARK: - 网络配置协议
 public protocol NetworkConfigurable {
@@ -85,20 +86,20 @@ public enum InitError: Error, LocalizedError {
     @objc public static let shared = GrowthKit()
     
     /// 当前状态
-    @objc public private(set) var state: InitState = .uninitialized
+    @objc public private(set) var state: InitState = .uninitialized {
+        didSet { isInitialized = (state == .initialized) }
+    }
     
     /// 日志工具
     internal static var logger: GrowthSDKLogging = DefaultLogger.shared
     
     /// 是否已初始化
-    @objc public var isInitialized: Bool {
-        return state == .initialized
-    }
+    @Published @objc public private(set) var isInitialized: Bool = false
     
     // MARK: - 私有属性
     private var initializationTask: Task<Void, Error>?
     
-    private(set) var config: NetworkConfigurable?
+    private(set) var config: NetworkConfigurable!
     
     private override init() {
         super.init()

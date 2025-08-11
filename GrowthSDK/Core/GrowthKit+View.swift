@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 #if canImport(UIKit)
 import SwiftUI
@@ -13,7 +14,7 @@ import UIKit
 
 // MARK: - SDK 初始化状态管理器
 private class SDKInitializationManager: ObservableObject {
-    private var monitoringTask: Task<Void, Never>?
+    private var cancellables = Set<AnyCancellable>()
     @Published var isReady: Bool = false
     
     func startMonitoring() {
@@ -21,18 +22,18 @@ private class SDKInitializationManager: ObservableObject {
             isReady = true
             return
         }
-        monitoringTask?.cancel()
-        monitoringTask = Task { @MainActor in
-            while !GrowthKit.shared.isInitialized {
-                try? await Task.sleep(nanoseconds: 50_000_000)
+        GrowthKit.shared.$isInitialized
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] initialized in
+                if initialized {
+                    self?.isReady = true
+                }
             }
-            isReady = true
-            Logger.info("SDK 初始化完成，功能视图已激活")
-        }
+            .store(in: &cancellables)
     }
     
     deinit {
-        monitoringTask?.cancel()
+        cancellables.removeAll()
     }
 }
 
