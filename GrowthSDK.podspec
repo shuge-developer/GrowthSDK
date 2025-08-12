@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'GrowthSDK'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'GrowthSDK binary distribution.'
   s.description      = 'GrowthSDK xcframework with ad mediation via CocoaPods dependencies.'
   s.homepage         = 'https://codeup.aliyun.com/630b1207050e9c4a07a93a48/IOS/SDK/GrowthSDK'
