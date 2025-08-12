@@ -6,13 +6,11 @@ target 'GrowthSDK' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks! :linkage => :static
   
-  # Pods for GrowthSDK
+  # 核心依赖（编译时需要，但不会链接进最终 xcframework）
   pod 'CryptoSwift'
   pod 'Alamofire'
   
-  # 开发时使用的广告 SDK（仅用于开发，不会链接进最终 xcframework）
-  # 注意：这些依赖仅用于开发时的代码提示和编译，不会链接进最终的 xcframework
-  # 在构建 xcframework 时，这些依赖会被排除
+  # 广告 SDK 依赖（编译时需要，但不会链接进最终 xcframework）
   pod 'AppLovinSDK'
   pod 'AppLovinMediationBigoAdsAdapter'
   pod 'AppLovinMediationChartboostAdapter'

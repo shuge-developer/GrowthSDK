@@ -6,6 +6,8 @@
 //
 
 import Foundation
+
+#if canImport(Alamofire)
 internal import Alamofire
 
 // MARK: -
@@ -22,8 +24,10 @@ internal extension HTTPMethod {
         }
     }
 }
+#endif
 
 // MARK: -
+#if canImport(Alamofire)
 internal class AlamofireProvider: NetworkProviderProtocol {
     
     private let configure: RequestConfigure
@@ -264,3 +268,30 @@ internal extension AlamofireProvider {
     }
     
 }
+#endif
+
+#if !canImport(Alamofire)
+// 当 Alamofire 不可用时的占位符实现
+internal class AlamofireProvider: NetworkProviderProtocol {
+    
+    init(configure: RequestConfigure) {
+        // 空实现
+    }
+    
+    func startNetworkMonitoring(handler: @escaping (Bool) -> Void) {
+        // 空实现
+    }
+    
+    func request(_ URL: BaseURL, method: HTTPMethod, parameters: Parameters?, cachePolicy: CachePolicy) -> NetworkRequest {
+        let networkRequest = NetworkRequest()
+        networkRequest.handle(response: nil, error: .networkUnavailable)
+        return networkRequest
+    }
+    
+    func request<T: APIProvider>(api: T, parameters: Parameters?, cachePolicy: CachePolicy) -> NetworkRequest {
+        let networkRequest = NetworkRequest()
+        networkRequest.handle(response: nil, error: .networkUnavailable)
+        return networkRequest
+    }
+}
+#endif
