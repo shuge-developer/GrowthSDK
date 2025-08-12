@@ -5,8 +5,6 @@
 //  Created by arvin on 2025/5/29.
 //
 
-internal import NetworkService
-
 // MARK: -
 internal enum Api: APIProvider {
     case config
@@ -21,7 +19,6 @@ internal enum Api: APIProvider {
         }
     }
 }
-
 
 // MARK: -
 internal struct NetworkRequester: RequestConfigure {
@@ -49,10 +46,6 @@ internal struct NetworkRequester: RequestConfigure {
         NetworkHeader()
     }
     
-    var apiVersion: ServiceVersion {
-        return .v2
-    }
-    
     var isLogEnabled: Bool {
         return true
     }
@@ -66,7 +59,6 @@ internal struct NetworkRequester: RequestConfigure {
             SDK.Config!.appid
         }
     }
-    
 }
 
 // MARK: -
@@ -125,5 +117,4 @@ internal class NetworkServer {
             }
         }
     }
-    
 }

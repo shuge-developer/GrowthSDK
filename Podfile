@@ -7,6 +7,8 @@ target 'GrowthSDK' do
   use_frameworks! :linkage => :static
   
   # Pods for GrowthSDK
+  pod 'CryptoSwift'
+  pod 'Alamofire'
   
 end
 

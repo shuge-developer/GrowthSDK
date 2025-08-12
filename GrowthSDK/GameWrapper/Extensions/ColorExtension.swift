@@ -5,6 +5,7 @@
 //  Created by arvin on 2025/7/31.
 //
 
+import Foundation
 import SwiftUI
 import UIKit
 

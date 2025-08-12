@@ -36,14 +36,34 @@ internal final class DefaultLogger: GrowthSDKLogging {
     private init() {}
     
     public func log(_ level: LogLevel, message: String) {
-        print("[GrowthSDK] \(level.emoji) \(message)")
+#if DEBUG
+        let maxLength = 900
+        var start = message.startIndex
+        var index = 0
+        while start < message.endIndex {
+            let end = message.index(start, offsetBy: maxLength, limitedBy: message.endIndex) ?? message.endIndex
+            let tag = "[GrowthSDK] [Part \(index)] \(level.emoji)"
+            let part = String(message[start..<end])
+            NSLog("%@ %@", tag, part)
+            start = end
+            index += 1
+        }
+#endif
     }
 }
 
 // MARK: - 日志工具
 internal enum Logger {
+    static func debug(_ message: String) {
+        GrowthKit.logger.log(.debug, message: message)
+    }
+    
     static func info(_ message: String) {
         GrowthKit.logger.log(.info, message: message)
+    }
+    
+    static func warning(_ message: String) {
+        GrowthKit.logger.log(.warning, message: message)
     }
     
     static func error(_ message: String) {
