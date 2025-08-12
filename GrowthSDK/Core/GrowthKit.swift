@@ -99,7 +99,7 @@ public enum InitError: Error, LocalizedError {
     /// - Parameters:
     ///   - config: 配置信息
     ///   - completion: 完成回调
-    @objc public func initialize(with config: NetworkConfig, completion: @escaping (Error?) -> Void) {
+    @objc public func initialize(with config: NetworkConfig, completion: ((Error?) -> Void)? = nil) {
         // 取消之前的初始化任务
         initializationTask?.cancel()
         // 创建新的初始化任务
@@ -107,11 +107,11 @@ public enum InitError: Error, LocalizedError {
             do {
                 try await initialize(with: config)
                 await MainActor.run {
-                    completion(nil)
+                    completion?(nil)
                 }
             } catch {
                 await MainActor.run {
-                    completion(error)
+                    completion?(error)
                 }
             }
         }
