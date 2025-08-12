@@ -1,0 +1,79 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.1 effective-5.10 (swiftlang-6.1.0.110.21 clang-1700.0.13.3)
+// swift-module-flags: -target arm64-apple-ios14-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name GrowthSDK
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1
+import AdSupport
+import AppTrackingTransparency
+import Combine
+import CoreData
+import DeveloperToolsSupport
+import Foundation
+import ObjectiveC
+import Security
+import Swift
+import SwiftUI
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public protocol NetworkConfigurable {
+  var appid: Swift.String { get }
+  var bundleName: Swift.String { get }
+  var baseUrl: Swift.String { get }
+  var publicKey: Swift.String { get }
+  var appKey: Swift.String { get }
+  var appIv: Swift.String { get }
+}
+@objc @objcMembers public class NetworkConfig : ObjectiveC.NSObject, GrowthSDK.NetworkConfigurable {
+  @objc final public let appid: Swift.String
+  @objc final public let bundleName: Swift.String
+  @objc final public let baseUrl: Swift.String
+  @objc final public let publicKey: Swift.String
+  @objc final public let appKey: Swift.String
+  @objc final public let appIv: Swift.String
+  @objc public init(appid: Swift.String, bundleName: Swift.String, baseUrl: Swift.String, publicKey: Swift.String, appKey: Swift.String, appIv: Swift.String)
+  @objc deinit
+}
+@objc public enum InitState : Swift.Int {
+  case uninitialized
+  case initializing
+  case initialized
+  case failed
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum InitError : Swift.Error, Foundation.LocalizedError {
+  case alreadyInitialized
+  case storageInitFailed(Swift.String)
+  case serviceInitFailed(Swift.String)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc final public class GrowthKit : ObjectiveC.NSObject {
+  @objc public static let shared: GrowthSDK.GrowthKit
+  @objc final public var state: GrowthSDK.InitState {
+    @objc get
+  }
+  @Combine.Published @objc @_projectedValueProperty($isInitialized) final public var isInitialized: Swift.Bool {
+    @objc get
+  }
+  final public var $isInitialized: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  @objc final public func initialize(with config: GrowthSDK.NetworkConfig, completion: (((any Swift.Error)?) -> Swift.Void)? = nil)
+  final public func initialize(with config: any GrowthSDK.NetworkConfigurable) async throws
+  @objc deinit
+}
+extension GrowthSDK.GrowthKit {
+  @objc public static func createController(with unityController: UIKit.UIViewController) -> UIKit.UIViewController
+  public static func createView(with unityController: UIKit.UIViewController) -> some SwiftUICore.View
+  
+}
+extension GrowthSDK.InitState : Swift.Equatable {}
+extension GrowthSDK.InitState : Swift.Hashable {}
+extension GrowthSDK.InitState : Swift.RawRepresentable {}
