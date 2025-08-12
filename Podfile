@@ -9,6 +9,21 @@ target 'GrowthSDK' do
   # Pods for GrowthSDK
   pod 'CryptoSwift'
   pod 'Alamofire'
+  
+  # 开发时使用的广告 SDK（仅用于开发，不会链接进最终 xcframework）
+  # 注意：这些依赖仅用于开发时的代码提示和编译，不会链接进最终的 xcframework
+  # 在构建 xcframework 时，这些依赖会被排除
+  pod 'AppLovinSDK'
+  pod 'AppLovinMediationBigoAdsAdapter'
+  pod 'AppLovinMediationChartboostAdapter'
+  pod 'AppLovinMediationFyberAdapter'
+  pod 'AppLovinMediationGoogleAdapter'
+  pod 'AppLovinMediationInMobiAdapter'
+  pod 'AppLovinMediationVungleAdapter'
+  pod 'AppLovinMediationFacebookAdapter'
+  pod 'AppLovinMediationMintegralAdapter'
+  pod 'AppLovinMediationByteDanceAdapter'
+  pod 'AppLovinMediationMolocoAdapter'
 
 end
 
