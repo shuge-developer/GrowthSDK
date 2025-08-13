@@ -12,16 +12,16 @@ target 'GrowthSDK' do
   
   # 广告 SDK 依赖（编译时需要，但不会链接进最终 xcframework）
   pod 'AppLovinSDK', '13.3.1'
-  pod 'AppLovinMediationBigoAdsAdapter'
-  pod 'AppLovinMediationChartboostAdapter'
-  pod 'AppLovinMediationFyberAdapter'
-  pod 'AppLovinMediationGoogleAdapter'
-  pod 'AppLovinMediationInMobiAdapter'
-  pod 'AppLovinMediationVungleAdapter'
-  pod 'AppLovinMediationFacebookAdapter'
-  pod 'AppLovinMediationMintegralAdapter'
-  pod 'AppLovinMediationByteDanceAdapter'
-  pod 'AppLovinMediationMolocoAdapter'
+  # pod 'AppLovinMediationBigoAdsAdapter'
+  # pod 'AppLovinMediationChartboostAdapter'
+  # pod 'AppLovinMediationFyberAdapter'
+  # pod 'AppLovinMediationGoogleAdapter'
+  # pod 'AppLovinMediationInMobiAdapter'
+  # pod 'AppLovinMediationVungleAdapter'
+  # pod 'AppLovinMediationFacebookAdapter'
+  # pod 'AppLovinMediationMintegralAdapter'
+  # pod 'AppLovinMediationByteDanceAdapter'
+  # pod 'AppLovinMediationMolocoAdapter'
 
 end
 
