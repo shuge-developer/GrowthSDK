@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'GrowthSDK'
-  s.version          = '1.0.2'
+  s.version          = '1.0.3'
   s.summary          = 'GrowthSDK binary distribution.'
   s.description      = 'GrowthSDK xcframework with ad mediation via CocoaPods dependencies.'
   s.homepage         = 'https://codeup.aliyun.com/630b1207050e9c4a07a93a48/IOS/SDK/GrowthSDK'
@@ -21,8 +21,8 @@ Pod::Spec.new do |s|
   }
 
   # 通过 Pod 下发所有依赖（由宿主 App 嵌入需要的动态库）
-  s.dependency 'CryptoSwift'
-  s.dependency 'Alamofire'
+  s.dependency 'CryptoSwift', '1.8.4'
+  s.dependency 'Alamofire', '5.10.2'
   s.dependency 'AppLovinSDK'
   s.dependency 'AppLovinMediationBigoAdsAdapter'
   s.dependency 'AppLovinMediationChartboostAdapter'

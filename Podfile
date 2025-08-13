@@ -4,11 +4,11 @@ platform :ios, '14.0'
 
 target 'GrowthSDK' do
   # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks! :linkage => :static
+  use_frameworks! #:linkage => :static
   
   # 核心依赖（编译时需要，但不会链接进最终 xcframework）
-  pod 'CryptoSwift'
-  pod 'Alamofire'
+  pod 'CryptoSwift', '1.8.4'
+  pod 'Alamofire', '5.10.2'
   
   # 广告 SDK 依赖（编译时需要，但不会链接进最终 xcframework）
   pod 'AppLovinSDK'
@@ -38,6 +38,11 @@ post_install do |installer|
       
       # 优化 SDK 构建设置
       config.build_settings['DEFINES_MODULE'] = 'YES'
+      
+      # # 弱链接配置 - 只对GrowthSDK target生效
+      # if target.name == 'GrowthSDK'
+      #   config.build_settings['OTHER_LDFLAGS'] = '$(inherited) -weak_framework Alamofire'
+      # end
     end
   end
 end

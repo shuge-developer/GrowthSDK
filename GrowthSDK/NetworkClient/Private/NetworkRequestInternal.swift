@@ -7,11 +7,11 @@
 
 import Foundation
 
-#if canImport(Alamofire)
+//#if canImport(Alamofire)
 internal import Alamofire
-#endif
+//#endif
 
-#if canImport(Alamofire)
+//#if canImport(Alamofire)
 // MARK: -
 internal class NetworkRequestInternal {
     
@@ -153,19 +153,19 @@ internal extension NetworkRequestInternal {
     }
     
 }
-#endif
-
-#if !canImport(Alamofire)
-// 当 Alamofire 不可用时的占位符实现
-internal class NetworkRequestInternal {
-    
-    internal let networkRequest: NetworkRequest
-    internal init(networkRequest: NetworkRequest) {
-        self.networkRequest = networkRequest
-    }
-    
-    internal func handle(_ response: NetworkRawResponse, configure: RequestConfigure, cacheKey: String, cachePolicy: CachePolicy) {
-        // 空实现
-    }
-}
-#endif
+//#endif
+//
+//#if !canImport(Alamofire)
+//// 当 Alamofire 不可用时的占位符实现
+//internal class NetworkRequestInternal {
+//    
+//    internal let networkRequest: NetworkRequest
+//    internal init(networkRequest: NetworkRequest) {
+//        self.networkRequest = networkRequest
+//    }
+//    
+//    internal func handle(_ response: NetworkRawResponse, configure: RequestConfigure, cacheKey: String, cachePolicy: CachePolicy) {
+//        // 空实现
+//    }
+//}
+//#endif
