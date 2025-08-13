@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		668544D336AB3A5313FE555A /* Pods_GrowthSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21554DC3B55B64B678CDD5E9 /* Pods_GrowthSDK.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		21554DC3B55B64B678CDD5E9 /* Pods_GrowthSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GrowthSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D61B62CFEB16D9C6358187B /* Pods-GrowthSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrowthSDK.debug.xcconfig"; path = "Target Support Files/Pods-GrowthSDK/Pods-GrowthSDK.debug.xcconfig"; sourceTree = "<group>"; };
@@ -28,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				668544D336AB3A5313FE555A /* Pods_GrowthSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +96,7 @@
 				A23CFFF52E37505F00B6EEAB /* Sources */,
 				A23CFFF62E37505F00B6EEAB /* Frameworks */,
 				A23CFFF72E37505F00B6EEAB /* Resources */,
+				E67939B1DD8C5F3C15FA5C64 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -169,6 +175,23 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E67939B1DD8C5F3C15FA5C64 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GrowthSDK/Pods-GrowthSDK-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GrowthSDK/Pods-GrowthSDK-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GrowthSDK/Pods-GrowthSDK-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
