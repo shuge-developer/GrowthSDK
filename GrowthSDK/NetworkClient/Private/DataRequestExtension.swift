@@ -7,11 +7,9 @@
 
 import Foundation
 
-//#if canImport(Alamofire)
+#if canImport(Alamofire)
 internal import Alamofire
-//#endif
 
-//#if canImport(Alamofire)
 // MARK: -
 internal enum NetworkRawResponse {
     case business(AFDataResponse<NetworkResponse>)
@@ -33,10 +31,4 @@ internal extension DataRequest {
     }
     
 }
-//#else
-//// 当 Alamofire 不可用时的占位符定义
-//internal enum NetworkRawResponse {
-//    case business(Any)
-//    case external(Any)
-//}
-//#endif
+#endif

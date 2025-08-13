@@ -7,9 +7,8 @@
 
 import Foundation
 
-//#if canImport(CryptoSwift)
+#if canImport(CryptoSwift)
 internal import CryptoSwift
-//#endif
 
 // MARK: -
 private extension String {
@@ -63,7 +62,7 @@ internal class CryptoProvider {
     
     // MARK: -
     static func rsaEncrypt(string: String, publicKey: String) throws -> String {
-//        #if canImport(CryptoSwift)
+        //        #if canImport(CryptoSwift)
         do {
             var error: Unmanaged<CFError>?
             let secKey = try String.createSecKey(publicKey, keyClass: .public)
@@ -77,13 +76,13 @@ internal class CryptoProvider {
             let errMsg = "RSA encryption failed: \(error.localizedDescription)"
             throw NetworkError.encryptionError(errMsg)
         }
-//        #else
-//        throw NetworkError.encryptionError("CryptoSwift not available")
-//        #endif
+        //        #else
+        //        throw NetworkError.encryptionError("CryptoSwift not available")
+        //        #endif
     }
     
     static func rsaDecrypt(string: String, privateKey: String) throws -> String {
-//        #if canImport(CryptoSwift)
+        //        #if canImport(CryptoSwift)
         do {
             var error: Unmanaged<CFError>?
             let secKey = try String.createSecKey(privateKey, keyClass: .private)
@@ -97,14 +96,14 @@ internal class CryptoProvider {
             let errMsg = "RSA decryption failed: \(error.localizedDescription)"
             throw NetworkError.decryptionError(errMsg)
         }
-//        #else
-//        throw NetworkError.decryptionError("CryptoSwift not available")
-//        #endif
+        //        #else
+        //        throw NetworkError.decryptionError("CryptoSwift not available")
+        //        #endif
     }
     
     // MARK: -
     static func aesEncrypt(string: String, key: String, iv: String) throws -> String {
-//        #if canImport(CryptoSwift)
+        //        #if canImport(CryptoSwift)
         guard let data = string.data(using: .utf8, allowLossyConversion: true) else {
             throw NetworkError.encryptionError("Failed to convert string to data")
         }
@@ -118,13 +117,13 @@ internal class CryptoProvider {
             let errMsg = "AES encryption failed: \(error.localizedDescription)"
             throw NetworkError.encryptionError(errMsg)
         }
-//        #else
-//        throw NetworkError.encryptionError("CryptoSwift not available")
-//        #endif
+        //        #else
+        //        throw NetworkError.encryptionError("CryptoSwift not available")
+        //        #endif
     }
     
     static func aesDecrypt(string: String, key: String, iv: String) throws -> String {
-//        #if canImport(CryptoSwift)
+        //        #if canImport(CryptoSwift)
         let options = Data.Base64DecodingOptions(rawValue: 0)
         guard let data = Data(base64Encoded: string, options: options) else {
             throw NetworkError.decryptionError("Invalid base64 string")
@@ -142,22 +141,23 @@ internal class CryptoProvider {
             let errMsg = "AES decryption failed: \(error.localizedDescription)"
             throw NetworkError.decryptionError(errMsg)
         }
-//        #else
-//        throw NetworkError.decryptionError("CryptoSwift not available")
-//        #endif
+        //        #else
+        //        throw NetworkError.decryptionError("CryptoSwift not available")
+        //        #endif
     }
     
     // MARK: -
     static func md5(string: String) -> String {
-//        #if canImport(CryptoSwift)
+        //        #if canImport(CryptoSwift)
         guard let data = string.data(using: .utf8) else { return string }
         let strings = data.md5().map { String(format: "%02x", $0) }
         let hash = strings.joined()
         return hash
-//        #else
-//        // 简单的 MD5 实现，仅用于编译通过
-//        return string
-//        #endif
+        //        #else
+        //        // 简单的 MD5 实现，仅用于编译通过
+        //        return string
+        //        #endif
     }
     
 }
+#endif
