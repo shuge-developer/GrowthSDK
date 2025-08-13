@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'GrowthSDK'
-  s.version          = '1.0.6'
+  s.version          = '1.0.7'
   s.summary          = 'GrowthSDK binary distribution.'
   s.description      = 'GrowthSDK xcframework with ad mediation via CocoaPods dependencies.'
   s.homepage         = 'https://codeup.aliyun.com/630b1207050e9c4a07a93a48/IOS/SDK/GrowthSDK'
@@ -22,11 +22,12 @@ Pod::Spec.new do |s|
         core.vendored_frameworks = 'Frameworks/GrowthSDK.xcframework'
         core.dependency 'CryptoSwift', '1.8.4'
         core.dependency 'Alamofire',  '5.10.2'
-        core.dependency 'AppLovinSDK', '13.3.1'
+        # 广告 SDK 依赖移至 AdsDeps 子规范，由下游应用选择性安装
     end
 
     # AdsDeps：仅分发广告依赖（不含源码、不含你的二进制）
     s.subspec 'AdsDeps' do |ads|
+        ads.dependency 'AppLovinSDK', '13.3.1'
         ads.dependency 'AppLovinMediationBigoAdsAdapter'
         ads.dependency 'AppLovinMediationChartboostAdapter'
         ads.dependency 'AppLovinMediationFyberAdapter'

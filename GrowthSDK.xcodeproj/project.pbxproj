@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		58127DE9136894AD48B5F588 /* Pods_GrowthSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21554DC3B55B64B678CDD5E9 /* Pods_GrowthSDK.framework */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		21554DC3B55B64B678CDD5E9 /* Pods_GrowthSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GrowthSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D61B62CFEB16D9C6358187B /* Pods-GrowthSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GrowthSDK.debug.xcconfig"; path = "Target Support Files/Pods-GrowthSDK/Pods-GrowthSDK.debug.xcconfig"; sourceTree = "<group>"; };
@@ -32,7 +28,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58127DE9136894AD48B5F588 /* Pods_GrowthSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

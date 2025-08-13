@@ -30,11 +30,11 @@
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		bclUPsq5pabKKdsywQe6aLwTE7M=
+		DRvAcrdb6aFwlYNLv27oCDjKaIg=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		LSAkzyIkX/Zg6TYgx/LYlAyEOGM=
+		dME5CKGjEJcWQKvDcBF1uk9amqQ=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -42,19 +42,19 @@
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		LSAkzyIkX/Zg6TYgx/LYlAyEOGM=
+		dME5CKGjEJcWQKvDcBF1uk9amqQ=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		+Ev91yLNRxqHFvp/kTUlviIzZEU=
+		gaLM6xlZlnRex5Ns6AnWKm/1g/Q=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		bclUPsq5pabKKdsywQe6aLwTE7M=
+		DRvAcrdb6aFwlYNLv27oCDjKaIg=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		5Hz9tHjUBluKgK7K93KP9muTBoE=
+		/d5pIgaG456AR3hjfCVYXKZxsjE=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -62,11 +62,11 @@
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		5Hz9tHjUBluKgK7K93KP9muTBoE=
+		/d5pIgaG456AR3hjfCVYXKZxsjE=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		RFXnih7SKjKkLoBrcH2WqYJGwrU=
+		hI/WZq1nORbWgus4LQwJOcitL2k=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -114,14 +114,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			d/ik8QbjPs4jsNnq+K5+CZI/9dAbZCMssLFxCl01Iv8=
+			z33bjb3WSyjT1X1wTI5/xtnxvg6xv87vTubTLfPGL94=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			3hV2klcUdKu5ZTgNDhtrE1ufIh2YFSMM5E9Yp8nqOaA=
+			BCvPw1M/w9D54Trl8773/e/tGxQx0xeJg/dIM/0G5+0=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
@@ -135,28 +135,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			3hV2klcUdKu5ZTgNDhtrE1ufIh2YFSMM5E9Yp8nqOaA=
+			BCvPw1M/w9D54Trl8773/e/tGxQx0xeJg/dIM/0G5+0=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yIz1TD3giqcdyYerCCDoKH9Ma6Jma1a+ZQc2Coootg4=
+			NQ4hDiH3Zo9rwrUsb/C1KlJ31geoxf+PZ7Osi6NWVEE=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			d/ik8QbjPs4jsNnq+K5+CZI/9dAbZCMssLFxCl01Iv8=
+			z33bjb3WSyjT1X1wTI5/xtnxvg6xv87vTubTLfPGL94=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xNt51GfKCXyTUq0FAljYrM9E8AC/93XEpzIA1mJCNFw=
+			wBRFSSNzMtjMOpnpSwQuTeTFGAYdjdSj8oxEZD5N6Z4=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -170,14 +170,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			xNt51GfKCXyTUq0FAljYrM9E8AC/93XEpzIA1mJCNFw=
+			wBRFSSNzMtjMOpnpSwQuTeTFGAYdjdSj8oxEZD5N6Z4=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kh794/4xf0MtUYr4/H06Bdxlm/GIPY34kcjIhXQ81c8=
+			y/aXupz71S3fWfO4yPwMTIh9hIifEQ+gLsY/Jgc/iXU=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
