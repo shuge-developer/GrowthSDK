@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'GrowthSDK'
-  s.version          = '1.0.9'
+  s.version          = '1.1.0'
   s.summary          = 'GrowthSDK binary distribution.'
   s.description      = 'GrowthSDK xcframework with ad mediation via CocoaPods dependencies.'
   s.homepage         = 'https://codeup.aliyun.com/630b1207050e9c4a07a93a48/IOS/SDK/GrowthSDK'
@@ -22,6 +22,10 @@ Pod::Spec.new do |s|
         core.vendored_frameworks = 'Frameworks/GrowthSDK.xcframework'
         core.dependency 'CryptoSwift', '1.8.4'
         core.dependency 'Alamofire',  '5.10.2'
+
+        # 通过 pod_target_xcconfig 排除依赖项的链接，防止将依赖打包进二进制文件
+        # 我们通过覆盖 OTHER_LDFLAGS 来移除 CocoaPods 默认添加的对依赖库的链接
+        core.pod_target_xcconfig = { 'OTHER_LDFLAGS' => '' }
         # 广告 SDK 依赖移至 AdsDeps 子规范，由下游应用选择性安装
     end
 
