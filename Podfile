@@ -6,7 +6,6 @@ target 'GrowthSDK' do
   use_frameworks! :linkage => :static
   
   pod 'AppLovinSDK'
-  pod 'CryptoSwift'
   
 end
 

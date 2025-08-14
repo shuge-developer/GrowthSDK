@@ -5,7 +5,9 @@
 import AdSupport
 import AppTrackingTransparency
 import Combine
+import CommonCrypto
 import CoreData
+import CryptoKit
 import DeveloperToolsSupport
 import Foundation
 import Network
@@ -55,7 +57,6 @@ public enum InitError : Swift.Error, Foundation.LocalizedError {
   }
   @objc final public func initialize(with config: GrowthSDK.NetworkConfig, completion: (((any Swift.Error)?) -> Swift.Void)? = nil)
   final public func initialize(with config: any GrowthSDK.NetworkConfigurable) async throws
-  final public func getModel()
   @objc deinit
 }
 public protocol NetworkConfigurable {

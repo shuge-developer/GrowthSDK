@@ -5,7 +5,9 @@
 import AdSupport
 import AppTrackingTransparency
 import Combine
+import CommonCrypto
 import CoreData
+import CryptoKit
 import DeveloperToolsSupport
 import Foundation
 import Network
@@ -18,11 +20,6 @@ import WebKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-extension GrowthSDK.GrowthKit {
-  @objc public static func createController(with unityController: UIKit.UIViewController) -> UIKit.UIViewController
-  public static func createView(with unityController: UIKit.UIViewController) -> some SwiftUICore.View
-  
-}
 @objc public enum InitState : Swift.Int {
   case uninitialized
   case initializing
@@ -55,7 +52,6 @@ public enum InitError : Swift.Error, Foundation.LocalizedError {
   }
   @objc final public func initialize(with config: GrowthSDK.NetworkConfig, completion: (((any Swift.Error)?) -> Swift.Void)? = nil)
   final public func initialize(with config: any GrowthSDK.NetworkConfigurable) async throws
-  final public func getModel()
   @objc deinit
 }
 public protocol NetworkConfigurable {
@@ -127,6 +123,11 @@ extension GrowthSDK.NetworkConfigurable {
   @objc public var adid: Swift.String?
   @objc public init(thirdId: Swift.String? = nil, instanceId: Swift.String? = nil, campaign: Swift.String? = nil, referer: Swift.String? = nil, adid: Swift.String? = nil)
   @objc deinit
+}
+extension GrowthSDK.GrowthKit {
+  @objc public static func createController(with unityController: UIKit.UIViewController) -> UIKit.UIViewController
+  public static func createView(with unityController: UIKit.UIViewController) -> some SwiftUICore.View
+  
 }
 extension GrowthSDK.InitState : Swift.Equatable {}
 extension GrowthSDK.InitState : Swift.Hashable {}

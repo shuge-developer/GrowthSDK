@@ -6,6 +6,9 @@
 //
 
 import Foundation
+import CommonCrypto
+import CryptoKit
+import Security
 
 // MARK: -
 private extension String {
@@ -54,90 +57,142 @@ private extension String {
     
 }
 
-#if canImport(CryptoSwift)
-internal import CryptoSwift
-
 // MARK: -
 internal class CryptoProvider {
     
-    // MARK: -
-    static func rsaEncrypt(string: String, publicKey: String) throws -> String {
-        do {
-            var error: Unmanaged<CFError>?
-            let secKey = try String.createSecKey(publicKey, keyClass: .public)
-            guard let cfdata = SecKeyCopyExternalRepresentation(secKey, &error) else {
-                throw NetworkError.createSecKeyFailed(error?.takeRetainedValue())
+    enum CryptType {
+        case encrypt, decrypt
+        
+        var rawValue: Int {
+            switch self {
+            case .encrypt:
+                return kCCEncrypt
+            case .decrypt:
+                return kCCDecrypt
             }
-            
-            let key = try RSA(rawRepresentation: cfdata as Data)
-            return try string.encryptToBase64(cipher: key)
-        } catch {
-            let errMsg = "RSA encryption failed: \(error.localizedDescription)"
+        }
+    }
+    
+    // MARK: - RSA
+    static func rsaEncrypt(string: String, publicKey: String) throws -> String {
+        let secKey = try String.createSecKey(publicKey, keyClass: .public)
+        let algorithm: SecKeyAlgorithm = .rsaEncryptionPKCS1
+        
+        guard SecKeyIsAlgorithmSupported(secKey, .encrypt, algorithm) else {
+            throw NetworkError.encryptionError("RSA algorithm not supported")
+        }
+        
+        guard let stringData = string.data(using: .utf8) else {
+            throw NetworkError.encryptionError("Failed to convert string to data")
+        }
+        
+        var error: Unmanaged<CFError>?
+        guard let encryptedData = SecKeyCreateEncryptedData(secKey, algorithm, stringData as CFData, &error) as Data? else {
+            let errMsg = "RSA encryption failed: \(error?.takeRetainedValue().localizedDescription ?? "Unknown error")"
             throw NetworkError.encryptionError(errMsg)
         }
+        return encryptedData.base64EncodedString()
     }
     
     static func rsaDecrypt(string: String, privateKey: String) throws -> String {
-        do {
-            var error: Unmanaged<CFError>?
-            let secKey = try String.createSecKey(privateKey, keyClass: .private)
-            guard let cfdata = SecKeyCopyExternalRepresentation(secKey, &error) else {
-                throw NetworkError.createSecKeyFailed(error?.takeRetainedValue())
-            }
-            
-            let key = try RSA(rawRepresentation: cfdata as Data)
-            return try string.decryptBase64ToString(cipher: key)
-        } catch {
-            let errMsg = "RSA decryption failed: \(error.localizedDescription)"
+        let secKey = try String.createSecKey(privateKey, keyClass: .private)
+        let algorithm: SecKeyAlgorithm = .rsaEncryptionPKCS1
+        
+        guard SecKeyIsAlgorithmSupported(secKey, .decrypt, algorithm) else {
+            throw NetworkError.decryptionError("RSA algorithm not supported")
+        }
+        
+        let options = Data.Base64DecodingOptions(rawValue: 0)
+        guard let dataToDecrypt = Data(base64Encoded: string, options: options) else {
+            throw NetworkError.decryptionError("Invalid base64 string")
+        }
+        
+        var error: Unmanaged<CFError>?
+        guard let decryptedData = SecKeyCreateDecryptedData(secKey, algorithm, dataToDecrypt as CFData, &error) as Data? else {
+            let errMsg = "RSA decryption failed: \(error?.takeRetainedValue().localizedDescription ?? "Unknown error")"
             throw NetworkError.decryptionError(errMsg)
         }
+        
+        guard let decryptedString = String(data: decryptedData, encoding: .utf8) else {
+            throw NetworkError.decryptionError("Failed to convert decrypted data to string")
+        }
+        return decryptedString
     }
     
-    // MARK: -
+    // MARK: - AES
     static func aesEncrypt(string: String, key: String, iv: String) throws -> String {
-        guard let data = string.data(using: .utf8, allowLossyConversion: true) else {
-            throw NetworkError.encryptionError("Failed to convert string to data")
+        guard let data = string.data(using: .utf8) else {
+            throw NetworkError.encryptionError("Failed to convert string to data for AES")
         }
-        do {
-            let aes = try AES(key: key, iv: iv)
-            let encrypted = try aes.encrypt(data.bytes)
-            
-            let encryptedData = Data(bytes: encrypted, count: encrypted.count)
-            return encryptedData.base64EncodedString()
-        } catch {
-            let errMsg = "AES encryption failed: \(error.localizedDescription)"
-            throw NetworkError.encryptionError(errMsg)
-        }
+        let keyData = key.data(using: .utf8)!
+        let ivData = iv.data(using: .utf8)!
+        
+        let encryptedData = try aesCrypt(data, key: keyData, iv: ivData, type: .encrypt)
+        return encryptedData.base64EncodedString()
     }
     
     static func aesDecrypt(string: String, key: String, iv: String) throws -> String {
         let options = Data.Base64DecodingOptions(rawValue: 0)
         guard let data = Data(base64Encoded: string, options: options) else {
-            throw NetworkError.decryptionError("Invalid base64 string")
+            throw NetworkError.decryptionError("Invalid base64 string for AES")
         }
-        do {
-            let aes = try AES(key: key, iv: iv)
-            let decrypted = try aes.decrypt(data.bytes)
-            
-            let decryptedData = Data(bytes: decrypted, count: decrypted.count)
-            guard let decryptedString = String(data: decryptedData, encoding: .utf8) else {
-                throw NetworkError.decryptionError("Failed to convert decrypted data to string")
-            }
-            return decryptedString
-        } catch {
-            let errMsg = "AES decryption failed: \(error.localizedDescription)"
-            throw NetworkError.decryptionError(errMsg)
+        let keyData = key.data(using: .utf8)!
+        let ivData = iv.data(using: .utf8)!
+        
+        let decryptedData = try aesCrypt(data, key: keyData, iv: ivData, type: .decrypt)
+        guard let decryptedString = String(data: decryptedData, encoding: .utf8) else {
+            throw NetworkError.decryptionError("Failed to convert decrypted AES data to string")
         }
+        return decryptedString
     }
     
     // MARK: -
+    private static func aesCrypt(_ data: Data, key: Data, iv: Data, type: CryptType) throws -> Data {
+        let keyLength = kCCKeySizeAES128
+        let ivLength = kCCBlockSizeAES128
+        
+        guard key.count == keyLength else {
+            throw NetworkError.encryptionError("Invalid AES key length. Must be \(keyLength) bytes.")
+        }
+        guard iv.count == ivLength else {
+            throw NetworkError.encryptionError("Invalid AES IV length. Must be \(ivLength) bytes.")
+        }
+        
+        var outputBytes = [UInt8](repeating: 0, count: data.count + kCCBlockSizeAES128)
+        var numBytesEncrypted: size_t = 0
+        
+        let status = data.withUnsafeBytes { dataBytes in
+            key.withUnsafeBytes { keyBytes in
+                iv.withUnsafeBytes { ivBytes in
+                    CCCrypt(
+                        CCOperation(type.rawValue),
+                        CCAlgorithm(kCCAlgorithmAES),
+                        CCOptions(kCCOptionPKCS7Padding),
+                        keyBytes.baseAddress, keyLength,
+                        ivBytes.baseAddress,
+                        dataBytes.baseAddress, data.count,
+                        &outputBytes, outputBytes.count,
+                        &numBytesEncrypted
+                    )
+                }
+            }
+        }
+        
+        if status == kCCSuccess {
+            return Data(bytes: outputBytes, count: numBytesEncrypted)
+        } else {
+            let errorType = type == .encrypt ? "Encryption" : "Decryption"
+            throw NetworkError.encryptionError("AES \(errorType) failed with status \(status)")
+        }
+    }
+    
+    // MARK: - MD5
     static func md5(string: String) -> String {
         guard let data = string.data(using: .utf8) else { return string }
-        let strings = data.md5().map { String(format: "%02x", $0) }
-        let hash = strings.joined()
-        return hash
+        let digest = Insecure.MD5.hash(data: data)
+        return digest.map {
+            String(format: "%02x", $0)
+        }.joined()
     }
     
 }
-
-#endif
