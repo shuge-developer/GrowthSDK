@@ -20,7 +20,7 @@ internal class NetworkProvider {
     // MARK: -
     internal func setup(_ configure: RequestConfigure) {
         self.configure = configure
-        self.networkProvider = AlamofireProvider(
+        self.networkProvider = URLSessionNetworkProvider(
             configure: configure
         )
         setupNetworkMonitoring()

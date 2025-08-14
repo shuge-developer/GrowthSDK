@@ -14,7 +14,6 @@ internal enum BaseURL {
 }
 
 internal extension BaseURL {
-    
     var value: String {
         switch self {
         case .global(let url):
@@ -32,12 +31,10 @@ internal extension BaseURL {
             return headers
         }
     }
-    
 }
 
 // MARK: -
 internal protocol RequestConfigure: CustomStringConvertible {
-    
     var baseURL: BaseURL { get }
     var timeout: TimeInterval { get }
     var cacheTTL: TimeInterval { get }
@@ -48,7 +45,6 @@ internal protocol RequestConfigure: CustomStringConvertible {
     var headerProvider: HeaderConfigure { get }
     var isCacheEnabled: Bool { get }
     var isLogEnabled: Bool { get }
-    
 }
 
 // MARK: -
@@ -109,7 +105,7 @@ internal extension RequestConfigure {
         
         lines.append("")
         lines.append("=== Header Configuration ===")
-        lines.append(headerProvider.v2Header() ?? "")
+        lines.append(headerProvider.header() ?? "")
         
         lines.append("========================")
         return lines.joined(separator: "\n")

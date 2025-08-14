@@ -97,7 +97,7 @@ internal extension HeaderConfigure {
 // MARK: -
 internal extension HeaderConfigure {
     
-    func v2Header() -> String? {
+    func header() -> String? {
         var header: [String: Any?] = [:]
         header["apd"] = appId
         header["tid"] = thirdPartyId
