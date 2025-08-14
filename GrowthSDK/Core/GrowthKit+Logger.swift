@@ -36,7 +36,7 @@ internal final class DefaultLogger: GrowthSDKLogging {
     private init() {}
     
     public func log(_ level: LogLevel, message: String) {
-#if DEBUG
+//#if DEBUG
         let maxLength = 900
         var start = message.startIndex
         var index = 0
@@ -48,7 +48,7 @@ internal final class DefaultLogger: GrowthSDKLogging {
             start = end
             index += 1
         }
-#endif
+//#endif
     }
 }
 

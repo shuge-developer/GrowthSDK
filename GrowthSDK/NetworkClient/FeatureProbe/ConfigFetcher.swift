@@ -58,30 +58,34 @@ internal final class ConfigFetcher {
     private init() {}
     
     // MARK: -
-    /// 获取配置数据
-    func getConfig<T: Codable>(for key: String, type: T.Type) -> T? {
-        guard let json = getConfigJSON(for: key) else { return nil }
-        let model = T.deserialize(from: json)
-        return model
-    }
-    
-    /// 获取配置JSON字符串
-    func getConfigJSON(for key: String) -> String? {
-        return getCachedData()?.configs[key]
-    }
-    
-    /// 获取扩展数据
-    func getExtendData() -> ConfigResponse.ExtendJson? {
-        return getCachedData()?.extendJson
-    }
-    
-    /// 批量获取配置
     func fetchConfigs(_ keys: [String]) {
         Logger.info("开始获取配置: \(keys)")
         guard !keys.isEmpty else { return }
         queue.async { [weak self] in
             self?.performFetch(keys)
         }
+    }
+    
+    // MARK: -
+    func getConfigModel<T: Codable>(_ key: String) -> T? {
+        guard let json = getConfigJson(key) else { return nil }
+        let model = T.deserialize(from: json)
+        return model
+    }
+    
+    func getConfigJson(_ key: String) -> String? {
+        return getCachedData()?.configs[key]
+    }
+    
+    func getCachedData() -> ConfigData? {
+        if let data = cachedData, !isExpired(data) {
+            return data
+        }
+        return nil
+    }
+    
+    func getExtendData() -> ConfigResponse.ExtendJson? {
+        return getCachedData()?.extendJson
     }
     
     // MARK: -
@@ -92,13 +96,6 @@ internal final class ConfigFetcher {
     private func shouldFetch(_ key: String) -> Bool {
         guard let lastTime = lastFetchTime[key] else { return true }
         return Date().timeIntervalSince1970 - lastTime > cacheExpiry
-    }
-    
-    private func getCachedData() -> ConfigData? {
-        if let data = cachedData, !isExpired(data) {
-            return data
-        }
-        return nil
     }
     
     // MARK: -
@@ -115,7 +112,7 @@ internal final class ConfigFetcher {
         switch result {
         case .success(let json):
             guard let response = ConfigResponse.deserialize(from: json) else {
-                Logger.info("配置数据解析失败")
+                Logger.error("配置数据解析失败: \(json)")
                 return
             }
             let configData = ConfigData(from: response)

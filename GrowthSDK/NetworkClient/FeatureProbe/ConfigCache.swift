@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: -
 internal enum CachedPath: String {
-    case configs = "GrowthSDK/configs.dat"
+    case configs = "GrowthSDK/Configs.dat"
 }
 
 internal protocol Readable {
@@ -57,7 +57,9 @@ internal struct CacheReader: Readable {
             return nil
         }
         let binaryData = secureData.dropFirst(5)
-        return String(data: binaryData, encoding: .utf8)
+        let json = String(data: binaryData, encoding: .utf8)
+        Logger.info("数据已安全读取: \(json ?? "nil")")
+        return json
     }
 }
 
@@ -78,7 +80,6 @@ internal struct DataCached<T: Readable, V: Codable> {
                 return value
             }
             guard let json = T.read(at: path.rawValue) else { return nil }
-            Logger.info("DataCached 读取到的缓存数据：\(json)")
             guard let decodedValue = V.deserialize(from: json) else {
                 return nil
             }

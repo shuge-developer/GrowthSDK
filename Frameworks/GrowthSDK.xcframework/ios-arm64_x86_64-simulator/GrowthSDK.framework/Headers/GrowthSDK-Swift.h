@@ -281,6 +281,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import Foundation;
 @import ObjectiveC;
 #endif
 
@@ -311,7 +312,7 @@ SWIFT_CLASS("_TtC9GrowthSDK9GrowthKit")
 /// 单例
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) GrowthKit * _Nonnull shared;)
 + (GrowthKit * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
-/// 当前状态
+/// 初始化状态
 @property (nonatomic, readonly) enum InitState state;
 /// 是否已初始化
 @property (nonatomic, readonly) BOOL isInitialized;
@@ -344,15 +345,35 @@ typedef SWIFT_ENUM(NSInteger, InitState, open) {
 };
 
 @class NSString;
+@class OtherConfig;
 SWIFT_CLASS("_TtC9GrowthSDK13NetworkConfig")
 @interface NetworkConfig : NSObject
-@property (nonatomic, readonly, copy) NSString * _Nonnull appid;
+@property (nonatomic, readonly, copy) NSString * _Nonnull serviceId;
 @property (nonatomic, readonly, copy) NSString * _Nonnull bundleName;
-@property (nonatomic, readonly, copy) NSString * _Nonnull baseUrl;
+@property (nonatomic, readonly, copy) NSString * _Nonnull serviceUrl;
+@property (nonatomic, readonly, copy) NSString * _Nonnull serviceKey;
+@property (nonatomic, readonly, copy) NSString * _Nonnull serviceIv;
 @property (nonatomic, readonly, copy) NSString * _Nonnull publicKey;
-@property (nonatomic, readonly, copy) NSString * _Nonnull appKey;
-@property (nonatomic, readonly, copy) NSString * _Nonnull appIv;
-- (nonnull instancetype)initWithAppid:(NSString * _Nonnull)appid bundleName:(NSString * _Nonnull)bundleName baseUrl:(NSString * _Nonnull)baseUrl publicKey:(NSString * _Nonnull)publicKey appKey:(NSString * _Nonnull)appKey appIv:(NSString * _Nonnull)appIv OBJC_DESIGNATED_INITIALIZER;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nullable configKeys;
+@property (nonatomic, readonly, strong) OtherConfig * _Nullable other;
+- (nonnull instancetype)initWithServiceId:(NSString * _Nonnull)serviceId bundleName:(NSString * _Nonnull)bundleName serviceUrl:(NSString * _Nonnull)serviceUrl serviceKey:(NSString * _Nonnull)serviceKey serviceIv:(NSString * _Nonnull)serviceIv publicKey:(NSString * _Nonnull)publicKey configKeys:(NSArray<NSString *> * _Nullable)configKeys other:(OtherConfig * _Nullable)other OBJC_DESIGNATED_INITIALIZER;
+@property (nonatomic, readonly, copy) NSString * _Nullable thirdId;
+@property (nonatomic, readonly, copy) NSString * _Nullable instanceId;
+@property (nonatomic, readonly, copy) NSString * _Nullable campaign;
+@property (nonatomic, readonly, copy) NSString * _Nullable referer;
+@property (nonatomic, readonly, copy) NSString * _Nullable adid;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+SWIFT_CLASS("_TtC9GrowthSDK11OtherConfig")
+@interface OtherConfig : NSObject
+@property (nonatomic, copy) NSString * _Nullable thirdId;
+@property (nonatomic, copy) NSString * _Nullable instanceId;
+@property (nonatomic, copy) NSString * _Nullable campaign;
+@property (nonatomic, copy) NSString * _Nullable referer;
+@property (nonatomic, copy) NSString * _Nullable adid;
+- (nonnull instancetype)initWithThirdId:(NSString * _Nullable)thirdId instanceId:(NSString * _Nullable)instanceId campaign:(NSString * _Nullable)campaign referer:(NSString * _Nullable)referer adid:(NSString * _Nullable)adid OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -648,6 +669,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import Foundation;
 @import ObjectiveC;
 #endif
 
@@ -678,7 +700,7 @@ SWIFT_CLASS("_TtC9GrowthSDK9GrowthKit")
 /// 单例
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) GrowthKit * _Nonnull shared;)
 + (GrowthKit * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
-/// 当前状态
+/// 初始化状态
 @property (nonatomic, readonly) enum InitState state;
 /// 是否已初始化
 @property (nonatomic, readonly) BOOL isInitialized;
@@ -711,15 +733,35 @@ typedef SWIFT_ENUM(NSInteger, InitState, open) {
 };
 
 @class NSString;
+@class OtherConfig;
 SWIFT_CLASS("_TtC9GrowthSDK13NetworkConfig")
 @interface NetworkConfig : NSObject
-@property (nonatomic, readonly, copy) NSString * _Nonnull appid;
+@property (nonatomic, readonly, copy) NSString * _Nonnull serviceId;
 @property (nonatomic, readonly, copy) NSString * _Nonnull bundleName;
-@property (nonatomic, readonly, copy) NSString * _Nonnull baseUrl;
+@property (nonatomic, readonly, copy) NSString * _Nonnull serviceUrl;
+@property (nonatomic, readonly, copy) NSString * _Nonnull serviceKey;
+@property (nonatomic, readonly, copy) NSString * _Nonnull serviceIv;
 @property (nonatomic, readonly, copy) NSString * _Nonnull publicKey;
-@property (nonatomic, readonly, copy) NSString * _Nonnull appKey;
-@property (nonatomic, readonly, copy) NSString * _Nonnull appIv;
-- (nonnull instancetype)initWithAppid:(NSString * _Nonnull)appid bundleName:(NSString * _Nonnull)bundleName baseUrl:(NSString * _Nonnull)baseUrl publicKey:(NSString * _Nonnull)publicKey appKey:(NSString * _Nonnull)appKey appIv:(NSString * _Nonnull)appIv OBJC_DESIGNATED_INITIALIZER;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nullable configKeys;
+@property (nonatomic, readonly, strong) OtherConfig * _Nullable other;
+- (nonnull instancetype)initWithServiceId:(NSString * _Nonnull)serviceId bundleName:(NSString * _Nonnull)bundleName serviceUrl:(NSString * _Nonnull)serviceUrl serviceKey:(NSString * _Nonnull)serviceKey serviceIv:(NSString * _Nonnull)serviceIv publicKey:(NSString * _Nonnull)publicKey configKeys:(NSArray<NSString *> * _Nullable)configKeys other:(OtherConfig * _Nullable)other OBJC_DESIGNATED_INITIALIZER;
+@property (nonatomic, readonly, copy) NSString * _Nullable thirdId;
+@property (nonatomic, readonly, copy) NSString * _Nullable instanceId;
+@property (nonatomic, readonly, copy) NSString * _Nullable campaign;
+@property (nonatomic, readonly, copy) NSString * _Nullable referer;
+@property (nonatomic, readonly, copy) NSString * _Nullable adid;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+SWIFT_CLASS("_TtC9GrowthSDK11OtherConfig")
+@interface OtherConfig : NSObject
+@property (nonatomic, copy) NSString * _Nullable thirdId;
+@property (nonatomic, copy) NSString * _Nullable instanceId;
+@property (nonatomic, copy) NSString * _Nullable campaign;
+@property (nonatomic, copy) NSString * _Nullable referer;
+@property (nonatomic, copy) NSString * _Nullable adid;
+- (nonnull instancetype)initWithThirdId:(NSString * _Nullable)thirdId instanceId:(NSString * _Nullable)instanceId campaign:(NSString * _Nullable)campaign referer:(NSString * _Nullable)referer adid:(NSString * _Nullable)adid OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
