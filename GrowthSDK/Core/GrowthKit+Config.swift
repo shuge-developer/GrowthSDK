@@ -16,6 +16,7 @@ public protocol NetworkConfigurable {
     var serviceIv: String { get }
     var publicKey: String { get }
     
+    var configKeys: [String]? { get }
     var thirdId: String? { get }
     var instanceId: String? { get }
     var campaign: String? { get }
@@ -24,6 +25,7 @@ public protocol NetworkConfigurable {
 }
 
 public extension NetworkConfigurable {
+    var configKeys: [String]? { return nil }
     var thirdId: String? { return nil }
     var instanceId: String? { return nil }
     var campaign: String? { return nil }
@@ -40,15 +42,17 @@ public class NetworkConfig: NSObject, NetworkConfigurable {
     public let serviceKey: String
     public let serviceIv: String
     public let publicKey: String
+    public let configKeys: [String]?
     public let other: OtherConfig?
     
-    public init(serviceId: String, bundleName: String, serviceUrl: String, serviceKey: String, serviceIv: String, publicKey: String, other: OtherConfig? = nil) {
+    public init(serviceId: String, bundleName: String, serviceUrl: String, serviceKey: String, serviceIv: String, publicKey: String, configKeys: [String]? = nil, other: OtherConfig? = nil) {
         self.serviceId = serviceId
         self.bundleName = bundleName
         self.serviceUrl = serviceUrl
         self.serviceKey = serviceKey
         self.serviceIv = serviceIv
         self.publicKey = publicKey
+        self.configKeys = configKeys
         self.other = other
         super.init()
     }

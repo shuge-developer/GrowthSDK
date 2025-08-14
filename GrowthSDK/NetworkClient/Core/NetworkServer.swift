@@ -131,6 +131,12 @@ internal class NetworkServer {
         }
     }
     
+    // MARK: - 配置批量获取
+    static func fetchConfigs(_ configIds: [String], complete: @escaping (Result<String, NetworkError>) -> Void) {
+        let params = ["configIds": configIds.joined(separator: ",")]
+        NetworkServer.request(.fpV2, params: params, complete: complete)
+    }
+    
     static func uploadH5Params(_ params: String?) {
         print("[H5] [Upload] 数据上报，params: \(params ?? "nil")")
         NetworkServer.request(.upload, params: params) { result in

@@ -1,5 +1,5 @@
 //
-//  JSONExtension.swift
+//  JSON+Extensions.swift
 //  GrowthSDK
 //
 //  Created by arvin on 2025/5/29.
