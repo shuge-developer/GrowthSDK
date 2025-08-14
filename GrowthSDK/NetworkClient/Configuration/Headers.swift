@@ -1,5 +1,5 @@
 //
-//  HeadersConfigure.swift
+//  Headers.swift
 //  GrowthSDK
 //
 //  Created by arvin on 2025/7/18.
