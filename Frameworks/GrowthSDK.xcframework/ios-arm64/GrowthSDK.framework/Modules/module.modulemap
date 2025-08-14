@@ -1,4 +1,0 @@
-framework module GrowthSDK {
-  header "GrowthSDK-Swift.h"
-  requires objc
-}
