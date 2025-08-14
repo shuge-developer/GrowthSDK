@@ -6,6 +6,114 @@
     "children": [
       {
         "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Security",
+        "printedName": "Security",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Combine",
+        "printedName": "Combine",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "WebKit",
+        "printedName": "WebKit",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
         "declKind": "Import",
@@ -23,8 +131,123 @@
       },
       {
         "kind": "Import",
-        "name": "WebKit",
-        "printedName": "WebKit",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CoreData",
+        "printedName": "CoreData",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Combine",
+        "printedName": "Combine",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Network",
+        "printedName": "Network",
         "declKind": "Import",
         "moduleName": "GrowthSDK"
       },
@@ -71,319 +294,6 @@
       },
       {
         "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "CoreData",
-        "printedName": "CoreData",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Combine",
-        "printedName": "Combine",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Combine",
-        "printedName": "Combine",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "CoreData",
-        "printedName": "CoreData",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Combine",
-        "printedName": "Combine",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "ObjectiveC",
-        "printedName": "ObjectiveC",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "WebKit",
-        "printedName": "WebKit",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Combine",
-        "printedName": "Combine",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Combine",
-        "printedName": "Combine",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "WebKit",
-        "printedName": "WebKit",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "CoreData",
-        "printedName": "CoreData",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
         "declKind": "Import",
@@ -407,13 +317,6 @@
         "name": "UIKit",
         "printedName": "UIKit",
         "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
         "moduleName": "GrowthSDK",
         "declAttributes": [
           "RawDocComment"
@@ -428,74 +331,6 @@
         "declAttributes": [
           "RawDocComment"
         ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Combine",
-        "printedName": "Combine",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "WebKit",
-        "printedName": "WebKit",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Network",
-        "printedName": "Network",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
       },
       {
         "kind": "Import",
@@ -536,67 +371,10 @@
       },
       {
         "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "CoreData",
-        "printedName": "CoreData",
+        "name": "ObjectiveC",
+        "printedName": "ObjectiveC",
         "declKind": "Import",
         "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Combine",
-        "printedName": "Combine",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
       },
       {
         "kind": "Import",
@@ -623,10 +401,7 @@
         "name": "SwiftUI",
         "printedName": "SwiftUI",
         "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
+        "moduleName": "GrowthSDK"
       },
       {
         "kind": "Import",
@@ -667,23 +442,6 @@
       },
       {
         "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Combine",
-        "printedName": "Combine",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
         "declKind": "Import",
@@ -701,151 +459,6 @@
         "declAttributes": [
           "RawDocComment"
         ]
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "SwiftUI",
-        "printedName": "SwiftUI",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "WebKit",
-        "printedName": "WebKit",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "Preconcurrency",
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "UIKit",
-        "printedName": "UIKit",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "CryptoSwift",
-        "printedName": "CryptoSwift",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "AccessControl"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK",
-        "declAttributes": [
-          "RawDocComment"
-        ]
-      },
-      {
-        "kind": "Import",
-        "name": "Security",
-        "printedName": "Security",
-        "declKind": "Import",
-        "moduleName": "GrowthSDK"
       },
       {
         "kind": "Import",
@@ -2632,13 +2245,20 @@
       },
       {
         "kind": "Import",
-        "name": "Foundation",
-        "printedName": "Foundation",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
         "declKind": "Import",
         "moduleName": "GrowthSDK",
         "declAttributes": [
           "RawDocComment"
         ]
+      },
+      {
+        "kind": "Import",
+        "name": "Combine",
+        "printedName": "Combine",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
       },
       {
         "kind": "Import",
@@ -2663,6 +2283,26 @@
         "printedName": "WebKit",
         "declKind": "Import",
         "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
       },
       {
         "kind": "Import",
@@ -2707,6 +2347,318 @@
       },
       {
         "kind": "Import",
+        "name": "Combine",
+        "printedName": "Combine",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CoreData",
+        "printedName": "CoreData",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "WebKit",
+        "printedName": "WebKit",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "Preconcurrency",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "WebKit",
+        "printedName": "WebKit",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Combine",
+        "printedName": "Combine",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CoreData",
+        "printedName": "CoreData",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CryptoSwift",
+        "printedName": "CryptoSwift",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Combine",
+        "printedName": "Combine",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "WebKit",
+        "printedName": "WebKit",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Combine",
+        "printedName": "Combine",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
         "name": "UIKit",
         "printedName": "UIKit",
         "declKind": "Import",
@@ -2741,6 +2693,27 @@
       },
       {
         "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Combine",
+        "printedName": "Combine",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "WebKit",
+        "printedName": "WebKit",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
+      },
+      {
+        "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
         "declKind": "Import",
@@ -2765,6 +2738,43 @@
         "declAttributes": [
           "RawDocComment"
         ]
+      },
+      {
+        "kind": "Import",
+        "name": "SwiftUI",
+        "printedName": "SwiftUI",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CoreData",
+        "printedName": "CoreData",
+        "declKind": "Import",
+        "moduleName": "GrowthSDK"
       },
       {
         "kind": "Import",
@@ -3369,1001 +3379,6 @@
             ],
             "usr": "s:16CoreTransferable0B0P",
             "mangledName": "$s16CoreTransferable0B0P"
-          }
-        ]
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "Dictionary",
-        "printedName": "Dictionary",
-        "declKind": "Struct",
-        "usr": "s:SD",
-        "mangledName": "$sSD",
-        "moduleName": "Swift",
-        "genericSig": "<τ_0_0, τ_0_1 where τ_0_0 : Swift.Hashable>",
-        "sugared_genericSig": "<Key, Value where Key : Swift.Hashable>",
-        "declAttributes": [
-          "EagerMove",
-          "Frozen"
-        ],
-        "isExternal": true,
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "Copyable",
-            "printedName": "Copyable",
-            "usr": "s:s8CopyableP",
-            "mangledName": "$ss8CopyableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Escapable",
-            "printedName": "Escapable",
-            "usr": "s:s9EscapableP",
-            "mangledName": "$ss9EscapableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Encodable",
-            "printedName": "Encodable",
-            "usr": "s:SE",
-            "mangledName": "$sSE"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Decodable",
-            "printedName": "Decodable",
-            "usr": "s:Se",
-            "mangledName": "$sSe"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Sequence",
-            "printedName": "Sequence",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "Element",
-                "printedName": "Element",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Tuple",
-                    "printedName": "(key: τ_0_0, value: τ_0_1)",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "GenericTypeParam",
-                        "printedName": "τ_0_0"
-                      },
-                      {
-                        "kind": "TypeNominal",
-                        "name": "GenericTypeParam",
-                        "printedName": "τ_0_1"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Iterator",
-                "printedName": "Iterator",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Iterator",
-                    "printedName": "Swift.Dictionary<τ_0_0, τ_0_1>.Iterator",
-                    "usr": "s:SD8IteratorV"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:ST",
-            "mangledName": "$sST"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Collection",
-            "printedName": "Collection",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "Element",
-                "printedName": "Element",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Tuple",
-                    "printedName": "(key: τ_0_0, value: τ_0_1)",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "GenericTypeParam",
-                        "printedName": "τ_0_0"
-                      },
-                      {
-                        "kind": "TypeNominal",
-                        "name": "GenericTypeParam",
-                        "printedName": "τ_0_1"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Index",
-                "printedName": "Index",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Index",
-                    "printedName": "Swift.Dictionary<τ_0_0, τ_0_1>.Index",
-                    "usr": "s:SD5IndexV"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Iterator",
-                "printedName": "Iterator",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Iterator",
-                    "printedName": "Swift.Dictionary<τ_0_0, τ_0_1>.Iterator",
-                    "usr": "s:SD8IteratorV"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "SubSequence",
-                "printedName": "SubSequence",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Slice",
-                    "printedName": "Swift.Slice<[τ_0_0 : τ_0_1]>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Dictionary",
-                        "printedName": "[τ_0_0 : τ_0_1]",
-                        "children": [
-                          {
-                            "kind": "TypeNominal",
-                            "name": "GenericTypeParam",
-                            "printedName": "τ_0_0"
-                          },
-                          {
-                            "kind": "TypeNominal",
-                            "name": "GenericTypeParam",
-                            "printedName": "τ_0_1"
-                          }
-                        ],
-                        "usr": "s:SD"
-                      }
-                    ],
-                    "usr": "s:s5SliceV"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Indices",
-                "printedName": "Indices",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "DefaultIndices",
-                    "printedName": "Swift.DefaultIndices<[τ_0_0 : τ_0_1]>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Dictionary",
-                        "printedName": "[τ_0_0 : τ_0_1]",
-                        "children": [
-                          {
-                            "kind": "TypeNominal",
-                            "name": "GenericTypeParam",
-                            "printedName": "τ_0_0"
-                          },
-                          {
-                            "kind": "TypeNominal",
-                            "name": "GenericTypeParam",
-                            "printedName": "τ_0_1"
-                          }
-                        ],
-                        "usr": "s:SD"
-                      }
-                    ],
-                    "usr": "s:SI"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:Sl",
-            "mangledName": "$sSl"
-          },
-          {
-            "kind": "Conformance",
-            "name": "ExpressibleByDictionaryLiteral",
-            "printedName": "ExpressibleByDictionaryLiteral",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "Key",
-                "printedName": "Key",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "GenericTypeParam",
-                    "printedName": "τ_0_0"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Value",
-                "printedName": "Value",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "GenericTypeParam",
-                    "printedName": "τ_0_1"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:s30ExpressibleByDictionaryLiteralP",
-            "mangledName": "$ss30ExpressibleByDictionaryLiteralP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Equatable",
-            "printedName": "Equatable",
-            "usr": "s:SQ",
-            "mangledName": "$sSQ"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Hashable",
-            "printedName": "Hashable",
-            "usr": "s:SH",
-            "mangledName": "$sSH"
-          },
-          {
-            "kind": "Conformance",
-            "name": "_HasCustomAnyHashableRepresentation",
-            "printedName": "_HasCustomAnyHashableRepresentation",
-            "usr": "s:s35_HasCustomAnyHashableRepresentationP",
-            "mangledName": "$ss35_HasCustomAnyHashableRepresentationP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CustomStringConvertible",
-            "printedName": "CustomStringConvertible",
-            "usr": "s:s23CustomStringConvertibleP",
-            "mangledName": "$ss23CustomStringConvertibleP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CustomDebugStringConvertible",
-            "printedName": "CustomDebugStringConvertible",
-            "usr": "s:s28CustomDebugStringConvertibleP",
-            "mangledName": "$ss28CustomDebugStringConvertibleP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CustomReflectable",
-            "printedName": "CustomReflectable",
-            "usr": "s:s17CustomReflectableP",
-            "mangledName": "$ss17CustomReflectableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Sendable",
-            "printedName": "Sendable",
-            "usr": "s:s8SendableP",
-            "mangledName": "$ss8SendableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "_ObjectiveCBridgeable",
-            "printedName": "_ObjectiveCBridgeable",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "_ObjectiveCType",
-                "printedName": "_ObjectiveCType",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "NSDictionary",
-                    "printedName": "Foundation.NSDictionary",
-                    "usr": "c:objc(cs)NSDictionary"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:s21_ObjectiveCBridgeableP",
-            "mangledName": "$ss21_ObjectiveCBridgeableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CVarArg",
-            "printedName": "CVarArg",
-            "usr": "s:s7CVarArgP",
-            "mangledName": "$ss7CVarArgP"
-          }
-        ]
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "Array",
-        "printedName": "Array",
-        "declKind": "Struct",
-        "usr": "s:Sa",
-        "mangledName": "$sSa",
-        "moduleName": "Swift",
-        "genericSig": "<τ_0_0>",
-        "sugared_genericSig": "<Element>",
-        "declAttributes": [
-          "EagerMove",
-          "Frozen"
-        ],
-        "isExternal": true,
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "_DestructorSafeContainer",
-            "printedName": "_DestructorSafeContainer",
-            "usr": "s:s24_DestructorSafeContainerP",
-            "mangledName": "$ss24_DestructorSafeContainerP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Copyable",
-            "printedName": "Copyable",
-            "usr": "s:s8CopyableP",
-            "mangledName": "$ss8CopyableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Escapable",
-            "printedName": "Escapable",
-            "usr": "s:s9EscapableP",
-            "mangledName": "$ss9EscapableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Equatable",
-            "printedName": "Equatable",
-            "usr": "s:SQ",
-            "mangledName": "$sSQ"
-          },
-          {
-            "kind": "Conformance",
-            "name": "_ArrayProtocol",
-            "printedName": "_ArrayProtocol",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "_Buffer",
-                "printedName": "_Buffer",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "_ArrayBuffer",
-                    "printedName": "Swift._ArrayBuffer<τ_0_0>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "GenericTypeParam",
-                        "printedName": "τ_0_0"
-                      }
-                    ],
-                    "usr": "s:s12_ArrayBufferV"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:s14_ArrayProtocolP",
-            "mangledName": "$ss14_ArrayProtocolP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "RandomAccessCollection",
-            "printedName": "RandomAccessCollection",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "Element",
-                "printedName": "Element",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "GenericTypeParam",
-                    "printedName": "τ_0_0"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Index",
-                "printedName": "Index",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Int",
-                    "printedName": "Swift.Int",
-                    "usr": "s:Si"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "SubSequence",
-                "printedName": "SubSequence",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "ArraySlice",
-                    "printedName": "Swift.ArraySlice<τ_0_0>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "GenericTypeParam",
-                        "printedName": "τ_0_0"
-                      }
-                    ],
-                    "usr": "s:s10ArraySliceV"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Indices",
-                "printedName": "Indices",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Range",
-                    "printedName": "Swift.Range<Swift.Int>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Int",
-                        "printedName": "Swift.Int",
-                        "usr": "s:Si"
-                      }
-                    ],
-                    "usr": "s:Sn"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:Sk",
-            "mangledName": "$sSk"
-          },
-          {
-            "kind": "Conformance",
-            "name": "MutableCollection",
-            "printedName": "MutableCollection",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "Element",
-                "printedName": "Element",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "GenericTypeParam",
-                    "printedName": "τ_0_0"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Index",
-                "printedName": "Index",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Int",
-                    "printedName": "Swift.Int",
-                    "usr": "s:Si"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "SubSequence",
-                "printedName": "SubSequence",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "ArraySlice",
-                    "printedName": "Swift.ArraySlice<τ_0_0>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "GenericTypeParam",
-                        "printedName": "τ_0_0"
-                      }
-                    ],
-                    "usr": "s:s10ArraySliceV"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:SM",
-            "mangledName": "$sSM"
-          },
-          {
-            "kind": "Conformance",
-            "name": "BidirectionalCollection",
-            "printedName": "BidirectionalCollection",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "Element",
-                "printedName": "Element",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "GenericTypeParam",
-                    "printedName": "τ_0_0"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Index",
-                "printedName": "Index",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Int",
-                    "printedName": "Swift.Int",
-                    "usr": "s:Si"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "SubSequence",
-                "printedName": "SubSequence",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "ArraySlice",
-                    "printedName": "Swift.ArraySlice<τ_0_0>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "GenericTypeParam",
-                        "printedName": "τ_0_0"
-                      }
-                    ],
-                    "usr": "s:s10ArraySliceV"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Indices",
-                "printedName": "Indices",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Range",
-                    "printedName": "Swift.Range<Swift.Int>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Int",
-                        "printedName": "Swift.Int",
-                        "usr": "s:Si"
-                      }
-                    ],
-                    "usr": "s:Sn"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:SK",
-            "mangledName": "$sSK"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Collection",
-            "printedName": "Collection",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "Element",
-                "printedName": "Element",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "GenericTypeParam",
-                    "printedName": "τ_0_0"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Index",
-                "printedName": "Index",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Int",
-                    "printedName": "Swift.Int",
-                    "usr": "s:Si"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Iterator",
-                "printedName": "Iterator",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "IndexingIterator",
-                    "printedName": "Swift.IndexingIterator<[τ_0_0]>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Array",
-                        "printedName": "[τ_0_0]",
-                        "children": [
-                          {
-                            "kind": "TypeNominal",
-                            "name": "GenericTypeParam",
-                            "printedName": "τ_0_0"
-                          }
-                        ],
-                        "usr": "s:Sa"
-                      }
-                    ],
-                    "usr": "s:s16IndexingIteratorV"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "SubSequence",
-                "printedName": "SubSequence",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "ArraySlice",
-                    "printedName": "Swift.ArraySlice<τ_0_0>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "GenericTypeParam",
-                        "printedName": "τ_0_0"
-                      }
-                    ],
-                    "usr": "s:s10ArraySliceV"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Indices",
-                "printedName": "Indices",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Range",
-                    "printedName": "Swift.Range<Swift.Int>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Int",
-                        "printedName": "Swift.Int",
-                        "usr": "s:Si"
-                      }
-                    ],
-                    "usr": "s:Sn"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:Sl",
-            "mangledName": "$sSl"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Sequence",
-            "printedName": "Sequence",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "Element",
-                "printedName": "Element",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "GenericTypeParam",
-                    "printedName": "τ_0_0"
-                  }
-                ]
-              },
-              {
-                "kind": "TypeWitness",
-                "name": "Iterator",
-                "printedName": "Iterator",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "IndexingIterator",
-                    "printedName": "Swift.IndexingIterator<[τ_0_0]>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Array",
-                        "printedName": "[τ_0_0]",
-                        "children": [
-                          {
-                            "kind": "TypeNominal",
-                            "name": "GenericTypeParam",
-                            "printedName": "τ_0_0"
-                          }
-                        ],
-                        "usr": "s:Sa"
-                      }
-                    ],
-                    "usr": "s:s16IndexingIteratorV"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:ST",
-            "mangledName": "$sST"
-          },
-          {
-            "kind": "Conformance",
-            "name": "ExpressibleByArrayLiteral",
-            "printedName": "ExpressibleByArrayLiteral",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "ArrayLiteralElement",
-                "printedName": "ArrayLiteralElement",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "GenericTypeParam",
-                    "printedName": "τ_0_0"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:s25ExpressibleByArrayLiteralP",
-            "mangledName": "$ss25ExpressibleByArrayLiteralP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "RangeReplaceableCollection",
-            "printedName": "RangeReplaceableCollection",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "SubSequence",
-                "printedName": "SubSequence",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "ArraySlice",
-                    "printedName": "Swift.ArraySlice<τ_0_0>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "GenericTypeParam",
-                        "printedName": "τ_0_0"
-                      }
-                    ],
-                    "usr": "s:s10ArraySliceV"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:Sm",
-            "mangledName": "$sSm"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CustomReflectable",
-            "printedName": "CustomReflectable",
-            "usr": "s:s17CustomReflectableP",
-            "mangledName": "$ss17CustomReflectableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CustomStringConvertible",
-            "printedName": "CustomStringConvertible",
-            "usr": "s:s23CustomStringConvertibleP",
-            "mangledName": "$ss23CustomStringConvertibleP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CustomDebugStringConvertible",
-            "printedName": "CustomDebugStringConvertible",
-            "usr": "s:s28CustomDebugStringConvertibleP",
-            "mangledName": "$ss28CustomDebugStringConvertibleP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Hashable",
-            "printedName": "Hashable",
-            "usr": "s:SH",
-            "mangledName": "$sSH"
-          },
-          {
-            "kind": "Conformance",
-            "name": "_HasCustomAnyHashableRepresentation",
-            "printedName": "_HasCustomAnyHashableRepresentation",
-            "usr": "s:s35_HasCustomAnyHashableRepresentationP",
-            "mangledName": "$ss35_HasCustomAnyHashableRepresentationP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Sendable",
-            "printedName": "Sendable",
-            "usr": "s:s8SendableP",
-            "mangledName": "$ss8SendableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Encodable",
-            "printedName": "Encodable",
-            "usr": "s:SE",
-            "mangledName": "$sSE"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Decodable",
-            "printedName": "Decodable",
-            "usr": "s:Se",
-            "mangledName": "$sSe"
-          },
-          {
-            "kind": "Conformance",
-            "name": "_HasContiguousBytes",
-            "printedName": "_HasContiguousBytes",
-            "usr": "s:s19_HasContiguousBytesP",
-            "mangledName": "$ss19_HasContiguousBytesP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "_ObjectiveCBridgeable",
-            "printedName": "_ObjectiveCBridgeable",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "_ObjectiveCType",
-                "printedName": "_ObjectiveCType",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "NSArray",
-                    "printedName": "Foundation.NSArray",
-                    "usr": "c:objc(cs)NSArray"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:s21_ObjectiveCBridgeableP",
-            "mangledName": "$ss21_ObjectiveCBridgeableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CVarArg",
-            "printedName": "CVarArg",
-            "usr": "s:s7CVarArgP",
-            "mangledName": "$ss7CVarArgP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "DataProtocol",
-            "printedName": "DataProtocol",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "Regions",
-                "printedName": "Regions",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "CollectionOfOne",
-                    "printedName": "Swift.CollectionOfOne<[Swift.UInt8]>",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Array",
-                        "printedName": "[Swift.UInt8]",
-                        "children": [
-                          {
-                            "kind": "TypeNominal",
-                            "name": "UInt8",
-                            "printedName": "Swift.UInt8",
-                            "usr": "s:s5UInt8V"
-                          }
-                        ],
-                        "usr": "s:Sa"
-                      }
-                    ],
-                    "usr": "s:s15CollectionOfOneV"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:10Foundation12DataProtocolP",
-            "mangledName": "$s10Foundation12DataProtocolP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "MutableDataProtocol",
-            "printedName": "MutableDataProtocol",
-            "usr": "s:10Foundation19MutableDataProtocolP",
-            "mangledName": "$s10Foundation19MutableDataProtocolP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "ContiguousBytes",
-            "printedName": "ContiguousBytes",
-            "usr": "s:10Foundation15ContiguousBytesP",
-            "mangledName": "$s10Foundation15ContiguousBytesP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "EncodableWithConfiguration",
-            "printedName": "EncodableWithConfiguration",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "EncodingConfiguration",
-                "printedName": "EncodingConfiguration",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "DependentMember",
-                    "printedName": "τ_0_0.EncodingConfiguration"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:10Foundation26EncodableWithConfigurationP",
-            "mangledName": "$s10Foundation26EncodableWithConfigurationP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "DecodableWithConfiguration",
-            "printedName": "DecodableWithConfiguration",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "DecodingConfiguration",
-                "printedName": "DecodingConfiguration",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "DependentMember",
-                    "printedName": "τ_0_0.DecodingConfiguration"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:10Foundation26DecodableWithConfigurationP",
-            "mangledName": "$s10Foundation26DecodableWithConfigurationP"
           }
         ]
       },
@@ -7036,6 +6051,1001 @@
       },
       {
         "kind": "TypeDecl",
+        "name": "Dictionary",
+        "printedName": "Dictionary",
+        "declKind": "Struct",
+        "usr": "s:SD",
+        "mangledName": "$sSD",
+        "moduleName": "Swift",
+        "genericSig": "<τ_0_0, τ_0_1 where τ_0_0 : Swift.Hashable>",
+        "sugared_genericSig": "<Key, Value where Key : Swift.Hashable>",
+        "declAttributes": [
+          "EagerMove",
+          "Frozen"
+        ],
+        "isExternal": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Encodable",
+            "printedName": "Encodable",
+            "usr": "s:SE",
+            "mangledName": "$sSE"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Decodable",
+            "printedName": "Decodable",
+            "usr": "s:Se",
+            "mangledName": "$sSe"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sequence",
+            "printedName": "Sequence",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Element",
+                "printedName": "Element",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Tuple",
+                    "printedName": "(key: τ_0_0, value: τ_0_1)",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "GenericTypeParam",
+                        "printedName": "τ_0_0"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "GenericTypeParam",
+                        "printedName": "τ_0_1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Iterator",
+                "printedName": "Iterator",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Iterator",
+                    "printedName": "Swift.Dictionary<τ_0_0, τ_0_1>.Iterator",
+                    "usr": "s:SD8IteratorV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:ST",
+            "mangledName": "$sST"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Collection",
+            "printedName": "Collection",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Element",
+                "printedName": "Element",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Tuple",
+                    "printedName": "(key: τ_0_0, value: τ_0_1)",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "GenericTypeParam",
+                        "printedName": "τ_0_0"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "GenericTypeParam",
+                        "printedName": "τ_0_1"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Index",
+                "printedName": "Index",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Index",
+                    "printedName": "Swift.Dictionary<τ_0_0, τ_0_1>.Index",
+                    "usr": "s:SD5IndexV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Iterator",
+                "printedName": "Iterator",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Iterator",
+                    "printedName": "Swift.Dictionary<τ_0_0, τ_0_1>.Iterator",
+                    "usr": "s:SD8IteratorV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SubSequence",
+                "printedName": "SubSequence",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Slice",
+                    "printedName": "Swift.Slice<[τ_0_0 : τ_0_1]>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Dictionary",
+                        "printedName": "[τ_0_0 : τ_0_1]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "GenericTypeParam",
+                            "printedName": "τ_0_0"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "GenericTypeParam",
+                            "printedName": "τ_0_1"
+                          }
+                        ],
+                        "usr": "s:SD"
+                      }
+                    ],
+                    "usr": "s:s5SliceV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Indices",
+                "printedName": "Indices",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DefaultIndices",
+                    "printedName": "Swift.DefaultIndices<[τ_0_0 : τ_0_1]>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Dictionary",
+                        "printedName": "[τ_0_0 : τ_0_1]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "GenericTypeParam",
+                            "printedName": "τ_0_0"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "GenericTypeParam",
+                            "printedName": "τ_0_1"
+                          }
+                        ],
+                        "usr": "s:SD"
+                      }
+                    ],
+                    "usr": "s:SI"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sl",
+            "mangledName": "$sSl"
+          },
+          {
+            "kind": "Conformance",
+            "name": "ExpressibleByDictionaryLiteral",
+            "printedName": "ExpressibleByDictionaryLiteral",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Key",
+                "printedName": "Key",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GenericTypeParam",
+                    "printedName": "τ_0_0"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Value",
+                "printedName": "Value",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GenericTypeParam",
+                    "printedName": "τ_0_1"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s30ExpressibleByDictionaryLiteralP",
+            "mangledName": "$ss30ExpressibleByDictionaryLiteralP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_HasCustomAnyHashableRepresentation",
+            "printedName": "_HasCustomAnyHashableRepresentation",
+            "usr": "s:s35_HasCustomAnyHashableRepresentationP",
+            "mangledName": "$ss35_HasCustomAnyHashableRepresentationP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomReflectable",
+            "printedName": "CustomReflectable",
+            "usr": "s:s17CustomReflectableP",
+            "mangledName": "$ss17CustomReflectableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_ObjectiveCBridgeable",
+            "printedName": "_ObjectiveCBridgeable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "_ObjectiveCType",
+                "printedName": "_ObjectiveCType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSDictionary",
+                    "printedName": "Foundation.NSDictionary",
+                    "usr": "c:objc(cs)NSDictionary"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s21_ObjectiveCBridgeableP",
+            "mangledName": "$ss21_ObjectiveCBridgeableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "Array",
+        "printedName": "Array",
+        "declKind": "Struct",
+        "usr": "s:Sa",
+        "mangledName": "$sSa",
+        "moduleName": "Swift",
+        "genericSig": "<τ_0_0>",
+        "sugared_genericSig": "<Element>",
+        "declAttributes": [
+          "EagerMove",
+          "Frozen"
+        ],
+        "isExternal": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "_DestructorSafeContainer",
+            "printedName": "_DestructorSafeContainer",
+            "usr": "s:s24_DestructorSafeContainerP",
+            "mangledName": "$ss24_DestructorSafeContainerP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_ArrayProtocol",
+            "printedName": "_ArrayProtocol",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "_Buffer",
+                "printedName": "_Buffer",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "_ArrayBuffer",
+                    "printedName": "Swift._ArrayBuffer<τ_0_0>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "GenericTypeParam",
+                        "printedName": "τ_0_0"
+                      }
+                    ],
+                    "usr": "s:s12_ArrayBufferV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s14_ArrayProtocolP",
+            "mangledName": "$ss14_ArrayProtocolP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "RandomAccessCollection",
+            "printedName": "RandomAccessCollection",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Element",
+                "printedName": "Element",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GenericTypeParam",
+                    "printedName": "τ_0_0"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Index",
+                "printedName": "Index",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SubSequence",
+                "printedName": "SubSequence",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ArraySlice",
+                    "printedName": "Swift.ArraySlice<τ_0_0>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "GenericTypeParam",
+                        "printedName": "τ_0_0"
+                      }
+                    ],
+                    "usr": "s:s10ArraySliceV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Indices",
+                "printedName": "Indices",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Range",
+                    "printedName": "Swift.Range<Swift.Int>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sn"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sk",
+            "mangledName": "$sSk"
+          },
+          {
+            "kind": "Conformance",
+            "name": "MutableCollection",
+            "printedName": "MutableCollection",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Element",
+                "printedName": "Element",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GenericTypeParam",
+                    "printedName": "τ_0_0"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Index",
+                "printedName": "Index",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SubSequence",
+                "printedName": "SubSequence",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ArraySlice",
+                    "printedName": "Swift.ArraySlice<τ_0_0>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "GenericTypeParam",
+                        "printedName": "τ_0_0"
+                      }
+                    ],
+                    "usr": "s:s10ArraySliceV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SM",
+            "mangledName": "$sSM"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BidirectionalCollection",
+            "printedName": "BidirectionalCollection",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Element",
+                "printedName": "Element",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GenericTypeParam",
+                    "printedName": "τ_0_0"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Index",
+                "printedName": "Index",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SubSequence",
+                "printedName": "SubSequence",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ArraySlice",
+                    "printedName": "Swift.ArraySlice<τ_0_0>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "GenericTypeParam",
+                        "printedName": "τ_0_0"
+                      }
+                    ],
+                    "usr": "s:s10ArraySliceV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Indices",
+                "printedName": "Indices",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Range",
+                    "printedName": "Swift.Range<Swift.Int>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sn"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SK",
+            "mangledName": "$sSK"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Collection",
+            "printedName": "Collection",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Element",
+                "printedName": "Element",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GenericTypeParam",
+                    "printedName": "τ_0_0"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Index",
+                "printedName": "Index",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Iterator",
+                "printedName": "Iterator",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "IndexingIterator",
+                    "printedName": "Swift.IndexingIterator<[τ_0_0]>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Array",
+                        "printedName": "[τ_0_0]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "GenericTypeParam",
+                            "printedName": "τ_0_0"
+                          }
+                        ],
+                        "usr": "s:Sa"
+                      }
+                    ],
+                    "usr": "s:s16IndexingIteratorV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "SubSequence",
+                "printedName": "SubSequence",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ArraySlice",
+                    "printedName": "Swift.ArraySlice<τ_0_0>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "GenericTypeParam",
+                        "printedName": "τ_0_0"
+                      }
+                    ],
+                    "usr": "s:s10ArraySliceV"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Indices",
+                "printedName": "Indices",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Range",
+                    "printedName": "Swift.Range<Swift.Int>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sn"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sl",
+            "mangledName": "$sSl"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sequence",
+            "printedName": "Sequence",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Element",
+                "printedName": "Element",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GenericTypeParam",
+                    "printedName": "τ_0_0"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Iterator",
+                "printedName": "Iterator",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "IndexingIterator",
+                    "printedName": "Swift.IndexingIterator<[τ_0_0]>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Array",
+                        "printedName": "[τ_0_0]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "GenericTypeParam",
+                            "printedName": "τ_0_0"
+                          }
+                        ],
+                        "usr": "s:Sa"
+                      }
+                    ],
+                    "usr": "s:s16IndexingIteratorV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:ST",
+            "mangledName": "$sST"
+          },
+          {
+            "kind": "Conformance",
+            "name": "ExpressibleByArrayLiteral",
+            "printedName": "ExpressibleByArrayLiteral",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "ArrayLiteralElement",
+                "printedName": "ArrayLiteralElement",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GenericTypeParam",
+                    "printedName": "τ_0_0"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s25ExpressibleByArrayLiteralP",
+            "mangledName": "$ss25ExpressibleByArrayLiteralP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "RangeReplaceableCollection",
+            "printedName": "RangeReplaceableCollection",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "SubSequence",
+                "printedName": "SubSequence",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ArraySlice",
+                    "printedName": "Swift.ArraySlice<τ_0_0>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "GenericTypeParam",
+                        "printedName": "τ_0_0"
+                      }
+                    ],
+                    "usr": "s:s10ArraySliceV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sm",
+            "mangledName": "$sSm"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomReflectable",
+            "printedName": "CustomReflectable",
+            "usr": "s:s17CustomReflectableP",
+            "mangledName": "$ss17CustomReflectableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_HasCustomAnyHashableRepresentation",
+            "printedName": "_HasCustomAnyHashableRepresentation",
+            "usr": "s:s35_HasCustomAnyHashableRepresentationP",
+            "mangledName": "$ss35_HasCustomAnyHashableRepresentationP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Encodable",
+            "printedName": "Encodable",
+            "usr": "s:SE",
+            "mangledName": "$sSE"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Decodable",
+            "printedName": "Decodable",
+            "usr": "s:Se",
+            "mangledName": "$sSe"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_HasContiguousBytes",
+            "printedName": "_HasContiguousBytes",
+            "usr": "s:s19_HasContiguousBytesP",
+            "mangledName": "$ss19_HasContiguousBytesP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_ObjectiveCBridgeable",
+            "printedName": "_ObjectiveCBridgeable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "_ObjectiveCType",
+                "printedName": "_ObjectiveCType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSArray",
+                    "printedName": "Foundation.NSArray",
+                    "usr": "c:objc(cs)NSArray"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s21_ObjectiveCBridgeableP",
+            "mangledName": "$ss21_ObjectiveCBridgeableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "DataProtocol",
+            "printedName": "DataProtocol",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Regions",
+                "printedName": "Regions",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CollectionOfOne",
+                    "printedName": "Swift.CollectionOfOne<[Swift.UInt8]>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Array",
+                        "printedName": "[Swift.UInt8]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "UInt8",
+                            "printedName": "Swift.UInt8",
+                            "usr": "s:s5UInt8V"
+                          }
+                        ],
+                        "usr": "s:Sa"
+                      }
+                    ],
+                    "usr": "s:s15CollectionOfOneV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:10Foundation12DataProtocolP",
+            "mangledName": "$s10Foundation12DataProtocolP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "MutableDataProtocol",
+            "printedName": "MutableDataProtocol",
+            "usr": "s:10Foundation19MutableDataProtocolP",
+            "mangledName": "$s10Foundation19MutableDataProtocolP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "ContiguousBytes",
+            "printedName": "ContiguousBytes",
+            "usr": "s:10Foundation15ContiguousBytesP",
+            "mangledName": "$s10Foundation15ContiguousBytesP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "EncodableWithConfiguration",
+            "printedName": "EncodableWithConfiguration",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "EncodingConfiguration",
+                "printedName": "EncodingConfiguration",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DependentMember",
+                    "printedName": "τ_0_0.EncodingConfiguration"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:10Foundation26EncodableWithConfigurationP",
+            "mangledName": "$s10Foundation26EncodableWithConfigurationP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "DecodableWithConfiguration",
+            "printedName": "DecodableWithConfiguration",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "DecodingConfiguration",
+                "printedName": "DecodingConfiguration",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DependentMember",
+                    "printedName": "τ_0_0.DecodingConfiguration"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:10Foundation26DecodableWithConfigurationP",
+            "mangledName": "$s10Foundation26DecodableWithConfigurationP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
         "name": "UIImage",
         "printedName": "UIImage",
         "declKind": "Class",
@@ -7249,86 +7259,58 @@
   },
   "ConstValues": [
     {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerGameWebView.swift",
-      "kind": "Dictionary",
-      "offset": 703,
-      "length": 3,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerGameWebView.swift",
-      "kind": "Dictionary",
-      "offset": 762,
-      "length": 3,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit+Logger.swift",
-      "kind": "IntegerLiteral",
-      "offset": 176,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit+Logger.swift",
-      "kind": "IntegerLiteral",
-      "offset": 194,
-      "length": 1,
-      "value": "1"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit+Logger.swift",
-      "kind": "IntegerLiteral",
-      "offset": 215,
-      "length": 1,
-      "value": "2"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit+Logger.swift",
-      "kind": "IntegerLiteral",
-      "offset": 234,
-      "length": 1,
-      "value": "3"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskService.swift",
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerWebContainer.swift",
       "kind": "BooleanLiteral",
-      "offset": 418,
+      "offset": 561,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskService.swift",
-      "kind": "Array",
-      "offset": 519,
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
+      "kind": "StringLiteral",
+      "offset": 217,
       "length": 2,
-      "value": "[]"
+      "value": "\"\""
     },
     {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskService.swift",
-      "kind": "Array",
-      "offset": 693,
-      "length": 2,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskService.swift",
-      "kind": "Array",
-      "offset": 846,
-      "length": 2,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupCoordinator.swift",
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 6087,
+      "offset": 421,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 485,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 548,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 615,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 919,
       "length": 1,
       "value": "2"
     },
     {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupCoordinator.swift",
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
       "kind": "IntegerLiteral",
-      "offset": 6131,
+      "offset": 938,
       "length": 1,
       "value": "2"
     },
@@ -7431,6 +7413,48 @@
       "value": "[]"
     },
     {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerWebContainer.swift",
+      "kind": "FloatLiteral",
+      "offset": 484,
+      "length": 3,
+      "value": "1.0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerWebContainer.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2196,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerWebContainer.swift",
+      "kind": "FloatLiteral",
+      "offset": 2237,
+      "length": 4,
+      "value": "0.95"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerWebContainer.swift",
+      "kind": "BooleanLiteral",
+      "offset": 2290,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerWebContainer.swift",
+      "kind": "BooleanLiteral",
+      "offset": 2342,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerWebContainer.swift",
+      "kind": "Array",
+      "offset": 2394,
+      "length": 2,
+      "value": "[]"
+    },
+    {
       "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/ColorExtension.swift",
       "kind": "IntegerLiteral",
       "offset": 592,
@@ -7452,39 +7476,32 @@
       "value": "1"
     },
     {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerTaskHandler.swift",
-      "kind": "BooleanLiteral",
-      "offset": 402,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerTaskHandler.swift",
-      "kind": "BooleanLiteral",
-      "offset": 470,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerTaskHandler.swift",
-      "kind": "BooleanLiteral",
-      "offset": 512,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerTaskHandler.swift",
-      "kind": "Array",
-      "offset": 762,
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5UploadParam.swift",
+      "kind": "StringLiteral",
+      "offset": 434,
       "length": 2,
-      "value": "[]"
+      "value": "\"\""
     },
     {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerTaskHandler.swift",
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5UploadParam.swift",
+      "kind": "StringLiteral",
+      "offset": 2396,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CoreData\/DataStore.swift",
       "kind": "BooleanLiteral",
-      "offset": 845,
+      "offset": 1493,
       "length": 5,
       "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CoreData\/DataStore.swift",
+      "kind": "IntegerLiteral",
+      "offset": 16525,
+      "length": 1,
+      "value": "0"
     },
     {
       "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/DeviceKit\/DeviceKit.swift",
@@ -7529,16 +7546,9 @@
       "value": "0x04"
     },
     {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit+View.swift",
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/UnityScreenshotManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 355,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit+View.swift",
-      "kind": "BooleanLiteral",
-      "offset": 2448,
+      "offset": 436,
       "length": 5,
       "value": "false"
     },
@@ -7613,951 +7623,6 @@
       "value": "10"
     },
     {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "BooleanLiteral",
-      "offset": 643,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "Array",
-      "offset": 726,
-      "length": 2,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "BooleanLiteral",
-      "offset": 896,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "BooleanLiteral",
-      "offset": 977,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "BooleanLiteral",
-      "offset": 1056,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "BooleanLiteral",
-      "offset": 1141,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "BooleanLiteral",
-      "offset": 1268,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "BooleanLiteral",
-      "offset": 1344,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 2224,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "BooleanLiteral",
-      "offset": 2319,
-      "length": 4,
-      "value": "true"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 2391,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 2469,
-      "length": 1,
-      "value": "2"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
-      "kind": "BooleanLiteral",
-      "offset": 30980,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupUIView.swift",
-      "kind": "BooleanLiteral",
-      "offset": 179,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupUIView.swift",
-      "kind": "IntegerLiteral",
-      "offset": 227,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupUIView.swift",
-      "kind": "IntegerLiteral",
-      "offset": 295,
-      "length": 2,
-      "value": "16"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupUIView.swift",
-      "kind": "IntegerLiteral",
-      "offset": 2147,
-      "length": 2,
-      "value": "20"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupUIView.swift",
-      "kind": "IntegerLiteral",
-      "offset": 2212,
-      "length": 2,
-      "value": "25"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupUIView.swift",
-      "kind": "IntegerLiteral",
-      "offset": 3429,
-      "length": 2,
-      "value": "20"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 240,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 304,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 367,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 434,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 476,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 519,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 1063,
-      "length": 1,
-      "value": "2"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 1082,
-      "length": 1,
-      "value": "2"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 5649,
-      "length": 6,
-      "value": "\"done\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 5675,
-      "length": 9,
-      "value": "\"loading\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 5703,
-      "length": 8,
-      "value": "\"failed\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 5959,
-      "length": 8,
-      "value": "\"filled\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 5988,
-      "length": 10,
-      "value": "\"unfilled\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 6213,
-      "length": 11,
-      "value": "\"displayed\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 6244,
-      "length": 9,
-      "value": "\"visible\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 6272,
-      "length": 8,
-      "value": "\"hidden\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 6564,
-      "length": 6,
-      "value": "\"iner\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 6589,
-      "length": 8,
-      "value": "\"anchor\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 6616,
-      "length": 8,
-      "value": "\"native\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 6643,
-      "length": 8,
-      "value": "\"banner\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 6671,
-      "length": 9,
-      "value": "\"default\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "BooleanLiteral",
-      "offset": 7292,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 7378,
-      "length": 2,
-      "value": "\"\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
-      "kind": "StringLiteral",
-      "offset": 7453,
-      "length": 2,
-      "value": "\"\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerViewModel.swift",
-      "kind": "Array",
-      "offset": 791,
-      "length": 2,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerViewModel.swift",
-      "kind": "BooleanLiteral",
-      "offset": 841,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerViewModel.swift",
-      "kind": "Dictionary",
-      "offset": 988,
-      "length": 3,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerViewModel.swift",
-      "kind": "Dictionary",
-      "offset": 1141,
-      "length": 3,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/AlamofireProvider.swift",
-      "kind": "Dictionary",
-      "offset": 9907,
-      "length": 3,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/AlamofireProvider.swift",
-      "kind": "Dictionary",
-      "offset": 9967,
-      "length": 3,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/AlamofireProvider.swift",
-      "kind": "StringLiteral",
-      "offset": 11762,
-      "length": 31,
-      "value": "\"URLSessionReachabilityManager\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/AlamofireProvider.swift",
-      "kind": "Dictionary",
-      "offset": 12677,
-      "length": 3,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/AlamofireProvider.swift",
-      "kind": "IntegerLiteral",
-      "offset": 21009,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 4002,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 4470,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 4971,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 5422,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 5905,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 6390,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 6886,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 7502,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 8159,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 8641,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 9153,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 9630,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 10135,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 10645,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 11159,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 11666,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "StringLiteral",
-      "offset": 11995,
-      "length": 24,
-      "value": "\"UIView.Constraints.Key\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 14494,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
-      "kind": "IntegerLiteral",
-      "offset": 14883,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 195,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 245,
-      "length": 1,
-      "value": "1"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 279,
-      "length": 1,
-      "value": "2"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 332,
-      "length": 1,
-      "value": "3"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 4028,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 4091,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 4192,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 4248,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 4789,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "FloatLiteral",
-      "offset": 8173,
-      "length": 3,
-      "value": "0.0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "FloatLiteral",
-      "offset": 8289,
-      "length": 3,
-      "value": "0.0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 9570,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 9599,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 9626,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 9653,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "Array",
-      "offset": 10565,
-      "length": 2,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 12202,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 12282,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 12406,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 12481,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 12549,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 12619,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 12803,
-      "length": 3,
-      "value": "180"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerWebContainer.swift",
-      "kind": "BooleanLiteral",
-      "offset": 561,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CoreData\/DataStore.swift",
-      "kind": "BooleanLiteral",
-      "offset": 1493,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CoreData\/DataStore.swift",
-      "kind": "IntegerLiteral",
-      "offset": 16525,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
-      "kind": "IntegerLiteral",
-      "offset": 796,
-      "length": 1,
-      "value": "1"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
-      "kind": "IntegerLiteral",
-      "offset": 851,
-      "length": 1,
-      "value": "3"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
-      "kind": "IntegerLiteral",
-      "offset": 905,
-      "length": 1,
-      "value": "5"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
-      "kind": "IntegerLiteral",
-      "offset": 957,
-      "length": 1,
-      "value": "7"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
-      "kind": "StringLiteral",
-      "offset": 1155,
-      "length": 6,
-      "value": "\"init\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
-      "kind": "StringLiteral",
-      "offset": 1210,
-      "length": 5,
-      "value": "\"cfg\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
-      "kind": "StringLiteral",
-      "offset": 1260,
-      "length": 4,
-      "value": "\"js\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
-      "kind": "StringLiteral",
-      "offset": 217,
-      "length": 2,
-      "value": "\"\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 421,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 485,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 548,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 615,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 919,
-      "length": 1,
-      "value": "2"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/FuncAreaModel.swift",
-      "kind": "IntegerLiteral",
-      "offset": 938,
-      "length": 1,
-      "value": "2"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Public\/NetworkProvider.swift",
-      "kind": "BooleanLiteral",
-      "offset": 261,
-      "length": 4,
-      "value": "true"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkResponse.swift",
-      "kind": "IntegerLiteral",
-      "offset": 177,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerWebContainer.swift",
-      "kind": "FloatLiteral",
-      "offset": 484,
-      "length": 3,
-      "value": "1.0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerWebContainer.swift",
-      "kind": "IntegerLiteral",
-      "offset": 2196,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerWebContainer.swift",
-      "kind": "FloatLiteral",
-      "offset": 2237,
-      "length": 4,
-      "value": "0.95"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerWebContainer.swift",
-      "kind": "BooleanLiteral",
-      "offset": 2290,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerWebContainer.swift",
-      "kind": "BooleanLiteral",
-      "offset": 2342,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerWebContainer.swift",
-      "kind": "Array",
-      "offset": 2394,
-      "length": 2,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkCacheManager.swift",
-      "kind": "StringLiteral",
-      "offset": 391,
-      "length": 25,
-      "value": "\"com.networkclient.cache\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkCacheManager.swift",
-      "kind": "IntegerLiteral",
-      "offset": 588,
-      "length": 2,
-      "value": "10"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkCacheManager.swift",
-      "kind": "IntegerLiteral",
-      "offset": 593,
-      "length": 4,
-      "value": "1024"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkCacheManager.swift",
-      "kind": "IntegerLiteral",
-      "offset": 600,
-      "length": 4,
-      "value": "1024"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkCacheManager.swift",
-      "kind": "Array",
-      "offset": 1463,
-      "length": 2,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkCacheManager.swift",
-      "kind": "BooleanLiteral",
-      "offset": 8916,
-      "length": 4,
-      "value": "true"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5UploadParam.swift",
-      "kind": "StringLiteral",
-      "offset": 434,
-      "length": 2,
-      "value": "\"\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5UploadParam.swift",
-      "kind": "StringLiteral",
-      "offset": 2396,
-      "length": 2,
-      "value": "\"\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/TaskLauncher.swift",
-      "kind": "BooleanLiteral",
-      "offset": 458,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/TaskLauncher.swift",
-      "kind": "BooleanLiteral",
-      "offset": 586,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/TaskLauncher.swift",
-      "kind": "FloatLiteral",
-      "offset": 675,
-      "length": 3,
-      "value": "1.0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/TaskLauncher.swift",
-      "kind": "FloatLiteral",
-      "offset": 763,
-      "length": 3,
-      "value": "1.0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/TaskLauncher.swift",
-      "kind": "FloatLiteral",
-      "offset": 848,
-      "length": 3,
-      "value": "0.5"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/TaskLauncher.swift",
-      "kind": "Dictionary",
-      "offset": 954,
-      "length": 3,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/UnityScreenshotManager.swift",
-      "kind": "BooleanLiteral",
-      "offset": 436,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/AnimationExtension.swift",
-      "kind": "FloatLiteral",
-      "offset": 210,
-      "length": 4,
-      "value": "0.25"
-    },
-    {
       "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/TaskTypeable.swift",
       "kind": "IntegerLiteral",
       "offset": 844,
@@ -8600,67 +7665,11 @@
       "value": "5"
     },
     {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/Crypto\/Asn1Parser.swift",
-      "kind": "IntegerLiteral",
-      "offset": 734,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkReachabilityManager.swift",
       "kind": "StringLiteral",
-      "offset": 1104,
-      "length": 33,
-      "value": "\"WebViewCoordinatorDidInitialize\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
-      "kind": "StringLiteral",
-      "offset": 1202,
-      "length": 36,
-      "value": "\"WebViewCoordinatorWillDeinitialize\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
-      "kind": "BooleanLiteral",
-      "offset": 1629,
-      "length": 4,
-      "value": "true"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
-      "kind": "Array",
-      "offset": 1692,
-      "length": 2,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
-      "kind": "BooleanLiteral",
-      "offset": 1743,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
-      "kind": "BooleanLiteral",
-      "offset": 1796,
-      "length": 4,
-      "value": "true"
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
-      "kind": "StringLiteral",
-      "offset": 1984,
-      "length": 15,
-      "value": "\"SmallGame\/1.0\""
-    },
-    {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
-      "kind": "BooleanLiteral",
-      "offset": 2366,
-      "length": 5,
-      "value": "false"
+      "offset": 277,
+      "length": 28,
+      "value": "\"NetworkReachabilityManager\""
     },
     {
       "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/HumanScrollSimulator.swift",
@@ -9090,11 +8099,207 @@
       "value": "5"
     },
     {
-      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/ArrayExtension.swift",
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4002,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4470,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4971,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5422,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 5905,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 6390,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 6886,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 7502,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 8159,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 8641,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9153,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9630,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 10135,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 10645,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 11159,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 11666,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
       "kind": "StringLiteral",
-      "offset": 220,
+      "offset": 11995,
+      "length": 24,
+      "value": "\"UIView.Constraints.Key\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 14494,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/UIViewExtension.swift",
+      "kind": "IntegerLiteral",
+      "offset": 14883,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkResponse.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1011,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 796,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 851,
+      "length": 1,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 905,
+      "length": 1,
+      "value": "5"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 957,
+      "length": 1,
+      "value": "7"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
+      "kind": "StringLiteral",
+      "offset": 1155,
+      "length": 6,
+      "value": "\"init\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
+      "kind": "StringLiteral",
+      "offset": 1210,
+      "length": 5,
+      "value": "\"cfg\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskPloysManager.swift",
+      "kind": "StringLiteral",
+      "offset": 1260,
+      "length": 4,
+      "value": "\"js\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/HTTP\/HTTPHeader.swift",
+      "kind": "Dictionary",
+      "offset": 543,
       "length": 3,
-      "value": "\",\""
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/HTTP\/HTTPHeader.swift",
+      "kind": "Dictionary",
+      "offset": 603,
+      "length": 3,
+      "value": "[]"
     },
     {
       "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit.swift",
@@ -9123,6 +8328,76 @@
       "offset": 2300,
       "length": 5,
       "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/TaskLauncher.swift",
+      "kind": "BooleanLiteral",
+      "offset": 458,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/TaskLauncher.swift",
+      "kind": "BooleanLiteral",
+      "offset": 586,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/TaskLauncher.swift",
+      "kind": "FloatLiteral",
+      "offset": 675,
+      "length": 3,
+      "value": "1.0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/TaskLauncher.swift",
+      "kind": "FloatLiteral",
+      "offset": 763,
+      "length": 3,
+      "value": "1.0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/TaskLauncher.swift",
+      "kind": "FloatLiteral",
+      "offset": 848,
+      "length": 3,
+      "value": "0.5"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/TaskLauncher.swift",
+      "kind": "Dictionary",
+      "offset": 954,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerGameWebView.swift",
+      "kind": "Dictionary",
+      "offset": 703,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerGameWebView.swift",
+      "kind": "Dictionary",
+      "offset": 762,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/URLSessionNetworkProvider.swift",
+      "kind": "Dictionary",
+      "offset": 381,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/AnimationExtension.swift",
+      "kind": "FloatLiteral",
+      "offset": 210,
+      "length": 4,
+      "value": "0.25"
     },
     {
       "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/CustomPopupView.swift",
@@ -9216,6 +8491,510 @@
       "value": "false"
     },
     {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskService.swift",
+      "kind": "BooleanLiteral",
+      "offset": 418,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskService.swift",
+      "kind": "Array",
+      "offset": 519,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskService.swift",
+      "kind": "Array",
+      "offset": 693,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/H5Tasks\/TaskService.swift",
+      "kind": "Array",
+      "offset": 846,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/Crypto\/Asn1Parser.swift",
+      "kind": "IntegerLiteral",
+      "offset": 734,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Public\/NetworkProvider.swift",
+      "kind": "BooleanLiteral",
+      "offset": 261,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit+Logger.swift",
+      "kind": "IntegerLiteral",
+      "offset": 176,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit+Logger.swift",
+      "kind": "IntegerLiteral",
+      "offset": 194,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit+Logger.swift",
+      "kind": "IntegerLiteral",
+      "offset": 215,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit+Logger.swift",
+      "kind": "IntegerLiteral",
+      "offset": 234,
+      "length": 1,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
+      "kind": "StringLiteral",
+      "offset": 1104,
+      "length": 33,
+      "value": "\"WebViewCoordinatorDidInitialize\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
+      "kind": "StringLiteral",
+      "offset": 1202,
+      "length": 36,
+      "value": "\"WebViewCoordinatorWillDeinitialize\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1629,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
+      "kind": "Array",
+      "offset": 1692,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1743,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1796,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
+      "kind": "StringLiteral",
+      "offset": 1984,
+      "length": 15,
+      "value": "\"SmallGame\/1.0\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewCoordinator.swift",
+      "kind": "BooleanLiteral",
+      "offset": 2366,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerTaskHandler.swift",
+      "kind": "BooleanLiteral",
+      "offset": 402,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerTaskHandler.swift",
+      "kind": "BooleanLiteral",
+      "offset": 470,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerTaskHandler.swift",
+      "kind": "BooleanLiteral",
+      "offset": 512,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerTaskHandler.swift",
+      "kind": "Array",
+      "offset": 762,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerTaskHandler.swift",
+      "kind": "BooleanLiteral",
+      "offset": 845,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/URLSessionTaskWrapper.swift",
+      "kind": "IntegerLiteral",
+      "offset": 377,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Extensions\/ArrayExtension.swift",
+      "kind": "StringLiteral",
+      "offset": 220,
+      "length": 3,
+      "value": "\",\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupCoordinator.swift",
+      "kind": "IntegerLiteral",
+      "offset": 6087,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupCoordinator.swift",
+      "kind": "IntegerLiteral",
+      "offset": 6131,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "BooleanLiteral",
+      "offset": 643,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "Array",
+      "offset": 726,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "BooleanLiteral",
+      "offset": 896,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "BooleanLiteral",
+      "offset": 977,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1056,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1141,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1268,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1344,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2224,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "BooleanLiteral",
+      "offset": 2319,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2391,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2469,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/SingleLayerWebView\/SingleLayerViewModel.swift",
+      "kind": "BooleanLiteral",
+      "offset": 30980,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 240,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 304,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 367,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 434,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 476,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 519,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1063,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1082,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 5649,
+      "length": 6,
+      "value": "\"done\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 5675,
+      "length": 9,
+      "value": "\"loading\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 5703,
+      "length": 8,
+      "value": "\"failed\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 5959,
+      "length": 8,
+      "value": "\"filled\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 5988,
+      "length": 10,
+      "value": "\"unfilled\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 6213,
+      "length": 11,
+      "value": "\"displayed\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 6244,
+      "length": 9,
+      "value": "\"visible\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 6272,
+      "length": 8,
+      "value": "\"hidden\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 6564,
+      "length": 6,
+      "value": "\"iner\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 6589,
+      "length": 8,
+      "value": "\"anchor\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 6616,
+      "length": 8,
+      "value": "\"native\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 6643,
+      "length": 8,
+      "value": "\"banner\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 6671,
+      "length": 9,
+      "value": "\"default\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "BooleanLiteral",
+      "offset": 7292,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 7378,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/Models\/AdElementModel.swift",
+      "kind": "StringLiteral",
+      "offset": 7453,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkCacheManager.swift",
+      "kind": "StringLiteral",
+      "offset": 391,
+      "length": 25,
+      "value": "\"com.networkclient.cache\""
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkCacheManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 588,
+      "length": 2,
+      "value": "10"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkCacheManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 593,
+      "length": 4,
+      "value": "1024"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkCacheManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 600,
+      "length": 4,
+      "value": "1024"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkCacheManager.swift",
+      "kind": "Array",
+      "offset": 1463,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/NetworkClient\/Private\/NetworkCacheManager.swift",
+      "kind": "BooleanLiteral",
+      "offset": 8916,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit+View.swift",
+      "kind": "BooleanLiteral",
+      "offset": 355,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/Core\/GrowthKit+View.swift",
+      "kind": "BooleanLiteral",
+      "offset": 2448,
+      "length": 5,
+      "value": "false"
+    },
+    {
       "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/WebViewScrollInteractor.swift",
       "kind": "FloatLiteral",
       "offset": 942,
@@ -9300,6 +9079,34 @@
       "value": "false"
     },
     {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerViewModel.swift",
+      "kind": "Array",
+      "offset": 791,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerViewModel.swift",
+      "kind": "BooleanLiteral",
+      "offset": 841,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerViewModel.swift",
+      "kind": "Dictionary",
+      "offset": 988,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/MultiLayerWebView\/MultiLayerViewModel.swift",
+      "kind": "Dictionary",
+      "offset": 1141,
+      "length": 3,
+      "value": "[]"
+    },
+    {
       "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/WebView\/IframeAdClickHandler.swift",
       "kind": "Array",
       "offset": 304,
@@ -9319,6 +9126,209 @@
       "offset": 671,
       "length": 62,
       "value": "[\"url\", \"target\", \"dest\", \"landing\", \"click\", \"redirect\", \"u\"]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupUIView.swift",
+      "kind": "BooleanLiteral",
+      "offset": 179,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupUIView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 227,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupUIView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 295,
+      "length": 2,
+      "value": "16"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupUIView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2147,
+      "length": 2,
+      "value": "20"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupUIView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2212,
+      "length": 2,
+      "value": "25"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/CustomUIs\/PopupUIView.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3429,
+      "length": 2,
+      "value": "20"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 195,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 245,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 279,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 332,
+      "length": 1,
+      "value": "3"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4028,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4091,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4192,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4248,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4789,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "FloatLiteral",
+      "offset": 8173,
+      "length": 3,
+      "value": "0.0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "FloatLiteral",
+      "offset": 8289,
+      "length": 3,
+      "value": "0.0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9570,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9599,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9626,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 9653,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "Array",
+      "offset": 10565,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 12202,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 12282,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 12406,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 12481,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 12549,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 12619,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/arvin\/Desktop\/ShuGeProjects\/SourceCode\/FrameWorks\/SDK\/GrowthSDK\/GrowthSDK\/GameWrapper\/Networking\/Models\/H5ConfigModel.swift",
+      "kind": "IntegerLiteral",
+      "offset": 12803,
+      "length": 3,
+      "value": "180"
     },
     {
       "filePath": "\/Users\/arvin\/Library\/Developer\/Xcode\/DerivedData\/GrowthSDK-aeydiwkbkmfhjpfkcznbxcckjtqt\/Build\/Intermediates.noindex\/ArchiveIntermediates\/GrowthSDK\/IntermediateBuildFilesPath\/GrowthSDK.build\/Release-iphonesimulator\/GrowthSDK.build\/DerivedSources\/GeneratedAssetSymbols.swift",
