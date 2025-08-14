@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
   # MARK: - Basic Information
   s.name             = 'GrowthSDK'
-  s.version          = '1.1.6'
+  s.version          = '1.0.0'
   s.summary          = 'GrowthSDK binary distribution.'
   s.description      = 'GrowthSDK xcframework with ad mediation via CocoaPods dependencies.'
-  s.homepage         = 'https://codeup.aliyun.com/630b1207050e9c4a07a93a48/IOS/SDK/GrowthSDK'
+  s.homepage         = 'https://github.com/shuge-developer/GrowthSDK'
   s.license          = { :type => 'Proprietary', :text => 'All rights reserved.' }
-  s.author           = { 'Arvin' => 'arvinSir.86@gmail.com' }
-  s.source           = { :git => 'git@codeup.aliyun.com:630b1207050e9c4a07a93a48/IOS/SDK/GrowthSDK.git', :tag => s.version.to_s }
+  s.author           = { 'Shuge' => 'shugedeveloper@163.com' }
+  s.source           = { :git => 'git@github.com:shuge-developer/GrowthSDK.git', :tag => s.version.to_s }
 
   # MARK: - Platform & Swift Version
   s.platform         = :ios, '14.0'
