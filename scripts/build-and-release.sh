@@ -49,25 +49,12 @@ fi
 echo "📥 拉取最新代码..."
 git pull origin main
 
-# 确保 Frameworks 目录存在
-echo "📁 确保 Frameworks 目录存在..."
-mkdir -p Frameworks
-
-# 构建 framework
-echo "�� 构建 framework..."
-xcodebuild -project GrowthSDK.xcodeproj \
-    -scheme GrowthSDK \
-    -configuration Release \
-    -destination 'generic/platform=iOS' \
-    -derivedDataPath build \
-    build
-
-# 创建 xcframework
-echo "📦 创建 xcframework..."
-xcodebuild -create-xcframework \
-    -framework build/Build/Products/Release-iphoneos/GrowthSDK.framework \
-    -framework build/Build/Products/Release-iphonesimulator/GrowthSDK.framework \
-    -output Frameworks/GrowthSDK.xcframework
+# 使用专业的 SDK 构建脚本
+echo "🔨 使用专业 SDK 构建脚本..."
+if ! ./scripts/build-sdk.sh --verbose; then
+    echo "❌ SDK 构建失败"
+    exit 1
+fi
 
 # 更新 podspec 版本
 echo "📝 更新 podspec 版本..."
