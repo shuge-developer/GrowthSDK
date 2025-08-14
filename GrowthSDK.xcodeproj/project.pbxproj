@@ -20,8 +20,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A23CFFFB2E37505F00B6EEAB /* GrowthSDK */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = GrowthSDK;
 			sourceTree = "<group>";
 		};
