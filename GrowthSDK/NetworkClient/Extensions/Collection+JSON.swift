@@ -1,5 +1,5 @@
 //
-//  Collection+Jsonable.swift
+//  Collection+JSON.swift
 //  GrowthSDK
 //
 //  Created by arvin on 2025/7/19.

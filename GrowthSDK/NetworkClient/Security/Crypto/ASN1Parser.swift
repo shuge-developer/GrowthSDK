@@ -1,5 +1,5 @@
 //
-//  Asn1Parser.swift
+//  ASN1Parser.swift
 //
 //  Created by Lois Di Qual on 5/9/17.
 //  Copyright © 2017 Scoop. All rights reserved.
@@ -122,9 +122,9 @@ internal extension Data {
     }
     
     func stripKeyHeader() throws -> Data {
-        let node: Asn1Parser.Node
+        let node: ASN1Parser.Node
         do {
-            node = try Asn1Parser.parse(data: self)
+            node = try ASN1Parser.parse(data: self)
         } catch {
             throw ParserError.asn1ParsingFailed
         }
@@ -165,7 +165,7 @@ internal extension Data {
 /// A simple ASN1 parser that will recursively iterate over a root node and return a Node tree.
 /// The root node can be any of the supported nodes described in `Node`. If the parser encounters a sequence
 /// it will recursively parse its children.
-internal enum Asn1Parser {
+internal enum ASN1Parser {
     
     /// An ASN1 node
     enum Node {

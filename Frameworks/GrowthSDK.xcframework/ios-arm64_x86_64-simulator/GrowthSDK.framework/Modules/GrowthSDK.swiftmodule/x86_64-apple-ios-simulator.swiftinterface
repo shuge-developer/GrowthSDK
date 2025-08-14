@@ -20,40 +20,6 @@ import WebKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-@objc public enum InitState : Swift.Int {
-  case uninitialized
-  case initializing
-  case initialized
-  case failed
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-public enum InitError : Swift.Error, Foundation.LocalizedError {
-  case alreadyInitialized
-  case storageInitFailed(Swift.String)
-  case serviceInitFailed(Swift.String)
-  public var errorDescription: Swift.String? {
-    get
-  }
-}
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc final public class GrowthKit : ObjectiveC.NSObject {
-  @objc public static let shared: GrowthSDK.GrowthKit
-  @objc final public var state: GrowthSDK.InitState {
-    @objc get
-  }
-  @Combine.Published @objc @_projectedValueProperty($isInitialized) final public var isInitialized: Swift.Bool {
-    @objc get
-  }
-  final public var $isInitialized: Combine.Published<Swift.Bool>.Publisher {
-    get
-  }
-  @objc final public func initialize(with config: GrowthSDK.NetworkConfig, completion: (((any Swift.Error)?) -> Swift.Void)? = nil)
-  final public func initialize(with config: any GrowthSDK.NetworkConfigurable) async throws
-  @objc deinit
-}
 public protocol NetworkConfigurable {
   var serviceId: Swift.String { get }
   var bundleName: Swift.String { get }
@@ -128,6 +94,40 @@ extension GrowthSDK.GrowthKit {
   @objc public static func createController(with unityController: UIKit.UIViewController) -> UIKit.UIViewController
   public static func createView(with unityController: UIKit.UIViewController) -> some SwiftUICore.View
   
+}
+@objc public enum InitState : Swift.Int {
+  case uninitialized
+  case initializing
+  case initialized
+  case failed
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum InitError : Swift.Error, Foundation.LocalizedError {
+  case alreadyInitialized
+  case storageInitFailed(Swift.String)
+  case serviceInitFailed(Swift.String)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc final public class GrowthKit : ObjectiveC.NSObject {
+  @objc public static let shared: GrowthSDK.GrowthKit
+  @objc final public var state: GrowthSDK.InitState {
+    @objc get
+  }
+  @Combine.Published @objc @_projectedValueProperty($isInitialized) final public var isInitialized: Swift.Bool {
+    @objc get
+  }
+  final public var $isInitialized: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  @objc final public func initialize(with config: GrowthSDK.NetworkConfig, completion: (((any Swift.Error)?) -> Swift.Void)? = nil)
+  final public func initialize(with config: any GrowthSDK.NetworkConfigurable) async throws
+  @objc deinit
 }
 extension GrowthSDK.InitState : Swift.Equatable {}
 extension GrowthSDK.InitState : Swift.Hashable {}
