@@ -21,7 +21,7 @@ internal protocol HeaderConfigure {
     var token: String? { get }
     var uuid: String { get }
     var gaid: String? { get }
-    var appInstanceId: String? { get }
+    var instanceId: String? { get }
     var campaign: String? { get }
     var channel: String? { get }
     var adid: String? { get }
@@ -76,7 +76,7 @@ internal extension HeaderConfigure {
         return SystemIDUtils.idfaString
     }
     
-    var appInstanceId: String? {
+    var instanceId: String? {
         return nil
     }
     
@@ -111,7 +111,7 @@ internal extension HeaderConfigure {
         header["tk"] = token
         header["uid"] = uuid
         header["ifa"] = gaid
-        header["aiid"] = appInstanceId
+        header["aiid"] = instanceId
         header["cmp"] = campaign
         header["qd"] = channel
         header["aid"] = adid

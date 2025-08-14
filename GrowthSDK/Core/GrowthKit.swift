@@ -8,37 +8,6 @@
 import Foundation
 import Combine
 
-// MARK: - 网络配置协议
-public protocol NetworkConfigurable {
-    var appid: String { get }
-    var bundleName: String { get }
-    var baseUrl: String { get }
-    var publicKey: String { get }
-    var appKey: String { get }
-    var appIv: String { get }
-}
-
-// MARK: - Objective-C 兼容
-@objcMembers
-public class NetworkConfig: NSObject, NetworkConfigurable {
-    public let appid: String
-    public let bundleName: String
-    public let baseUrl: String
-    public let publicKey: String
-    public let appKey: String
-    public let appIv: String
-    
-    public init(appid: String, bundleName: String, baseUrl: String, publicKey: String, appKey: String, appIv: String) {
-        self.appid = appid
-        self.bundleName = bundleName
-        self.baseUrl = baseUrl
-        self.publicKey = publicKey
-        self.appKey = appKey
-        self.appIv = appIv
-        super.init()
-    }
-}
-
 // MARK: - SDK 状态
 @objc public enum InitState: Int {
     case uninitialized  // 未初始化
@@ -73,7 +42,7 @@ public enum InitError: Error, LocalizedError {
     /// 单例
     @objc public static let shared = GrowthKit()
     
-    /// 当前状态
+    /// 初始化状态
     @objc public private(set) var state: InitState = .uninitialized {
         didSet { isInitialized = (state == .initialized) }
     }

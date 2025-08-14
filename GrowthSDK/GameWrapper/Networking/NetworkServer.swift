@@ -7,11 +7,17 @@
 
 // MARK: -
 internal enum Api: APIProvider {
+    case fpV2
+    case revenue
     case config
     case upload
     
     var path: String {
         switch self {
+        case .fpV2:
+            return "/iap/conf/json/fpV2"
+        case .revenue:
+            return "/iap/upData/adRevenue"
         case .config:
             return "/iap/h5/config"
         case .upload:
@@ -27,7 +33,7 @@ internal struct NetworkRequester: RequestConfigure {
     }
     
     var baseURL: BaseURL {
-        .global(SDK.Config!.baseUrl)
+        .global(SDK.Config!.serviceUrl)
     }
     
     var rsaPublicKey: String {
@@ -35,11 +41,11 @@ internal struct NetworkRequester: RequestConfigure {
     }
     
     var aesKey: String {
-        SDK.Config!.appKey
+        SDK.Config!.serviceKey
     }
     
     var aesIV: String {
-        SDK.Config!.appIv
+        SDK.Config!.serviceIv
     }
     
     var headerProvider: any HeaderConfigure {
@@ -51,12 +57,32 @@ internal struct NetworkRequester: RequestConfigure {
     }
     
     struct NetworkHeader: HeaderConfigure {
+        var appId: String! {
+            SDK.Config!.serviceId
+        }
+        
         var packageName: String? {
             SDK.Config!.bundleName
         }
         
-        var appId: String! {
-            SDK.Config!.appid
+        var thirdPartyId: String? {
+            SDK.Config?.thirdId
+        }
+        
+        var instanceId: String? {
+            SDK.Config?.instanceId
+        }
+        
+        var campaign: String? {
+            SDK.Config?.campaign
+        }
+        
+        var channel: String? {
+            SDK.Config?.referer
+        }
+        
+        var adid: String? {
+            SDK.Config?.adid
         }
     }
 }
