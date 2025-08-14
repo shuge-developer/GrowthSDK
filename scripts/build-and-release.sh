@@ -9,6 +9,7 @@ set -e
 VERSION=${1:-"1.0.0"}
 SOURCE_REPO="git@codeup.aliyun.com:630b1207050e9c4a07a93a48/IOS/SDK/GrowthSDK.git"
 RELEASE_REPO="https://github.com/shuge-developer/GrowthSDK.git"
+PROJECT_DIR="$(pwd)"
 
 echo "🚀 开始构建和发布 GrowthSDK v$VERSION"
 
@@ -89,40 +90,9 @@ git rm -rf * || true
 
 # 复制发布文件到 GitHub 仓库
 echo "📋 复制发布文件到 GitHub 仓库..."
-cp -R /Users/arvin/Desktop/ShuGeProjects/SourceCode/FrameWorks/SDK/GrowthSDK/Frameworks ./
-cp /Users/arvin/Desktop/ShuGeProjects/SourceCode/FrameWorks/SDK/GrowthSDK/GrowthSDK.podspec ./
-
-# 创建 README 文件
-echo "📝 创建 README 文件..."
-cat > README.md << 'EOF'
-# GrowthSDK
-
-GrowthSDK 是一个用于 iOS 应用开发的 SDK 框架。
-
-## 安装
-
-### CocoaPods
-
-在您的 `Podfile` 中添加：
-
-```ruby
-pod 'GrowthSDK', '~> 1.0.0'
-```
-
-然后运行：
-
-```bash
-pod install
-```
-
-## 版本历史
-
-请查看 [Releases](https://github.com/shuge-developer/GrowthSDK/releases) 页面了解版本更新历史。
-
-## 许可证
-
-版权所有 © 2024 Shuge Developer
-EOF
+cp -R "$PROJECT_DIR/Frameworks" ./
+cp "$PROJECT_DIR/GrowthSDK.podspec" ./
+cp "$PROJECT_DIR/README.md" ./
 
 # 提交到 GitHub 仓库
 echo "💾 提交到 GitHub 仓库..."
