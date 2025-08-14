@@ -5,9 +5,10 @@
 
 set -e
 
+# 配置
 VERSION=${1:-"1.0.0"}
 SOURCE_REPO="git@codeup.aliyun.com:630b1207050e9c4a07a93a48/IOS/SDK/GrowthSDK.git"
-RELEASE_REPO="git@github.com:shuge-developer/GrowthSDK.git"
+RELEASE_REPO="https://github.com/shuge-developer/GrowthSDK.git"
 
 echo "🚀 开始构建和发布 GrowthSDK v$VERSION"
 
