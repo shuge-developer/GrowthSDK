@@ -316,7 +316,7 @@ if [[ "$USE_WORKSPACE" == true ]]; then
     # 使用 workspace 和 destination（CocoaPods 兼容）
     BUILD_CMD="xcodebuild archive \
         $BUILD_PARAM \"$BUILD_FILE\" \
-        -scheme \"$BUILD_FILE\" \
+        -scheme \"$SDK_NAME\" \
         -configuration \"$CONFIGURATION\" \
         -destination \"generic/platform=iOS Simulator\" \
         -archivePath \"$ARCHIVE_DIR/ios_simulator.xcarchive\" \

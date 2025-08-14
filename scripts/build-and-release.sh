@@ -51,7 +51,7 @@ git pull origin main
 
 # 使用专业的 SDK 构建脚本
 echo "🔨 使用专业 SDK 构建脚本..."
-if ! ./scripts/build-sdk.sh --verbose; then
+if ! ./scripts/build-ios-sdk.sh --verbose; then
     echo "❌ SDK 构建失败"
     exit 1
 fi
