@@ -19,3 +19,4 @@ post_install do |installer|
     end
   end
 end
+在新选项卡中打开 [https://github.com/login/device](https://github.com/login/device)，并粘贴一次性代码: AC0C-A1BE

@@ -126,12 +126,12 @@ EOF
 echo "💾 提交到 GitHub 仓库..."
 git add .
 git commit -m "release: v$VERSION"
-git push github main
+git push origin main
 
 # 创建版本标签
 echo "🏷️  创建版本标签..."
 git tag "v$VERSION"
-git push github "v$VERSION"
+git push origin "v$VERSION"
 
 # 清理临时目录
 rm -rf "$TEMP_DIR"
