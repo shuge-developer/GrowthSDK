@@ -14,8 +14,7 @@ import Security
 private extension String {
     
     enum SecAttrKeyClass {
-        case `private`
-        case `public`
+        case `private`, `public`
         
         var rawValue: CFString {
             switch self {
