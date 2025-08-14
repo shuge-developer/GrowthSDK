@@ -8,6 +8,7 @@ import Combine
 import CoreData
 import DeveloperToolsSupport
 import Foundation
+import Network
 import ObjectiveC
 import Security
 import Swift

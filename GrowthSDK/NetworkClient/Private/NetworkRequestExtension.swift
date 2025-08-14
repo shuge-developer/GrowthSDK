@@ -27,11 +27,20 @@ internal class AnyAssociation<T: Any> {
 // MARK: -
 internal extension NetworkRequest {
     
-    private static let requestAssociation = AnyAssociation<NetworkRequestInternal>()
+    // Keep old association for backward compatibility but deprecated
+    private static let requestAssociation = AnyAssociation<Any>()
+    private static let urlSessionRequestAssociation = AnyAssociation<Any>()
     
-    var internalRequest: NetworkRequestInternal? {
+    // DEPRECATED: Use urlSessionRequest instead
+    var internalRequest: Any? {
         get { return Self.requestAssociation[self] ?? nil }
         set { Self.requestAssociation[self] = newValue }
+    }
+    
+    // New URLSession-based request handler
+    var urlSessionRequest: Any? {
+        get { return Self.urlSessionRequestAssociation[self] ?? nil }
+        set { Self.urlSessionRequestAssociation[self] = newValue }
     }
     
 }

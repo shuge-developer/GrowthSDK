@@ -8,7 +8,7 @@ target 'GrowthSDK' do
   
   # 核心依赖（编译时需要，但不会链接进最终 xcframework）
   pod 'CryptoSwift', '1.8.4'
-  pod 'Alamofire', '5.10.2'
+  # pod 'Alamofire', '5.10.2'  # Removed - using URLSession instead
   
   # 广告 SDK 依赖已移除 - 将由下游应用提供
   # pod 'AppLovinSDK', '13.3.1'

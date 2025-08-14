@@ -7,7 +7,9 @@
 
 import Foundation
 
-#if canImport(Alamofire)
+// DEPRECATED: This file is kept for reference but not used
+// URLSessionNetworkRequest in URLSessionProvider is now used instead
+#if false && canImport(Alamofire)
 internal import Alamofire
 
 // MARK: -

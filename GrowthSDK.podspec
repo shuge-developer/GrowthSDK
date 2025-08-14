@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'GrowthSDK'
-  s.version          = '1.1.4'
+  s.version          = '1.1.5'
   s.summary          = 'GrowthSDK binary distribution.'
   s.description      = 'GrowthSDK xcframework with ad mediation via CocoaPods dependencies.'
   s.homepage         = 'https://codeup.aliyun.com/630b1207050e9c4a07a93a48/IOS/SDK/GrowthSDK'
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
     s.subspec 'Core' do |core|
         core.vendored_frameworks = 'Frameworks/GrowthSDK.xcframework'
         core.dependency 'CryptoSwift', '1.8.4'
-        core.dependency 'Alamofire',  '5.10.2'
+        # Alamofire dependency removed - using URLSession instead
         # 广告 SDK 依赖移至 AdsDeps 子规范，由下游应用选择性安装
     end
 
