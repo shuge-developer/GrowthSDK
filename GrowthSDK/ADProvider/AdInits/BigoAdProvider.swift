@@ -17,7 +17,7 @@ internal class BigoAdProvider {
     func initialize(complete: AdInitComplete? = nil) {
         let appid = ""//AppConfigure.AD.Bigo.appId
         let config = BigoAdConfig(appId: appid)
-        config.testMode = true//SDKLogManager.shared.bigoTestMode
+        config.testMode = true
         
         let sdk = BigoAdSdk.sharedInstance()
         sdk.initializeSdk(with: config) {

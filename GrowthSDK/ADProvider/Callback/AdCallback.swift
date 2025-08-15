@@ -26,7 +26,6 @@ internal class AdCallback: NSObject {
         case max(MaxAdWrapper?)
         
         var description: String {
-#if DEBUG
             switch self {
             case .bigo(let wrapper):
                 return "[AdSource] [BIGO] \(wrapper?.description ?? "nil")"
@@ -37,9 +36,6 @@ internal class AdCallback: NSObject {
             case .max(let wrapper):
                 return "[AdSource] [MAX] \(wrapper?.description ?? "nil")"
             }
-#else
-            return ""
-#endif
         }
         
         var revenue: Double {

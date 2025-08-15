@@ -24,18 +24,6 @@ internal class AdMobProvider {
             self._isInitialized = true
             complete?(.admob)
         }
-#if DEBUG
-        sdk.requestConfiguration.testDeviceIdentifiers = [
-            "6638E837-4C90-48CC-BE6A-882330C9AC07",
-            "6638E837-4C90-48CC-BE6A-882330C9AC07",
-            "D21AFB1D-2967-4153-AA56-0FA203E2D439",
-            "C05EC5C6-EDD5-4547-81C3-AED8D045D7AC",
-            "B5C85D60-205C-4767-BAC6-CFDCFF6D9256",
-            "07D7F1B4-B668-4C50-83B7-E4999FE44E0C",
-            "C0D33FA9-0F1D-48A5-B3B0-FCEA27F60418",
-            "BE2EF246-44C6-4E9F-82DE-049C889B3A91"
-        ]
-#endif
     }
     
     var isInitialized: Bool {

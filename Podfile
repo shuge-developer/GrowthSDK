@@ -5,6 +5,7 @@ platform :ios, '14.0'
 target 'GrowthSDK' do
   use_frameworks! :linkage => :static
   
+  pod 'ThinkingSDK'
   pod 'AppLovinSDK'
   pod 'Google-Mobile-Ads-SDK'
   pod 'KwaiAdsSDK'

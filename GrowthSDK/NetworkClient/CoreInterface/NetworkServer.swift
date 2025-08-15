@@ -133,7 +133,7 @@ internal class NetworkServer {
     
     // MARK: - 配置批量获取
     static func fetchConfigs(_ configIds: [String], complete: @escaping (Result<String, NetworkError>) -> Void) {
-        let params = ["configIds": configIds.joined(separator: ",")]
+        let params = ["configIds": configIds.joined(separator: ","), "fields": "appUser.adChannel,appUser.userId"]
         NetworkServer.request(.fpV2, params: params, complete: complete)
     }
     

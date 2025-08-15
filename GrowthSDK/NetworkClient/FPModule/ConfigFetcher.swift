@@ -113,25 +113,10 @@ internal final class ConfigFetcher {
     }
     
     func getConfigJson(_ key: String) -> String? {
-        return getCachedData()?.configs[key]
-    }
-    
-    func getCachedData() -> ConfigData? {
-        if let data = cachedData, !isExpired(data) {
-            return data
-        }
-        return nil
-    }
-    
-    func getExtendData() -> ConfigResponse.ExtendJson? {
-        return getCachedData()?.extendJson
+        return cachedData?.configs[key]
     }
     
     // MARK: -
-    private func isExpired(_ data: ConfigData) -> Bool {
-        return Date().timeIntervalSince1970 - data.timestamp > cacheExpiry
-    }
-    
     private func shouldFetch(_ key: String) -> Bool {
         guard let lastTime = lastFetchTime[key] else { return true }
         return Date().timeIntervalSince1970 - lastTime > cacheExpiry
@@ -153,6 +138,9 @@ internal final class ConfigFetcher {
             guard let response = ConfigResponse.deserialize(from: json) else {
                 Logger.error("配置数据解析失败: \(json)")
                 return
+            }
+            if let userId = response.extendJson?.userId {
+                ThinkListener.setLoginUser(userId)
             }
             self.cachedData = ConfigData(from: response)
             CacheWriter.write(cachedData, to: .configs)
@@ -190,6 +178,8 @@ internal final class ConfigFetcher {
             switch configItem {
             case .adjust:
                 if let adjustConfig = AdjustConfig.deserialize(from: json) {
+                    adjustConfig.adChannel = configData.extendJson?.adChannel
+                    adjustConfig.userId = configData.extendJson?.userId
                     ConfigFetcher.adjustConfig = adjustConfig
                     Logger.info("AdjustConfig 已更新 (key: \(key))")
                 }
@@ -203,7 +193,7 @@ internal final class ConfigFetcher {
     }
     
     private func loadCachedConfigs() {
-        guard let data = getCachedData() else { return }
+        guard let data = cachedData else { return }
         Logger.info("从缓存加载配置完成")
         updateStaticConfigs(data)
     }

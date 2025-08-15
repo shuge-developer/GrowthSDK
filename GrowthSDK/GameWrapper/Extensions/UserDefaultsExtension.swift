@@ -18,7 +18,11 @@ internal extension UserDefaults {
         case initConfigHistory
         case cfgConfigHistory
         case jsConfigHistory
+        
+        case userLogin
+        case baseParam
     }
+    
     static func setValue<T>(_ value: T, key: UserDefaults.Key) where T: Codable {
         if let data = try? JSONEncoder().encode(value) {
             UserDefaults.standard.setValue(data, forKey: key.rawValue)
@@ -32,6 +36,7 @@ internal extension UserDefaults {
         }
         return nil
     }
+    
     static func set<T>(value: T, key: UserDefaults.Key) where T: Codable {
         UserDefaults.setValue(value, key: key)
     }
@@ -39,4 +44,10 @@ internal extension UserDefaults {
     static func get<T>(key: UserDefaults.Key) -> T? where T: Codable {
         return UserDefaults.value(for: key)
     }
+    
+    static func bool(for key: UserDefaults.Key) -> Bool {
+        let result: Bool? = get(key: key)
+        return result ?? false
+    }
+    
 }

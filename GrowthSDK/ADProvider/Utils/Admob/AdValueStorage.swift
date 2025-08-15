@@ -20,28 +20,30 @@ internal class AdValueStorage {
     /// - Parameters:
     ///   - adValue: AdMob 提供的 AdValue 对象
     ///   - ad: 广告对象
-    internal func setAdValue(_ adValue: AdValue, for ad: Any) {
-        Logger.info("[Ad] [AppOpenAd] 广告价值：\(formatAdValue(adValue))")
+    func setAdValue(_ adValue: AdValue, for ad: Any) {
         let identifier = ObjectIdentifier(ad as AnyObject)
         queue.async(flags: .barrier) {
             self.adValueMap[identifier] = adValue
         }
     }
     
+    /// 获取广告的详细价值信息
+    /// - Parameter ad: 广告对象
+    /// - Returns: AdValue 对象，如果没有找到则返回 nil
+    func getAdValue(for ad: Any) -> AdValue? {
+        let identifier = ObjectIdentifier(ad as AnyObject)
+        return queue.sync {
+            return adValueMap[identifier]
+        }
+    }
+    
+    // MARK: -
     /// 获取广告的收益值（美元，已转换为 ECPM）
     /// - Parameter ad: 广告对象
     /// - Returns: 收益值，如果没有找到则返回 nil
     func getRevenue(for ad: Any) -> Double? {
-        let identifier = ObjectIdentifier(ad as AnyObject)
-        return queue.sync {
-            guard let adValue = adValueMap[identifier] else { return nil }
-            let value = adValue.value.doubleValue
-            let baseAmount = value * 1000
-            if adValue.currencyCode == "USD" {
-                return baseAmount
-            }
-            return localeRevenue(for: adValue)
-        }
+        let adValue = getAdValue(for: ad)
+        return revenueInUSD(adValue)
     }
     
     // MARK: -
@@ -61,27 +63,31 @@ internal class AdValueStorage {
         }
     }
     
-    // MARK: - Private
-    private func localeRevenue(for adValue: AdValue) -> Double {
-        let formatter = NumberFormatter()
-        formatter.locale = .current
-        formatter.numberStyle = .currency
-        let amount = formatter.string(from: adValue.value)
-        let price = Double(amount ?? "0")
-        return (price ?? 0.0) * 1000
+    // MARK: -
+    func revenueInUSD(_ adValue: AdValue?) -> Double {
+        let value = adValue?.value.doubleValue ?? 0.0
+        let baseAmount = value * 1000
+        if adValue?.currencyCode == "USD" {
+            return baseAmount
+        }
+        return localeRevenue(adValue)
     }
     
-    private func formatAdValue(_ adValue: AdValue) -> String {
-        let value = adValue.value.doubleValue
-        let baseAmount = value * 1000
-        let revenue = adValue.currencyCode == "USD" ? baseAmount : localeRevenue(for: adValue)
-        return String(format: "%.6f %@", revenue, adValue.currencyCode)
+    func localeRevenue(_ adValue: AdValue?) -> Double {
+        guard let value = adValue?.value else { return 0.0 }
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = .current
+        
+        let amount = formatter.string(from: value)
+        let price = Double(amount ?? "0")
+        return (price ?? 0.0) * 1000
     }
     
 }
 
 // MARK: -
-extension AdValueStorage {
+internal extension AdValueStorage {
     
     static func revenue(for ad: Any) -> Double {
         let shared = AdValueStorage.shared

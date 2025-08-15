@@ -231,7 +231,6 @@ extension BigoBiddingLoader {
                 self.isLoaded = true
                 
                 if case .bigo(let wrapper) = adSource {
-                    // 从包装器中获取原始广告对象并保存
                     if let rewardAd = wrapper?.rewardVideoAd {
                         self.rewardVideoAd = rewardAd
                     }

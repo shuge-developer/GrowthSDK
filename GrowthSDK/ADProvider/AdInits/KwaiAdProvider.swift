@@ -20,7 +20,7 @@ internal class KwaiAdProvider {
         let option = KCOAdsInitOption()
         option.appId = ""//AppConfigure.AD.Kwai.appId
         option.token = ""//AppConfigure.AD.Kwai.token
-        option.debug = true//SDKLogManager.shared.kwaiDebug
+        option.debug = true
         option.mediationType = .SDK
         
         let sdk = KCOAdsInitialization.sharedInstance()
