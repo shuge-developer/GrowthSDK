@@ -10,6 +10,7 @@ import Foundation
 // MARK: -
 internal extension UserDefaults {
     enum Key: String {
+        case hasLaunchedBefore
         case configRejectionReason
         case configDailyLimitDate
         case configRejectionTime

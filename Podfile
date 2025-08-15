@@ -6,6 +6,9 @@ target 'GrowthSDK' do
   use_frameworks! :linkage => :static
   
   pod 'AppLovinSDK'
+  pod 'Google-Mobile-Ads-SDK'
+  pod 'KwaiAdsSDK'
+  pod 'BigoADS'
   
 end
 
