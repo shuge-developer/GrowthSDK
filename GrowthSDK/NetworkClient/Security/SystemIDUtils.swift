@@ -48,4 +48,10 @@ internal struct SystemIDUtils {
         return uuid
     }
     
+    internal static var countryCode: String {
+        let local = (Locale.current as NSLocale)
+        let code = local.object(forKey: .countryCode)
+        return (code as? String) ?? "unknown"
+    }
+    
 }
