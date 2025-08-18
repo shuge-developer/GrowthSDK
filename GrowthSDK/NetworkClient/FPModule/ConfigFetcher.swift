@@ -54,6 +54,7 @@ internal final class ConfigFetcher {
     private static var keyMapping: [String: ConfigItem] = [:]
     private static var _adjustConfig: AdjustConfig?
     private static var _adUnitConfig: AdUnitConfig?
+    private static var _confgConfig: ConfgConfig?
     
     private let cacheExpiry: TimeInterval = 24 * 60 * 60
     private var lastFetchTime: [String: TimeInterval] = [:]
@@ -71,6 +72,11 @@ internal final class ConfigFetcher {
     static var adUnitConfig: AdUnitConfig? {
         set { _adUnitConfig = newValue }
         get { return _adUnitConfig }
+    }
+    
+    static var confgConfig: ConfgConfig? {
+        set { _confgConfig = newValue }
+        get { return _confgConfig }
     }
     
     private init() {
@@ -105,7 +111,15 @@ internal final class ConfigFetcher {
     }
     
     private func performFetch(_ keys: [String], refresh: Bool = false) {
-        let keysToFetch = refresh ? keys : keys.filter { shouldFetch($0) }
+        let keysToFetch: [String] = keys.filter { key in
+            if let item = ConfigFetcher.keyMapping[key], item.requestOnce {
+                if let cachedJson = cachedData?.configs[key], !cachedJson.isEmpty {
+                    Logger.info("跳过仅请求一次的配置键(已缓存): \(key)")
+                    return false
+                }
+            }
+            return refresh ? true : shouldFetch(key)
+        }
         guard !keysToFetch.isEmpty else { return }
         
         NetworkServer.fetchConfigs(keysToFetch) { [weak self] result in
@@ -159,6 +173,11 @@ internal final class ConfigFetcher {
                 continue
             }
             switch configItem {
+            case .config:
+                if let confg = ConfgConfig.deserialize(from: json) {
+                    ConfigFetcher.confgConfig = confg
+                    Logger.info("ConfgConfig 已更新 (key: \(key))")
+                }
             case .adjust:
                 if let adjustConfig = AdjustConfig.deserialize(from: json) {
                     adjustConfig.adChannel = configData.extendJson?.adChannel

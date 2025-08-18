@@ -55,3 +55,29 @@ internal class BigoAdUnitConfig: Codable {
 internal class AdMobAdUnitConfig: Codable {
     var splashAdIds: [String]?
 }
+
+// MARK: - Confg Config
+internal class ConfgConfig: Codable {
+    var thinking: ThinkingConfig?
+    var appLovin: AppLovinConfig?
+    var kwaiAds: KwaiAdsConfig?
+    var bigo: BigoConfig?
+}
+
+internal class ThinkingConfig: Codable {
+    var appId: String?
+    var serverUrl: String?
+}
+
+internal class AppLovinConfig: Codable {
+    var sdkKey: String?
+}
+
+internal class KwaiAdsConfig: Codable {
+    var appId: String?
+    var token: String?
+}
+
+internal class BigoConfig: Codable {
+    var appId: String?
+}

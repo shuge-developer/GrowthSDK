@@ -9,8 +9,18 @@ import Foundation
 
 // MARK: - 配置键类型枚举
 @objc public enum ConfigItem: Int, Codable {
-    case adjust = 0
-    case adUnit = 1
+    case config = 0
+    case adjust = 1
+    case adUnit = 2
+    
+    internal var requestOnce: Bool {
+        switch self {
+        case .config, .adjust:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 // MARK: - 配置键结构
@@ -22,6 +32,10 @@ import Foundation
         self.key = key
         self.item = item
         super.init()
+    }
+    
+    @objc public convenience init(configKey: String) {
+        self.init(key: configKey, item: .config)
     }
     
     @objc public convenience init(adjustKey: String) {
