@@ -23,6 +23,16 @@ internal class AdsInitProvider {
         AdMobProvider.shared.isInitialized
     }
     
+    static var appOpenInitialized: Bool {
+        AdMobProvider.shared.isInitialized
+    }
+    
+    static var videoAdInitialized: Bool {
+        MaxAdProvider.shared.isInitialized  &&
+        KwaiAdProvider.shared.isInitialized &&
+        BigoAdProvider.shared.isInitialized
+    }
+    
     // MARK: -
     static func startup(complete: AdInitComplete? = nil) {
         if !KwaiAdProvider.shared.isInitialized {

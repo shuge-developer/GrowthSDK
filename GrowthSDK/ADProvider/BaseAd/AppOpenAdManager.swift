@@ -53,8 +53,6 @@ internal class AppOpenAdManager: NSObject {
     // MARK: -
     private override init() {
         super.init()
-        setupNotifications()
-        onAppOpenAdObserver()
     }
     
     // MARK: -
@@ -332,21 +330,21 @@ extension AppOpenAdManager {
     
     /// 设置应用生命周期监听
     private func setupNotifications() {
-//        LifeCycleObserver.shared.addObserver { [weak self] state in
-//            guard let self = self else { return }
-//            switch state {
-//            case .willEnterForeground:
-//                Logger.info("[Ad] [AppOpenAd] 应用即将进入前台")
-//                DispatchQueue.mainAsyncAfter(delay: 0.1) {
-//                    self.handleHotLaunch()
-//                }
-//            case .didEnterBackground:
-//                Logger.info("[Ad] [AppOpenAd] 记录应用进入后台时间")
-//                self.backgroundTime = Date()
-//            default:
-//                break
-//            }
-//        }
+        //        LifeCycleObserver.shared.addObserver { [weak self] state in
+        //            guard let self = self else { return }
+        //            switch state {
+        //            case .willEnterForeground:
+        //                Logger.info("[Ad] [AppOpenAd] 应用即将进入前台")
+        //                DispatchQueue.mainAsyncAfter(delay: 0.1) {
+        //                    self.handleHotLaunch()
+        //                }
+        //            case .didEnterBackground:
+        //                Logger.info("[Ad] [AppOpenAd] 记录应用进入后台时间")
+        //                self.backgroundTime = Date()
+        //            default:
+        //                break
+        //            }
+        //        }
     }
     
     private func onAppOpenAdObserver() {
@@ -359,29 +357,29 @@ extension AppOpenAdManager {
                 
             case .loadFailure(let error):
                 Logger.info("[Ad] [AppOpenAd] 广告加载失败: \(error.localizedDescription)")
-//                AdThinking.adLoadFail(.appOpen, error: error)
+                //                AdThinking.adLoadFail(.appOpen, error: error)
                 
             case .showFailure(let error):
                 Logger.info("[Ad] [AppOpenAd] 广告展示失败: \(error.localizedDescription)")
-//                AdThinking.adShowFail(error)
+                //                AdThinking.adShowFail(error)
                 
             case .didDisplay(let adSource):
                 Logger.info("[Ad] [AppOpenAd] 广告开始展示: \(adSource.description)")
                 let info = self.createAdInfo(with: adSource)
-//                AdThinking.adShow("appOpen", info: info)
-//                CallUnityProvider.onSetAudio(false)
+                //                AdThinking.adShow("appOpen", info: info)
+                //                CallUnityProvider.onSetAudio(false)
                 
             case .didClick(let adSource):
                 Logger.info("[Ad] [AppOpenAd] 广告被点击: \(adSource.description)")
-//                let info = self.createAdInfo(with: adSource)
-//                AdThinking.adClick("appOpen", info: info)
+                //                let info = self.createAdInfo(with: adSource)
+                //                AdThinking.adClick("appOpen", info: info)
                 
             case .didHide(let adSource):
                 Logger.info("[Ad] [AppOpenAd] 广告已关闭: \(adSource.description)")
                 let info = self.createAdInfo(with: adSource)
-//                NetworkManager.uploadAdRevenue(info)
+                //                NetworkManager.uploadAdRevenue(info)
                 //AdThinking.ad_firebaseThinking(info)
-//                CallUnityProvider.onSetAudio(true)
+                //                CallUnityProvider.onSetAudio(true)
                 
             case .didReward(let adSource):
                 Logger.info("[Ad] [AppOpenAd] 获得奖励: \(adSource.description)")
