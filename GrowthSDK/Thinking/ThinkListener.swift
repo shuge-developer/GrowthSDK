@@ -12,8 +12,12 @@ internal import ThinkingSDK
 internal class ThinkListener {
     
     static func initialize(_ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
-        let appId = ConfigFetcher.confgConfig?.thinking?.appId ?? ""
-        let sUrl = ConfigFetcher.confgConfig?.thinking?.serverUrl ?? ""
+        let appId = ConfigFetcher.confgConfig?.thinking?.appId
+        let sUrl = ConfigFetcher.confgConfig?.thinking?.serverUrl
+        guard let appId, !appId.isEmpty, let sUrl, !sUrl.isEmpty else {
+            Logger.warning("[Think] 配置缺失，跳过埋点SDK初始化")
+            return
+        }
         let config = TDConfig(appId: appId, serverUrl: sUrl)
         config.trackRelaunchedInBackgroundEvents = true
         if let options = launchOptions {

@@ -9,7 +9,9 @@ import Foundation
 
 // MARK: -
 internal enum CachedPath: String {
-    case configs = "GrowthSDK/Configs.dat"
+    case confg  = "GrowthSDK/Configs.Confg.dat"
+    case adjust = "GrowthSDK/Configs.Adjust.dat"
+    case adUnit = "GrowthSDK/Configs.Adunit.dat"
 }
 
 internal protocol Readable {

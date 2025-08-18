@@ -17,11 +17,18 @@ internal class KwaiAdProvider {
     
     // MARK: -
     func initialize(complete: AdInitComplete? = nil) {
+        let appId = ConfigFetcher.confgConfig?.kwaiAds?.appId
+        let token = ConfigFetcher.confgConfig?.kwaiAds?.token
+        guard let appId, !appId.isEmpty, let token, !token.isEmpty else {
+            Logger.warning("[Ad] Kwai 配置缺失，跳过初始化")
+            complete?(.kwai)
+            return
+        }
         let option = KCOAdsInitOption()
-        option.appId = ConfigFetcher.confgConfig?.kwaiAds?.appId ?? ""
-        option.token = ConfigFetcher.confgConfig?.kwaiAds?.token ?? ""
-        option.debug = true
         option.mediationType = .SDK
+        option.appId = appId
+        option.token = token
+        option.debug = true
         
         let sdk = KCOAdsInitialization.sharedInstance()
         sdk.start(option) { [weak self] error in

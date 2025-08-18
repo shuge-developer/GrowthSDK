@@ -50,7 +50,9 @@ public enum InitError: Error, LocalizedError {
     @Published @objc public private(set) var isInitialized: Bool = false
     
     // MARK: -
+    private var launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     private var initializationTask: Task<Void, Error>?
+    private var configSubscription: AnyCancellable?
     
     internal var openAdCallbacks: AdCallbacks?
     
@@ -60,6 +62,10 @@ public enum InitError: Error, LocalizedError {
         super.init()
     }
     
+    deinit {
+        configSubscription?.cancel()
+    }
+    
     // MARK: - Objective-C 公开方法
     
     /// 初始化 SDK
@@ -67,6 +73,7 @@ public enum InitError: Error, LocalizedError {
     ///   - config: 配置信息
     ///   - completion: 完成回调
     @objc public func initialize(with config: NetworkConfig, launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil, completion: ((Error?) -> Void)? = nil) {
+        self.launchOptions = launchOptions
         // 取消之前的初始化任务
         initializationTask?.cancel()
         // 创建新的初始化任务
@@ -99,13 +106,9 @@ public enum InitError: Error, LocalizedError {
             // 2. 初始化 CoreData
             try await initializeCoreData()
             // 3. 初始化任务服务
-            try await initializeTaskService()
+            try await initializeWebTaskService()
             // 4. 初始化网络服务
             try await initializeNetworkService()
-            // 5. 初始化埋点 SDK
-            try await initializeThinking(launchOptions)
-            // 5. 初始化广告 SDK
-            try await initializeAdSDKs()
             // 6. 完成初始化
             state = .initialized
             Logger.info("SDK 初始化成功")
@@ -135,7 +138,7 @@ private extension GrowthKit {
     }
     
     /// 初始化任务服务
-    func initializeTaskService() async throws {
+    func initializeWebTaskService() async throws {
         Logger.info("开始初始化任务服务...")
         // 加载任务
         TaskService.shared.loadTasks()
@@ -159,18 +162,23 @@ private extension GrowthKit {
         // 如果提供了结构化配置键，则获取配置
         if let configKeyItems = config.configKeyItems, !configKeyItems.isEmpty {
             let configItems = configKeyItems.map { item in
-                let type = ConfigItem(rawValue: item.item.rawValue)
-                return (key: item.key, item: type)
+                return (key: item.key, item: item.item)
             }
-            ConfigFetcher.shared.fetchConfigs(with: configItems)
-            // 如果包含通用配置（.config），则等待其可用（可能已从缓存加载）
-            let needsConfg = configItems.contains { $0.item == .config }
-            if needsConfg {
-                let ready = await waitForConfgConfigReady(timeoutSeconds: 6.0)
-                if !ready {
-                    Logger.warning("confg 配置等待超时，继续后续初始化（可能使用默认配置）")
+            // 订阅配置状态变化
+            configSubscription = ConfigFetcher.shared.configStatePublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] state in
+                    Logger.info("网络服务初始化 state：\(state)")
+                    guard let self = self else { return }
+                    if case .loaded = state {
+                        Task {
+                            try? await self.initializeThinking(self.launchOptions)
+                            try? await self.initializeAdSDKs()
+                        }
+                    }
                 }
-            }
+            // 发起配置请求
+            ConfigFetcher.shared.fetchConfigs(with: configItems)
         }
         Logger.info("网络服务初始化成功")
     }
@@ -185,21 +193,39 @@ private extension GrowthKit {
     /// 初始化广告SDK
     func initializeAdSDKs() async throws {
         Logger.info("开始初始化广告SDK...")
-        await MainActor.run {
-            AdLoadProvider.startup()
+        guard let confg = ConfigFetcher.confgConfig else {
+            Logger.warning("confg 配置缺失，跳过广告 SDK 初始化")
+            return
         }
+        // 并行初始化各广告网络
+        await withTaskGroup(of: Void.self) { group in
+            if let maxConfig = confg.appLovin, maxConfig.canInitialize {
+                group.addTask {
+                    await MainActor.run {
+                        MaxAdProvider.shared.initialize { _ in }
+                    }
+                }
+            }
+            // Kwai
+            if let kwaiConfig = confg.kwaiAds, kwaiConfig.canInitialize {
+                group.addTask {
+                    await MainActor.run {
+                        KwaiAdProvider.shared.initialize { _ in }
+                    }
+                }
+            }
+            // Bigo
+            if let bigoConfig = confg.bigo, bigoConfig.canInitialize {
+                group.addTask {
+                    await MainActor.run {
+                        BigoAdProvider.shared.initialize { _ in }
+                    }
+                }
+            }
+            // 等待所有初始化完成
+            await group.waitForAll()
+        }
+        Logger.info("广告 SDK 初始化完成")
     }
     
-}
-
-// MARK: - 等待配置
-private extension GrowthKit {
-    func waitForConfgConfigReady(timeoutSeconds: Double) async -> Bool {
-        let deadline = Date().addingTimeInterval(timeoutSeconds)
-        while Date() < deadline {
-            if ConfigFetcher.confgConfig != nil { return true }
-            try? await Task.sleep(nanoseconds: 100_000_000)
-        }
-        return ConfigFetcher.confgConfig != nil
-    }
 }

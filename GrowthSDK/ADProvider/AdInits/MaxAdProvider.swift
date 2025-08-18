@@ -15,7 +15,12 @@ internal class MaxAdProvider {
     
     // MARK: -
     func initialize(complete: AdInitComplete? = nil) {
-        let sdkKey = ConfigFetcher.confgConfig?.appLovin?.sdkKey ?? ""
+        let sdkKey = ConfigFetcher.confgConfig?.appLovin?.sdkKey
+        guard let sdkKey, !sdkKey.isEmpty else {
+            Logger.warning("[Ad] MAX 配置缺失，跳过初始化")
+            complete?(.max)
+            return
+        }
         let initConfig = ALSdkInitializationConfiguration(sdkKey: sdkKey) { builder in
             builder.mediationProvider = ALMediationProviderMAX
         }

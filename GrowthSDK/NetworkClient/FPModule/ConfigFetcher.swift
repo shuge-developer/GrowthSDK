@@ -6,6 +6,35 @@
 //
 
 import Foundation
+import Combine
+
+// MARK: - 配置错误
+internal enum ConfigError: Error {
+    case retryExhausted
+    case networkError(Error)
+    case timeout
+}
+
+// MARK: - 配置状态
+internal enum ConfigState {
+    case initial
+    case loading(attempt: Int)
+    case loaded(ConfgConfig)
+    case failed(ConfigError)
+}
+
+// MARK: - 配置选项
+internal struct ConfigOptions {
+    let maxRetries: Int
+    let retryDelay: TimeInterval
+    let timeout: TimeInterval
+    
+    static let `default` = ConfigOptions(
+        maxRetries: 3,
+        retryDelay: 2.0,
+        timeout: 5.0
+    )
+}
 
 // MARK: -
 internal struct ConfigResponse: Codable {
@@ -25,83 +54,58 @@ internal struct ConfigResponse: Codable {
 }
 
 // MARK: -
-internal struct ConfigData: Codable {
-    let configs: [String: String]
-    let extendJson: ConfigResponse.ExtendJson?
-    let timestamp: TimeInterval
-    
-    init(from response: ConfigResponse) {
-        var configDict: [String: String] = [:]
-        for bean in response.configBeans {
-            guard let id = bean.id, id.isValid, let content = bean.jsonContent, content.isValid else {
-                Logger.info("[ConfigFetcher] 跳过无效的配置项: id=\(bean.id.orEmpty()), content=\(bean.jsonContent.orEmpty())")
-                continue
-            }
-            configDict[id] = content
-        }
-        self.timestamp = Date().timeIntervalSince1970
-        self.extendJson = response.extendJson
-        self.configs = configDict
-    }
-}
-
-// MARK: -
 internal final class ConfigFetcher {
     
     static let shared = ConfigFetcher()
     
     // MARK: -
-    private static var keyMapping: [String: ConfigItem] = [:]
-    private static var _adjustConfig: AdjustConfig?
-    private static var _adUnitConfig: AdUnitConfig?
-    private static var _confgConfig: ConfgConfig?
-    
-    private let cacheExpiry: TimeInterval = 24 * 60 * 60
-    private var lastFetchTime: [String: TimeInterval] = [:]
     private let queue = DispatchQueue(label: "com.growthsdk.config", qos: .utility)
-    
-    @DataCached<CacheReader, ConfigData>(path: .configs)
-    private var cachedData: ConfigData?
+    private var lastFetchTime: [String: TimeInterval] = [:]
+    private let cacheExpiry: TimeInterval = 24 * 60 * 60
     
     // MARK: -
-    static var adjustConfig: AdjustConfig? {
-        set { _adjustConfig = newValue }
-        get { return _adjustConfig }
+    @Published private(set) var configState: ConfigState = .initial
+    private static var keyMapping: [String: ConfigItem] = [:]
+    private var retryTask: Task<Void, Never>?
+    private let options: ConfigOptions
+    
+    var configStatePublisher: AnyPublisher<ConfigState, Never> {
+        $configState.eraseToAnyPublisher()
     }
     
-    static var adUnitConfig: AdUnitConfig? {
-        set { _adUnitConfig = newValue }
-        get { return _adUnitConfig }
+    @DataCached<CacheReader, ConfgConfig>(path: .confg)
+    private(set) static var confgConfig: ConfgConfig?
+    
+    @DataCached<CacheReader, AdjustConfig>(path: .adjust)
+    private(set) static var adjustConfig: AdjustConfig?
+    
+    @DataCached<CacheReader, AdUnitConfig>(path: .adUnit)
+    private(set) static var adUnitConfig: AdUnitConfig?
+    
+    // MARK: -
+    private init(options: ConfigOptions = .default) {
+        self.options = options
+        if let config = ConfigFetcher.confgConfig {
+            configState = .loaded(config)
+        }
     }
     
-    static var confgConfig: ConfgConfig? {
-        set { _confgConfig = newValue }
-        get { return _confgConfig }
-    }
-    
-    private init() {
-        loadCachedConfigs()
+    deinit {
+        retryTask?.cancel()
     }
     
     // MARK: -
     func fetchConfigs(with configKeyItems: [(key: String, item: ConfigItem?)]) {
         Logger.info("开始获取配置(结构化配置键): \(configKeyItems.map { $0.key })")
         ConfigFetcher.registerConfigKeyItems(configKeyItems)
-        let keys = configKeyItems.map { $0.key }
-        queue.async { [weak self] in
-            self?.performFetch(keys)
+        // 取消之前的重试任务
+        retryTask?.cancel()
+        // 开始新的请求（带重试）
+        retryTask = Task { [weak self] in
+            guard let self = self else { return }
+            let keys = configKeyItems.map { $0.key }
+            await self.performFetchWithRetry(keys)
         }
-    }
-    
-    // MARK: -
-    func getConfigModel<T: Codable>(_ key: String) -> T? {
-        guard let json = getConfigJson(key) else { return nil }
-        let model = T.deserialize(from: json)
-        return model
-    }
-    
-    func getConfigJson(_ key: String) -> String? {
-        return cachedData?.configs[key]
     }
     
     // MARK: - 私有方法
@@ -110,44 +114,100 @@ internal final class ConfigFetcher {
         return Date().timeIntervalSince1970 - lastTime > cacheExpiry
     }
     
-    private func performFetch(_ keys: [String], refresh: Bool = false) {
-        let keysToFetch: [String] = keys.filter { key in
-            if let item = ConfigFetcher.keyMapping[key], item.requestOnce {
-                if let cachedJson = cachedData?.configs[key], !cachedJson.isEmpty {
-                    Logger.info("跳过仅请求一次的配置键(已缓存): \(key)")
-                    return false
-                }
-            }
-            return refresh ? true : shouldFetch(key)
-        }
-        guard !keysToFetch.isEmpty else { return }
+    internal func performFetchWithRetry(_ keys: [String]) async {
+        var attempt = 0
         
-        NetworkServer.fetchConfigs(keysToFetch) { [weak self] result in
-            self?.handleResponse(result, keys: keysToFetch)
-        }
-    }
-    
-    private func handleResponse(_ result: Result<String, NetworkError>, keys: [String]) {
-        switch result {
-        case .success(let json):
-            guard let response = ConfigResponse.deserialize(from: json) else {
-                Logger.error("配置数据解析失败: \(json)")
-                return
-            }
-            if let userId = response.extendJson?.userId {
-                ThinkListener.setLoginUser(userId)
-            }
-            self.cachedData = ConfigData(from: response)
-            CacheWriter.write(cachedData, to: .configs)
-            updateStaticConfigs(cachedData!)
+        while attempt < options.maxRetries {
+            attempt += 1
+            configState = .loading(attempt: attempt)
             
-            let now = Date().timeIntervalSince1970
-            keys.forEach { lastFetchTime[$0] = now }
-            Logger.info("配置获取成功: \(keys)")
+            // 过滤需要请求的键（针对 requestOnce：如已有分类缓存则跳过）
+            let keysToFetch = keys.filter { key in
+                if let item = ConfigFetcher.keyMapping[key], item.requestOnce {
+                    let hasCategoryCache: Bool = {
+                        switch item {
+                        case .config: return ConfigFetcher.confgConfig != nil
+                        case .adjust: return ConfigFetcher.adjustConfig != nil
+                        case .adUnit: return ConfigFetcher.adUnitConfig != nil
+                        }
+                    }()
+                    if hasCategoryCache {
+                        Logger.info("跳过仅请求一次的配置键(已缓存): \(key)")
+                        return false
+                    }
+                }
+                return shouldFetch(key)
+            }
             
-        case .failure(let error):
-            Logger.error("配置获取失败: \(error)")
+            guard !keysToFetch.isEmpty else { return }
+            
+            do {
+                // 创建网络请求任务
+                let fetchTask = Task { () -> String in
+                    try await withCheckedThrowingContinuation { continuation in
+                        NetworkServer.fetchConfigs(keysToFetch) { result in
+                            switch result {
+                            case .success(let json):
+                                continuation.resume(returning: json)
+                            case .failure(let error):
+                                let err = ConfigError.networkError(error)
+                                continuation.resume(throwing: err)
+                            }
+                        }
+                    }
+                }
+                
+                // 等待任一任务完成
+                let json = try await withThrowingTaskGroup(of: String.self) { group in
+                    // 网络请求任务
+                    group.addTask { try await fetchTask.value }
+                    // 超时任务：抛出超时错误以抢占完成
+                    group.addTask {
+                        try await Task.sleep(nanoseconds: UInt64(self.options.timeout * 1_000_000_000))
+                        throw ConfigError.timeout
+                    }
+                    // 任一完成后，取消其他任务
+                    defer { group.cancelAll() }
+                    guard let first = try await group.next() else {
+                        throw ConfigError.networkError(NSError(domain: "ConfigFetcher", code: -2, userInfo: [NSLocalizedDescriptionKey: "No task result"]))
+                    }
+                    return first
+                }
+                
+                // 处理响应
+                if let response = ConfigResponse.deserialize(from: json) {
+                    if let userId = response.extendJson?.userId {
+                        ThinkListener.setLoginUser(userId)
+                    }
+                    self.processResponse(response)
+                    
+                    let now = Date().timeIntervalSince1970
+                    keysToFetch.forEach { lastFetchTime[$0] = now }
+                    Logger.info("配置获取成功: \(keysToFetch)")
+                    return
+                }
+                
+                throw ConfigError.networkError(NSError(domain: "ConfigFetcher", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid response format"]))
+                
+            } catch {
+                let configError: ConfigError
+                if error is ConfigError {
+                    configError = error as! ConfigError
+                } else {
+                    configError = .networkError(error)
+                }
+                
+                if attempt >= options.maxRetries {
+                    configState = .failed(configError)
+                    return
+                }
+                
+                Logger.warning("配置获取失败(尝试 \(attempt)/\(options.maxRetries)): \(error)")
+                try? await Task.sleep(nanoseconds: UInt64(options.retryDelay * 1_000_000_000))
+            }
         }
+        
+        configState = .failed(.retryExhausted)
     }
     
     // MARK: -
@@ -157,15 +217,18 @@ internal final class ConfigFetcher {
                 Logger.info("跳过空的配置键")
                 continue
             }
-            Logger.info("注册配置键: \(configKeyItem.key) -> \(configKeyItem.item)")
-            keyMapping[configKeyItem.key] = configKeyItem.item
+            guard let type = configKeyItem.item else {
+                Logger.info("跳过无类型的配置键: \(configKeyItem.key)")
+                continue
+            }
+            Logger.info("注册配置键: \(configKeyItem.key) -> \(type.rawValue)")
+            ConfigFetcher.keyMapping[configKeyItem.key] = type
         }
     }
     
-    private func updateStaticConfigs(_ configData: ConfigData) {
-        for (key, json) in configData.configs {
-            guard !key.isEmpty, !json.isEmpty else {
-                Logger.info("跳过空的配置: key=\(key), json=\(json)")
+    private func processResponse(_ response: ConfigResponse) {
+        for bean in response.configBeans {
+            guard let key = bean.id, let json = bean.jsonContent else {
                 continue
             }
             guard let configItem = ConfigFetcher.keyMapping[key] else {
@@ -175,29 +238,27 @@ internal final class ConfigFetcher {
             switch configItem {
             case .config:
                 if let confg = ConfgConfig.deserialize(from: json) {
+                    CacheWriter.write(confg, to: .confg)
                     ConfigFetcher.confgConfig = confg
+                    configState = .loaded(confg)
                     Logger.info("ConfgConfig 已更新 (key: \(key))")
                 }
             case .adjust:
-                if let adjustConfig = AdjustConfig.deserialize(from: json) {
-                    adjustConfig.adChannel = configData.extendJson?.adChannel
-                    adjustConfig.userId = configData.extendJson?.userId
-                    ConfigFetcher.adjustConfig = adjustConfig
+                if var adjust = AdjustConfig.deserialize(from: json) {
+                    adjust.adChannel = response.extendJson?.adChannel
+                    adjust.userId = response.extendJson?.userId
+                    CacheWriter.write(adjust, to: .adjust)
+                    ConfigFetcher.adjustConfig = adjust
                     Logger.info("AdjustConfig 已更新 (key: \(key))")
                 }
             case .adUnit:
-                if let adUnitConfig = AdUnitConfig.deserialize(from: json) {
-                    ConfigFetcher.adUnitConfig = adUnitConfig
+                if let adu = AdUnitConfig.deserialize(from: json) {
+                    CacheWriter.write(adu, to: .adUnit)
+                    ConfigFetcher.adUnitConfig = adu
                     Logger.info("AdUnitConfig 已更新 (key: \(key))")
                 }
             }
         }
-    }
-    
-    private func loadCachedConfigs() {
-        guard let data = cachedData else { return }
-        Logger.info("从缓存加载配置完成")
-        updateStaticConfigs(data)
     }
     
 }

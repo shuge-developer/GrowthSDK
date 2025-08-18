@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Adjust Config
-internal class AdjustConfig: Codable {
+internal struct AdjustConfig: Codable {
     var initRate: Double = 0.5
     var isLegally: Bool = true
     var force: Bool?
@@ -24,7 +24,7 @@ internal class AdjustConfig: Codable {
 }
 
 // MARK: - Ad Unit Config
-internal class AdUnitConfig: Codable {
+internal struct AdUnitConfig: Codable {
     var abTest: String?
     var interAdIntervalSec: Int?
     var maxAdUnitConfig: MaxAdUnitConfig?
@@ -34,50 +34,72 @@ internal class AdUnitConfig: Codable {
 }
 
 // MARK: - Max Ad Unit Config
-internal class MaxAdUnitConfig: Codable {
+internal struct MaxAdUnitConfig: Codable {
     var rewardedAdIds: [String]?
     var interstitialAdIds: [String]?
 }
 
 // MARK: - Kwai Ad Unit Config
-internal class KwaiAdUnitConfig: Codable {
+internal struct KwaiAdUnitConfig: Codable {
     var rewardedAdIds: [String]?
     var interstitialAdIds: [String]?
 }
 
 // MARK: - Bigo Ad Unit Config
-internal class BigoAdUnitConfig: Codable {
+internal struct BigoAdUnitConfig: Codable {
     var rewardedAdIds: [String]?
     var interstitialAdIds: [String]?
 }
 
 // MARK: - AdMob Ad Unit Config
-internal class AdMobAdUnitConfig: Codable {
+internal struct AdMobAdUnitConfig: Codable {
     var splashAdIds: [String]?
 }
 
 // MARK: - Confg Config
-internal class ConfgConfig: Codable {
+internal struct ConfgConfig: Codable {
     var thinking: ThinkingConfig?
     var appLovin: AppLovinConfig?
     var kwaiAds: KwaiAdsConfig?
     var bigo: BigoConfig?
 }
 
-internal class ThinkingConfig: Codable {
+internal struct ThinkingConfig: Codable {
     var appId: String?
     var serverUrl: String?
+    
+    var canInitialize: Bool {
+        guard let appId = appId else { return false }
+        guard let url = serverUrl else { return false }
+        return !appId.isEmpty && !url.isEmpty
+    }
 }
 
-internal class AppLovinConfig: Codable {
+internal struct AppLovinConfig: Codable {
     var sdkKey: String?
+    
+    var canInitialize: Bool {
+        guard let sdkKey = sdkKey else { return false }
+        return !sdkKey.isEmpty
+    }
 }
 
-internal class KwaiAdsConfig: Codable {
+internal struct KwaiAdsConfig: Codable {
     var appId: String?
     var token: String?
+    
+    var canInitialize: Bool {
+        guard let appId = appId else { return false }
+        guard let token = token else { return false }
+        return !appId.isEmpty && !token.isEmpty
+    }
 }
 
-internal class BigoConfig: Codable {
+internal struct BigoConfig: Codable {
     var appId: String?
+    
+    var canInitialize: Bool {
+        guard let appId = appId else { return false }
+        return !appId.isEmpty
+    }
 }

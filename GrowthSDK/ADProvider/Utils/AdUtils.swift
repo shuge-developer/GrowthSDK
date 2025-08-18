@@ -366,13 +366,13 @@ internal extension KCOUnionRewardAd {
 // MARK: -
 internal struct MaxCustomData: Codable, Transformable {
     var adWorth: Double
-    var appid: String?
+    var appId: String?
     var gaid: String?
     var uuid: String
     
     init(adWorth: Double) {
         self.adWorth = adWorth
-        self.appid = GrowthKit.shared.config.serviceId
+        self.appId = GrowthKit.shared.config.serviceId
         self.gaid = SystemIDUtils.idfaString
         self.uuid = SystemIDUtils.uuidString
     }

@@ -15,8 +15,13 @@ internal class BigoAdProvider {
     
     // MARK: -
     func initialize(complete: AdInitComplete? = nil) {
-        let appid = ConfigFetcher.confgConfig?.bigo?.appId ?? ""
-        let config = BigoAdConfig(appId: appid)
+        let appId = ConfigFetcher.confgConfig?.bigo?.appId
+        guard let appId, !appId.isEmpty else {
+            Logger.warning("[Ad] Bigo 配置缺失，跳过初始化")
+            complete?(.bigo)
+            return
+        }
+        let config = BigoAdConfig(appId: appId)
         config.testMode = true
         
         let sdk = BigoAdSdk.sharedInstance()
