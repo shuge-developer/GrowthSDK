@@ -155,9 +155,16 @@ private extension GrowthKit {
         let configSyncManager = ConfigSyncManager.shared
         // 触发初始配置检查
         configSyncManager.triggerAllConfigCheck()
-        // 如果提供了配置键，则异步获取配置
-        if let configKeys = config.configKeys, !configKeys.isEmpty {
-            Task { ConfigFetcher.shared.fetchConfigs(configKeys) }
+        
+        // 如果提供了结构化配置键，则异步获取配置
+        if let configKeyItems = config.configKeyItems, !configKeyItems.isEmpty {
+            let configItems = configKeyItems.map { item in
+                let type = ConfigItem(rawValue: item.item.rawValue)
+                return (key: item.key, item: type)
+            }
+            Task {
+                ConfigFetcher.shared.fetchConfigs(with: configItems)
+            }
         }
         Logger.info("网络服务初始化成功")
     }

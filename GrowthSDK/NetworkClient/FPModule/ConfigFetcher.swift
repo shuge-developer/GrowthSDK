@@ -33,31 +33,15 @@ internal struct ConfigData: Codable {
     init(from response: ConfigResponse) {
         var configDict: [String: String] = [:]
         for bean in response.configBeans {
-            if let id = bean.id, let content = bean.jsonContent {
-                configDict[id] = content
+            guard let id = bean.id, id.isValid, let content = bean.jsonContent, content.isValid else {
+                Logger.info("[ConfigFetcher] 跳过无效的配置项: id=\(bean.id.orEmpty()), content=\(bean.jsonContent.orEmpty())")
+                continue
             }
+            configDict[id] = content
         }
         self.timestamp = Date().timeIntervalSince1970
         self.extendJson = response.extendJson
         self.configs = configDict
-    }
-}
-
-// MARK: -
-internal enum ConfigItem {
-    case adjust, adUnit
-    
-    static func inferFromKey(_ key: String) -> ConfigItem? {
-        let lowercasedKey = key.lowercased()
-        if lowercasedKey.contains("adjust") || lowercasedKey.contains("verify") {
-            return .adjust
-        }
-        if lowercasedKey.contains("ad") || lowercasedKey.contains("unit") ||
-            lowercasedKey.contains("max") || lowercasedKey.contains("kwai") ||
-            lowercasedKey.contains("bigo") || lowercasedKey.contains("admob") {
-            return .adUnit
-        }
-        return nil
     }
 }
 
@@ -94,12 +78,10 @@ internal final class ConfigFetcher {
     }
     
     // MARK: -
-    func fetchConfigs(_ keys: [String]) {
-        Logger.info("开始获取配置: \(keys)")
-        guard !keys.isEmpty else { return }
-        // 自动注册配置键映射
-        ConfigFetcher.autoRegisterConfig(keys)
-        // 开始异步配置请求
+    func fetchConfigs(with configKeyItems: [(key: String, item: ConfigItem?)]) {
+        Logger.info("开始获取配置(结构化配置键): \(configKeyItems.map { $0.key })")
+        ConfigFetcher.registerConfigKeyItems(configKeyItems)
+        let keys = configKeyItems.map { $0.key }
         queue.async { [weak self] in
             self?.performFetch(keys)
         }
@@ -116,13 +98,12 @@ internal final class ConfigFetcher {
         return cachedData?.configs[key]
     }
     
-    // MARK: -
+    // MARK: - 私有方法
     private func shouldFetch(_ key: String) -> Bool {
         guard let lastTime = lastFetchTime[key] else { return true }
         return Date().timeIntervalSince1970 - lastTime > cacheExpiry
     }
     
-    // MARK: -
     private func performFetch(_ keys: [String], refresh: Bool = false) {
         let keysToFetch = refresh ? keys : keys.filter { shouldFetch($0) }
         guard !keysToFetch.isEmpty else { return }
@@ -156,21 +137,23 @@ internal final class ConfigFetcher {
     }
     
     // MARK: -
-    private static func autoRegisterConfig(_ keys: [String]) {
-        for key in keys {
-            if keyMapping[key] == nil {
-                if let configItem = ConfigItem.inferFromKey(key) {
-                    Logger.info("自动注册配置键映射: \(key) -> \(configItem)")
-                    keyMapping[key] = configItem
-                } else {
-                    Logger.warning("无法推断配置键类型: \(key)")
-                }
+    private static func registerConfigKeyItems(_ configKeyItems: [(key: String, item: ConfigItem?)]) {
+        for configKeyItem in configKeyItems {
+            guard !configKeyItem.key.isEmpty else {
+                Logger.info("跳过空的配置键")
+                continue
             }
+            Logger.info("注册配置键: \(configKeyItem.key) -> \(configKeyItem.item)")
+            keyMapping[configKeyItem.key] = configKeyItem.item
         }
     }
     
     private func updateStaticConfigs(_ configData: ConfigData) {
         for (key, json) in configData.configs {
+            guard !key.isEmpty, !json.isEmpty else {
+                Logger.info("跳过空的配置: key=\(key), json=\(json)")
+                continue
+            }
             guard let configItem = ConfigFetcher.keyMapping[key] else {
                 Logger.info("未找到配置键映射: \(key)")
                 continue

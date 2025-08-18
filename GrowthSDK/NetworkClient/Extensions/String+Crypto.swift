@@ -68,3 +68,40 @@ internal extension String {
     }
     
 }
+
+// MARK: -
+internal extension String {
+    
+    var isNullOrEmpty: Bool {
+        return self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    
+    var isValid: Bool {
+        return !self.isNullOrEmpty
+    }
+    
+}
+
+// MARK: -
+internal extension Optional where Wrapped == String {
+    
+    var isNullOrEmpty: Bool {
+        guard let string = self else { return true }
+        return string.isNullOrEmpty
+    }
+    
+    var isValid: Bool {
+        guard let string = self else { return false }
+        return string.isValid
+    }
+    
+    // MARK: -
+    func orDefault(_ defaultValue: String) -> String {
+        return self ?? defaultValue
+    }
+    
+    func orEmpty() -> String {
+        return self ?? ""
+    }
+    
+}
