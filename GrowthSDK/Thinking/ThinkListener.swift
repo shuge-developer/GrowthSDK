@@ -61,7 +61,8 @@ internal class ThinkListener {
         }
     }
     
-    internal static func setLoginUser(_ userId: String) {
+    internal static func setLoginUser(_ userId: String?) {
+        guard let userId, !userId.isEmpty else { return }
         let cacheId = SecureUtils.string(for: .userId)
         if let cacheId = cacheId, !cacheId.isEmpty {
             return

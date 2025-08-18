@@ -165,14 +165,13 @@ private extension GrowthKit {
                 return (key: item.key, item: item.item)
             }
             // 订阅配置状态变化
-            configSubscription = ConfigFetcher.shared.configStatePublisher
+            configSubscription = ConfigFetcher.shared.configPublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] state in
-                    Logger.info("网络服务初始化 state：\(state)")
                     guard let self = self else { return }
                     if case .loaded = state {
                         Task {
-                            try? await self.initializeThinking(self.launchOptions)
+                            try? await self.initializeThinking()
                             try? await self.initializeAdSDKs()
                         }
                     }
@@ -184,9 +183,11 @@ private extension GrowthKit {
     }
     
     /// 初始化埋点 SDK
-    func initializeThinking(_ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) async throws {
+    func initializeThinking() async throws {
         Logger.info("开始初始化埋点SDK...")
+        let userId = ConfigFetcher.adjustConfig?.userId
         ThinkListener.initialize(launchOptions)
+        ThinkListener.setLoginUser(userId)
         Logger.info("埋点 SDK初始化成功")
     }
     

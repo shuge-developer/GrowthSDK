@@ -94,4 +94,8 @@ internal struct SecureUtils {
         shared.string(forKey: key.rawValue)
     }
     
+    static func clearAll() {
+        try? shared.removeAll()
+    }
+    
 }

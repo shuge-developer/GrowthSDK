@@ -208,4 +208,15 @@ internal extension SecureStorage {
         try removeValue(for: key)
     }
     
+    func removeAll() throws {
+        let query: [String: AnyObject] = [
+            kSecAttrService as String: service as AnyObject,
+            kSecClass as String: kSecClassGenericPassword
+        ]
+        let status = SecItemDelete(query as CFDictionary)
+        guard status == errSecSuccess || status == errSecItemNotFound else {
+            throw StorageError.unexpectedStatus(status)
+        }
+    }
+    
 }
