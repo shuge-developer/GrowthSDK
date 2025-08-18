@@ -156,14 +156,20 @@ private extension GrowthKit {
         // 触发初始配置检查
         configSyncManager.triggerAllConfigCheck()
         
-        // 如果提供了结构化配置键，则异步获取配置
+        // 如果提供了结构化配置键，则获取配置
         if let configKeyItems = config.configKeyItems, !configKeyItems.isEmpty {
             let configItems = configKeyItems.map { item in
                 let type = ConfigItem(rawValue: item.item.rawValue)
                 return (key: item.key, item: type)
             }
-            Task {
-                ConfigFetcher.shared.fetchConfigs(with: configItems)
+            ConfigFetcher.shared.fetchConfigs(with: configItems)
+            // 如果包含通用配置（.config），则等待其可用（可能已从缓存加载）
+            let needsConfg = configItems.contains { $0.item == .config }
+            if needsConfg {
+                let ready = await waitForConfgConfigReady(timeoutSeconds: 6.0)
+                if !ready {
+                    Logger.warning("confg 配置等待超时，继续后续初始化（可能使用默认配置）")
+                }
             }
         }
         Logger.info("网络服务初始化成功")
@@ -184,4 +190,16 @@ private extension GrowthKit {
         }
     }
     
+}
+
+// MARK: - 等待配置
+private extension GrowthKit {
+    func waitForConfgConfigReady(timeoutSeconds: Double) async -> Bool {
+        let deadline = Date().addingTimeInterval(timeoutSeconds)
+        while Date() < deadline {
+            if ConfigFetcher.confgConfig != nil { return true }
+            try? await Task.sleep(nanoseconds: 100_000_000)
+        }
+        return ConfigFetcher.confgConfig != nil
+    }
 }

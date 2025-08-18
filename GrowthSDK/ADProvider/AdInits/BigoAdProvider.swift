@@ -15,7 +15,7 @@ internal class BigoAdProvider {
     
     // MARK: -
     func initialize(complete: AdInitComplete? = nil) {
-        let appid = ""//AppConfigure.AD.Bigo.appId
+        let appid = ConfigFetcher.confgConfig?.bigo?.appId ?? ""
         let config = BigoAdConfig(appId: appid)
         config.testMode = true
         

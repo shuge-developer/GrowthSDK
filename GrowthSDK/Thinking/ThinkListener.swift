@@ -12,8 +12,8 @@ internal import ThinkingSDK
 internal class ThinkListener {
     
     static func initialize(_ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
-        let appId = ""
-        let sUrl = ""
+        let appId = ConfigFetcher.confgConfig?.thinking?.appId ?? ""
+        let sUrl = ConfigFetcher.confgConfig?.thinking?.serverUrl ?? ""
         let config = TDConfig(appId: appId, serverUrl: sUrl)
         config.trackRelaunchedInBackgroundEvents = true
         if let options = launchOptions {

@@ -18,8 +18,8 @@ internal class KwaiAdProvider {
     // MARK: -
     func initialize(complete: AdInitComplete? = nil) {
         let option = KCOAdsInitOption()
-        option.appId = ""//AppConfigure.AD.Kwai.appId
-        option.token = ""//AppConfigure.AD.Kwai.token
+        option.appId = ConfigFetcher.confgConfig?.kwaiAds?.appId ?? ""
+        option.token = ConfigFetcher.confgConfig?.kwaiAds?.token ?? ""
         option.debug = true
         option.mediationType = .SDK
         
