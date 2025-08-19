@@ -23,7 +23,7 @@ internal class BiddingExecutionManager {
         session.state = .loading
         parent?.logInfo("⚡ 开始执行立即竞价: \(await session.description)")
         
-        guard AdsInitProvider.allInitialized else {
+        guard AdsInitProvider.videoAdInitialized else {
             parent?.logInfo("❌ 广告 SDK 未完全初始化")
             await parent?.finishBidding(session: session, state: .failed)
             return
@@ -37,7 +37,7 @@ internal class BiddingExecutionManager {
         session.state = .loading
         parent?.logInfo("📊 开始执行竞价: \(await session.description)")
         
-        guard AdsInitProvider.allInitialized else {
+        guard AdsInitProvider.videoAdInitialized else {
             parent?.logInfo("❌ 广告 SDK 未完全初始化")
             await parent?.finishBidding(session: session, state: .failed)
             return
