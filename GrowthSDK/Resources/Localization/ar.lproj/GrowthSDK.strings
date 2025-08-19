@@ -1,0 +1,7 @@
+/* GrowthSDK Arabic localization */
+
+"game_network_tips" = "الشبكة لا تعمل، يُرجى المحاولة مرة أخرى.";
+"game_reload_tips" = "جاري تحميل موارد اللعبة...";
+"game_review_tips" = "جاري حساب مكافآت اللعبة...";
+"game_btn_relaod" = "إعادة تحميل";
+"game_btn_ok" = "حسنًا";

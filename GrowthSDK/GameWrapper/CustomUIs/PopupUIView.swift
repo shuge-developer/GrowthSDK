@@ -32,7 +32,7 @@ struct TopLoadingView: View {
                     .rotationEffect(.degrees(rotation))
                     .animation(isLoading ? loadingAnimation : normalAnimation, value: rotation)
                 
-                Text("game_reload_tips".localized)
+                Text("game_reload_tips".localized())
                     .foregroundColor(.white)
                     .font(.system(size: fontSize, weight: .bold))
                     .shadow(color: .hex("#000000", 0.25),
@@ -44,7 +44,7 @@ struct TopLoadingView: View {
                     .resizable()
                     .frame(width: 188, height: 44)
                 
-                Text("game_btn_ok".localized)
+                Text("game_btn_ok".localized())
                     .font(.system(size: fontSize, weight: .bold))
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white)
@@ -75,7 +75,7 @@ struct CenterNetTipsView: View {
     
     var body: some View {
         VStack(spacing: 40) {
-            Text("game_network_tips".localized)
+            Text("game_network_tips".localized())
                 .fixedSize(horizontal: false, vertical: true)
                 .font(.system(size: fontSize1, weight: .bold))
                 .multilineTextAlignment(.center)
@@ -91,7 +91,7 @@ struct CenterNetTipsView: View {
                         .resizable()
                         .frame(width: 38, height: 38)
                     
-                    Text("game_btn_relaod".localized)
+                    Text("game_btn_relaod".localized())
                         .font(.system(size: fontSize2, weight: .bold))
                         .multilineTextAlignment(.center)
                         .foregroundColor(.white)
@@ -108,7 +108,7 @@ struct CenterNetTipsView: View {
 struct BottomTipsView: View {
     @ScaledMetric(relativeTo: .body) var fontSize: CGFloat = 20
     var body: some View {
-        Text("game_review_tips".localized)
+        Text("game_review_tips".localized())
             .fixedSize(horizontal: false, vertical: true)
             .font(.system(size: fontSize, weight: .bold))
             .multilineTextAlignment(.center)

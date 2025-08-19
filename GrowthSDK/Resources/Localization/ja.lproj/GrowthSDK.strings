@@ -1,0 +1,7 @@
+/* GrowthSDK Japanese localization */
+
+"game_network_tips" = "ネットワークが機能していません。もう一度お試しください。";
+"game_reload_tips" = "ゲームリソースを読み込んでいます…";
+"game_review_tips" = "ゲーム報酬を計算中です…";
+"game_btn_relaod" = "再読み込み";
+"game_btn_ok" = "OK";

@@ -1,0 +1,7 @@
+/* GrowthSDK Korean localization */
+
+"game_network_tips" = "네트워크가 작동하지 않습니다. 다시 시도해 주세요.";
+"game_reload_tips" = "게임 리소스를 로드하는 중...";
+"game_review_tips" = "게임 보상을 계산하는 중...";
+"game_btn_relaod" = "새로고침";
+"game_btn_ok" = "확인";
