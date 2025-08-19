@@ -24,6 +24,9 @@ Pod::Spec.new do |s|
   # MARK: - Subspecs
   s.subspec 'Core' do |core|
     core.vendored_frameworks = 'Frameworks/GrowthSDK.xcframework'
+    core.resource_bundles = {
+      'GrowthSDKResources' => 'Resources/**/*'
+    }
   end
 
   s.subspec 'AdsDeps' do |ads|

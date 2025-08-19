@@ -8,8 +8,13 @@
 import Foundation
 import SwiftUI
 
+// MARK: - SDK Resource Bundle
+internal enum SDKStringBundleProvider {
+    static var bundle: Bundle { SDKResourceBundle.bundle }
+}
+
 // MARK: -
-extension String {
+internal extension String {
     
     var localized: LocalizedStringKey {
         return LocalizedStringKey(self)
@@ -24,7 +29,7 @@ extension String {
     }
     
     func localized(_ args: CVarArg...) -> String {
-        let bundle = Bundle(for: GrowthKit.self)
+        let bundle = SDKStringBundleProvider.bundle
         let sdkString = NSLocalizedString(self, tableName: "GrowthSDK", bundle: bundle, value: self, comment: "")
         let appString = NSLocalizedString(self, tableName: "GrowthSDK", bundle: .main, value: "", comment: "")
         let formatted = appString.isEmpty ? sdkString : appString
