@@ -2,7 +2,7 @@
 //  AdDisplayManager.swift
 //  SmallGame
 //
-//  Created by AI Assistant on 2025/7/2.
+//  Created by arvin Assistant on 2025/7/2.
 //
 
 import Foundation

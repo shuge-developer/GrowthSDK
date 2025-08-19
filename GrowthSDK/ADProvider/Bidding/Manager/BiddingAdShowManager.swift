@@ -53,35 +53,24 @@ internal class BiddingAdShowManager {
     
     /// 尝试展示单个广告
     private func attemptShowAd(result: BiddingResult, adCallbacks: BiddingAdCallbacks?) async -> Bool {
-        guard let loader = parent?.getLoader(for: result.adStyle),
-              loader.isLoaded,
-              loader.isAdValid() else {
+        guard let loader = parent?.getLoader(for: result.adStyle), loader.isLoaded, loader.isAdValid() else {
             return false
         }
-        
         parent?.setupLoaderCallbacks(loader: loader, result: result, adCallbacks: adCallbacks)
-        
         return await withCheckedContinuation { continuation in
-            // 使用独立的UIWindow展示广告，避免影响主应用视图层次结构
-            let adWindow = UIWindow(frame: UIScreen.main.bounds)
-            adWindow.windowLevel = UIWindow.Level.alert + 1
-            adWindow.backgroundColor = UIColor.clear
-            adWindow.isHidden = false
-            
-            // 创建一个透明的根视图控制器
-            let adViewController = UIViewController()
-            adViewController.view.backgroundColor = UIColor.clear
-            adWindow.rootViewController = adViewController
-            
-            let data = MaxCustomData.adWorth(result.revenue)
-            let result = loader.show(from: adViewController, customData: data)
-            
-            // 广告展示完成后清理window
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                adWindow.isHidden = true
+            guard let rootVC = AdWindowManager.shared.beginPresentation() else {
+                parent?.logInfo("❌ 已存在正在展示的广告，拒绝并发展示请求")
+                adCallbacks?.onShowFailed?(AdError.adAlreadyShowing)
+                continuation.resume(returning: false)
+                return
             }
-            
-            continuation.resume(returning: result)
+            let data = MaxCustomData.adWorth(result.revenue)
+            let showOK = loader.show(from: rootVC, customData: data)
+            if !showOK { // 未能成功展示，立即结束展示并释放窗口
+                AdWindowManager.shared.endPresentation()
+            }
+            // 立即返回展示结果；窗口释放由回调在广告结束/失败时触发
+            continuation.resume(returning: showOK)
         }
     }
     

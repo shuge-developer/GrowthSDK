@@ -976,6 +976,7 @@ extension AdBiddingManager {
         switch state {
         case .showFailure(let error):
             logInfo("❌ 广告展示失败回调: \(result.adStyle), 错误: \(error.localizedDescription)")
+            AdWindowManager.shared.endPresentation()
             adCallbacks?.onShowFailed?(error)
             
         case .didDisplay(_):
@@ -992,6 +993,7 @@ extension AdBiddingManager {
             
         case .didHide(_):
             logInfo("🔒 广告关闭回调: \(result.adStyle)")
+            AdWindowManager.shared.endPresentation()
             adCallbacks?.onClose?(result)
             
             logInfo("🔄 广告已关闭，开始精确补充: \(result.adStyle)")
