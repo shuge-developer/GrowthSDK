@@ -28,7 +28,7 @@ internal class KwaiAdProvider {
         option.mediationType = .SDK
         option.appId = appId
         option.token = token
-        option.debug = true
+        option.debug = GrowthKit.isLoggingEnabled
         
         let sdk = KCOAdsInitialization.sharedInstance()
         sdk.start(option) { [weak self] error in

@@ -26,8 +26,9 @@ internal class MaxAdProvider {
         }
         
         let sdk = ALSdk.shared()
-        sdk.settings.isCreativeDebuggerEnabled = true
-        sdk.settings.isVerboseLoggingEnabled = true
+        let isEnabled = GrowthKit.isLoggingEnabled
+        sdk.settings.isCreativeDebuggerEnabled = isEnabled
+        sdk.settings.isVerboseLoggingEnabled = isEnabled
         sdk.settings.userIdentifier = SystemIDUtils.uuidString
         sdk.settings.setExtraParameterForKey(
             "initialization_delay_ms", value: "0"

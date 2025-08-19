@@ -22,7 +22,7 @@ internal class BigoAdProvider {
             return
         }
         let config = BigoAdConfig(appId: appId)
-        config.testMode = true
+        config.testMode = GrowthKit.isLoggingEnabled
         
         let sdk = BigoAdSdk.sharedInstance()
         sdk.initializeSdk(with: config) {

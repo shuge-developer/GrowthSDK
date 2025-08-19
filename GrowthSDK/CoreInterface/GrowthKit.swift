@@ -45,11 +45,12 @@ public enum InitError: Error, LocalizedError {
         didSet { isInitialized = (state == .initialized) }
     }
     
-    internal static var logger: GrowthSDKLogging = DefaultLogger.shared
-    
     @Published @objc public private(set) var isInitialized: Bool = false
     
+    @objc public static var isLoggingEnabled: Bool = true
+    
     // MARK: -
+    internal static var logger: GrowthSDKLogging = DefaultLogger.shared
     private var launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     private var initializationTask: Task<Void, Error>?
     private var configSubscription: AnyCancellable?
