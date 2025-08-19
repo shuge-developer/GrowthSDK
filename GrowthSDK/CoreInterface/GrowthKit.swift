@@ -199,6 +199,7 @@ private extension GrowthKit {
             return
         }
         await withCheckedContinuation { continuation in
+            var hasResumed = false
             AdsInitProvider.startup { adType in
                 Logger.info("\(adType.description) SDK 初始化完成")
                 if case .admob = adType {
@@ -206,7 +207,8 @@ private extension GrowthKit {
                         await AppOpenAdManager.shared.loadAd()
                     }
                 }
-                if AdsInitProvider.videoAdInitialized {
+                if AdsInitProvider.videoAdInitialized && !hasResumed {
+                    hasResumed = true
                     Task { @MainActor in
                         AdBiddingManager.shared.preloadAllAds()
                     }
