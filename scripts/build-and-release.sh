@@ -6,18 +6,104 @@
 set -e
 
 # 配置
-VERSION=${1:-"1.0.0"}
 SOURCE_REPO="git@codeup.aliyun.com:630b1207050e9c4a07a93a48/IOS/SDK/GrowthSDK.git"
 RELEASE_REPO="https://github.com/shuge-developer/GrowthSDK.git"
 PROJECT_DIR="$(pwd)"
+VERSION=""
+BUMP_TYPE="patch"  # 可选：patch | minor | major
+ONLY_BUMP=false     # 仅更新版本号并退出
 
-echo "🚀 开始构建和发布 GrowthSDK v$VERSION"
+# 打印使用方法
+usage() {
+    cat << EOF
+用法: $(basename "$0") [<version>] [--bump <patch|minor|major>] [--only-bump] [--help]
 
-# 检查参数
-if [ -z "$VERSION" ]; then
-    echo "❌ 请提供版本号: ./build-and-release.sh <version>"
-    exit 1
+说明:
+  - 本脚本用于一键完成 GrowthSDK 的版本迭代、构建 XCFramework、
+    提交源代码到阿里云仓库，以及将产物发布到 GitHub 并打标签。
+
+选项:
+  <version>              显式指定要发布的版本号（例如: 1.2.3）。
+  --bump, -b <type>      自动迭代版本号，<type> 可选:
+                         - patch (默认): x.y.z -> x.y.(z+1)，按 9 进位
+                         - minor         : x.y.z -> x.(y+1).0，按 9 进位
+                         - major         : x.y.z -> (x+1).0.0
+  --only-bump            仅更新版本号（同步写入 podspec 与 MARKETING_VERSION）后立即退出，
+                         不执行后续的构建与推送流程。
+  -h, --help             显示此帮助信息。
+
+常见用法:
+  1) 自动补丁位迭代并完整发布（默认）
+     $(basename "$0")
+
+  2) 自动小版本迭代并完整发布
+     $(basename "$0") --bump minor
+
+  3) 自动大版本迭代并完整发布
+     $(basename "$0") --bump major
+
+  4) 指定具体版本并完整发布
+     $(basename "$0") 1.3.0
+
+  5) 仅更新版本号并退出（用于验证版本写入是否正确）
+     $(basename "$0") --only-bump --bump patch
+     或
+     $(basename "$0") --only-bump 1.2.3
+
+流程概览:
+  - 解析/计算版本号（调用 scripts/version-bump.sh）
+  - 写入版本到 GrowthSDK.podspec 与 Xcode MARKETING_VERSION
+  - 调用 scripts/build-ios-sdk.sh 构建 XCFramework 到 ./Frameworks
+  - 提交源代码到阿里云 origin/main
+  - 将 Frameworks + podspec + README 推送到 GitHub 仓库 main，并创建 tag v<version>
+
+前置要求:
+  - 当前目录为 GrowthSDK 工程根目录，且为 git 仓库
+  - origin 指向阿里云源码仓库，github 远程指向 GitHub 发布仓库
+  - 已安装 Xcode 命令行工具（xcodebuild）和 CocoaPods（可选）
+
+示例输出:
+  成功后会显示版本号、GitHub 推送信息以及 CocoaPods 集成提示。
+
+EOF
+}
+
+# 解析参数（支持位置参数版本号与 --bump）
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --bump|-b)
+            BUMP_TYPE="$2"; shift 2 ;;
+        --only-bump)
+            ONLY_BUMP=true; shift ;;
+        -h|--help)
+            usage; exit 0 ;;
+        *)
+            if [[ -z "$VERSION" ]]; then
+                VERSION="$1"; shift
+            else
+                echo "❌ 未知参数: $1"; usage; exit 1
+            fi
+            ;;
+    esac
+done
+
+# 使用单独的版本脚本计算版本
+
+if [[ -z "$VERSION" ]]; then
+    VERSION=$(./scripts/version-bump.sh --print --bump "$BUMP_TYPE")
 fi
+
+echo "🚀 开始构建和发布 GrowthSDK v$VERSION  (bump: $BUMP_TYPE)"
+
+# 仅更新版本并提前退出
+if [[ "$ONLY_BUMP" == true ]]; then
+    echo "📝 仅更新版本号到 $VERSION..."
+    ./scripts/version-bump.sh --apply --set "$VERSION"
+    echo "✅ 版本号已更新为 $VERSION，按要求提前结束。"
+    exit 0
+fi
+
+# 无需检查必填参数，已支持自动递增
 
 # 检查当前是否在 git 仓库中
 if [ ! -d ".git" ]; then
@@ -51,16 +137,18 @@ fi
 echo "📥 拉取最新代码..."
 git pull origin main
 
-# 使用专业的 SDK 构建脚本
+# 在构建前同步更新版本号（podspec 与 Xcode MARKETING_VERSION）
+echo "📝 更新版本号到 $VERSION..."
+./scripts/version-bump.sh --apply --set "$VERSION"
+
+# 使用专业的 SDK 构建脚本（构建出的二进制包含正确的版本信息）
 echo "🔨 使用专业 SDK 构建脚本..."
 if ! ./scripts/build-ios-sdk.sh --verbose; then
     echo "❌ SDK 构建失败"
     exit 1
 fi
 
-# 更新 podspec 版本
-echo "📝 更新 podspec 版本..."
-sed -i '' "s/s.version.*=.*'.*'/s.version          = '$VERSION'/" GrowthSDK.podspec
+# 版本已在构建前更新，无需再次修改 podspec
 
 # 提交源代码到阿里云仓库（不包含 framework）
 echo "💾 提交源代码到阿里云仓库..."
