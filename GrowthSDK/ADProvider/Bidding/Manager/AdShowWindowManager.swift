@@ -35,10 +35,10 @@ internal final class AdWindowManager {
     }
     
     // MARK: -
-    private func getRootViewController() -> UIViewController {
-        let rootVC = window!.rootViewController!
-        showRetainCounter += 1
+    private func getRootViewController() -> UIViewController? {
         ensureWindowVisible()
+        let rootVC = window?.rootViewController
+        showRetainCounter += 1
         return rootVC
     }
     
