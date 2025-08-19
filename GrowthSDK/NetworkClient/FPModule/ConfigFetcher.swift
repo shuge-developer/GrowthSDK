@@ -58,6 +58,7 @@ internal final class ConfigFetcher {
     
     static let shared = ConfigFetcher()
     
+    internal typealias _ConfigKeyItem = (key: String, item: ConfigItem?)
     @Published private(set) var configState: ConfigState = .initial
     internal var configPublisher: AnyPublisher<ConfigState, Never> {
         $configState.eraseToAnyPublisher()
@@ -90,7 +91,7 @@ internal final class ConfigFetcher {
     }
     
     // MARK: -
-    internal func fetchConfigs(with configKeyItems: [(key: String, item: ConfigItem?)]) {
+    internal func fetchConfigs(with configKeyItems: [_ConfigKeyItem]) {
         Logger.info("开始获取配置(结构化配置键): \(configKeyItems.map { $0.key })")
         registerConfigKeyItems(configKeyItems)
         
@@ -213,7 +214,7 @@ internal final class ConfigFetcher {
     }
     
     // MARK: -
-    private func registerConfigKeyItems(_ configKeyItems: [(key: String, item: ConfigItem?)]) {
+    private func registerConfigKeyItems(_ configKeyItems: [_ConfigKeyItem]) {
         for configKeyItem in configKeyItems {
             guard !configKeyItem.key.isEmpty else { continue }
             guard let item = configKeyItem.item else { continue }

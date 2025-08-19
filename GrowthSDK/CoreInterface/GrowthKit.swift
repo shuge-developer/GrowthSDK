@@ -164,6 +164,8 @@ private extension GrowthKit {
             let configItems = configKeyItems.map { item in
                 return (key: item.key, item: item.item)
             }
+            // 发起配置请求
+            ConfigFetcher.shared.fetchConfigs(with: configItems)
             // 订阅配置状态变化
             configSubscription = ConfigFetcher.shared.configPublisher
                 .receive(on: DispatchQueue.main)
@@ -176,8 +178,6 @@ private extension GrowthKit {
                         }
                     }
                 }
-            // 发起配置请求
-            ConfigFetcher.shared.fetchConfigs(with: configItems)
         }
         Logger.info("网络服务初始化成功")
     }
@@ -194,37 +194,25 @@ private extension GrowthKit {
     /// 初始化广告SDK
     func initializeAdSDKs() async throws {
         Logger.info("开始初始化广告SDK...")
-        guard let confg = ConfigFetcher.confgConfig else {
+        guard let _ = ConfigFetcher.confgConfig else {
             Logger.warning("confg 配置缺失，跳过广告 SDK 初始化")
             return
         }
-        // 并行初始化各广告网络
-        await withTaskGroup(of: Void.self) { group in
-            if let maxConfig = confg.appLovin, maxConfig.canInitialize {
-                group.addTask {
-                    await MainActor.run {
-                        MaxAdProvider.shared.initialize { _ in }
+        await withCheckedContinuation { continuation in
+            AdsInitProvider.startup { adType in
+                Logger.info("\(adType.description) SDK 初始化完成")
+                if case .admob = adType {
+                    Task { @MainActor in
+                        await AppOpenAdManager.shared.loadAd()
                     }
                 }
-            }
-            // Kwai
-            if let kwaiConfig = confg.kwaiAds, kwaiConfig.canInitialize {
-                group.addTask {
-                    await MainActor.run {
-                        KwaiAdProvider.shared.initialize { _ in }
+                if AdsInitProvider.videoAdInitialized {
+                    Task { @MainActor in
+                        AdBiddingManager.shared.preloadAllAds()
                     }
+                    continuation.resume()
                 }
             }
-            // Bigo
-            if let bigoConfig = confg.bigo, bigoConfig.canInitialize {
-                group.addTask {
-                    await MainActor.run {
-                        BigoAdProvider.shared.initialize { _ in }
-                    }
-                }
-            }
-            // 等待所有初始化完成
-            await group.waitForAll()
         }
         Logger.info("广告 SDK 初始化完成")
     }

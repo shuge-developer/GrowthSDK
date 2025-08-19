@@ -11,6 +11,19 @@ typealias AdInitComplete = ((AD) -> Void)
 
 internal enum AD {
     case admob, bigo, kwai, max
+    
+    internal var description: String {
+        switch self {
+        case .admob:
+            return "AdMob"
+        case .bigo:
+            return "Bigo"
+        case .kwai:
+            return "Kwai"
+        case .max:
+            return "Max"
+        }
+    }
 }
 
 // MARK: -
@@ -52,26 +65,6 @@ internal class AdsInitProvider {
     // MARK: -
     static func showDebugger() {
         MaxAdProvider.shared.showDebugger()
-    }
-    
-}
-
-// MARK: -
-internal class AdLoadProvider {
-    
-    static func startup() {
-        AdsInitProvider.startup { adType in
-            if case .admob = adType {
-                Task { @MainActor in // 加载开屏广告
-                    await AppOpenAdManager.shared.loadAd()
-                }
-            }
-            if AdsInitProvider.allInitialized {
-                Task { @MainActor in // 预加载竞价广告
-                    AdBiddingManager.shared.preloadAllAds()
-                }
-            }
-        }
     }
     
 }
