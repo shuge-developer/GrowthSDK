@@ -7,13 +7,14 @@
 
 import SwiftUI
 
+// MARK: -
 internal protocol ImageResourceable {
     static func getImageResource(_ name: String) -> ImageResource
 }
 
 internal extension ImageResourceable {
     static func getImageResource(_ name: String) -> ImageResource {
-        let bundle = Bundle(for: GrowthKit.self)
+        let bundle = SDKStringBundleProvider.bundle
         return ImageResource(
             name: name, bundle: bundle
         )
@@ -35,7 +36,6 @@ extension Image: ImageResourceable {
     
     static func named(_ name: String) -> Image {
         let resource = getImageResource(name)
-        //return Image(name, bundle: bundle)
         return Image(resource)
     }
     
