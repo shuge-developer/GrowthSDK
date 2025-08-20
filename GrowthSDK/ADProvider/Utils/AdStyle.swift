@@ -80,34 +80,8 @@ extension AdStyle {
         case .custom(let id, _, _):
             return id
         default:
-            return defaultAdId
-        }
-    }
-    
-    private var defaultAdId: String {
-//        let AD = AppConfigure.AD.self
-//        switch self {
-//        case .rewarded(let source):
-//            switch source {
-//            case .bigo1: return AD.Bigo.Rewarded.adId1
-//            case .bigo2: return AD.Bigo.Rewarded.adId2
-//            case .kwai1: return AD.Kwai.Rewarded.adId1
-//            case .kwai2: return AD.Kwai.Rewarded.adId2
-//            case .max1: return AD.MAX.Rewarded.adId1
-//            case .max2: return AD.MAX.Rewarded.adId2
-//            }
-//        case .inserted(let source):
-//            switch source {
-//            case .bigo1: return AD.Bigo.Inserted.adId1
-//            case .bigo2: return AD.Bigo.Inserted.adId2
-//            case .kwai1: return AD.Kwai.Inserted.adId1
-//            case .kwai2: return AD.Kwai.Inserted.adId2
-//            case .max1: return AD.MAX.Inserted.adId1
-//            case .max2: return AD.MAX.Inserted.adId2
-//            }
-//        default:
             return ""
-//        }
+        }
     }
     
 }

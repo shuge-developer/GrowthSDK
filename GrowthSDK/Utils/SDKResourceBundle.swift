@@ -2,7 +2,7 @@
 //  SDKResourceBundle.swift
 //  GrowthSDK
 //
-//  Created by AI Assistant on 2025/08/10.
+//  Created by arvin on 2025/08/10.
 //
 
 import Foundation
