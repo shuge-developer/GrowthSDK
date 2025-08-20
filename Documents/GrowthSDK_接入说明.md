@@ -1203,10 +1203,18 @@ GrowthKit.shared.showAdDebugger()
 - `UnifiedExample/ObjcExample`：Objective-C 示例
 - `UnifiedExample/SwiftExample`：Swift 示例（UIKit）
 - `UnifiedExample/SwiftUIExample`：SwiftUI 示例
-- `UnifiedExample/UnityProject`：Unity iOS 子工程占位目录（发布到 GitHub 时默认不包含 Unity 原始文件，需由集成者将本地 Unity 导出的 iOS 工程拷入该目录）
+- `UnifiedExample/UnityProject`：Unity iOS 子工程目录（发布仓库完全忽略该目录；请在本地手动新建 `UnityProject/` 并将 Unity 导出的 iOS 工程拷入）
 - `UnifiedExample/README.md`：该示例的详细使用说明
 
-### 7.2 打开与首次安装
+### 7.2 准备与首次打开
+先在本地创建并导入 Unity 工程：
+```bash
+cd UnifiedExample
+mkdir -p UnityProject
+# 将你本地 Unity 导出的 iOS 工程完整复制到 UnityProject/
+```
+
+然后安装依赖并打开：
 ```bash
 cd UnifiedExample
 pod install
@@ -1218,7 +1226,7 @@ open UnifiedExample.xcworkspace
 ### 7.3 Unity 引入（重要）
 由于 Unity 子项目自动化配置较复杂，示例已预置子项目引用；但仍需在每个 App Target 手动完成以下操作：
 1) 进入 Target → General → Frameworks, Libraries, and Embedded Content
-2) 将你本地 Unity 导出的 iOS 工程复制到 `UnifiedExample/UnityProject/` 下；若目录为空或未包含 `Unity-iPhone.xcodeproj`，请先执行此步
+2) 确保你已将 Unity iOS 导出工程复制至 `UnifiedExample/UnityProject/`，并能看到 `Unity-iPhone.xcodeproj`
 3) 点击“+”，在 `Unity-iPhone.xcodeproj` → Products 下添加 `UnityFramework.framework`
 4) 将其设置为“Embed & Sign”
 

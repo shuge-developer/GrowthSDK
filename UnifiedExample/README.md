@@ -3,12 +3,20 @@
 该工程包含三个 target（ObjcExample/SwiftExample/SwiftUIExample），统一引入 `UnityProject`（发布仓库中默认不包含 Unity 原始子工程，请按下文手动添加），并通过 CocoaPods 管理第三方依赖。
 
 ## 目录结构
-- UnityProject：Unity iOS 子工程（发布时默认不包含，请在本地自行导入 Unity 导出的 iOS 工程到该目录）
+- UnityProject：Unity iOS 子工程目录（发布仓库完全忽略该目录；请在本地手动新建 `UnityProject/` 目录，并将 Unity 导出的 iOS 工程拷入该目录）
 - ObjcExample：Objective-C 示例源文件
 - SwiftExample：Swift 示例源文件
 - SwiftUIExample：SwiftUI 示例源文件
 
 ## 快速开始
+
+### 0. 准备 Unity 子工程（首次必做）
+发布仓库不包含 Unity 工程，请先在本地创建目录并拷贝 Unity iOS 导出：
+```bash
+cd UnifiedExample
+mkdir -p UnityProject
+# 将你本地 Unity 导出的 iOS 工程完整复制到当前目录下的 UnityProject/
+```
 
 ### 1. 打开工程
 ```bash
@@ -28,7 +36,7 @@ open UnifiedExample.xcworkspace
 1. 在 Xcode 中选择任意一个 App Target
 2. 进入 "Build Phases" → "Frameworks, Libraries, and Embedded Content"
 3. 点击 "+" 按钮
-4. 在 "Unity-iPhone.xcodeproj" → "Products" 下找到 `UnityFramework.framework`（若工程中无 `Unity-iPhone.xcodeproj`，请将你本地 Unity 导出的 iOS 工程复制进 `UnifiedExample/UnityProject/` 再重试）
+4. 在 "Unity-iPhone.xcodeproj" → "Products" 下找到 `UnityFramework.framework`（若看不到 `Unity-iPhone.xcodeproj`，请先执行上面的“准备 Unity 子工程”步骤：新建 `UnityProject/` 并拷入 Unity iOS 工程）
 5. 将其添加到当前 Target，并设置为 "Embed & Sign"
 6. 对另外两个 App Target 重复此步骤
 
