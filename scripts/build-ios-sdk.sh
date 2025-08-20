@@ -147,7 +147,7 @@ begin
       if phase.is_a?(Xcodeproj::Project::Object::PBXShellScriptBuildPhase)
         if phase.name&.include?('Copy Pods Resources') || 
            phase.name&.include?('[CP] Copy Pods Resources') ||
-           phase.shell_script&.include?('Pods-') && phase.shell_script&.include?('-resources.sh')
+           (phase.shell_script&.include?('Pods-') && phase.shell_script&.include?('-resources.sh'))
           phases_to_remove << phase
         end
       end
@@ -308,9 +308,11 @@ fi
 
 echo "✅ iOS 设备版本构建完成"
 
-# 为iOS模拟器构建
+# 为iOS模拟器构建（排除 arm64 以兼容缺少 arm64-simulator slice 的第三方SDK，例如 KwaiAdsSDK）
 echo "🖥️  构建 iOS 模拟器版本..."
-log "开始构建 iOS 模拟器架构"
+log "开始构建 iOS 模拟器架构 (EXCLUDED_ARCHS=arm64, ARCHS=x86_64)"
+
+SIMULATOR_ARCH_FLAGS="ARCHS=x86_64 EXCLUDED_ARCHS=arm64 ONLY_ACTIVE_ARCH=NO"
 
 if [[ "$USE_WORKSPACE" == true ]]; then
     # 使用 workspace 和 destination（CocoaPods 兼容）
@@ -320,6 +322,7 @@ if [[ "$USE_WORKSPACE" == true ]]; then
         -configuration \"$CONFIGURATION\" \
         -destination \"generic/platform=iOS Simulator\" \
         -archivePath \"$ARCHIVE_DIR/ios_simulator.xcarchive\" \
+        $SIMULATOR_ARCH_FLAGS \
         BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
         SKIP_INSTALL=NO \
         DEFINES_MODULE=YES \
@@ -333,6 +336,7 @@ else
         -sdk iphonesimulator \
         -configuration \"$CONFIGURATION\" \
         -archivePath \"$ARCHIVE_DIR/ios_simulator.xcarchive\" \
+        $SIMULATOR_ARCH_FLAGS \
         BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
         SKIP_INSTALL=NO \
         DEFINES_MODULE=YES \
