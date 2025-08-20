@@ -1057,60 +1057,119 @@ struct YourApp: App {
 
 ## 4. 广告集成
 
-GrowthSDK 提供统一的广告展示入口，支持激励视频、插屏、开屏三类样式：
+> **注意**：广告集成相关 API 和详细说明请参考 [5.5 广告相关 API](#55-广告相关-api) 章节。
 
-- ADStyle.rewarded（激励）
-- ADStyle.inserted（插屏）
-- ADStyle.appOpen（开屏）
+## 5. SDK API 参考
 
-### 4.1 展示激励广告（带回调）
+GrowthSDK 提供 广告展示、Unity 视图管理 功能。
+
+### 5.1 版本信息
 
 ```swift
-import GrowthSDK
-
-final class AdHandler: NSObject, AdCallbacks {
-    func onStartLoading(_ style: ADStyle) { print("开始加载: \(style)") }
-    func onLoadSuccess(_ style: ADStyle) { print("加载成功: \(style)") }
-    func onLoadFailed(_ style: ADStyle, error: Error?) { print("加载失败: \(String(describing: error))") }
-    func onShowSuccess(_ style: ADStyle) { print("展示成功: \(style)") }
-    func onShowFailed(_ style: ADStyle, error: Error?) { print("展示失败: \(String(describing: error))") }
-    func onGetAdReward(_ style: ADStyle) { print("获得激励") }
-    func onAdClick(_ style: ADStyle) { print("点击事件") }
-    func onAdClose(_ style: ADStyle) { print("关闭") }
-}
-
-let callbacks = AdHandler()
-GrowthKit.showAd(with: .rewarded, callbacks: callbacks)
+// 获取 SDK 版本号
+let version = GrowthKit.sdkVersion
 ```
 
-### 4.2 展示插屏广告
+### 5.2 状态查询
 
 ```swift
+// 查询 SDK 初始化状态
+let isReady = GrowthKit.shared.isInitialized
+
+// 查询 SDK 当前状态
+let state = GrowthKit.shared.state
+// InitState.uninitialized  - 未初始化
+// InitState.initializing   - 初始化中  
+// InitState.initialized    - 已初始化
+// InitState.failed         - 初始化失败
+```
+
+### 5.3 日志控制
+
+```swift
+// 启用/禁用 SDK 日志输出
+GrowthKit.isLoggingEnabled = true  // 默认启用
+```
+
+### 5.4 视图管理（Unity 集成）
+
+#### 5.4.1 UIKit 方式
+
+```swift
+// 创建 GrowthSDK 视图控制器
+let sdkController = GrowthKit.createController(with: unityController)
+```
+
+#### 5.4.2 SwiftUI 方式
+
+```swift
+// 创建 GrowthSDK SwiftUI 视图
+let sdkView = GrowthKit.createView(with: unityController)
+```
+
+> **注意**：视图管理 API 主要用于 Unity 游戏集成场景。
+
+### 5.5 广告相关 API
+
+#### 5.5.1 广告展示
+
+```swift
+// 展示激励广告（无回调）
+GrowthKit.showAd(with: .rewarded)
+
+// 展示激励广告（带回调）
+GrowthKit.showAd(with: .rewarded, callbacks: adCallbacks)
+
+// 展示插屏广告
 GrowthKit.showAd(with: .inserted)
-```
 
-### 4.3 展示开屏广告
-
-```swift
+// 展示开屏广告
 GrowthKit.showAd(with: .appOpen)
 ```
 
-### 4.4 预加载/调试
+#### 5.5.2 广告预加载
 
 ```swift
-// 重新加载开屏广告资源
+// 重新加载开屏广告
 GrowthKit.shared.reloadAppOpenAd()
 
-// 预加载竞价广告资源
+// 重新加载竞价广告
 GrowthKit.shared.reloadBiddingAd()
+```
 
+#### 5.5.3 广告调试
+
+```swift
 // 打开广告调试面板
 GrowthKit.shared.showAdDebugger()
 ```
 
-> 注意：实际加载/竞价/展示由内部管理；确保完成 SDK 初始化并成功拉取必要配置后再调用。
+### 5.6 广告回调协议
 
-## 5. 错误码与错误处理
+```swift
+@objc protocol AdCallbacks {
+    @objc optional func onStartLoading(_ style: ADStyle)      // 开始加载
+    @objc optional func onLoadSuccess(_ style: ADStyle)       // 加载成功
+    @objc optional func onLoadFailed(_ style: ADStyle, error: Error?)  // 加载失败
+    @objc optional func onShowSuccess(_ style: ADStyle)       // 展示成功
+    @objc optional func onShowFailed(_ style: ADStyle, error: Error?)  // 展示失败
+    @objc optional func onGetAdReward(_ style: ADStyle)       // 获得激励
+    @objc optional func onAdClick(_ style: ADStyle)           // 广告点击
+    @objc optional func onAdClose(_ style: ADStyle)           // 广告关闭
+}
+```
+
+### 5.7 广告样式枚举
+
+```swift
+@objc enum ADStyle: Int {
+    case rewarded = 0   // 激励广告
+    case inserted = 1   // 插屏广告
+    case appOpen = 2    // 开屏广告
+}
+```
+
+## 6. 错误码与错误处理
 
 初始化阶段的错误类型（示例）：
 
@@ -1135,21 +1194,3 @@ GrowthKit.shared.showAdDebugger()
 - 广告无填充（No Fill）
 - 频控/策略限制（如冷却时间未到）
 - IDFA/权限受限导致竞价或定向能力受限
-
-### 6.3 最低系统与架构
-
-- iOS 14.0+
-- 支持模拟器与真机（arm64、x86_64）
-
-## 7. 版本与兼容性建议
-
-- 建议在 App 启动阶段尽早初始化 SDK
-- 生产环境严格控制 ATS 白名单
-- 合理处理未授权 IDFA 场景，避免强依赖
-
-## 8. 技术支持
-
-- 请先检查控制台日志与回调错误信息
-- 确认 `NetworkConfig` 参数配置正确
-- 确认已正确集成依赖与权限
-- 如仍有问题，请联系 SDK 技术支持
