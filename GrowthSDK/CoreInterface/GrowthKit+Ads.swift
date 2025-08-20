@@ -52,7 +52,7 @@ public extension GrowthKit {
         }
     }
     
-    @objc func reloadBiddingAds() {
+    @objc func reloadBiddingAd() {
         let videoAd = AdsInitProvider.videoAdInitialized
         guard isInitialized && videoAd else {
             Logger.warning("未初始化完成，无法加载竞价广告")

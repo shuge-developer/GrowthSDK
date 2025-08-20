@@ -898,8 +898,18 @@ GrowthSDK 的对外主入口为 `GrowthKit`。初始化时需要传入 `NetworkC
 - serviceKey: 服务密钥（字符串）
 - serviceIv: 服务向量（字符串）
 - publicKey: 公钥（字符串）
-- configKeyItems: 结构化配置键（可选，数组）
-- other: 其它可选扩展字段（`OtherConfig`，包含 thirdId/instanceId/campaign/referer/adid 等）
+- configKeyItems: 结构化配置键（数组）
+- other: 其它可选扩展字段（`OtherConfig`，主要用于 Objective-C 项目）
+
+`OtherConfig` 扩展字段：
+
+- thirdId: 第三方 ID（可选，字符串）
+- instanceId: 实例 ID（可选，字符串）
+- campaign: 活动标识（可选，字符串）
+- referer: 来源标识（可选，字符串）
+- adid: 广告 ID（可选，字符串）
+
+> **注意**：`other` 字段主要是为了适配 Objective-C 项目。在 Swift 和 SwiftUI 项目中，可以直接通过实现 `NetworkConfigurable` 协议来注入这些扩展字段，无需使用 `OtherConfig`。
 
 如需通过结构化配置驱动 SDK 内部的配置拉取，可传入 `configKeyItems`：
 
@@ -1092,9 +1102,9 @@ GrowthKit.showAd(with: .appOpen)
 GrowthKit.shared.reloadAppOpenAd()
 
 // 预加载竞价广告资源
-GrowthKit.shared.reloadBiddingAds()
+GrowthKit.shared.reloadBiddingAd()
 
-// 打开广告调试面板（如可用）
+// 打开广告调试面板
 GrowthKit.shared.showAdDebugger()
 ```
 
