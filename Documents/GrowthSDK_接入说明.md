@@ -1194,3 +1194,58 @@ GrowthKit.shared.showAdDebugger()
 - 广告无填充（No Fill）
 - 频控/策略限制（如冷却时间未到）
 - IDFA/权限受限导致竞价或定向能力受限
+
+## 7. 集成示例工程（UnifiedExample）
+
+为方便验证 SDK 与 Unity 集成、三种工程模板（Objc/Swift/SwiftUI）的使用方式，仓库内提供多 Target 示例工程 `UnifiedExample/`。
+
+### 7.1 目录结构
+- `UnifiedExample/ObjcExample`：Objective-C 示例
+- `UnifiedExample/SwiftExample`：Swift 示例（UIKit）
+- `UnifiedExample/SwiftUIExample`：SwiftUI 示例
+- `UnifiedExample/UnityProject`：Unity iOS 子工程占位目录（发布到 GitHub 时默认不包含 Unity 原始文件，需由集成者将本地 Unity 导出的 iOS 工程拷入该目录）
+- `UnifiedExample/README.md`：该示例的详细使用说明
+
+### 7.2 打开与首次安装
+```bash
+cd UnifiedExample
+pod install
+open UnifiedExample.xcworkspace
+```
+
+在 Xcode 顶部 Scheme 中选择任一 Target 运行：`ObjcExample`、`SwiftExample`、`SwiftUIExample`。
+
+### 7.3 Unity 引入（重要）
+由于 Unity 子项目自动化配置较复杂，示例已预置子项目引用；但仍需在每个 App Target 手动完成以下操作：
+1) 进入 Target → General → Frameworks, Libraries, and Embedded Content
+2) 将你本地 Unity 导出的 iOS 工程复制到 `UnifiedExample/UnityProject/` 下；若目录为空或未包含 `Unity-iPhone.xcodeproj`，请先执行此步
+3) 点击“+”，在 `Unity-iPhone.xcodeproj` → Products 下添加 `UnityFramework.framework`
+4) 将其设置为“Embed & Sign”
+
+完成后即可在三个示例中统一使用 Unity 视图（SDK 内部提供 `GrowthKit.createController` 与 `createView`）。
+
+### 7.4 Info.plist 必要项（示例已预置）
+- `CFBundleIdentifier`、`CFBundleVersion`、`CFBundleShortVersionString`、`CFBundleExecutable`、`CFBundleDisplayName/Name`
+- 启动屏：为避免回退至旧布局（320×480），示例已设置：
+  - ObjcExample/SwiftExample：`UILaunchStoryboardName = LaunchScreen`
+  - SwiftUIExample：同样使用 Launch Screen（或 `UILaunchScreen`）
+
+### 7.5 常见问题
+- 运行界面仅 320×480：
+  - 原因：缺少 Launch Screen 或工程恢复旧窗口尺寸
+  - 处理：如上启用 `LaunchScreen.storyboard`，清理后重装
+- 设备安装失败（invalid bundle / 缺键）：
+  - 检查 Info.plist 是否包含 `CFBundleIdentifier/CFBundleExecutable` 等必备键
+  - 清理（Product → Clean Build Folder），卸载设备上旧 App 后重装
+- 找不到 UnityFramework：
+  - 确认已在每个 Target 中添加并设置为“Embed & Sign”
+
+### 7.6 一键生成（如需重新生成示例工程）
+```bash
+cd UnifiedExample
+ruby scripts/gen_project.rb
+pod install
+open UnifiedExample.xcworkspace
+```
+
+更多细节请参见 `UnifiedExample/README.md`。

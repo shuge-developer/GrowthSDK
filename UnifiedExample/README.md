@@ -1,9 +1,9 @@
 # UnifiedExample 多 Target 集成示例
 
-该工程包含三个 target（ObjcExample/SwiftExample/SwiftUIExample），统一引入 `UnityProject`，并通过 CocoaPods 管理第三方依赖。
+该工程包含三个 target（ObjcExample/SwiftExample/SwiftUIExample），统一引入 `UnityProject`（发布仓库中默认不包含 Unity 原始子工程，请按下文手动添加），并通过 CocoaPods 管理第三方依赖。
 
 ## 目录结构
-- UnityProject：从 `ObjcExample` 拷贝的 Unity iOS 子工程
+- UnityProject：Unity iOS 子工程（发布时默认不包含，请在本地自行导入 Unity 导出的 iOS 工程到该目录）
 - ObjcExample：Objective-C 示例源文件
 - SwiftExample：Swift 示例源文件
 - SwiftUIExample：SwiftUI 示例源文件
@@ -28,7 +28,7 @@ open UnifiedExample.xcworkspace
 1. 在 Xcode 中选择任意一个 App Target
 2. 进入 "Build Phases" → "Frameworks, Libraries, and Embedded Content"
 3. 点击 "+" 按钮
-4. 在 "Unity-iPhone.xcodeproj" → "Products" 下找到 `UnityFramework.framework`
+4. 在 "Unity-iPhone.xcodeproj" → "Products" 下找到 `UnityFramework.framework`（若工程中无 `Unity-iPhone.xcodeproj`，请将你本地 Unity 导出的 iOS 工程复制进 `UnifiedExample/UnityProject/` 再重试）
 5. 将其添加到当前 Target，并设置为 "Embed & Sign"
 6. 对另外两个 App Target 重复此步骤
 

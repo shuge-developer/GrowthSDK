@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # GrowthSDK 构建和发布脚本
-# 源代码提交到阿里云，打包文件提交到 GitHub
+# 源代码提交到阿里云，打包文件 + 示例工程提交到 GitHub
 
 set -e
 
@@ -152,7 +152,7 @@ fi
 
 # 提交源代码到阿里云仓库（不包含 framework）
 echo "💾 提交源代码到阿里云仓库..."
-git add GrowthSDK/ GrowthSDK.xcodeproj/ GrowthSDK.xcworkspace/ Podfile Podfile.lock scripts/ || true
+git add GrowthSDK/ GrowthSDK.xcodeproj/ GrowthSDK.xcworkspace/ Podfile Podfile.lock scripts/ UnifiedExample/ || true
 git commit -m "feat: update source code for v$VERSION" || true
 git push origin main
 
@@ -182,6 +182,27 @@ cp -R "$PROJECT_DIR/Frameworks" ./
 cp "$PROJECT_DIR/GrowthSDK.podspec" ./
 cp "$PROJECT_DIR/README.md" ./
 
+# 同步发布 UnifiedExample 集成示例（排除体积/本地化生成文件）
+EXAMPLE_SRC="$PROJECT_DIR/UnifiedExample"
+if [ -d "$EXAMPLE_SRC" ]; then
+  echo "📦 同步发布示例工程 UnifiedExample/ ..."
+  mkdir -p UnifiedExample
+  rsync -a "$EXAMPLE_SRC"/ UnifiedExample/ \
+    --delete \
+    --exclude 'Pods' \
+    --exclude 'DerivedData' \
+    --exclude 'UnityProject' \
+    --exclude '*.xcuserstate' \
+    --exclude 'xcuserdata' \
+    --exclude '.DS_Store'
+  # 在 README 中追加一句指引（若仓库根 README 存在）
+  if grep -q "UnifiedExample" README.md 2>/dev/null; then :; else
+    echo "\n\n---\n\n示例工程：请查看 \`UnifiedExample/\` 目录，首次打开先执行 \`pod install\`。" >> README.md
+  fi
+else
+  echo "⚠️  未找到示例工程目录：$EXAMPLE_SRC，跳过示例同步。"
+fi
+
 # 提交到 GitHub 仓库
 echo "💾 提交到 GitHub 仓库..."
 git add .
@@ -199,7 +220,7 @@ rm -rf "$TEMP_DIR"
 echo ""
 echo "✅ 发布完成！"
 echo "📝 源代码已提交到阿里云仓库"
-echo "📦 Framework 已推送到 GitHub 仓库"
+echo "📦 Framework 与示例工程已推送到 GitHub 仓库"
 echo "🏷️  版本标签: v$VERSION"
 echo "📋 下游集成方式:"
 echo "pod 'GrowthSDK', '~> $VERSION'"
