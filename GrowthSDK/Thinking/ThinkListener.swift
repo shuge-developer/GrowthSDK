@@ -76,6 +76,10 @@ internal class ThinkListener {
 // MARK: -
 internal extension ThinkListener {
     
+    static func log(_ eventName: EventName, params: (() -> [EventParams: Any]?)? = nil) {
+        TDAnalytics.track(eventName, properties: params?())
+    }
+    
     static func log(_ event: EventName, params: [EventParams: Any]? = nil) {
         TDAnalytics.track(event, properties: params)
     }

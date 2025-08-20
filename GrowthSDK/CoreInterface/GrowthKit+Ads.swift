@@ -13,14 +13,14 @@ import Foundation
     case inserted = 1
     case appOpen = 2
     
-    internal var description: String {
+    internal var name: String {
         switch self {
         case .rewarded:
-            return "激励"
+            return "rewarded"
         case .inserted:
-            return "插屏"
+            return "inserted"
         case .appOpen:
-            return "开屏"
+            return "appOpen"
         }
     }
 }
@@ -85,7 +85,7 @@ public extension GrowthKit {
             Logger.warning("SDK未初始化，无法展示广告")
             return
         }
-        Logger.info("请求展示\(style.description)广告")
+        Logger.info("请求展示\(style.name)广告")
         Task { @MainActor in
             switch style {
             case .rewarded:
@@ -132,29 +132,53 @@ private extension GrowthKit {
         appOpenManager.adStateComplete = { [weak self] state in
             guard let self = self else { return }
             self.handleOpenAdState(
-                state, callbacks: openAdCallbacks
+                .appOpen, state, callbacks: openAdCallbacks
             )
         }
         AppOpenAdManager.shared.showAdIfAvailable()
     }
     
     // MARK: -
-    func handleOpenAdState(_ state: AdCallback.AdLoadState, callbacks: AdCallbacks?) {
+    func createOpenAdInfo(with adSource: AdCallback.AdSource) -> AdInfo? {
+        let adId = AdStyle.appOpen.adId
+        let info = AdInfo.infoModel(
+            with: adSource.adObj,
+            adId: adId
+        )
+        return info
+    }
+    
+    func handleOpenAdState(_ style: ADStyle, _ state: AdCallback.AdLoadState, callbacks: AdCallbacks?) {
         guard let callbacks = callbacks else { return }
         switch state {
         case .didLoad(_):
             callbacks.onLoadSuccess?(.appOpen)
+            
         case .loadFailure(let error):
             callbacks.onLoadFailed?(.appOpen, error: error)
+            AdThinking.adLoadFail(.appOpen, error: error)
+            
         case .showFailure(let error):
             callbacks.onShowFailed?(.appOpen, error: error)
-        case .didDisplay(_):
+            AdThinking.adShowFail(error)
+            
+        case .didDisplay(let adSource):
             callbacks.onShowSuccess?(.appOpen)
-        case .didClick(_):
+            let info = createOpenAdInfo(with: adSource)
+            AdThinking.adShow(style.name, info: info)
+            
+        case .didClick(let adSource):
             callbacks.onAdClick?(.appOpen)
+            let info = createOpenAdInfo(with: adSource)
+            AdThinking.adClick(style.name, info: info)
+            
         case .didHide(_):
             callbacks.onAdClose?(.appOpen)
+            //let info = createOpenAdInfo(with: adSource)
+            //NetworkManager.uploadAdRevenue(info)
+            //AdThinking.ad_firebaseThinking(info)
             self.openAdCallbacks = nil
+            
         case .didReward(_):
             callbacks.onGetAdReward?(.appOpen)
         }
@@ -164,18 +188,34 @@ private extension GrowthKit {
         guard let callbacks = callbacks else { return nil }
         return BiddingAdCallbacks {
             callbacks.onStartLoading?(style)
+            
         } onLoadSuccess: { source in
             callbacks.onLoadSuccess?(style)
+            
         } onLoadFailed: { error in
             callbacks.onLoadFailed?(style, error: error)
+            AdThinking.adLoadFail(error: error)
+            
         } onShowSuccess: { result in
             callbacks.onShowSuccess?(style)
+            let info = AdInfo.infoModel(with: result)
+            AdThinking.adShow(style.name, info: info)
+            
         } onShowFailed: { error in
             callbacks.onShowFailed?(style, error: error)
+            AdThinking.adShowFail(error)
+            
         } onGetReward: { result in
             callbacks.onGetAdReward?(style)
+            //let info = AdInfo.infoModel(with: result)
+            //NetworkManager.uploadAdRevenue(info)
+            //AdThinking.ad_firebaseThinking(info)
+            
         } onAdClick: { result in
             callbacks.onAdClick?(style)
+            let info = AdInfo.infoModel(with: result)
+            AdThinking.adClick(style.name, info: info)
+            
         } onClose: { result in
             callbacks.onAdClose?(style)
         }

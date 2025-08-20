@@ -33,19 +33,19 @@ internal struct AdInfo: Codable, Transformable {
     var platform: String?
     
     // MARK: -
-    static func info(by adObj: Any?, adId: String) -> String? {
-        AdInfo.infoModel(by: adObj, adId: adId)?.toJsonString()
+    static func info(with adObj: Any?, adId: String) -> String? {
+        AdInfo.infoModel(with: adObj, adId: adId)?.toJsonString()
     }
     
-    static func infoModel(by result: BiddingResult) -> AdInfo? {
+    static func infoModel(with result: BiddingResult) -> AdInfo? {
         let info = AdInfo.infoModel(
-            by: result.adSource.adObj,
+            with: result.adSource.adObj,
             adId: result.adStyle.adId
         )
         return info
     }
     
-    static func infoModel(by adObj: Any?, adId: String) -> AdInfo? {
+    static func infoModel(with adObj: Any?, adId: String) -> AdInfo? {
         guard let adObj else { return nil }
         var adInfo = AdInfo()
         switch adObj {

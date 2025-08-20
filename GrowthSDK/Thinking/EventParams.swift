@@ -12,3 +12,12 @@ extension EventParams {
     static let version = "vn"
     static let build = "vc"
 }
+
+extension EventParams {
+    static let errmsg = "errormsg"
+    static let adtype = "adtype"
+    static let adrevenue = "adrevenue"
+    static let adindex = "adindex"
+    static let network = "network"
+    static let adid = "adid"
+}
