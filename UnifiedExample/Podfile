@@ -1,0 +1,19 @@
+platform :ios, '14.0'
+inhibit_all_warnings!
+use_frameworks!
+
+# 统一工程包含三个 Target：ObjcExample、SwiftExample、SwiftUIExample
+abstract_target 'UnifiedExample' do
+  pod 'GrowthSDK', :path => '..'
+  pod 'AppLovinSDK', '13.3.1'
+  pod 'KwaiAdsSDK', '1.2.0'
+
+  target 'ObjcExample' do
+  end
+
+  target 'SwiftExample' do
+  end
+
+  target 'SwiftUIExample' do
+  end
+end
