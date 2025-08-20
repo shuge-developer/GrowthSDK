@@ -1,7 +1,7 @@
 /* GrowthSDK French localization */
 
-"game_network_tips" = "Le réseau ne fonctionne pas. Veuillez réessayer.";
-"game_reload_tips" = "Chargement des ressources du jeu…";
-"game_review_tips" = "Calcul des récompenses du jeu…";
-"game_btn_relaod" = "Recharger";
-"game_btn_ok" = "OK";
+"sdk_network_tips" = "Le réseau ne fonctionne pas. Veuillez réessayer.";
+"sdk_reload_tips" = "Chargement des ressources du jeu…";
+"sdk_review_tips" = "Calcul des récompenses du jeu…";
+"sdk_btn_relaod" = "Recharger";
+"sdk_btn_ok" = "OK";
