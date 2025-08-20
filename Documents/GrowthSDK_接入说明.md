@@ -928,9 +928,9 @@ struct CustomNetworkConfig: NetworkConfigurable {
     let serviceIv: String = "your_service_iv"
     var configKeyItems: [ConfigKeyItem]? {
         [
-            ConfigKeyItem(adjustKey: "ccs_ad_just_config"),
-            ConfigKeyItem(configKey: "ccs_sdk_config"),
-            ConfigKeyItem(adUnitKey: "ccs_ad_config")
+            ConfigKeyItem(adjustKey: "your_adjust_key"),
+            ConfigKeyItem(configKey: "your_config_key"),
+            ConfigKeyItem(adUnitKey: "your_adunit_key")
         ]
     }
 }
@@ -967,9 +967,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 - (void)initializeGrowthKitSDK:(NSDictionary *)launchOptions {
     NSArray<ConfigKeyItem *> *configKeys = @[
-        [[ConfigKeyItem alloc] initWithAdjustKey:@"ccs_ad_just_config"],
-        [[ConfigKeyItem alloc] initWithConfigKey:@"ccs_sdk_config"],
-        [[ConfigKeyItem alloc] initWithAdUnitKey:@"ccs_ad_config"]
+        [[ConfigKeyItem alloc] initWithAdjustKey:@"your_adjust_key"],
+        [[ConfigKeyItem alloc] initWithConfigKey:@"your_config_key"],
+        [[ConfigKeyItem alloc] initWithAdUnitKey:@"your_adunit_key"]
     ];
 
     NetworkConfig *config = [[NetworkConfig alloc] initWithServiceId:@"your_service_id"
@@ -1011,9 +1011,9 @@ struct CustomNetworkConfig: NetworkConfigurable {
     let serviceIv: String = "your_service_iv"
     var configKeyItems: [ConfigKeyItem]? {
         [
-            ConfigKeyItem(adjustKey: "ccs_ad_just_config"),
-            ConfigKeyItem(configKey: "ccs_sdk_config"),
-            ConfigKeyItem(adUnitKey: "ccs_ad_config")
+            ConfigKeyItem(adjustKey: "your_adjust_key"),
+            ConfigKeyItem(configKey: "your_config_key"),
+            ConfigKeyItem(adUnitKey: "your_adunit_key")
         ]
     }
 }
