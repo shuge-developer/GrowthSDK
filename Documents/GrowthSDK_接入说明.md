@@ -911,41 +911,136 @@ let configKeys: [ConfigKeyItem] = [
 ]
 ```
 
-### 3.2 初始化示例（Swift 回调）
+### 3.2 初始化示例（Swift · UIKit · async/await）
+
+使用 `NetworkConfigurable` 自定义配置并在 `AppDelegate` 中使用 `async/await` 初始化：
 
 ```swift
+import UIKit
 import GrowthSDK
 
-let other = OtherConfig(thirdId: nil, instanceId: nil, campaign: nil, referer: nil, adid: nil)
-let config = NetworkConfig(
-    serviceId: "your_service_id",
-    bundleName: Bundle.main.bundleIdentifier ?? "com.example.app",
-    serviceUrl: "https://api.example.com",
-    serviceKey: "your_service_key",
-    serviceIv: "your_service_iv",
-    publicKey: "your_public_key",
-    configKeyItems: configKeys,
-    other: other
-)
-
-GrowthKit.shared.initialize(with: config) { error in
-    if let error = error {
-        print("❌ 初始化失败: \(error.localizedDescription)")
-        return
+struct CustomNetworkConfig: NetworkConfigurable {
+    let serviceId: String = "your_service_id"
+    let bundleName: String = "com.example.app"
+    let serviceUrl: String = "https://api.example.com"
+    let publicKey: String = "your_public_key_pem"
+    let serviceKey: String = "your_service_key"
+    let serviceIv: String = "your_service_iv"
+    var configKeyItems: [ConfigKeyItem]? {
+        [
+            ConfigKeyItem(adjustKey: "ccs_ad_just_config"),
+            ConfigKeyItem(configKey: "ccs_sdk_config"),
+            ConfigKeyItem(adUnitKey: "ccs_ad_config")
+        ]
     }
-    print("✅ 初始化成功")
+}
+
+@main
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        Task {
+            do {
+                try await GrowthKit.shared.initialize(with: CustomNetworkConfig())
+                print("SDK 初始化成功")
+            } catch {
+                print("SDK 初始化失败: \(error)")
+            }
+        }
+        return true
+    }
 }
 ```
 
-### 3.3 初始化示例（Swift async/await）
+### 3.3 初始化示例（Objective-C · UIKit）
+
+在 `AppDelegate` 中通过回调方式初始化。注意引入自动生成的 Swift 头文件：`#import <GrowthSDK/GrowthSDK-Swift.h>`。
+
+```objective-c
+// AppDelegate.m
+#import <GrowthSDK/GrowthSDK-Swift.h>
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self initializeGrowthKitSDK:launchOptions];
+    return YES;
+}
+
+- (void)initializeGrowthKitSDK:(NSDictionary *)launchOptions {
+    NSArray<ConfigKeyItem *> *configKeys = @[
+        [[ConfigKeyItem alloc] initWithAdjustKey:@"ccs_ad_just_config"],
+        [[ConfigKeyItem alloc] initWithConfigKey:@"ccs_sdk_config"],
+        [[ConfigKeyItem alloc] initWithAdUnitKey:@"ccs_ad_config"]
+    ];
+
+    NetworkConfig *config = [[NetworkConfig alloc] initWithServiceId:@"your_service_id"
+                                                         bundleName:@"com.example.app"
+                                                         serviceUrl:@"https://api.example.com"
+                                                         serviceKey:@"your_service_key"
+                                                          serviceIv:@"your_service_iv"
+                                                          publicKey:@"your_public_key_pem"
+                                                     configKeyItems:configKeys
+                                                              other:nil];
+
+    [[GrowthKit shared] initializeWith:config launchOptions:launchOptions completion:^(NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                NSLog(@"SDK 初始化失败: %@", error.localizedDescription);
+            } else {
+                NSLog(@"SDK 初始化成功");
+            }
+        });
+    }];
+}
+```
+
+### 3.4 初始化示例（SwiftUI · @UIApplicationDelegateAdaptor）
+
+通过 `@UIApplicationDelegateAdaptor` 适配 `AppDelegate` 并在启动时初始化：
 
 ```swift
-Task {
-    do {
-        try await GrowthKit.shared.initialize(with: config)
-        print("✅ 初始化成功")
-    } catch {
-        print("❌ 初始化失败: \(error)")
+import SwiftUI
+import GrowthSDK
+import UIKit
+
+struct CustomNetworkConfig: NetworkConfigurable {
+    let serviceId: String = "your_service_id"
+    let bundleName: String = "com.example.app"
+    let serviceUrl: String = "https://api.example.com"
+    let publicKey: String = "your_public_key_pem"
+    let serviceKey: String = "your_service_key"
+    let serviceIv: String = "your_service_iv"
+    var configKeyItems: [ConfigKeyItem]? {
+        [
+            ConfigKeyItem(adjustKey: "ccs_ad_just_config"),
+            ConfigKeyItem(configKey: "ccs_sdk_config"),
+            ConfigKeyItem(adUnitKey: "ccs_ad_config")
+        ]
+    }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        Task {
+            do {
+                try await GrowthKit.shared.initialize(with: CustomNetworkConfig())
+                print("SDK 初始化成功")
+            } catch {
+                print("SDK 初始化失败: \(error)")
+            }
+        }
+        return true
+    }
+}
+
+@main
+struct YourApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
     }
 }
 ```
