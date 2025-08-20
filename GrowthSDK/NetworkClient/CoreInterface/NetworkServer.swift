@@ -137,6 +137,18 @@ internal class NetworkServer {
         NetworkServer.request(.fpV2, params: params, complete: complete)
     }
     
+    static func uploadAdRevenue(_ adInfo: AdInfo?) {
+        let params = adInfo?.toJsonString()
+        NetworkServer.request(.revenue, params: params) { result in
+            switch result {
+            case .success(let json):
+                print("[net] ✅ 广告价值上报成功: \(json)")
+            case .failure(let error):
+                print("[net] ❌ 广告价值上报失败: \(error)")
+            }
+        }
+    }
+    
     static func uploadH5Params(_ params: String?) {
         print("[H5] [Upload] 数据上报，params: \(params ?? "nil")")
         NetworkServer.request(.upload, params: params) { result in
@@ -149,4 +161,5 @@ internal class NetworkServer {
             }
         }
     }
+    
 }

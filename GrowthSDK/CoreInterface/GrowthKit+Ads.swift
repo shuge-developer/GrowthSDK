@@ -172,10 +172,10 @@ private extension GrowthKit {
             let info = createOpenAdInfo(with: adSource)
             AdThinking.adClick(style.name, info: info)
             
-        case .didHide(_):
+        case .didHide(let adSource):
             callbacks.onAdClose?(.appOpen)
-            //let info = createOpenAdInfo(with: adSource)
-            //NetworkManager.uploadAdRevenue(info)
+            let info = createOpenAdInfo(with: adSource)
+            NetworkServer.uploadAdRevenue(info)
             //AdThinking.ad_firebaseThinking(info)
             self.openAdCallbacks = nil
             
@@ -207,8 +207,8 @@ private extension GrowthKit {
             
         } onGetReward: { result in
             callbacks.onGetAdReward?(style)
-            //let info = AdInfo.infoModel(with: result)
-            //NetworkManager.uploadAdRevenue(info)
+            let info = AdInfo.infoModel(with: result)
+            NetworkServer.uploadAdRevenue(info)
             //AdThinking.ad_firebaseThinking(info)
             
         } onAdClick: { result in
