@@ -30,9 +30,9 @@ internal extension String {
     
     func localized(_ args: CVarArg...) -> String {
         let bundle = SDKStringBundleProvider.bundle
-        let sdkString = NSLocalizedString(self, tableName: "GrowthSDK", bundle: bundle, value: self, comment: "")
         let appString = NSLocalizedString(self, tableName: "GrowthSDK", bundle: .main, value: "", comment: "")
-        let formatted = appString.isEmpty ? sdkString : appString
+        let sdkString = NSLocalizedString(self, tableName: "GrowthSDK", bundle: bundle, value: self, comment: "")
+        let formatted = (appString.isEmpty || appString == self || appString.count < 2) ? sdkString : appString
         return String(format: formatted, arguments: args)
     }
     

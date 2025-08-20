@@ -8,7 +8,7 @@
 import Foundation
 
 /// 用于定位 SDK 的资源 Bundle。
-/// 优先返回内嵌的 `GrowthSDKResources.bundle`，若不存在则回退到框架自身的 bundle。
+/// 支持 CocoaPods 和直接集成两种场景
 internal enum SDKResourceBundle {
     
     static let bundle: Bundle = {
@@ -25,6 +25,7 @@ internal enum SDKResourceBundle {
            let res = Bundle(url: url) {
             return res
         }
+        // 3) 直接集成场景：直接使用框架自身 bundle，资源文件在框架根目录
         return frameworkBundle
     }()
     
