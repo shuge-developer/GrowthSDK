@@ -10,13 +10,14 @@ SOURCE_REPO="git@codeup.aliyun.com:630b1207050e9c4a07a93a48/IOS/SDK/GrowthSDK.gi
 RELEASE_REPO="https://github.com/shuge-developer/GrowthSDK.git"
 PROJECT_DIR="$(pwd)"
 VERSION=""
-BUMP_TYPE="patch"  # 可选：patch | minor | major
-ONLY_BUMP=false     # 仅更新版本号并退出
+BUMP_TYPE="patch"   # 可选：patch | minor | major
+ONLY_BUMP=false      # 仅更新版本号并退出
+DOCS_ONLY=false      # 仅推送文档（README + Wiki）到发布仓库
 
 # 打印使用方法
 usage() {
     cat << EOF
-用法: $(basename "$0") [<version>] [--bump <patch|minor|major>] [--only-bump] [--help]
+用法: $(basename "$0") [<version>] [--bump <patch|minor|major>] [--only-bump] [--docs-only] [--help]
 
 说明:
   - 本脚本用于一键完成 GrowthSDK 的版本迭代、构建 XCFramework、
@@ -30,6 +31,8 @@ usage() {
                          - major         : x.y.z -> (x+1).0.0
   --only-bump            仅更新版本号（同步写入 podspec 与 MARKETING_VERSION）后立即退出，
                          不执行后续的构建与推送流程。
+  --docs-only            仅推送文档（README.md 与 Wiki/）到 GitHub 发布仓库，不构建 SDK、
+                         不打 tag、不中断/校验阿里云 origin。
   -h, --help             显示此帮助信息。
 
 常见用法:
@@ -50,6 +53,9 @@ usage() {
      或
      $(basename "$0") --only-bump 1.2.3
 
+  6) 仅推送文档（不构建二进制、不打标签）
+     $(basename "$0") --docs-only
+
 流程概览:
   - 解析/计算版本号（调用 scripts/version-bump.sh）
   - 写入版本到 GrowthSDK.podspec 与 Xcode MARKETING_VERSION
@@ -68,13 +74,15 @@ usage() {
 EOF
 }
 
-# 解析参数（支持位置参数版本号与 --bump）
+# 解析参数（支持位置参数版本号与 --bump / --docs-only）
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --bump|-b)
             BUMP_TYPE="$2"; shift 2 ;;
         --only-bump)
             ONLY_BUMP=true; shift ;;
+        --docs-only)
+            DOCS_ONLY=true; shift ;;
         -h|--help)
             usage; exit 0 ;;
         *)
@@ -87,13 +95,15 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# 使用单独的版本脚本计算版本
-
-if [[ -z "$VERSION" ]]; then
-    VERSION=$(./scripts/version-bump.sh --print --bump "$BUMP_TYPE")
+# docs-only 模式不需要版本号；否则计算版本号
+if [[ "$DOCS_ONLY" != true ]]; then
+    if [[ -z "$VERSION" ]]; then
+        VERSION=$(./scripts/version-bump.sh --print --bump "$BUMP_TYPE")
+    fi
+    echo "🚀 开始构建和发布 GrowthSDK v$VERSION  (bump: $BUMP_TYPE)"
+else
+    echo "📝 进入仅文档发布模式（README + Wiki）"
 fi
-
-echo "🚀 开始构建和发布 GrowthSDK v$VERSION  (bump: $BUMP_TYPE)"
 
 # 仅更新版本并提前退出
 if [[ "$ONLY_BUMP" == true ]]; then
@@ -111,11 +121,13 @@ if [ ! -d ".git" ]; then
     exit 1
 fi
 
-# 检查远程仓库配置
-echo "📋 检查远程仓库配置..."
-if ! git remote get-url origin | grep -q "codeup.aliyun.com"; then
-    echo "❌ 当前仓库不是阿里云仓库，请确保在正确的源代码仓库中"
-    exit 1
+# 非 docs-only 才校验阿里云源仓
+if [[ "$DOCS_ONLY" != true ]]; then
+  echo "📋 检查远程仓库配置..."
+  if ! git remote get-url origin | grep -q "codeup.aliyun.com"; then
+      echo "❌ 当前仓库不是阿里云仓库，请确保在正确的源代码仓库中"
+      exit 1
+  fi
 fi
 
 # 添加 GitHub 远程仓库（如果不存在）
@@ -126,7 +138,7 @@ else
     echo "✅ GitHub 远程仓库已存在"
 fi
 
-# 确保在 main 分支
+# 确保在 main 分支（docs-only 也建议在 main）
 CURRENT_BRANCH=$(git branch --show-current)
 if [ "$CURRENT_BRANCH" != "main" ]; then
     echo "⚠️  当前不在 main 分支，正在切换到 main 分支..."
@@ -137,24 +149,30 @@ fi
 echo "📥 拉取最新代码..."
 git pull origin main
 
-# 在构建前同步更新版本号（podspec 与 Xcode MARKETING_VERSION）
-echo "📝 更新版本号到 $VERSION..."
-./scripts/version-bump.sh --apply --set "$VERSION"
+# 非 docs-only：在构建前同步更新版本号（podspec 与 Xcode MARKETING_VERSION）
+if [[ "$DOCS_ONLY" != true ]]; then
+  echo "📝 更新版本号到 $VERSION..."
+  ./scripts/version-bump.sh --apply --set "$VERSION"
+fi
 
-# 使用专业的 SDK 构建脚本（构建出的二进制包含正确的版本信息）
-echo "🔨 使用专业 SDK 构建脚本..."
-if ! ./scripts/build-ios-sdk.sh --verbose; then
-    echo "❌ SDK 构建失败"
-    exit 1
+# 非 docs-only：构建 SDK
+if [[ "$DOCS_ONLY" != true ]]; then
+  echo "🔨 使用专业 SDK 构建脚本..."
+  if ! ./scripts/build-ios-sdk.sh --verbose; then
+      echo "❌ SDK 构建失败"
+      exit 1
+  fi
 fi
 
 # 版本已在构建前更新，无需再次修改 podspec
 
-# 提交源代码到阿里云仓库（不包含 framework）
-echo "💾 提交源代码到阿里云仓库..."
-git add GrowthSDK/ GrowthSDK.xcodeproj/ GrowthSDK.xcworkspace/ Podfile Podfile.lock scripts/ UnifiedExample/ || true
-git commit -m "feat: update source code for v$VERSION" || true
-git push origin main
+# 非 docs-only：提交源代码到阿里云仓库（不包含 framework）
+if [[ "$DOCS_ONLY" != true ]]; then
+  echo "💾 提交源代码到阿里云仓库..."
+  git add GrowthSDK/ GrowthSDK.xcodeproj/ GrowthSDK.xcworkspace/ Podfile Podfile.lock scripts/ UnifiedExample/ || true
+  git commit -m "feat: update source code for v$VERSION" || true
+  git push origin main
+fi
 
 # 创建临时目录用于发布
 TEMP_DIR=$(mktemp -d)
@@ -172,15 +190,24 @@ else
     git remote rename origin github 2>/dev/null || true
 fi
 
-# 清理 GitHub 仓库，只保留必要文件
-echo "🧹 清理 GitHub 仓库..."
-git rm -rf * || true
+# 清理 GitHub 仓库
+if [[ "$DOCS_ONLY" != true ]]; then
+  echo "🧹 清理 GitHub 仓库..."
+  git rm -rf * || true
+else
+  echo "🧹（跳过）docs-only 模式不清空仓库"
+fi
 
 # 复制发布文件到 GitHub 仓库
 echo "📋 复制发布文件到 GitHub 仓库..."
-cp -R "$PROJECT_DIR/Frameworks" ./
-cp "$PROJECT_DIR/GrowthSDK.podspec" ./
+if [[ "$DOCS_ONLY" != true ]]; then
+  cp -R "$PROJECT_DIR/Frameworks" ./
+  cp "$PROJECT_DIR/GrowthSDK.podspec" ./
+fi
 cp "$PROJECT_DIR/README.md" ./
+if [ -d "$PROJECT_DIR/Wiki" ]; then
+  rsync -a "$PROJECT_DIR/Wiki" ./ --delete
+fi
 
 # 同步发布 UnifiedExample 集成示例（排除体积/本地化生成文件）
 EXAMPLE_SRC="$PROJECT_DIR/UnifiedExample"
@@ -206,24 +233,36 @@ fi
 # 提交到 GitHub 仓库
 echo "💾 提交到 GitHub 仓库..."
 git add .
-git commit -m "release: v$VERSION"
+if [[ "$DOCS_ONLY" != true ]]; then
+  git commit -m "release: v$VERSION"
+else
+  git commit -m "docs: update README & Wiki"
+fi
 git push github main
 
-# 创建版本标签
-echo "🏷️  创建版本标签..."
-git tag "v$VERSION"
-git push github "v$VERSION"
+# 非 docs-only：创建版本标签
+if [[ "$DOCS_ONLY" != true ]]; then
+  echo "🏷️  创建版本标签..."
+  git tag "v$VERSION"
+  git push github "v$VERSION"
+else
+  echo "🏷️  跳过打标签（docs-only 模式）"
+fi
 
 # 清理临时目录
 rm -rf "$TEMP_DIR"
 
 echo ""
 echo "✅ 发布完成！"
-echo "📝 源代码已提交到阿里云仓库"
-echo "📦 Framework 与示例工程已推送到 GitHub 仓库"
-echo "🏷️  版本标签: v$VERSION"
-echo "📋 下游集成方式:"
-echo "pod 'GrowthSDK', '~> $VERSION'"
+if [[ "$DOCS_ONLY" != true ]]; then
+  echo "📝 源代码已提交到阿里云仓库"
+  echo "📦 Framework 与示例工程已推送到 GitHub 仓库"
+  echo "🏷️  版本标签: v$VERSION"
+  echo "📋 下游集成方式:"
+  echo "pod 'GrowthSDK', '~> $VERSION'"
+else
+  echo "📝 文档（README + Wiki）已推送到 GitHub 仓库"
+fi
 echo ""
 echo "🔗 发布仓库地址: $RELEASE_REPO"
 echo "📝 源代码仓库地址: $SOURCE_REPO"
