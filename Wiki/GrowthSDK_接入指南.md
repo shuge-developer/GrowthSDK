@@ -41,7 +41,17 @@
 #### 2.1 添加依赖（CocoaPods）
 
 ```ruby
-# 方式一：主模块 + 子模块（推荐）
+# 方式一：一键集成推荐广告网络（最简单）
+platform :ios, '14.0'
+use_frameworks!
+
+target 'YourAppTarget' do
+  pod 'GrowthSDK/Recommended', '~> 1.0.0'
+end
+```
+
+```ruby
+# 方式二：自定义选择广告网络
 platform :ios, '14.0'
 use_frameworks!
 
@@ -51,7 +61,7 @@ end
 ```
 
 ```ruby
-# 方式二：仅子模块（自动带上 Core）
+# 方式三：单独指定子模块（自动带上 Core）
 platform :ios, '14.0'
 use_frameworks!
 

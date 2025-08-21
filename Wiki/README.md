@@ -48,16 +48,21 @@ platform :ios, '14.0'
 use_frameworks!
 
 target 'YourAppTarget' do
-  # 方式一：一行选择主模块并指定子模块（推荐）
-  pod 'GrowthSDK', '~> 1.0.0', :subspecs => [
-    'Google', 'GoogleAdManager', 'Facebook', 'Vungle'
-  ]
+  # 方式一：一键集成推荐广告网络（最简单）
+  pod 'GrowthSDK/Recommended', '~> 1.0.0'
+  
+  # 方式二：自定义选择广告网络
+  # pod 'GrowthSDK', '~> 1.0.0', :subspecs => [
+  #   'Google', 'GoogleAdManager', 'Facebook', 'Vungle'
+  # ]
 
-  # 方式二：仅写子模块（也会自动拉取 Core）
+  # 方式三：单独指定子模块（也会自动拉取 Core）
   # pod 'GrowthSDK/Google', '~> 1.0.0'
   # pod 'GrowthSDK/Facebook', '~> 1.0.0'
   # pod 'GrowthSDK/Vungle', '~> 1.0.0'
 end
 ```
 
-> 提示：任一广告子模块都会自动依赖 `GrowthSDK/Core`，无需单独声明。
+> 提示：
+> - `GrowthSDK/Recommended` 包含 10 个主流广告网络，适合快速开始
+> - 任一广告子模块都会自动依赖 `GrowthSDK/Core`，无需单独声明

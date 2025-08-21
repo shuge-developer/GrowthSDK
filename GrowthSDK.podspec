@@ -173,4 +173,21 @@ Pod::Spec.new do |s|
     sp.dependency 'GrowthSDK/Core'
     sp.dependency 'AppLovinMediationYSONetworkAdapter', '1.1.31.1'
   end
+  
+  # MARK: - Recommended Ad Network Bundle
+  # 推荐广告网络组合包 - 一键集成最常用的广告网络适配器
+  # 包含：BigoAds、Chartboost、Fyber、Google、InMobi、Vungle、Facebook、Mintegral、ByteDance、Moloco
+  # 使用方式：pod 'GrowthSDK/Recommended'
+  s.subspec 'Recommended' do |re|
+    re.dependency 'GrowthSDK/BigoAds'          # BigoAds - 全球短视频广告平台
+    re.dependency 'GrowthSDK/Chartboost'       # Chartboost - 游戏广告优化平台
+    re.dependency 'GrowthSDK/Fyber'            # Fyber - 移动广告变现平台
+    re.dependency 'GrowthSDK/Google'           # Google AdMob - 全球最大移动广告网络
+    re.dependency 'GrowthSDK/InMobi'           # InMobi - 印度领先移动广告平台
+    re.dependency 'GrowthSDK/Vungle'           # Vungle - 视频广告领导者
+    re.dependency 'GrowthSDK/Facebook'         # Facebook Audience Network - Meta 广告网络
+    re.dependency 'GrowthSDK/Mintegral'        # Mintegral - 移动广告优化平台
+    re.dependency 'GrowthSDK/ByteDance'        # ByteDance - 字节跳动广告网络
+    re.dependency 'GrowthSDK/Moloco'           # Moloco - 机器学习广告平台
+  end
 end

@@ -10,10 +10,20 @@
 
 #### 1. 添加依赖
 
-在工程根目录的 `Podfile` 中加入依赖（二选一）：
+在工程根目录的 `Podfile` 中加入依赖（三选一）：
 
 ```ruby
-# 方式一：一行选择主模块 + 子模块（推荐）
+# 方式一：一键集成推荐广告网络（最简单）
+platform :ios, '14.0'
+use_frameworks!
+
+target 'YourAppTarget' do
+  pod 'GrowthSDK/Recommended', '~> 1.0.0'
+end
+```
+
+```ruby
+# 方式二：自定义选择广告网络
 platform :ios, '14.0'
 use_frameworks!
 
@@ -23,7 +33,7 @@ end
 ```
 
 ```ruby
-# 方式二：仅写子模块（也会自动带上 Core）
+# 方式三：单独指定子模块（也会自动带上 Core）
 platform :ios, '14.0'
 use_frameworks!
 

@@ -8,20 +8,32 @@
 
 从现在起，`GrowthSDK` 已将所有 AppLovin MAX 支持的广告适配器拆分为独立子模块。下游 App 可按需在 Podfile 中选择集成需要的网络，并相应只保留所需网络的 `SKAdNetworkIdentifier`。
 
-- Podfile 按需集成示例：
-  - 仅集成 Google 与 Facebook：
-    ```ruby
-    pod 'GrowthSDK', :subspecs => ['Google', 'Facebook']
-    ```
-  - 同时集成多家网络：
-    ```ruby
-    pod 'GrowthSDK', :subspecs => ['Google', 'GoogleAdManager', 'Vungle', 'Mintegral']
-    ```
+### 推荐集成方式
 
-- 可选子模块清单（与 AppLovin 适配器一一对应）：
-  - `AdColony`, `Amazon`, `AmazonAdMarketplace`, `BidMachine`, `Bigo`, `ByteDance`, `Chartboost`, `Criteo`, `CSJ`, `Dataseat`, `Facebook`, `Fyber`, `Google`, `GoogleAdManager`, `HyprMX`, `InMobi`, `IronSource`, `Line`, `Maio`, `Mintegral`, `MobileFuse`, `Moloco`, `MyTarget`, `Nend`, `OguryPresage`, `PubMatic`, `Smaato`, `Snap`, `Tapjoy`, `TencentGDT`, `UnityAds`, `VerizonAds`, `Verve`, `Vungle`, `Yandex`, `YSONetwork`。
+- **一键集成推荐广告网络**（最简单）：
+  ```ruby
+  pod 'GrowthSDK/Recommended', '~> 1.0.0'
+  ```
+  包含 10 个主流广告网络：BigoAds、Chartboost、Fyber、Google、InMobi、Vungle、Facebook、Mintegral、ByteDance、Moloco
 
-- 建议：只在 `Info.plist` 中保留与所选子模块对应网络的 `SKAdNetworkIdentifier`，以减少无关标识符。
+- **自定义选择广告网络**：
+  ```ruby
+  # 仅集成 Google 与 Facebook：
+  pod 'GrowthSDK', :subspecs => ['Google', 'Facebook']
+  
+  # 同时集成多家网络：
+  pod 'GrowthSDK', :subspecs => ['Google', 'GoogleAdManager', 'Vungle', 'Mintegral', 'Pangle']
+  ```
+
+### 可选子模块清单
+
+与 AppLovin 适配器一一对应的子模块：
+- `AmazonAdMarketplace`, `BidMachine`, `BigoAds`, `ByteDance`, `Chartboost`, `CSJ`, `Facebook`, `Fyber`, `Google`, `GoogleAdManager`, `HyprMX`, `InMobi`, `IronSource`, `Line`, `Maio`, `Mintegral`, `MobileFuse`, `Moloco`, `MyTarget`, `OguryPresage`, `PubMatic`, `Smaato`, `TencentGDT`, `UnityAds`, `Verve`, `Vungle`, `Yandex`, `YSONetwork`
+
+### 建议
+
+- 使用 `GrowthSDK/Recommended` 可快速集成主流广告网络
+- 只在 `Info.plist` 中保留与所选子模块对应网络的 `SKAdNetworkIdentifier`，以减少无关标识符
 
 - 参考：
   - AppLovin MAX iOS：准备各广告网络/适配器（含支持网络与指导）[`https://developers.axon.ai/en/max/ios/preparing-mediated-networks`]
