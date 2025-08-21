@@ -34,6 +34,11 @@
 		A224C0872E55F932006CCCFF /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A224C0852E55F932006CCCFF /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A224C08A2E55F939006CCCFF /* UnityFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A224C0892E55F939006CCCFF /* UnityFramework.framework */; };
 		A224C08B2E55F939006CCCFF /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A224C0892E55F939006CCCFF /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A224C1E52E56B720006CCCFF /* ObjcExample-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = A224C1E42E56B720006CCCFF /* ObjcExample-Bridging-Header.h */; };
+		A224C1E82E56BA0B006CCCFF /* UnityCallProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = A224C1E62E56BA0B006CCCFF /* UnityCallProvider.h */; };
+		A224C1E92E56BA0B006CCCFF /* UnityCallProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = A224C1E72E56BA0B006CCCFF /* UnityCallProvider.m */; };
+		A224C1EC2E56C3CD006CCCFF /* UnityCallProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A224C1EB2E56C3CD006CCCFF /* UnityCallProvider.swift */; };
+		A224C1EF2E56C5AA006CCCFF /* UnityCallProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A224C1EE2E56C5AA006CCCFF /* UnityCallProvider.swift */; };
 		ACFE40DF7B30E2D77A7C0032 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F90168EA00F139D69ED5CF /* ContentView.swift */; };
 		AFC325920BFE70BCF3EB001C /* Pods_UnifiedExample_SwiftExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8D252DE58C7F57F175D354D /* Pods_UnifiedExample_SwiftExample.framework */; };
 		B0F132334457F92F947CDF83 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A4AAB54CB7B3D2FD4948205 /* AppDelegate.m */; };
@@ -106,6 +111,13 @@
 		A224BF552E55F918006CCCFF /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A224C0852E55F932006CCCFF /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A224C0892E55F939006CCCFF /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A224C1E42E56B720006CCCFF /* ObjcExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjcExample-Bridging-Header.h"; sourceTree = "<group>"; };
+		A224C1E62E56BA0B006CCCFF /* UnityCallProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnityCallProvider.h; sourceTree = "<group>"; };
+		A224C1E72E56BA0B006CCCFF /* UnityCallProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UnityCallProvider.m; sourceTree = "<group>"; };
+		A224C1EA2E56C378006CCCFF /* SwiftExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftExample-Bridging-Header.h"; sourceTree = "<group>"; };
+		A224C1EB2E56C3CD006CCCFF /* UnityCallProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnityCallProvider.swift; sourceTree = "<group>"; };
+		A224C1ED2E56C571006CCCFF /* SwiftUIExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftUIExample-Bridging-Header.h"; sourceTree = "<group>"; };
+		A224C1EE2E56C5AA006CCCFF /* UnityCallProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnityCallProvider.swift; sourceTree = "<group>"; };
 		AA76869B5DA9C6C6CD8F1C46 /* SwiftUIExampleApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleApp.swift; sourceTree = "<group>"; };
 		B112B0461AC051AA1CDA78E6 /* Pods-UnifiedExample-ObjcExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnifiedExample-ObjcExample.release.xcconfig"; path = "Target Support Files/Pods-UnifiedExample-ObjcExample/Pods-UnifiedExample-ObjcExample.release.xcconfig"; sourceTree = "<group>"; };
 		B2270D3E59985D911BCD188A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -209,6 +221,9 @@
 				B2270D3E59985D911BCD188A /* LaunchScreen.storyboard */,
 				311B8F2F6D1E7A93D67F852D /* Main.storyboard */,
 				CADB0CF0A4DF7DCD2C299266 /* Info.plist */,
+				A224C1E42E56B720006CCCFF /* ObjcExample-Bridging-Header.h */,
+				A224C1E62E56BA0B006CCCFF /* UnityCallProvider.h */,
+				A224C1E72E56BA0B006CCCFF /* UnityCallProvider.m */,
 			);
 			path = ObjcExample;
 			sourceTree = "<group>";
@@ -245,6 +260,8 @@
 				4848AF66A7C6B008BB2B36EA /* LaunchScreen.storyboard */,
 				E772B3D7D5246E3F84AAEC5A /* Main.storyboard */,
 				8CC81FBFB5F3D3585319AB5C /* Info.plist */,
+				A224C1EA2E56C378006CCCFF /* SwiftExample-Bridging-Header.h */,
+				A224C1EB2E56C3CD006CCCFF /* UnityCallProvider.swift */,
 			);
 			path = SwiftExample;
 			sourceTree = "<group>";
@@ -259,6 +276,8 @@
 				6BCE6D559E503C4AE3A44A7B /* Assets.xcassets */,
 				B8ADC0FCE38D2E776A4FD4B4 /* Info.plist */,
 				2F630B2D93A2E171C9CE4086 /* LaunchScreen.storyboard */,
+				A224C1ED2E56C571006CCCFF /* SwiftUIExample-Bridging-Header.h */,
+				A224C1EE2E56C5AA006CCCFF /* UnityCallProvider.swift */,
 			);
 			path = SwiftUIExample;
 			sourceTree = "<group>";
@@ -271,7 +290,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				968D59A317209C4DD758792E /* AppDelegate.h in Headers */,
+				A224C1E82E56BA0B006CCCFF /* UnityCallProvider.h in Headers */,
 				C7A627BB68B2809355AE6CD9 /* GrowthKitConfig.h in Headers */,
+				A224C1E52E56B720006CCCFF /* ObjcExample-Bridging-Header.h in Headers */,
 				6DEE199F24566D990F6E8E5D /* SceneDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -603,6 +624,7 @@
 				ACFE40DF7B30E2D77A7C0032 /* ContentView.swift in Sources */,
 				A0A566DDADA6EB0CF3C9DBE3 /* SwiftUIExampleApp.swift in Sources */,
 				640C5811A5D1AC9A14BE77DF /* UnityManager.swift in Sources */,
+				A224C1EF2E56C5AA006CCCFF /* UnityCallProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +634,7 @@
 			files = (
 				032FD283D4FFC86D5006E3AD /* AppDelegate.swift in Sources */,
 				727D69B91494713464DDB540 /* SceneDelegate.swift in Sources */,
+				A224C1EC2E56C3CD006CCCFF /* UnityCallProvider.swift in Sources */,
 				18D0FA62CA4D7E60C1D3109B /* UnityManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,6 +643,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A224C1E92E56BA0B006CCCFF /* UnityCallProvider.m in Sources */,
 				B0F132334457F92F947CDF83 /* AppDelegate.m in Sources */,
 				51C366FE12935C45A23ED69E /* GrowthKitConfig.m in Sources */,
 				B919F939FD44DE1C89B93551 /* SceneDelegate.m in Sources */,
@@ -657,6 +681,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "wildcard-dev";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftExample/SwiftExample-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -687,6 +712,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "wildcard-dev";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftExample/SwiftExample-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -718,6 +744,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "wildcard-dev";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftUIExample/SwiftUIExample-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -748,6 +775,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "wildcard-dev";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "ObjcExample/ObjcExample-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -779,6 +807,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "wildcard-dev";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftUIExample/SwiftUIExample-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -810,6 +839,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "wildcard-dev";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "ObjcExample/ObjcExample-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
