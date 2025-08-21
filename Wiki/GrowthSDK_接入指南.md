@@ -38,14 +38,26 @@
 
 ### 2. 集成步骤
 
-#### 2.1 添加依赖
+#### 2.1 添加依赖（CocoaPods）
 
 ```ruby
+# 方式一：主模块 + 子模块（推荐）
 platform :ios, '14.0'
 use_frameworks!
 
 target 'YourAppTarget' do
-  pod 'GrowthSDK', '~> 1.0.0'
+  pod 'GrowthSDK', '~> 1.0.0', :subspecs => ['Google', 'Facebook']
+end
+```
+
+```ruby
+# 方式二：仅子模块（自动带上 Core）
+platform :ios, '14.0'
+use_frameworks!
+
+target 'YourAppTarget' do
+  pod 'GrowthSDK/Google', '~> 1.0.0'
+  pod 'GrowthSDK/Facebook', '~> 1.0.0'
 end
 ```
 

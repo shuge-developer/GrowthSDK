@@ -40,3 +40,24 @@
 ---
 
 **开始您的 GrowthSDK 集成之旅！** 🚀
+
+## Podfile 示例（CocoaPods）
+
+```ruby
+platform :ios, '14.0'
+use_frameworks!
+
+target 'YourAppTarget' do
+  # 方式一：一行选择主模块并指定子模块（推荐）
+  pod 'GrowthSDK', '~> 1.0.0', :subspecs => [
+    'Google', 'GoogleAdManager', 'Facebook', 'Vungle'
+  ]
+
+  # 方式二：仅写子模块（也会自动拉取 Core）
+  # pod 'GrowthSDK/Google', '~> 1.0.0'
+  # pod 'GrowthSDK/Facebook', '~> 1.0.0'
+  # pod 'GrowthSDK/Vungle', '~> 1.0.0'
+end
+```
+
+> 提示：任一广告子模块都会自动依赖 `GrowthSDK/Core`，无需单独声明。

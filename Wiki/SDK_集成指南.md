@@ -10,14 +10,27 @@
 
 #### 1. 添加依赖
 
-在工程根目录的 `Podfile` 中加入依赖：
+在工程根目录的 `Podfile` 中加入依赖（二选一）：
 
 ```ruby
+# 方式一：一行选择主模块 + 子模块（推荐）
 platform :ios, '14.0'
 use_frameworks!
 
 target 'YourAppTarget' do
-  pod 'GrowthSDK', '~> 1.0.0'
+  pod 'GrowthSDK', '~> 1.0.0', :subspecs => ['Google', 'Facebook', 'Vungle']
+end
+```
+
+```ruby
+# 方式二：仅写子模块（也会自动带上 Core）
+platform :ios, '14.0'
+use_frameworks!
+
+target 'YourAppTarget' do
+  pod 'GrowthSDK/Google',   '~> 1.0.0'
+  pod 'GrowthSDK/Facebook', '~> 1.0.0'
+  pod 'GrowthSDK/Vungle',   '~> 1.0.0'
 end
 ```
 
@@ -60,21 +73,40 @@ pod repo update && pod install
 
 #### 3. 可选广告适配器
 
-如需接入多平台广告，请在 `Podfile` 中按需添加以下适配器依赖（与 `AppLovinSDK` 版本配套）：
+如需接入更多网络，请在 `:subspecs` 或子模块列表中按需添加：
 
 ```ruby
 target 'YourAppTarget' do
   # 可选适配器（按需添加）
-  pod 'AppLovinMediationBigoAdsAdapter', '4.9.3.0'
+  pod 'AmazonPublisherServicesSDK', '5.3.0'
+  pod 'AppLovinMediationAmazonAdMarketplaceAdapter', '5.3.0.0'
+  pod 'AppLovinMediationBidMachineAdapter', '3.4.0.0.0'
   pod 'AppLovinMediationByteDanceAdapter', '7.5.0.5.0'
+  pod 'AppLovinMediationBigoAdsAdapter', '4.9.3.0'
   pod 'AppLovinMediationChartboostAdapter', '9.9.2.1'
+  pod 'AppLovinMediationCSJAdapter', '6.7.1.6.0'
   pod 'AppLovinMediationFyberAdapter', '8.3.8.0'
+  pod 'AppLovinMediationGoogleAdManagerAdapter', '12.9.0.0'
   pod 'AppLovinMediationGoogleAdapter', '12.9.0.0'
+  pod 'AppLovinMediationHyprMXAdapter', '6.4.2.0.0'
   pod 'AppLovinMediationInMobiAdapter', '10.8.6.0'
+  pod 'AppLovinMediationIronSourceAdapter', '8.11.0.0.0'
   pod 'AppLovinMediationVungleAdapter', '7.5.3.0'
+  pod 'AppLovinMediationLineAdapter', '2.9.20250805.0'
+  pod 'AppLovinMediationMaioAdapter', '2.1.6.0'
   pod 'AppLovinMediationFacebookAdapter', '6.20.1.0'
   pod 'AppLovinMediationMintegralAdapter', '7.7.9.0.0'
+  pod 'AppLovinMediationMobileFuseAdapter', '1.9.2.1'
   pod 'AppLovinMediationMolocoAdapter', '3.12.1.0'
+  pod 'AppLovinMediationOguryPresageAdapter', '5.1.0.1'
+  pod 'AppLovinMediationPubMaticAdapter', '4.8.1.0'
+  pod 'AppLovinMediationSmaatoAdapter', '22.9.3.1'
+  pod 'AppLovinMediationTencentGDTAdapter', '4.15.21.1'
+  pod 'AppLovinMediationUnityAdsAdapter', '4.16.1.0'
+  pod 'AppLovinMediationVerveAdapter', '3.6.1.0'
+  pod 'AppLovinMediationMyTargetAdapter', '5.34.1.0'
+  pod 'AppLovinMediationYandexAdapter', '7.15.1.0'
+  pod 'AppLovinMediationYSONetworkAdapter', '1.1.31.1'
 end
 ```
 
@@ -135,7 +167,7 @@ SDK 集成了 AdMob，宿主应用必须在 `Info.plist` 添加 `GADApplicationI
 
 > **注意**：完整的 SKAdNetwork 列表请参考 [SKAdNetwork 配置参考](SKAdNetwork_配置参考.md)。
 
-### AppDelegate window 属性（当集成 AdsDeps 适配器时必须）
+### AppDelegate window 属性（部分网络要求）
 
 若集成了 InMobi 等适配器，请确保 `AppDelegate` 中暴露可读的 `window` 属性，否则第三方 SDK 可能崩溃：
 
