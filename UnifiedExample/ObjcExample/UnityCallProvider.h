@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UnityCallProvider : NSObject<NativeCallable>
 
-+ (instancetype)sharedInstance NS_SWIFT_NAME(shared());
+@property(class, nonatomic, readonly) UnityCallProvider *sharedInstance NS_SWIFT_NAME(shared);
 
 @end
 

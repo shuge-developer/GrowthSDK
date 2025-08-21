@@ -127,7 +127,7 @@ public class UnityManager: NSObject {
                                   argv: CommandLine.unsafeArgv,
                                   appLaunchOpts: nil)
             
-            FrameworkLibAPI.register(UnityCallProvider.shared())
+            FrameworkLibAPI.register(UnityCallProvider.shared)
             
             guard let controller = unityDelegate?.rootViewController else {
                 completion(.failure(UnityError.controllerNotFound))
