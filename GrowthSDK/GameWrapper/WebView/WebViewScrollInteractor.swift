@@ -165,7 +165,6 @@ internal final class WebViewScrollInteractor {
     init(webView: WKWebView, config: ScrollInteractionConfig = .default) {
         self.webView = webView
         self.config = config
-        print("[H5] [ScrollInteractor] 🔧 初始化滑动交互器: WebView=\(webView.frame.size)")
     }
     
     // MARK: - 公共接口
@@ -181,52 +180,27 @@ internal final class WebViewScrollInteractor {
         completion: @escaping (ScrollInteractionResult) -> Void
     ) {
         guard !isExecuting else {
-            print("[H5] [ScrollInteractor] ⚠️ 滑动任务正在执行中，忽略新任务")
             completion(.failure(ScrollInteractionError.taskInProgress))
             return
         }
-        
         guard let webView = webView else {
-            print("[H5] [ScrollInteractor] ❌ WebView已被释放")
             completion(.failure(ScrollInteractionError.webViewUnavailable))
             return
         }
-        
-        // 添加详细的初始状态日志
-        let scrollView = webView.scrollView
-        print("[H5] [ScrollInteractor] 🕒 准备执行滑动任务：\(type.description)")
-        print("[H5] [ScrollInteractor] 📊 初始WebView状态: frame=\(webView.frame), contentSize=\(scrollView.contentSize)")
-        print("[H5] [ScrollInteractor] 📊 初始ScrollView状态: offset=\(scrollView.contentOffset), bounds=\(scrollView.bounds)")
-        print("[H5] [ScrollInteractor] ⏰ 延迟时间: \(taskConfig.startDelay)秒")
-        
         isExecuting = true
-        print("[H5] [ScrollInteractor] 🕒 滑动任务延迟 \(taskConfig.startDelay) 秒后开始：\(type.description)")
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + taskConfig.startDelay) { [weak self] in
             guard let self = self else {
-                print("[H5] [ScrollInteractor] ❌ 延迟后ScrollInteractor已被释放")
                 completion(.failure(ScrollInteractionError.interactorReleased))
                 return
             }
-            
             guard let webView = self.webView else {
-                print("[H5] [ScrollInteractor] ❌ 延迟后WebView已被释放")
                 self.isExecuting = false
                 completion(.failure(ScrollInteractionError.webViewUnavailable))
                 return
             }
-            
-            // 检查延迟后WebView状态
-            let scrollView = webView.scrollView
-            print("[H5] [ScrollInteractor] 📊 延迟后WebView状态: frame=\(webView.frame), contentSize=\(scrollView.contentSize)")
-            print("[H5] [ScrollInteractor] 📊 延迟后ScrollView状态: offset=\(scrollView.contentOffset), bounds=\(scrollView.bounds)")
-            
-            print("[H5] [ScrollInteractor] 🚀 开始执行滑动任务：\(type.description)")
-            
             // 执行实际的滑动交互
             self.performScrollInteraction(type: type) { result in
                 self.isExecuting = false
-                print("[H5] [ScrollInteractor] 🏁 滑动任务完成，结果: \(result)")
                 completion(result)
             }
         }
@@ -241,27 +215,15 @@ internal final class WebViewScrollInteractor {
         completion: @escaping (ScrollInteractionResult) -> Void
     ) {
         guard let webView = webView else {
-            print("[H5] [ScrollInteractor] ❌ WebView已被释放")
             completion(.failure(ScrollInteractionError.webViewUnavailable))
             return
         }
-        
         let scrollView = webView.scrollView
-        print("[H5] [ScrollInteractor] 🔄 开始\(type.description)滑动")
-        print("[H5] [ScrollInteractor] 📊 WebView状态: contentSize=\(scrollView.contentSize), frame=\(scrollView.frame)")
-        print("[H5] [ScrollInteractor] 📊 ScrollView详细状态: offset=\(scrollView.contentOffset), bounds=\(scrollView.bounds)")
-        
-        // 检查内容是否足够滑动
         let maxScrollOffset = max(0, scrollView.contentSize.height - scrollView.frame.height)
-        print("[H5] [ScrollInteractor] 📏 最大可滑动距离: \(maxScrollOffset)")
-        
         if maxScrollOffset <= 0 {
-            print("[H5] [ScrollInteractor] ⚠️ 内容不足以滚动: contentHeight=\(scrollView.contentSize.height), frameHeight=\(scrollView.frame.height)")
             completion(.insufficientContent)
             return
         }
-        
-        // 根据类型执行不同的滑动策略
         switch type {
         case .initialBrowsing:
             performInitialBrowsingScroll(scrollView: scrollView, completion: completion)
@@ -286,7 +248,6 @@ internal final class WebViewScrollInteractor {
     /// 重置重试计数
     func resetRetryCount() {
         retryCount = 0
-        print("[H5] [ScrollInteractor] 🔄 重置重试计数")
     }
     
     /// 获取当前重试次数
@@ -311,16 +272,12 @@ internal final class WebViewScrollInteractor {
         scrollView: UIScrollView,
         completion: @escaping (ScrollInteractionResult) -> Void
     ) {
-        print("[H5] [ScrollInteractor] 📖 执行初始浏览滑动")
-        
         // 使用智能浏览功能，模拟真实用户行为
         scrollView.simulateSmartBrowsing(maxScrolls: config.maxSmartScrolls) { [weak self] in
             guard let self = self else {
                 completion(.failure(ScrollInteractionError.interactorReleased))
                 return
             }
-            
-            print("[H5] [ScrollInteractor] ✅ 初始浏览滑动完成")
             completion(.success)
         }
     }
@@ -331,43 +288,30 @@ internal final class WebViewScrollInteractor {
         completion: @escaping (ScrollInteractionResult) -> Void
     ) {
         retryCount += 1
-        print("[H5] [ScrollInteractor] 🔄 执行第\(retryCount)次重试滑动")
-        
         let currentOffset = scrollView.contentOffset.y
         let maxScrollOffset = max(0, scrollView.contentSize.height - scrollView.frame.height)
-        
         // 检查是否已到达底部
         if currentOffset >= maxScrollOffset - 100 {
-            print("[H5] [ScrollInteractor] 📍 已到达底部，重置位置")
-            
             // 根据重试次数决定重置位置
             let targetOffset: CGFloat = retryCount % 2 == 0 ? 0 : maxScrollOffset * 0.3
             scrollView.setContentOffset(CGPoint(x: 0, y: targetOffset), animated: false)
-            
             // 等待一段时间后完成
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 completion(.reachedBottom)
             }
             return
         }
-        
         // 计算重试滑动距离
         let scrollDistance = calculateRetryScrollDistance(
             scrollView: scrollView,
             retryCount: retryCount
         )
-        
         let duration = TimeInterval.random(in: config.durationRange.min...config.durationRange.max)
-        
-        print("[H5] [ScrollInteractor] 📏 重试滑动距离: \(scrollDistance), 持续时间: \(duration)秒")
-        
         scrollView.simulateHumanScroll(distance: scrollDistance, duration: duration) { [weak self] in
             guard let self = self else {
                 completion(.failure(ScrollInteractionError.interactorReleased))
                 return
             }
-            
-            print("[H5] [ScrollInteractor] ✅ 重试滑动完成")
             completion(.success)
         }
     }
@@ -379,40 +323,25 @@ internal final class WebViewScrollInteractor {
         completion: @escaping (ScrollInteractionResult) -> Void
     ) {
         guard let area = ad.area else {
-            print("[H5] [ScrollInteractor] ❌ 广告没有位置信息")
             completion(.failure(ScrollInteractionError.invalidAdArea))
             return
         }
-        
-        print("[H5] [ScrollInteractor] 🎯 滑动到指定广告: type=\(ad.type.rawValue), area=\(area.rect)")
-        
         guard let targetOffset = calculateScrollPositionForAd(ad, scrollView: scrollView) else {
-            print("[H5] [ScrollInteractor] ❌ 无法计算广告滑动位置")
             completion(.failure(ScrollInteractionError.cannotCalculatePosition))
             return
         }
-        
         let currentOffset = scrollView.contentOffset.y
         let scrollDistance = targetOffset - currentOffset
-        
-        print("[H5] [ScrollInteractor] 📏 目标位置: \(targetOffset), 滑动距离: \(scrollDistance)")
-        
-        // 如果距离很小，直接完成
         if abs(scrollDistance) <= 1.0 {
-            print("[H5] [ScrollInteractor] ℹ️ 广告已在可视区域，无需滑动")
             completion(.success)
             return
         }
-        
         let duration = TimeInterval.random(in: 1.0...1.5)
-        
         scrollView.simulateHumanScroll(distance: scrollDistance, duration: duration) { [weak self] in
             guard let self = self else {
                 completion(.failure(ScrollInteractionError.interactorReleased))
                 return
             }
-            
-            print("[H5] [ScrollInteractor] ✅ 滑动到广告完成")
             completion(.success)
         }
     }
@@ -422,8 +351,6 @@ internal final class WebViewScrollInteractor {
         scrollView: UIScrollView,
         completion: @escaping (ScrollInteractionResult) -> Void
     ) {
-        print("[H5] [ScrollInteractor] 📱 执行二级页面滑动")
-        
         // 二级页面使用较温和的滑动策略
         let maxScrolls = min(3, config.maxSmartScrolls) // 减少滑动次数
         scrollView.simulateSmartBrowsing(maxScrolls: maxScrolls) { [weak self] in
@@ -431,8 +358,6 @@ internal final class WebViewScrollInteractor {
                 completion(.failure(ScrollInteractionError.interactorReleased))
                 return
             }
-            
-            print("[H5] [ScrollInteractor] ✅ 二级页面滑动完成")
             completion(.success)
         }
     }
@@ -443,14 +368,10 @@ internal final class WebViewScrollInteractor {
         scrollView: UIScrollView,
         completion: @escaping (ScrollInteractionResult) -> Void
     ) {
-        print("[H5] [ScrollInteractor] 📊 执行指定次数滑动: \(count)次")
-        
         guard count > 0 else {
-            print("[H5] [ScrollInteractor] ℹ️ 滑动次数为0，直接完成")
             completion(.success)
             return
         }
-        
         // 执行多次滑动
         performScrollSequence(scrollView: scrollView, remainingCount: count, completion: completion)
     }
@@ -462,33 +383,23 @@ internal final class WebViewScrollInteractor {
         completion: @escaping (ScrollInteractionResult) -> Void
     ) {
         guard remainingCount > 0 else {
-            print("[H5] [ScrollInteractor] ✅ 滑动序列完成")
             completion(.success)
             return
         }
-        
         // 计算单次滑动距离
         let scrollDistance = calculateSingleScrollDistance(scrollView: scrollView)
-        
         if scrollDistance == 0 {
-            print("[H5] [ScrollInteractor] ℹ️ 内容不足滑动，序列提前结束")
             completion(.insufficientContent)
             return
         }
-        
         let duration = TimeInterval.random(in: config.durationRange.min...config.durationRange.max)
-        
-        print("[H5] [ScrollInteractor] 📏 序列滑动 \(remainingCount): 距离=\(scrollDistance), 持续时间=\(duration)秒")
-        
         scrollView.simulateHumanScroll(distance: scrollDistance, duration: duration) { [weak self] in
             guard let self = self else {
                 completion(.failure(ScrollInteractionError.interactorReleased))
                 return
             }
-            
             // 滑动间隔
             let pauseTime = TimeInterval.random(in: self.config.pauseRange.min...self.config.pauseRange.max)
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + pauseTime) {
                 // 递归执行下一次滑动
                 self.performScrollSequence(
@@ -505,8 +416,6 @@ internal final class WebViewScrollInteractor {
         scrollView: UIScrollView,
         completion: @escaping (ScrollInteractionResult) -> Void
     ) {
-        print("[H5] [ScrollInteractor] 🖱️ 执行滑动+功能点击")
-        
         // 先执行单次滑动
         performScrollWithCount(1, scrollView: scrollView) { [weak self] result in
             guard let self = self else {
@@ -518,11 +427,8 @@ internal final class WebViewScrollInteractor {
             case .success:
                 // 滑动完成后，随机停顿一段时间
                 let delay = TimeInterval.random(in: self.config.pauseRange.min...self.config.pauseRange.max)
-                print("[H5] [ScrollInteractor] ⏸️ 滑动完成，停顿\(delay)秒后继续功能点击")
-                
                 DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                    // 这里只是完成滑动部分，功能点击需要在外部处理
-                    print("[H5] [ScrollInteractor] ✅ 滑动+功能点击的滑动部分完成")
+                    // 这里只是完成滑动部分，功能点击需要在外部处
                     completion(.success)
                 }
                 
@@ -539,30 +445,18 @@ internal final class WebViewScrollInteractor {
     private func calculateSingleScrollDistance(scrollView: UIScrollView) -> CGFloat {
         let maxScrollOffset = max(0, scrollView.contentSize.height - scrollView.frame.height)
         let currentOffset = scrollView.contentOffset.y
-        
-        print("[H5] [ScrollInteractor] 🧮 计算滑动距离: contentHeight=\(scrollView.contentSize.height), frameHeight=\(scrollView.frame.height)")
-        print("[H5] [ScrollInteractor] 🧮 最大偏移=\(maxScrollOffset), 当前偏移=\(currentOffset)")
-        
         // 如果内容不足以滚动，返回0
         if maxScrollOffset <= 0 {
-            print("[H5] [ScrollInteractor] 🧮 内容不足滑动，返回距离0")
             return 0
         }
-        
         // 判断是否为短页面
         let isShortPage = scrollView.contentSize.height < scrollView.frame.height * config.shortPageThreshold
-        print("[H5] [ScrollInteractor] 🧮 短页面阈值: \(scrollView.frame.height * config.shortPageThreshold)")
-        
         // 计算剩余可滚动距离
         let remainingDistance = maxScrollOffset - currentOffset
-        print("[H5] [ScrollInteractor] 🧮 剩余可滑动距离: \(remainingDistance)")
-        
         // 根据页面类型决定滑动距离
         let range = isShortPage ? config.shortPageScrollRange : config.scrollDistanceRange
         let randomDistance = CGFloat.random(in: range.min...range.max)
         let distance = min(remainingDistance, randomDistance)
-        
-        print("[H5] [ScrollInteractor] 📏 页面类型: \(isShortPage ? "短页面" : "长页面"), 滑动范围: \(range), 随机距离: \(randomDistance), 最终距离: \(distance)")
         return distance
     }
     
@@ -612,9 +506,6 @@ internal final class WebViewScrollInteractor {
         
         // 计算滚动位置，使广告显示在屏幕中部偏上的位置
         let targetOffset = max(0, adTopPosition - (screenHeight / 4))
-        
-        print("[H5] [ScrollInteractor] 🎯 广告位置计算: adTop=\(area.top), 实际位置=\(adTopPosition), 目标偏移=\(targetOffset)")
-        
         return targetOffset
     }
 }

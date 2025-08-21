@@ -20,7 +20,6 @@ internal extension Transformable {
             )
             dict = json as? [String: Any]
         } catch {
-            print(error)
             return nil
         }
         return dict
@@ -32,7 +31,6 @@ internal extension Transformable {
             let json = String(data: data, encoding: .utf8)
             return json
         } catch {
-            print(error)
             return nil
         }
     }
