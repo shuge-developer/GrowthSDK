@@ -203,6 +203,8 @@ echo "📋 复制发布文件到 GitHub 仓库..."
 if [[ "$DOCS_ONLY" != true ]]; then
   cp -R "$PROJECT_DIR/Frameworks" ./
   cp "$PROJECT_DIR/GrowthSDK.podspec" ./
+  # 强制添加 Frameworks 目录（即使被 .gitignore 忽略）
+  git add -f Frameworks/
 fi
 cp "$PROJECT_DIR/README.md" ./
 if [ -d "$PROJECT_DIR/Wiki" ]; then

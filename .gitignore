@@ -29,7 +29,7 @@ Podfile.lock
 *~
 
 # Framework distribution (built artifacts)
-Frameworks/
+# Frameworks/
 
 # IDE
 /buildServer.json
