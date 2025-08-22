@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   # MARK: - Basic Information
   s.name             = 'GrowthSDK'
-  s.version          = '0.0.5'
+  s.version          = '0.0.6'
   s.summary          = 'GrowthSDK binary distribution.'
   s.description      = 'GrowthSDK xcframework with ad mediation via CocoaPods dependencies.'
   s.source           = { :git => 'https://github.com/shuge-developer/GrowthSDK.git', :tag => "v#{s.version}" }

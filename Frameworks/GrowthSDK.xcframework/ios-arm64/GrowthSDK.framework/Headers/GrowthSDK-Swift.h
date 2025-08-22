@@ -365,6 +365,11 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL isLoggingEnabled;)
 - (void)initializeWith:(NetworkConfig * _Nonnull)config launchOptions:(NSDictionary<UIApplicationLaunchOptionsKey, id> * _Nullable)launchOptions completion:(void (^ _Nullable)(NSError * _Nullable))completion;
 @end
 
+@interface GrowthKit (SWIFT_EXTENSION(GrowthSDK))
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull sdkVersion;)
++ (NSString * _Nonnull)sdkVersion SWIFT_WARN_UNUSED_RESULT;
+@end
+
 @class UIViewController;
 @interface GrowthKit (SWIFT_EXTENSION(GrowthSDK))
 /// 创建主视图控制器
@@ -374,11 +379,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL isLoggingEnabled;)
 /// returns:
 /// GrowthSDK 视图控制器
 + (UIViewController * _Nonnull)createControllerWith:(UIViewController * _Nonnull)unityController SWIFT_WARN_UNUSED_RESULT;
-@end
-
-@interface GrowthKit (SWIFT_EXTENSION(GrowthSDK))
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull sdkVersion;)
-+ (NSString * _Nonnull)sdkVersion SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @interface GrowthKit (SWIFT_EXTENSION(GrowthSDK))

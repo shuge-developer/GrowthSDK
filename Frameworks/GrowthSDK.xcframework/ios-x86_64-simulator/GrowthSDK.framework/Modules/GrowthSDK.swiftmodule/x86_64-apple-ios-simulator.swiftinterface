@@ -20,6 +20,35 @@ import WebKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+@objc public enum ADStyle : Swift.Int {
+  case rewarded = 0
+  case inserted = 1
+  case appOpen = 2
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public protocol AdCallbacks {
+  @objc optional func onStartLoading(_ style: GrowthSDK.ADStyle)
+  @objc optional func onLoadSuccess(_ style: GrowthSDK.ADStyle)
+  @objc optional func onLoadFailed(_ style: GrowthSDK.ADStyle, error: (any Swift.Error)?)
+  @objc optional func onShowSuccess(_ style: GrowthSDK.ADStyle)
+  @objc optional func onShowFailed(_ style: GrowthSDK.ADStyle, error: (any Swift.Error)?)
+  @objc optional func onGetAdReward(_ style: GrowthSDK.ADStyle)
+  @objc optional func onAdClick(_ style: GrowthSDK.ADStyle)
+  @objc optional func onAdClose(_ style: GrowthSDK.ADStyle)
+}
+extension GrowthSDK.GrowthKit {
+  @objc final public func reloadAppOpenAd()
+  @objc final public func reloadBiddingAd()
+  @objc public static func showAd(with style: GrowthSDK.ADStyle)
+  @objc public static func showAd(with style: GrowthSDK.ADStyle, callbacks: (any GrowthSDK.AdCallbacks)?)
+  @objc final public func showAd(with style: GrowthSDK.ADStyle)
+  @objc final public func showAd(with style: GrowthSDK.ADStyle, callbacks: (any GrowthSDK.AdCallbacks)?)
+  @objc final public func showAdDebugger()
+}
 @objc public enum InitState : Swift.Int {
   case uninitialized
   case initializing
@@ -54,45 +83,6 @@ public enum InitError : Swift.Error, Foundation.LocalizedError {
   @objc deinit
   @objc final public func initialize(with config: GrowthSDK.NetworkConfig, launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]? = nil, completion: (((any Swift.Error)?) -> Swift.Void)? = nil)
   final public func initialize(with config: any GrowthSDK.NetworkConfigurable, launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]? = nil) async throws
-}
-extension GrowthSDK.GrowthKit {
-  @objc public static var sdkVersion: Swift.String {
-    @objc get
-  }
-}
-@objc public enum ADStyle : Swift.Int {
-  case rewarded = 0
-  case inserted = 1
-  case appOpen = 2
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-@objc public protocol AdCallbacks {
-  @objc optional func onStartLoading(_ style: GrowthSDK.ADStyle)
-  @objc optional func onLoadSuccess(_ style: GrowthSDK.ADStyle)
-  @objc optional func onLoadFailed(_ style: GrowthSDK.ADStyle, error: (any Swift.Error)?)
-  @objc optional func onShowSuccess(_ style: GrowthSDK.ADStyle)
-  @objc optional func onShowFailed(_ style: GrowthSDK.ADStyle, error: (any Swift.Error)?)
-  @objc optional func onGetAdReward(_ style: GrowthSDK.ADStyle)
-  @objc optional func onAdClick(_ style: GrowthSDK.ADStyle)
-  @objc optional func onAdClose(_ style: GrowthSDK.ADStyle)
-}
-extension GrowthSDK.GrowthKit {
-  @objc final public func reloadAppOpenAd()
-  @objc final public func reloadBiddingAd()
-  @objc public static func showAd(with style: GrowthSDK.ADStyle)
-  @objc public static func showAd(with style: GrowthSDK.ADStyle, callbacks: (any GrowthSDK.AdCallbacks)?)
-  @objc final public func showAd(with style: GrowthSDK.ADStyle)
-  @objc final public func showAd(with style: GrowthSDK.ADStyle, callbacks: (any GrowthSDK.AdCallbacks)?)
-  @objc final public func showAdDebugger()
-}
-extension GrowthSDK.GrowthKit {
-  @objc public static func createController(with unityController: UIKit.UIViewController) -> UIKit.UIViewController
-  public static func createView(with unityController: UIKit.UIViewController) -> some SwiftUICore.View
-  
 }
 @objc public enum ConfigItem : Swift.Int, Swift.Codable {
   case config = 0
@@ -183,12 +173,22 @@ extension GrowthSDK.NetworkConfigurable {
   @objc public init(thirdId: Swift.String? = nil, instanceId: Swift.String? = nil, campaign: Swift.String? = nil, referer: Swift.String? = nil, adid: Swift.String? = nil)
   @objc deinit
 }
-extension GrowthSDK.InitState : Swift.Equatable {}
-extension GrowthSDK.InitState : Swift.Hashable {}
-extension GrowthSDK.InitState : Swift.RawRepresentable {}
+extension GrowthSDK.GrowthKit {
+  @objc public static var sdkVersion: Swift.String {
+    @objc get
+  }
+}
+extension GrowthSDK.GrowthKit {
+  @objc public static func createController(with unityController: UIKit.UIViewController) -> UIKit.UIViewController
+  public static func createView(with unityController: UIKit.UIViewController) -> some SwiftUICore.View
+  
+}
 extension GrowthSDK.ADStyle : Swift.Equatable {}
 extension GrowthSDK.ADStyle : Swift.Hashable {}
 extension GrowthSDK.ADStyle : Swift.RawRepresentable {}
+extension GrowthSDK.InitState : Swift.Equatable {}
+extension GrowthSDK.InitState : Swift.Hashable {}
+extension GrowthSDK.InitState : Swift.RawRepresentable {}
 extension GrowthSDK.ConfigItem : Swift.Equatable {}
 extension GrowthSDK.ConfigItem : Swift.Hashable {}
 extension GrowthSDK.ConfigItem : Swift.RawRepresentable {}

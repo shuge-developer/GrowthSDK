@@ -22,19 +22,19 @@
 		</data>
 		<key>Headers/GrowthSDK-Swift.h</key>
 		<data>
-		erlQtXFL4XhPs2UKKu5oidHNYUY=
+		d2OkVBnDMZyedpMnfaAtRHLivhg=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		iwASwecwsXiFDbh6tlhKwm72xVc=
+		vwAJCO9rY1dsb0gDwljcYOC4gtE=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		FNuXxayd4duyDDLF8b/zlRfi7jw=
+		GlD7Hb/707PbjPon+KqsHwGfrTg=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		Mp4w2rbwF8q3DVP0PyQ0onm5UL4=
+		dSolg+x/xa3B0m+IYjlV2oHjh1Q=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -42,11 +42,11 @@
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		Mp4w2rbwF8q3DVP0PyQ0onm5UL4=
+		dSolg+x/xa3B0m+IYjlV2oHjh1Q=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		ZalvIZdyotST3xsFKOl6ht8W0vA=
+		Zs7wnIACbQcyk7zGZawDY0W2BKQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -163,21 +163,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			bBjGDisnKuP91cDkMwrMLp5ehUb98YMXm852g9b+xcU=
+			WSjVIdBAVvp/u12EMCQoBTsOwqJM9fgk4fE182D6QmY=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xb5dfNBxAYhUv3Zw0JPH+JgpMvDrLU3ZQCZtnN+ezXY=
+			RjQWBk+J8u4B3Nng8swUL0Jy5gck4BYWjNO+SC8cMZE=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			syU5JWr6o4RFT8wx9VwWh7t4m/7Fl7YiT0kqgzLZ62s=
+			WiJIe3Gp4Vzfh/RQDkdnsTZBxBx0kebMXg44mF8npJM=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -191,14 +191,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			syU5JWr6o4RFT8wx9VwWh7t4m/7Fl7YiT0kqgzLZ62s=
+			WiJIe3Gp4Vzfh/RQDkdnsTZBxBx0kebMXg44mF8npJM=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7Q/LnCST0m1vgGvqSfi/GCcJoy9XDLprc7Trv+xuG7k=
+			kpjvm1+BxyUm9iaomNjvPzQ63GwEhJBh2xGG4o/epH0=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
