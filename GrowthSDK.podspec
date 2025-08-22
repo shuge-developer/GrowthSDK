@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   # MARK: - Basic Information
   s.name             = 'GrowthSDK'
-  s.version          = '1.0.0'
+  s.version          = '0.0.1'
   s.summary          = 'GrowthSDK binary distribution.'
   s.description      = 'GrowthSDK xcframework with ad mediation via CocoaPods dependencies.'
   s.source           = { :git => 'git@github.com:shuge-developer/GrowthSDK.git', :tag => s.version.to_s }
@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   # MARK: - Subspecs
   s.subspec 'Core' do |core|
     core.vendored_frameworks = 'Frameworks/GrowthSDK.xcframework'
-    core.resource_bundles = { 'GrowthSDKResources' => 'Resources/**/*' }
+    core.resource_bundles = { 'GrowthSDKResources' => 'GrowthSDK/Resources/**/*' }
     core.dependency 'AppLovinSDK', '13.3.1'
     core.dependency 'KwaiAdsSDK', '1.2.0'
   end
