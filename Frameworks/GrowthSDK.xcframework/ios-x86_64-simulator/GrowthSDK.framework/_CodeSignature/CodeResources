@@ -26,15 +26,15 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		85l+RrQ8Gl9p0JStYPEqsuKIRwE=
+		J+Qes98eyWmk8ABw0P3q72c5RQ4=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		D7xZ16KAbhHD/227npHE0GFP7IA=
+		sXFQl/FX4wkbxA4UoZgv47FzblM=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		f4mm3ez6foba1MXP3N2oXNibuTY=
+		4AA7vueGqO/hLvGEsM5XX4WEwAs=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -42,11 +42,11 @@
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		f4mm3ez6foba1MXP3N2oXNibuTY=
+		4AA7vueGqO/hLvGEsM5XX4WEwAs=
 		</data>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		M5FgGZHtSA/1SaMPvYp/2FD7pU0=
+		aCWQ3HmbVp4Yjmt9b9gaiM/6/Pw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -170,14 +170,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			k6vTa3zxCx9633uH2Z2wo3yVM6NBPIltaNrZBxSuPJs=
+			6GS75/buNpCa/pG1/Sszz9ChNVfH9OJzW+LjyxqqNjQ=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			R1PkPyCj6h0Jof4fy6Ckz0mZF2ooaCUfAk77xPYcnvU=
+			155wf1jobJIok/kGF3noVMNn2XpUt5mvYgqGiGYHCvE=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -191,14 +191,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			R1PkPyCj6h0Jof4fy6Ckz0mZF2ooaCUfAk77xPYcnvU=
+			155wf1jobJIok/kGF3noVMNn2XpUt5mvYgqGiGYHCvE=
 			</data>
 		</dict>
 		<key>Modules/GrowthSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sWvn8nx58Wu3Wmu2GtnzZhgv8CNkFIEsRwbItlg8+HA=
+			kFFpzIefUay9H1SDj5cbF668/4vyj7Q/Rv6/wLXGMmo=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
