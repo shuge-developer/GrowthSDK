@@ -308,11 +308,11 @@ fi
 
 echo "✅ iOS 设备版本构建完成"
 
-# 为iOS模拟器构建（排除 arm64 以兼容缺少 arm64-simulator slice 的第三方SDK，例如 KwaiAdsSDK）
+# 为iOS模拟器构建（只构建 x86_64 以避免第三方SDK兼容性问题）
 echo "🖥️  构建 iOS 模拟器版本..."
-log "开始构建 iOS 模拟器架构 (EXCLUDED_ARCHS=arm64, ARCHS=x86_64)"
+log "开始构建 iOS 模拟器架构 (ARCHS=x86_64)"
 
-SIMULATOR_ARCH_FLAGS="ARCHS=x86_64 EXCLUDED_ARCHS=arm64 ONLY_ACTIVE_ARCH=NO"
+SIMULATOR_ARCH_FLAGS="ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO"
 
 if [[ "$USE_WORKSPACE" == true ]]; then
     # 使用 workspace 和 destination（CocoaPods 兼容）
