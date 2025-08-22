@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   # MARK: - Basic Information
   s.name             = 'GrowthSDK'
-  s.version          = '0.0.6'
+      s.version          = '0.1.0'
   s.summary          = 'GrowthSDK binary distribution.'
   s.description      = 'GrowthSDK xcframework with ad mediation via CocoaPods dependencies.'
   s.source           = { :git => 'https://github.com/shuge-developer/GrowthSDK.git', :tag => "v#{s.version}" }
@@ -26,7 +26,11 @@ Pod::Spec.new do |s|
     core.vendored_frameworks = 'Frameworks/GrowthSDK.xcframework'
     # 与 AppLovin 一致：使用独立资源包（不包含 PrivacyInfo.xcprivacy）
     # 资源包位于各 slice 的 GrowthSDK.framework 内部
-    core.resource_bundles = { 'GrowthSDKResources' => ['Frameworks/GrowthSDK.xcframework/**/GrowthSDK.framework/GrowthSDKResources.bundle'] }
+    # 资源包：包含本地化文件和图片资源（只使用arm64架构的资源包）
+    core.resource_bundles = { 'GrowthSDKResources' => ['Frameworks/GrowthSDK.xcframework/ios-arm64/GrowthSDK.framework/GrowthSDKResources.bundle'] }
+    
+    # 隐私清单文件：直接放在Pod的Resources目录中（只使用arm64架构的文件）
+    core.resources = ['Frameworks/GrowthSDK.xcframework/ios-arm64/GrowthSDK.framework/PrivacyInfo.xcprivacy']
 
     core.dependency 'AppLovinSDK', '13.3.1'
     core.dependency 'KwaiAdsSDK', '1.2.0'

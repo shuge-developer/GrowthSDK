@@ -20,6 +20,11 @@ import WebKit
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+extension GrowthSDK.GrowthKit {
+  @objc public static var sdkVersion: Swift.String {
+    @objc get
+  }
+}
 @objc public enum ADStyle : Swift.Int {
   case rewarded = 0
   case inserted = 1
@@ -48,41 +53,6 @@ extension GrowthSDK.GrowthKit {
   @objc final public func showAd(with style: GrowthSDK.ADStyle)
   @objc final public func showAd(with style: GrowthSDK.ADStyle, callbacks: (any GrowthSDK.AdCallbacks)?)
   @objc final public func showAdDebugger()
-}
-@objc public enum InitState : Swift.Int {
-  case uninitialized
-  case initializing
-  case initialized
-  case failed
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-public enum InitError : Swift.Error, Foundation.LocalizedError {
-  case alreadyInitialized
-  case storageInitFailed(Swift.String)
-  case serviceInitFailed(Swift.String)
-  public var errorDescription: Swift.String? {
-    get
-  }
-}
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc final public class GrowthKit : ObjectiveC.NSObject {
-  @objc public static let shared: GrowthSDK.GrowthKit
-  @objc final public var state: GrowthSDK.InitState {
-    @objc get
-  }
-  @Combine.Published @objc @_projectedValueProperty($isInitialized) final public var isInitialized: Swift.Bool {
-    @objc get
-  }
-  final public var $isInitialized: Combine.Published<Swift.Bool>.Publisher {
-    get
-  }
-  @objc public static var isLoggingEnabled: Swift.Bool
-  @objc deinit
-  @objc final public func initialize(with config: GrowthSDK.NetworkConfig, launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]? = nil, completion: (((any Swift.Error)?) -> Swift.Void)? = nil)
-  final public func initialize(with config: any GrowthSDK.NetworkConfigurable, launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]? = nil) async throws
 }
 @objc public enum ConfigItem : Swift.Int, Swift.Codable {
   case config = 0
@@ -174,21 +144,51 @@ extension GrowthSDK.NetworkConfigurable {
   @objc deinit
 }
 extension GrowthSDK.GrowthKit {
-  @objc public static var sdkVersion: Swift.String {
-    @objc get
-  }
-}
-extension GrowthSDK.GrowthKit {
   @objc public static func createController(with unityController: UIKit.UIViewController) -> UIKit.UIViewController
   public static func createView(with unityController: UIKit.UIViewController) -> some SwiftUICore.View
   
 }
+@objc public enum InitState : Swift.Int {
+  case uninitialized
+  case initializing
+  case initialized
+  case failed
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum InitError : Swift.Error, Foundation.LocalizedError {
+  case alreadyInitialized
+  case storageInitFailed(Swift.String)
+  case serviceInitFailed(Swift.String)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc final public class GrowthKit : ObjectiveC.NSObject {
+  @objc public static let shared: GrowthSDK.GrowthKit
+  @objc final public var state: GrowthSDK.InitState {
+    @objc get
+  }
+  @Combine.Published @objc @_projectedValueProperty($isInitialized) final public var isInitialized: Swift.Bool {
+    @objc get
+  }
+  final public var $isInitialized: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  @objc public static var isLoggingEnabled: Swift.Bool
+  @objc deinit
+  @objc final public func initialize(with config: GrowthSDK.NetworkConfig, launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]? = nil, completion: (((any Swift.Error)?) -> Swift.Void)? = nil)
+  final public func initialize(with config: any GrowthSDK.NetworkConfigurable, launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]? = nil) async throws
+}
 extension GrowthSDK.ADStyle : Swift.Equatable {}
 extension GrowthSDK.ADStyle : Swift.Hashable {}
 extension GrowthSDK.ADStyle : Swift.RawRepresentable {}
-extension GrowthSDK.InitState : Swift.Equatable {}
-extension GrowthSDK.InitState : Swift.Hashable {}
-extension GrowthSDK.InitState : Swift.RawRepresentable {}
 extension GrowthSDK.ConfigItem : Swift.Equatable {}
 extension GrowthSDK.ConfigItem : Swift.Hashable {}
 extension GrowthSDK.ConfigItem : Swift.RawRepresentable {}
+extension GrowthSDK.InitState : Swift.Equatable {}
+extension GrowthSDK.InitState : Swift.Hashable {}
+extension GrowthSDK.InitState : Swift.RawRepresentable {}
