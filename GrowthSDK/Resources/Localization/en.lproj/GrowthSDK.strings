@@ -1,7 +1,0 @@
-/* GrowthSDK English localization */
-
-"sdk_network_tips" = "The network is not working please try again";
-"sdk_reload_tips" = "Loading game resources...";
-"sdk_review_tips" = "Calculating game rewards...";
-"sdk_btn_relaod" = "Reload";
-"sdk_btn_ok" = "OK";

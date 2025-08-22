@@ -1,7 +1,0 @@
-/* GrowthSDK Korean localization */
-
-"sdk_network_tips" = "네트워크가 작동하지 않습니다. 다시 시도해 주세요.";
-"sdk_reload_tips" = "게임 리소스를 로드하는 중...";
-"sdk_review_tips" = "게임 보상을 계산하는 중...";
-"sdk_btn_relaod" = "새로고침";
-"sdk_btn_ok" = "확인";

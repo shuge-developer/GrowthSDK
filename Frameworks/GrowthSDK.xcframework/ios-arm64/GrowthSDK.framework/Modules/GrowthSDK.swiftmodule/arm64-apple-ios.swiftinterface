@@ -25,6 +25,11 @@ extension GrowthSDK.GrowthKit {
     @objc get
   }
 }
+extension GrowthSDK.GrowthKit {
+  @objc public static func createController(with unityController: UIKit.UIViewController) -> UIKit.UIViewController
+  public static func createView(with unityController: UIKit.UIViewController) -> some SwiftUICore.View
+  
+}
 @objc public enum InitState : Swift.Int {
   case uninitialized
   case initializing
@@ -88,11 +93,6 @@ extension GrowthSDK.GrowthKit {
   @objc final public func showAd(with style: GrowthSDK.ADStyle)
   @objc final public func showAd(with style: GrowthSDK.ADStyle, callbacks: (any GrowthSDK.AdCallbacks)?)
   @objc final public func showAdDebugger()
-}
-extension GrowthSDK.GrowthKit {
-  @objc public static func createController(with unityController: UIKit.UIViewController) -> UIKit.UIViewController
-  public static func createView(with unityController: UIKit.UIViewController) -> some SwiftUICore.View
-  
 }
 @objc public enum ConfigItem : Swift.Int, Swift.Codable {
   case config = 0

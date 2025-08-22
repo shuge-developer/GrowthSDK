@@ -24,6 +24,8 @@ Pod::Spec.new do |s|
   # MARK: - Subspecs
   s.subspec 'Core' do |core|
     core.vendored_frameworks = 'Frameworks/GrowthSDK.xcframework'
+    # 与 AppLovin 一致：使用独立资源包（不包含 PrivacyInfo.xcprivacy）
+    core.resource_bundles = { 'GrowthSDKResources' => ['Frameworks/GrowthSDK.xcframework/**/GrowthSDKResources.bundle'] }
 
     core.dependency 'AppLovinSDK', '13.3.1'
     core.dependency 'KwaiAdsSDK', '1.2.0'

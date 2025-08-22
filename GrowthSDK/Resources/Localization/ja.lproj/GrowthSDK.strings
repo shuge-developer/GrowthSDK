@@ -1,7 +1,0 @@
-/* GrowthSDK Japanese localization */
-
-"sdk_network_tips" = "ネットワークが機能していません。もう一度お試しください。";
-"sdk_reload_tips" = "ゲームリソースを読み込んでいます…";
-"sdk_review_tips" = "ゲーム報酬を計算中です…";
-"sdk_btn_relaod" = "再読み込み";
-"sdk_btn_ok" = "OK";

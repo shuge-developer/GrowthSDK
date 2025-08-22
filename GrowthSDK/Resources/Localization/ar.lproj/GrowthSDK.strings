@@ -1,7 +1,0 @@
-/* GrowthSDK Arabic localization */
-
-"sdk_network_tips" = "الشبكة لا تعمل، يُرجى المحاولة مرة أخرى.";
-"sdk_reload_tips" = "جاري تحميل موارد اللعبة...";
-"sdk_review_tips" = "جاري حساب مكافآت اللعبة...";
-"sdk_btn_relaod" = "إعادة تحميل";
-"sdk_btn_ok" = "حسنًا";
