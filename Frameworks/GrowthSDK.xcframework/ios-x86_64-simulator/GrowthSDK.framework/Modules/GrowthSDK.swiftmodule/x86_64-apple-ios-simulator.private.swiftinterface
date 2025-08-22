@@ -21,9 +21,9 @@ import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
 extension GrowthSDK.GrowthKit {
-  @objc public static var sdkVersion: Swift.String {
-    @objc get
-  }
+  @objc public static func createController(with unityController: UIKit.UIViewController) -> UIKit.UIViewController
+  public static func createView(with unityController: UIKit.UIViewController) -> some SwiftUICore.View
+  
 }
 @objc public enum ADStyle : Swift.Int {
   case rewarded = 0
@@ -144,9 +144,9 @@ extension GrowthSDK.NetworkConfigurable {
   @objc deinit
 }
 extension GrowthSDK.GrowthKit {
-  @objc public static func createController(with unityController: UIKit.UIViewController) -> UIKit.UIViewController
-  public static func createView(with unityController: UIKit.UIViewController) -> some SwiftUICore.View
-  
+  @objc public static var sdkVersion: Swift.String {
+    @objc get
+  }
 }
 @objc public enum InitState : Swift.Int {
   case uninitialized
