@@ -1,0 +1,8 @@
+*
+!.gitignore
+!Frameworks/
+!Frameworks/**
+!GrowthSDK.podspec
+!README.md
+!Wiki/
+!UnifiedExample/
