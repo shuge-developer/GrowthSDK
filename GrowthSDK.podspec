@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   # MARK: - Basic Information
   s.name             = 'GrowthSDK'
-      s.version          = '0.1.2'
+  s.version          = '0.1.4'
   s.summary          = 'GrowthSDK binary distribution.'
   s.description      = 'GrowthSDK xcframework with ad mediation via CocoaPods dependencies.'
   s.source           = { :git => 'https://github.com/shuge-developer/GrowthSDK.git', :tag => "v#{s.version}" }
@@ -21,12 +21,10 @@ Pod::Spec.new do |s|
     'OTHER_LDFLAGS' => '$(inherited) -ObjC'
   }
 
-  # MARK: - Subspecs
+  # MARK: - Core Subspec
   s.subspec 'Core' do |core|
     core.vendored_frameworks = 'Frameworks/GrowthSDK.xcframework'
-    # 隐私清单文件：直接放在Pod的Resources目录中
     core.resources = ['Frameworks/GrowthSDK.xcframework/ios-arm64/GrowthSDK.framework/PrivacyInfo.xcprivacy']
-
     core.dependency 'AppLovinSDK', '13.3.1'
     core.dependency 'KwaiAdsSDK', '1.2.0'
   end
@@ -177,19 +175,19 @@ Pod::Spec.new do |s|
   end
   
   # MARK: - Recommended Ad Network Bundle
-  # 推荐广告网络组合包 - 一键集成最常用的广告网络适配器
-  # 包含：BigoAds、Chartboost、Fyber、Google、InMobi、Vungle、Facebook、Mintegral、ByteDance、Moloco
-  # 使用方式：pod 'GrowthSDK/Recommended'
+  # Recommended ad network bundle - one-click integration of most commonly used ad network adapters
+  # Includes: BigoAds, Chartboost, Fyber, Google, InMobi, Vungle, Facebook, Mintegral, ByteDance, Moloco
+  # Usage: pod 'GrowthSDK/Recommended'
   s.subspec 'Recommended' do |re|
-    re.dependency 'GrowthSDK/BigoAds'          # BigoAds - 全球短视频广告平台
-    re.dependency 'GrowthSDK/Chartboost'       # Chartboost - 游戏广告优化平台
-    re.dependency 'GrowthSDK/Fyber'            # Fyber - 移动广告变现平台
-    re.dependency 'GrowthSDK/Google'           # Google AdMob - 全球最大移动广告网络
-    re.dependency 'GrowthSDK/InMobi'           # InMobi - 印度领先移动广告平台
-    re.dependency 'GrowthSDK/Vungle'           # Vungle - 视频广告领导者
-    re.dependency 'GrowthSDK/Facebook'         # Facebook Audience Network - Meta 广告网络
-    re.dependency 'GrowthSDK/Mintegral'        # Mintegral - 移动广告优化平台
-    re.dependency 'GrowthSDK/ByteDance'        # ByteDance - 字节跳动广告网络
-    re.dependency 'GrowthSDK/Moloco'           # Moloco - 机器学习广告平台
+    re.dependency 'GrowthSDK/BigoAds'          # BigoAds - Global short video advertising platform
+    re.dependency 'GrowthSDK/Chartboost'       # Chartboost - Game advertising optimization platform
+    re.dependency 'GrowthSDK/Fyber'            # Fyber - Mobile advertising monetization platform
+    re.dependency 'GrowthSDK/Google'           # Google AdMob - World's largest mobile advertising network
+    re.dependency 'GrowthSDK/InMobi'           # InMobi - India's leading mobile advertising platform
+    re.dependency 'GrowthSDK/Vungle'           # Vungle - Video advertising leader
+    re.dependency 'GrowthSDK/Facebook'         # Facebook Audience Network - Meta advertising network
+    re.dependency 'GrowthSDK/Mintegral'        # Mintegral - Mobile advertising optimization platform
+    re.dependency 'GrowthSDK/ByteDance'        # ByteDance - ByteDance advertising network
+    re.dependency 'GrowthSDK/Moloco'           # Moloco - Machine learning advertising platform
   end
 end

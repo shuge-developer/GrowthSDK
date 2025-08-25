@@ -306,39 +306,114 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
+/// Ad type enumeration
+/// Defines the ad types supported by the SDK for specifying ad styles to display.
 typedef SWIFT_ENUM(NSInteger, ADStyle, open) {
+/// Rewarded video ad
+/// Ad type where users receive rewards after watching the complete video.
   ADStyleRewarded = 0,
+/// Interstitial ad
+/// Full-screen ad type that appears over the app interface.
   ADStyleInserted = 1,
+/// App open ad
+/// Full-screen ad type displayed when the app starts.
   ADStyleAppOpen = 2,
 };
 
+/// Ad callback protocol
+/// Defines various callback methods in the ad lifecycle for monitoring ad loading, display, click and other events.
+/// All callback methods are optional, developers can implement corresponding methods as needed.
 SWIFT_PROTOCOL("_TtP9GrowthSDK11AdCallbacks_")
 @protocol AdCallbacks
 @optional
+/// Ad loading started callback
+/// Triggered when ad starts loading.
+/// \param style Ad type
+///
 - (void)onStartLoading:(enum ADStyle)style;
+/// Ad loading success callback
+/// Triggered when ad loads successfully.
+/// \param style Ad type
+///
 - (void)onLoadSuccess:(enum ADStyle)style;
+/// Ad loading failed callback
+/// Triggered when ad loading fails.
+/// \param style Ad type
+///
+/// \param error Error information
+///
 - (void)onLoadFailed:(enum ADStyle)style error:(NSError * _Nullable)error;
+/// Ad display success callback
+/// Triggered when ad displays successfully.
+/// \param style Ad type
+///
 - (void)onShowSuccess:(enum ADStyle)style;
+/// Ad display failed callback
+/// Triggered when ad display fails.
+/// \param style Ad type
+///
+/// \param error Error information
+///
 - (void)onShowFailed:(enum ADStyle)style error:(NSError * _Nullable)error;
+/// Ad reward received callback
+/// Triggered when user completes watching rewarded video ad and receives reward.
+/// \param style Ad type
+///
 - (void)onGetAdReward:(enum ADStyle)style;
+/// Ad click callback
+/// Triggered when user clicks on the ad.
+/// \param style Ad type
+///
 - (void)onAdClick:(enum ADStyle)style;
+/// Ad close callback
+/// Triggered when ad is closed.
+/// \param style Ad type
+///
 - (void)onAdClose:(enum ADStyle)style;
 @end
 
+/// Configuration item type enumeration
+/// Defines various configuration types supported by the SDK for distinguishing different configuration requests.
 typedef SWIFT_ENUM(NSInteger, ConfigItem, open) {
+/// General configuration
+/// Used to obtain general SDK configuration information such as ad configurations.
   ConfigItemConfig = 0,
+/// Adjust configuration
+/// Used to obtain Adjust analytics service configuration information.
   ConfigItemAdjust = 1,
+/// Ad unit configuration
+/// Used to obtain ad unit configuration information.
   ConfigItemAdUnit = 2,
 };
 
 @class NSString;
+/// Configuration key item
+/// Represents a configuration request item containing configuration key and corresponding configuration type.
 SWIFT_CLASS("_TtC9GrowthSDK13ConfigKeyItem")
 @interface ConfigKeyItem : NSObject
+/// Configuration key
+/// Unique key value for identifying specific configuration.
 @property (nonatomic, readonly, copy) NSString * _Nonnull key;
+/// Configuration type
+/// Specifies the type of configuration such as general configuration, Adjust configuration, etc.
 @property (nonatomic, readonly) enum ConfigItem item;
+/// Initialize configuration key item
+/// \param key Configuration key
+///
+/// \param item Configuration type
+///
 - (nonnull instancetype)initWithKey:(NSString * _Nonnull)key item:(enum ConfigItem)item OBJC_DESIGNATED_INITIALIZER;
+/// Create general configuration key item
+/// \param configKey General configuration key
+///
 - (nonnull instancetype)initWithConfigKey:(NSString * _Nonnull)configKey;
+/// Create Adjust configuration key item
+/// \param adjustKey Adjust configuration key
+///
 - (nonnull instancetype)initWithAdjustKey:(NSString * _Nonnull)adjustKey;
+/// Create ad unit configuration key item
+/// \param adUnitKey Ad unit configuration key
+///
 - (nonnull instancetype)initWithAdUnitKey:(NSString * _Nonnull)adUnitKey;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -346,86 +421,361 @@ SWIFT_CLASS("_TtC9GrowthSDK13ConfigKeyItem")
 
 enum InitState : NSInteger;
 @class NetworkConfig;
+/// GrowthSDK main class
+/// This is the core class of GrowthSDK, providing SDK initialization and status management functionality.
+/// Uses singleton pattern, accessed through the <code>shared</code> property.
+/// <h2>Usage Example</h2>
+/// \code
+/// // Create configuration
+/// let config = NetworkConfig(
+///     serviceId: "your_service_id",
+///     bundleName: "your_bundle_name",
+///     serviceUrl: "https://your-service.com",
+///     serviceKey: "your_service_key",
+///     serviceIv: "your_service_iv",
+///     publicKey: "your_public_key"
+/// )
+///
+/// // Initialize SDK
+/// GrowthKit.shared.initialize(with: config) { error in
+///     if let error = error {
+///         print("Initialization failed: \(error)")
+///     } else {
+///         print("Initialization successful")
+///     }
+/// }
+///
+/// \endcode
 SWIFT_CLASS("_TtC9GrowthSDK9GrowthKit")
 @interface GrowthKit : NSObject
+/// SDK singleton instance
+/// Access the unique instance of GrowthSDK through this property.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) GrowthKit * _Nonnull shared;)
 + (GrowthKit * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+/// Current SDK initialization status
+/// Used to monitor SDK initialization status changes.
 @property (nonatomic, readonly) enum InitState state;
+/// Whether SDK is initialized
+/// A convenience property for quickly checking if SDK initialization is complete.
+/// This property is <code>true</code> when <code>state</code> is <code>.initialized</code>.
 @property (nonatomic, readonly) BOOL isInitialized;
+/// Whether logging is enabled
+/// Controls SDK internal log output. Default is <code>true</code>, set to <code>false</code> to disable logging.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL isLoggingEnabled;)
 + (BOOL)isLoggingEnabled SWIFT_WARN_UNUSED_RESULT;
 + (void)setIsLoggingEnabled:(BOOL)value;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-/// 初始化 SDK
-/// \param config 配置信息
+/// Initialize SDK (Objective-C interface)
+/// Initialize SDK using callback approach, suitable for Objective-C projects.
+/// <h2>Usage Example</h2>
+/// \code
+/// NetworkConfig *config = [[NetworkConfig alloc] initWithServiceId:@"your_id"
+///                                                      bundleName:@"your_bundle"
+///                                                      serviceUrl:@"https://your-service.com"
+///                                                      serviceKey:@"your_key"
+///                                                      serviceIv:@"your_iv"
+///                                                      publicKey:@"your_public_key"];
 ///
-/// \param completion 完成回调
+/// [GrowthKit.shared initializeWithConfig:config
+///                           launchOptions:nil
+///                              completion:^(NSError *error) {
+///     if (error) {
+///         NSLog(@"Initialization failed: %@", error.localizedDescription);
+///     } else {
+///         NSLog(@"Initialization successful");
+///     }
+/// }];
+///
+/// \endcode\param config SDK configuration information, including service ID, keys and other required parameters
+///
+/// \param launchOptions Application launch options for analytics SDK initialization
+///
+/// \param completion Initialization completion callback, error is nil on success, contains error information on failure
 ///
 - (void)initializeWith:(NetworkConfig * _Nonnull)config launchOptions:(NSDictionary<UIApplicationLaunchOptionsKey, id> * _Nullable)launchOptions completion:(void (^ _Nullable)(NSError * _Nullable))completion;
 @end
 
 @interface GrowthKit (SWIFT_EXTENSION(GrowthSDK))
+/// SDK version number
+/// Returns the current SDK version number in “x.y.z” format.
+/// <h2>Usage Example</h2>
+/// \code
+/// let version = GrowthKit.sdkVersion
+/// print("Current SDK version: \(version)")
+///
+/// \endcode
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull sdkVersion;)
 + (NSString * _Nonnull)sdkVersion SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @class UIViewController;
 @interface GrowthKit (SWIFT_EXTENSION(GrowthSDK))
-/// 创建主视图控制器
-/// \param unityController Unity 视图控制器
+/// Create main view controller
+/// Creates a view controller containing Unity view and SDK functionality.
+/// Suitable for UIKit projects or scenarios requiring custom view controllers.
+/// <h2>Usage Example</h2>
+/// \code
+/// // Assuming unityController is Unity's view controller
+/// let sdkController = GrowthKit.createController(with: unityController)
+///
+/// // Set SDK controller as root view controller
+/// window?.rootViewController = sdkController
+///
+/// \endcode\param unityController Unity view controller containing Unity game view
 ///
 ///
 /// returns:
-/// GrowthSDK 视图控制器
+/// View controller integrated with SDK functionality
 + (UIViewController * _Nonnull)createControllerWith:(UIViewController * _Nonnull)unityController SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @interface GrowthKit (SWIFT_EXTENSION(GrowthSDK))
+/// Reload app open ad
+/// Force reload app open ad, typically called when ad display fails or needs refresh.
+/// Only executes when SDK is initialized and app open ad SDK is initialized.
+/// <h2>Usage Example</h2>
+/// \code
+/// GrowthKit.shared.reloadAppOpenAd()
+///
+/// \endcode
 - (void)reloadAppOpenAd;
+/// Reload bidding ads
+/// Force reload all bidding ads including rewarded video and interstitial ads.
+/// Only executes when SDK is initialized and video ad SDK is initialized.
+/// <h2>Usage Example</h2>
+/// \code
+/// GrowthKit.shared.reloadBiddingAd()
+///
+/// \endcode
 - (void)reloadBiddingAd;
+/// Show ad (static method, no callbacks)
+/// Convenient static method for quickly displaying specified ad type without handling callback events.
+/// <h2>Usage Example</h2>
+/// \code
+/// GrowthKit.showAd(with: .rewarded)
+///
+/// \endcode\param style Ad type to display
+///
 + (void)showAdWith:(enum ADStyle)style;
+/// Show ad (static method, with callbacks)
+/// Convenient static method for displaying specified ad type and handling callback events.
+/// <h2>Usage Example</h2>
+/// \code
+/// class MyAdCallbacks: NSObject, AdCallbacks {
+///     func onShowSuccess(_ style: ADStyle) {
+///         print("Ad display successful")
+///     }
+///
+///     func onAdClose(_ style: ADStyle) {
+///         print("Ad closed")
+///     }
+/// }
+///
+/// let callbacks = MyAdCallbacks()
+/// GrowthKit.showAd(with: .rewarded, callbacks: callbacks)
+///
+/// \endcode\param style Ad type to display
+///
+/// \param callbacks Ad callback object for monitoring ad events
+///
 + (void)showAdWith:(enum ADStyle)style callbacks:(id <AdCallbacks> _Nullable)callbacks;
+/// Show ad (instance method, no callbacks)
+/// Display specified ad type without handling callback events.
+/// <h2>Usage Example</h2>
+/// \code
+/// GrowthKit.shared.showAd(with: .inserted)
+///
+/// \endcode\param style Ad type to display
+///
 - (void)showAdWith:(enum ADStyle)style;
+/// Show ad (instance method, with callbacks)
+/// Display specified ad type and handle callback events. This is the core method for ad display.
+/// <h2>Usage Example</h2>
+/// \code
+/// class MyAdCallbacks: NSObject, AdCallbacks {
+///     func onStartLoading(_ style: ADStyle) {
+///         print("Ad loading started")
+///     }
+///
+///     func onLoadSuccess(_ style: ADStyle) {
+///         print("Ad loaded successfully")
+///     }
+///
+///     func onShowSuccess(_ style: ADStyle) {
+///         print("Ad display successful")
+///     }
+///
+///     func onGetAdReward(_ style: ADStyle) {
+///         print("Ad reward received")
+///         // Give reward to user here
+///     }
+///
+///     func onAdClose(_ style: ADStyle) {
+///         print("Ad closed")
+///     }
+/// }
+///
+/// let callbacks = MyAdCallbacks()
+/// GrowthKit.shared.showAd(with: .rewarded, callbacks: callbacks)
+///
+/// \endcode<h2>Notes</h2>
+/// <ul>
+///   <li>
+///     Ads can only be displayed when SDK is initialized
+///   </li>
+///   <li>
+///     Different ad types have different display logic and callback events
+///   </li>
+///   <li>
+///     Rewarded video ads require users to watch completely to receive rewards
+///   </li>
+/// </ul>
+/// \param style Ad type to display
+///
+/// \param callbacks Ad callback object for monitoring ad events
+///
 - (void)showAdWith:(enum ADStyle)style callbacks:(id <AdCallbacks> _Nullable)callbacks;
+/// Show ad debugger
+/// Display ad SDK debug interface for viewing ad status and configuration during development and testing.
+/// <h2>Usage Example</h2>
+/// \code
+/// GrowthKit.shared.showAdDebugger()
+///
+/// \endcode
 - (void)showAdDebugger;
 @end
 
+/// SDK initialization status enumeration
+/// Represents the current initialization status of GrowthSDK. Developers can use this status to determine if the SDK is available.
 typedef SWIFT_ENUM(NSInteger, InitState, open) {
+/// Uninitialized state
+/// SDK has not started initialization process. All features are unavailable at this time.
   InitStateUninitialized = 0,
+/// Initializing state
+/// SDK is currently initializing various components.
   InitStateInitializing = 1,
+/// Initialized state
+/// SDK initialization completed successfully. All features are available.
   InitStateInitialized = 2,
+/// Failed state
+/// SDK initialization failed. Re-initialization is required.
   InitStateFailed = 3,
 };
 
 @class OtherConfig;
+/// Network configuration class
+/// Main configuration class for SDK, implements NetworkConfigurable protocol.
+/// Contains all configuration parameters required for SDK operation.
+/// <h2>Usage Example</h2>
+/// \code
+/// let config = NetworkConfig(
+///     serviceId: "your_service_id",
+///     bundleName: "com.yourcompany.yourapp",
+///     serviceUrl: "https://your-service.com",
+///     serviceKey: "your_service_key",
+///     serviceIv: "your_service_iv",
+///     publicKey: "your_public_key",
+///     configKeyItems: [
+///         ConfigKeyItem(configKey: "your_config_key"),
+///         ConfigKeyItem(adjustKey: "your_adjust_key")
+///     ],
+///     other: OtherConfig(
+///         thirdId: "your_third_id",
+///         instanceId: "your_instance_id",
+///         campaign: "your_campaign",
+///         referer: "your_referer",
+///         adid: "your_adid"
+///     )
+/// )
+///
+/// \endcode
 SWIFT_CLASS("_TtC9GrowthSDK13NetworkConfig")
 @interface NetworkConfig : NSObject
+/// Service ID
 @property (nonatomic, readonly, copy) NSString * _Nonnull serviceId;
+/// Application bundle name
 @property (nonatomic, readonly, copy) NSString * _Nonnull bundleName;
+/// Service URL
 @property (nonatomic, readonly, copy) NSString * _Nonnull serviceUrl;
+/// Service key
 @property (nonatomic, readonly, copy) NSString * _Nonnull serviceKey;
+/// Service initialization vector
 @property (nonatomic, readonly, copy) NSString * _Nonnull serviceIv;
+/// Public key
 @property (nonatomic, readonly, copy) NSString * _Nonnull publicKey;
+/// Configuration key items list
 @property (nonatomic, readonly, copy) NSArray<ConfigKeyItem *> * _Nullable configKeyItems;
+/// Other configuration information
 @property (nonatomic, readonly, strong) OtherConfig * _Nullable other;
+/// Initialize network configuration
+/// \param serviceId Service ID
+///
+/// \param bundleName Application bundle name
+///
+/// \param serviceUrl Service URL
+///
+/// \param serviceKey Service key
+///
+/// \param serviceIv Service initialization vector
+///
+/// \param publicKey Public key
+///
+/// \param configKeyItems Configuration key items list, optional
+///
+/// \param other Other configuration information, optional
+///
 - (nonnull instancetype)initWithServiceId:(NSString * _Nonnull)serviceId bundleName:(NSString * _Nonnull)bundleName serviceUrl:(NSString * _Nonnull)serviceUrl serviceKey:(NSString * _Nonnull)serviceKey serviceIv:(NSString * _Nonnull)serviceIv publicKey:(NSString * _Nonnull)publicKey configKeyItems:(NSArray<ConfigKeyItem *> * _Nullable)configKeyItems other:(OtherConfig * _Nullable)other OBJC_DESIGNATED_INITIALIZER;
+/// Get third-party ID from other configuration
 @property (nonatomic, readonly, copy) NSString * _Nullable thirdId;
+/// Get instance ID from other configuration
 @property (nonatomic, readonly, copy) NSString * _Nullable instanceId;
+/// Get campaign identifier from other configuration
 @property (nonatomic, readonly, copy) NSString * _Nullable campaign;
+/// Get referrer identifier from other configuration
 @property (nonatomic, readonly, copy) NSString * _Nullable referer;
+/// Get ad ID from other configuration
 @property (nonatomic, readonly, copy) NSString * _Nullable adid;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+/// Other configuration class
+/// Contains additional SDK configuration information such as third-party ID, campaign identifier, etc.
+/// <h2>Usage Example</h2>
+/// \code
+/// let otherConfig = OtherConfig(
+///     thirdId: "your_third_id",
+///     instanceId: "your_instance_id",
+///     campaign: "summer_promotion",
+///     referer: "facebook_ads",
+///     adid: "your_adid"
+/// )
+///
+/// \endcode
 SWIFT_CLASS("_TtC9GrowthSDK11OtherConfig")
 @interface OtherConfig : NSObject
+/// Third-party ID
 @property (nonatomic, copy) NSString * _Nullable thirdId;
+/// Instance ID
 @property (nonatomic, copy) NSString * _Nullable instanceId;
+/// Campaign identifier
 @property (nonatomic, copy) NSString * _Nullable campaign;
+/// Referrer identifier
 @property (nonatomic, copy) NSString * _Nullable referer;
+/// Ad ID
 @property (nonatomic, copy) NSString * _Nullable adid;
+/// Initialize other configuration
+/// \param thirdId Third-party ID, optional
+///
+/// \param instanceId Instance ID, optional
+///
+/// \param campaign Campaign identifier, optional
+///
+/// \param referer Referrer identifier, optional
+///
+/// \param adid Ad ID, optional
+///
 - (nonnull instancetype)initWithThirdId:(NSString * _Nullable)thirdId instanceId:(NSString * _Nullable)instanceId campaign:(NSString * _Nullable)campaign referer:(NSString * _Nullable)referer adid:(NSString * _Nullable)adid OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");

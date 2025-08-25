@@ -432,13 +432,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-ObjcExample/Pods-UnifiedExample-ObjcExample-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/GrowthSDK/GrowthSDKResources.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-ObjcExample/Pods-UnifiedExample-ObjcExample-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GrowthSDKResources.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-ObjcExample/Pods-UnifiedExample-ObjcExample-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -472,17 +471,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-SwiftExample/Pods-UnifiedExample-SwiftExample-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinSDK/AppLovinSDK.framework/AppLovinSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/GrowthSDK/Core/GrowthSDK.framework/GrowthSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/KwaiAdsSDK/KwaiAdsSDK.framework/KwaiAdsSDK",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-SwiftExample/Pods-UnifiedExample-SwiftExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppLovinSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrowthSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KwaiAdsSDK.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-SwiftExample/Pods-UnifiedExample-SwiftExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -494,13 +488,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-SwiftUIExample/Pods-UnifiedExample-SwiftUIExample-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/GrowthSDK/GrowthSDKResources.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-SwiftUIExample/Pods-UnifiedExample-SwiftUIExample-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GrowthSDKResources.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-SwiftUIExample/Pods-UnifiedExample-SwiftUIExample-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -512,17 +505,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-ObjcExample/Pods-UnifiedExample-ObjcExample-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinSDK/AppLovinSDK.framework/AppLovinSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/GrowthSDK/Core/GrowthSDK.framework/GrowthSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/KwaiAdsSDK/KwaiAdsSDK.framework/KwaiAdsSDK",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-ObjcExample/Pods-UnifiedExample-ObjcExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppLovinSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrowthSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KwaiAdsSDK.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-ObjcExample/Pods-UnifiedExample-ObjcExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -556,17 +544,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-SwiftUIExample/Pods-UnifiedExample-SwiftUIExample-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppLovinSDK/AppLovinSDK.framework/AppLovinSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/GrowthSDK/Core/GrowthSDK.framework/GrowthSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/KwaiAdsSDK/KwaiAdsSDK.framework/KwaiAdsSDK",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-SwiftUIExample/Pods-UnifiedExample-SwiftUIExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppLovinSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrowthSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KwaiAdsSDK.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-SwiftUIExample/Pods-UnifiedExample-SwiftUIExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -578,13 +561,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-SwiftExample/Pods-UnifiedExample-SwiftExample-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/GrowthSDK/GrowthSDKResources.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-SwiftExample/Pods-UnifiedExample-SwiftExample-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GrowthSDKResources.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-UnifiedExample-SwiftExample/Pods-UnifiedExample-SwiftExample-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
