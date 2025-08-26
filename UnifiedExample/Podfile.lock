@@ -1,0 +1,31 @@
+PODS:
+  - AppLovinSDK (13.3.1)
+  - GrowthSDK (0.1.2):
+    - GrowthSDK/Core (= 0.1.2)
+  - GrowthSDK/Core (0.1.2):
+    - AppLovinSDK (= 13.3.1)
+    - KwaiAdsSDK (= 1.2.0)
+  - KwaiAdsSDK (1.2.0)
+
+DEPENDENCIES:
+  - AppLovinSDK (= 13.3.1)
+  - GrowthSDK (from `..`)
+  - KwaiAdsSDK (= 1.2.0)
+
+SPEC REPOS:
+  trunk:
+    - AppLovinSDK
+    - KwaiAdsSDK
+
+EXTERNAL SOURCES:
+  GrowthSDK:
+    :path: ".."
+
+SPEC CHECKSUMS:
+  AppLovinSDK: 5075837afdee4fb429121799b8cbcc5918ef3a23
+  GrowthSDK: 81e718d495e8d142f3db1f32cee41f57fe8035e9
+  KwaiAdsSDK: d211aeca15c8d874288cdd5a1510e0a3a0822905
+
+PODFILE CHECKSUM: 6472be9008742ad9b467eb4bcf0a28b822e3c7a4
+
+COCOAPODS: 1.16.2
