@@ -1,0 +1,162 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.1 effective-5.10 (swiftlang-6.1.0.110.21 clang-1700.0.13.3)
+// swift-module-flags: -target x86_64-apple-ios14-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name GrowthSDK
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1
+import AdSupport
+import AppTrackingTransparency
+import Combine
+import CommonCrypto
+import CoreData
+import CryptoKit
+import DeveloperToolsSupport
+import Foundation
+import Network
+import ObjectiveC
+import Security
+import Swift
+import SwiftUI
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+extension GrowthSDK.GrowthKit {
+  @objc public static var sdkVersion: Swift.String {
+    @objc get
+  }
+}
+extension GrowthSDK.GrowthKit {
+  @objc public static func createController(with unityController: UIKit.UIViewController) -> UIKit.UIViewController
+  public static func createView(with unityController: UIKit.UIViewController) -> some SwiftUICore.View
+  
+}
+@objc public enum InitState : Swift.Int {
+  case uninitialized = 0
+  case initializing = 1
+  case initialized = 2
+  case failed = 3
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum InitError : Swift.Error, Foundation.LocalizedError {
+  case alreadyInitialized
+  case storageInitFailed(Swift.String)
+  case serviceInitFailed(Swift.String)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc final public class GrowthKit : ObjectiveC.NSObject {
+  @objc public static let shared: GrowthSDK.GrowthKit
+  @objc final public var state: GrowthSDK.InitState {
+    @objc get
+  }
+  @Combine.Published @objc @_projectedValueProperty($isInitialized) final public var isInitialized: Swift.Bool {
+    @objc get
+  }
+  final public var $isInitialized: Combine.Published<Swift.Bool>.Publisher {
+    get
+  }
+  @objc public static var isLoggingEnabled: Swift.Bool
+  @objc deinit
+  @objc final public func initialize(with config: GrowthSDK.NetworkConfig, launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]? = nil, completion: (((any Swift.Error)?) -> Swift.Void)? = nil)
+  final public func initialize(with config: any GrowthSDK.NetworkConfigurable, launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]? = nil) async throws
+}
+@objc public enum ADStyle : Swift.Int {
+  case rewarded = 0
+  case inserted = 1
+  case appOpen = 2
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public protocol AdCallbacks {
+  @objc optional func onStartLoading(_ style: GrowthSDK.ADStyle)
+  @objc optional func onLoadSuccess(_ style: GrowthSDK.ADStyle)
+  @objc optional func onLoadFailed(_ style: GrowthSDK.ADStyle, error: (any Swift.Error)?)
+  @objc optional func onShowSuccess(_ style: GrowthSDK.ADStyle)
+  @objc optional func onShowFailed(_ style: GrowthSDK.ADStyle, error: (any Swift.Error)?)
+  @objc optional func onGetAdReward(_ style: GrowthSDK.ADStyle)
+  @objc optional func onAdClick(_ style: GrowthSDK.ADStyle)
+  @objc optional func onAdClose(_ style: GrowthSDK.ADStyle)
+}
+extension GrowthSDK.GrowthKit {
+  @objc final public func reloadAppOpenAd()
+  @objc final public func reloadBiddingAd()
+  @objc public static func showAd(with style: GrowthSDK.ADStyle, callbacks: (any GrowthSDK.AdCallbacks)? = nil)
+  @objc final public func showAd(with style: GrowthSDK.ADStyle, callbacks: (any GrowthSDK.AdCallbacks)? = nil)
+  @objc final public func showAdDebugger()
+}
+@objc public enum ConfigItem : Swift.Int, Swift.Codable {
+  case config = 0
+  case adjust = 1
+  case adUnit = 2
+  case link = 3
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public class ConfigKeyItem : ObjectiveC.NSObject {
+  @objc final public let key: Swift.String
+  @objc final public let item: GrowthSDK.ConfigItem
+  @objc public init(key: Swift.String, item: GrowthSDK.ConfigItem)
+  @objc convenience public init(configKey: Swift.String)
+  @objc convenience public init(adjustKey: Swift.String)
+  @objc convenience public init(adUnitKey: Swift.String)
+  @objc convenience public init(linkKey: Swift.String)
+  @objc deinit
+}
+public protocol NetworkConfigurable {
+  var serviceId: Swift.String { get }
+  var bundleName: Swift.String { get }
+  var serviceUrl: Swift.String { get }
+  var serviceKey: Swift.String { get }
+  var serviceIv: Swift.String { get }
+  var publicKey: Swift.String { get }
+  var configKeyItems: [GrowthSDK.ConfigKeyItem]? { get }
+  var thirdId: Swift.String? { get }
+}
+extension GrowthSDK.NetworkConfigurable {
+  public var configKeyItems: [GrowthSDK.ConfigKeyItem]? {
+    get
+  }
+  public var thirdId: Swift.String? {
+    get
+  }
+}
+@objc @objcMembers public class NetworkConfig : ObjectiveC.NSObject, GrowthSDK.NetworkConfigurable {
+  @objc final public let serviceId: Swift.String
+  @objc final public let bundleName: Swift.String
+  @objc final public let serviceUrl: Swift.String
+  @objc final public let serviceKey: Swift.String
+  @objc final public let serviceIv: Swift.String
+  @objc final public let publicKey: Swift.String
+  @objc final public let configKeyItems: [GrowthSDK.ConfigKeyItem]?
+  @objc public var thirdId: Swift.String?
+  @objc public init(serviceId: Swift.String, bundleName: Swift.String, serviceUrl: Swift.String, serviceKey: Swift.String, serviceIv: Swift.String, publicKey: Swift.String, configKeyItems: [GrowthSDK.ConfigKeyItem]? = nil, thirdId: Swift.String? = nil)
+  @objc deinit
+}
+extension GrowthSDK.GrowthKit {
+  @objc final public var isShowWebLink: Swift.Bool {
+    @objc get
+  }
+  @objc final public var webLink: Swift.String? {
+    @objc get
+  }
+}
+extension GrowthSDK.InitState : Swift.Equatable {}
+extension GrowthSDK.InitState : Swift.Hashable {}
+extension GrowthSDK.InitState : Swift.RawRepresentable {}
+extension GrowthSDK.ADStyle : Swift.Equatable {}
+extension GrowthSDK.ADStyle : Swift.Hashable {}
+extension GrowthSDK.ADStyle : Swift.RawRepresentable {}
+extension GrowthSDK.ConfigItem : Swift.Equatable {}
+extension GrowthSDK.ConfigItem : Swift.Hashable {}
+extension GrowthSDK.ConfigItem : Swift.RawRepresentable {}

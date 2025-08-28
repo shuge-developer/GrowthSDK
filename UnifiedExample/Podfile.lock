@@ -1,0 +1,36 @@
+PODS:
+  - AdjustSignature (3.47.0)
+  - AppLovinSDK (13.3.1)
+  - GrowthSDK (1.0.0):
+    - GrowthSDK/Core (= 1.0.0)
+  - GrowthSDK/Core (1.0.0):
+    - AdjustSignature (= 3.47.0)
+    - AppLovinSDK (= 13.3.1)
+    - KwaiAdsSDK (= 1.2.1)
+  - KwaiAdsSDK (1.2.1)
+
+DEPENDENCIES:
+  - AdjustSignature (= 3.47.0)
+  - AppLovinSDK (= 13.3.1)
+  - GrowthSDK (from `..`)
+  - KwaiAdsSDK (= 1.2.1)
+
+SPEC REPOS:
+  trunk:
+    - AdjustSignature
+    - AppLovinSDK
+    - KwaiAdsSDK
+
+EXTERNAL SOURCES:
+  GrowthSDK:
+    :path: ".."
+
+SPEC CHECKSUMS:
+  AdjustSignature: d634fc6b66295c38807f3b4e50978c1f72355950
+  AppLovinSDK: 5075837afdee4fb429121799b8cbcc5918ef3a23
+  GrowthSDK: 1c5f5929d1aecf6e791d8af3936f227c24ca5a66
+  KwaiAdsSDK: 5959f7e3d31ac1340885f8a4d3f2590b85f6f417
+
+PODFILE CHECKSUM: 746a0f90687ff152f76cefdc456e67a54baeab20
+
+COCOAPODS: 1.16.2

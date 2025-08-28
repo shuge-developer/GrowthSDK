@@ -1,0 +1,32 @@
+platform :ios, '14.0'
+inhibit_all_warnings!
+use_frameworks!
+
+# 统一工程包含三个 Target：ObjcExample、SwiftExample、SwiftUIExample
+abstract_target 'UnifiedExample' do
+  pod 'GrowthSDK', :path => '..'
+  
+  pod 'AdjustSignature', '3.47.0'
+  pod 'AppLovinSDK', '13.3.1'
+  pod 'KwaiAdsSDK', '1.2.1'
+  
+  #  pod 'AppLovinMediationBigoAdsAdapter'
+  #  pod 'AppLovinMediationChartboostAdapter'
+  #  pod 'AppLovinMediationFyberAdapter'
+  #  pod 'AppLovinMediationGoogleAdapter'
+  #  pod 'AppLovinMediationInMobiAdapter'
+  #  pod 'AppLovinMediationVungleAdapter'
+  #  pod 'AppLovinMediationFacebookAdapter'
+  #  pod 'AppLovinMediationMintegralAdapter'
+  #  pod 'AppLovinMediationByteDanceAdapter'
+  #  pod 'AppLovinMediationMolocoAdapter'
+  
+  target 'ObjcExample' do
+  end
+  
+  target 'SwiftExample' do
+  end
+  
+  target 'SwiftUIExample' do
+  end
+end
